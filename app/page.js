@@ -1,5 +1,10 @@
-import { getAllSites } from '../lib/getSiteConfig'
+import { getAllSites, getSiteBySlug } from '../lib/getSiteConfig'
+import SiteRenderer from '../components/SiteRenderer'
 import Link from 'next/link'
+
+// When NEXT_PUBLIC_SITE_SLUG is set, this deployment is for a single brand.
+// Render that brand's site at the root URL instead of the brand index.
+const SITE_SLUG = process.env.NEXT_PUBLIC_SITE_SLUG || null
 
 const categoryColors = {
   trading: '#00B4D8',
@@ -11,6 +16,12 @@ const categoryColors = {
 }
 
 export default function HomePage() {
+  // Single-brand deployment mode
+  if (SITE_SLUG) {
+    const site = getSiteBySlug(SITE_SLUG)
+    if (site) return <SiteRenderer site={site} />
+  }
+
   const sites = getAllSites()
 
   return (
