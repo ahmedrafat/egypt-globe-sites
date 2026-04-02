@@ -1,0 +1,67 @@
+name: Deploy All Brand Sites
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-brands
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy brand sites to Vercel
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        brand:
+          - slug: eg-salt
+            project_id: prj_3XT5WRi2UHufeza2xACxtggpTkes
+          - slug: ipelot
+            project_id: prj_02SNo6qIbAA3PKhBCeS2ojxJ5z6n
+          - slug: egypt-bulkers
+            project_id: prj_SdPpk6usk5WIkH7jVboz8bulfvJc
+          - slug: globe-freight
+            project_id: prj_n1zevYnMlCbhMrx0Hw4ppqFk0jbE
+          - slug: nile-minerals
+            project_id: prj_9QcoWmjihe244Fr2YSj0zRPiEWA2
+          - slug: delta-agri
+            project_id: prj_VyiCfPpYRhM9nWefjjBHpYECnKBJ
+          - slug: redsea-logistics
+            project_id: prj_RTW8LtE8Yi7eSfYlh9tKwkTB4Ypp
+          - slug: cairo-tech-hub
+            project_id: prj_LDX9GoM7dZqcf2xLIwDK3cFMqf8d
+          - slug: globe-stevedore
+            project_id: prj_BGHu3HRZnUbjWtuQoUlEUA8GZbAv
+          - slug: sinai-stone
+            project_id: prj_RMAsJFBatliCGqdqMZh7uvipvWaO
+          - slug: eg-chemicals
+            project_id: prj_EAir4pSD2mtt9g1NOp8fsHfTDpZ6
+          - slug: alexandria-traders
+            project_id: prj_e3W4yMuDgGTjjUxeWd2spDlqIgLZ
+          - slug: egypt-globe-group
+            project_id: prj_i48qLBmO7loL6L4FYc4lmZiCRWzn
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Deploy ${{ matrix.brand.slug }} to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: team_G9Z2JLdyHSV1l31jv4ycdwhf
+          VERCEL_PROJECT_ID: ${{ matrix.brand.project_id }}
+        run: |
+          npx vercel deploy --prod \
+            --token="$VERCEL_TOKEN" \
+            --yes \
+            2>&1 | tail -5
