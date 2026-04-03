@@ -1,58 +1,44 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 
-function StatCard({ item, primary, visible }) {
+function StatCard({ item, primary, accent, index }) {
+  const [visible, setVisible] = useState(false)
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true) }, { threshold: 0.3 })
+    if (ref.current) obs.observe(ref.current)
+    return () => obs.disconnect()
+  }, [])
+
   return (
-    <div
-      className={`text-center p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
-    >
-      <div
-        className="text-4xl sm:text-5xl font-extrabold mb-2"
-        style={{ color: primary }}
-      >
+    <div ref={ref}
+      className="relative flex flex-col items-center text-center px-8 py-6 group"
+      style={{ opacity: visible ? 1 : 0, transform: visible ? 'none' : 'translateY(12px)', transition: `opacity 0.5s ${index * 0.1}s, transform 0.5s ${index * 0.1}s` }}>
+      <div className="text-4xl sm:text-5xl font-black mb-2 tabular-nums"
+        style={{ background: `linear-gradient(135deg, ${primary}, ${accent || primary})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
         {item.value}
       </div>
-      <div className="text-sm text-gray-400 uppercase tracking-wider font-medium">
-        {item.label}
-      </div>
+      <div className="text-sm text-gray-500 font-medium max-w-[140px] leading-snug">{item.label}</div>
     </div>
   )
 }
 
 export default function StatsSection({ site }) {
   const { theme, sections } = site
-  const stats = sections.stats
+  const items = sections.stats?.items || []
   const primary = theme.primaryColor
-  const ref = useRef(null)
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.2 }
-    )
-    if (ref.current) observer.observe(ref.current)
-    return () => observer.disconnect()
-  }, [])
-
-  if (!stats?.items?.length) return null
+  const accent = theme.accentColor || primary
+  if (!items.length) return null
 
   return (
-    <section ref={ref} className="py-24 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {stats.items.map((item, i) => (
-            <div
-              key={i}
-              style={{ transitionDelay: `${i * 100}ms` }}
-            >
-              <StatCard item={item} primary={primary} visible={visible} />
-            </div>
+    <section className="relative border-y border-white/5 overflow-hidden">
+      <div className="absolute inset-0"
+        style={{ background: `linear-gradient(to right, ${primary}08, transparent 40%, transparent 60%, ${accent}08)` }} />
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-white/5">
+          {items.map((item, i) => (
+            <StatCard key={i} item={item} primary={primary} accent={accent} index={i} />
           ))}
         </div>
       </div>
