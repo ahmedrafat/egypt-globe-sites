@@ -10,6 +10,28 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  deploy-index:
+    name: Deploy egypt-globe-sites index
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Deploy egypt-globe-sites index
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: team_G9Z2JLdyHSV1l31jv4ycdwhf
+          VERCEL_PROJECT_ID: prj_aTk2GtjmEQP1zk8iVFyR2OOdiaYL
+        run: |
+          npx vercel deploy --prod \
+            --token="$VERCEL_TOKEN" \
+            --yes \
+            2>&1 | tail -5
+
   deploy:
     name: Deploy brand sites to Vercel
     runs-on: ubuntu-latest
