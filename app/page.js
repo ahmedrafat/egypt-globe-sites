@@ -2,8 +2,9 @@ import { getAllSites, getSiteBySlug } from '../lib/getSiteConfig'
 import SiteRenderer from '../components/SiteRenderer'
 import Link from 'next/link'
 
+export const revalidate = 60
+
 // When NEXT_PUBLIC_SITE_SLUG is set, this deployment is for a single brand.
-// Render that brand's site at the root URL instead of the brand index.
 const SITE_SLUG = process.env.NEXT_PUBLIC_SITE_SLUG || null
 
 const categoryColors = {
@@ -15,14 +16,14 @@ const categoryColors = {
   application: '#7B2FBE',
 }
 
-export default function HomePage() {
+export default async function HomePage() {
   // Single-brand deployment mode
   if (SITE_SLUG) {
-    const site = getSiteBySlug(SITE_SLUG)
-    if (site) return <SiteRenderer site={site} />
+    const site = await getSiteBySlug(SITE_SLUG)
+    if (site) return <SiteRenderer site={site} basePath="" />
   }
 
-  const sites = getAllSites()
+  const sites = await getAllSites()
 
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-white">
@@ -104,8 +105,12 @@ export default function HomePage() {
                   {/* Meta */}
                   <div className="flex flex-wrap gap-2 mb-5 text-xs text-gray-600">
                     <span className="px-2 py-0.5 rounded-full bg-white/5 capitalize">{preset}</span>
-                    {site.visitors && site.visitors !== '—' && (
-                      <span className="px-2 py-0.5 rounded-full bg-white/5">{site.visitors}</span>
+                    {site.visitors && (
+                      <span className="px-2 py-0.5 rounded-full bg-white/5">
+                        {typeof site.visitors === 'number'
+                          ? `${site.visitors.toLocaleString()}/mo`
+                          : site.visitors}
+                      </span>
                     )}
                   </div>
 

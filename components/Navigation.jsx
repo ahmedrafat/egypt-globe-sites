@@ -8,10 +8,21 @@ const defaultLinks = [
   { id: 'contact', label: 'Contact', href: '#contact', external: false },
 ]
 
-export default function Navigation({ site }) {
+export default function Navigation({ site, basePath = '' }) {
   const [open, setOpen] = useState(false)
-  const links = site.navigation?.length > 0 ? site.navigation : defaultLinks
+  const rawLinks = site.navigation?.length > 0 ? site.navigation : defaultLinks
   const primary = site.theme.primaryColor
+
+  // Resolve href: if it starts with / and isn't an anchor, prepend basePath
+  function resolveHref(href) {
+    if (!href) return '#'
+    if (href.startsWith('#')) return href
+    if (href.startsWith('http')) return href
+    if (href === '/') return basePath || '/'
+    return `${basePath}${href}`
+  }
+
+  const links = rawLinks.map((l) => ({ ...l, resolvedHref: resolveHref(l.href) }))
 
   return (
     <nav
@@ -35,8 +46,8 @@ export default function Navigation({ site }) {
           <div className="hidden md:flex items-center gap-6">
             {links.map((link) => (
               <a
-                key={link.id}
-                href={link.href}
+                key={link.id || link.label}
+                href={link.resolvedHref}
                 target={link.external ? '_blank' : undefined}
                 rel={link.external ? 'noopener noreferrer' : undefined}
                 className="text-sm text-gray-300 hover:text-white transition-colors"
@@ -48,7 +59,7 @@ export default function Navigation({ site }) {
               </a>
             ))}
             <a
-              href="#contact"
+              href={resolveHref('/contact')}
               className="ml-2 px-4 py-1.5 rounded-full text-sm font-medium text-white transition-all hover:opacity-90"
               style={{ background: primary }}
             >
@@ -82,8 +93,8 @@ export default function Navigation({ site }) {
         <div className="md:hidden border-t border-white/10 bg-black/95 px-4 py-4 space-y-2">
           {links.map((link) => (
             <a
-              key={link.id}
-              href={link.href}
+              key={link.id || link.label}
+              href={link.resolvedHref}
               target={link.external ? '_blank' : undefined}
               rel={link.external ? 'noopener noreferrer' : undefined}
               className="block py-2 text-gray-300 hover:text-white transition-colors"

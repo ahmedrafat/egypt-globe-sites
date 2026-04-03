@@ -11,25 +11,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-import { getSiteBySlug } from '../lib/getSiteConfig'
-
-function buildMetadata() {
-  const slug = process.env.NEXT_PUBLIC_SITE_SLUG
-  if (slug) {
-    const site = getSiteBySlug(slug)
-    if (site) return {
-      title: site.seo?.metaTitle || site.brandName,
-      description: site.seo?.metaDescription || '',
-      keywords: site.seo?.keywords || [],
-    }
-  }
-  return {
-    title: "Egypt Globe Group — Brand Sites",
-    description: "Digital presence for all Egypt Globe Group brands",
-  }
+export const metadata = {
+  title: "Egypt Globe Group — Brand Sites",
+  description: "Digital presence for all Egypt Globe Group brands",
 }
-
-export const metadata = buildMetadata()
 
 export default function RootLayout({ children }) {
   return (
