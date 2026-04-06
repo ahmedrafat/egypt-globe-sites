@@ -6,6 +6,10 @@ import StatsSection from './sections/StatsSection'
 import NetworkSection from './sections/NetworkSection'
 import FeaturesSection from './sections/FeaturesSection'
 import AISection from './sections/AISection'
+import TestimonialsSection from './sections/TestimonialsSection'
+import CertificationsSection from './sections/CertificationsSection'
+import TeamSection from './sections/TeamSection'
+import ProductsGridSection from './sections/ProductsGridSection'
 import ProductsPage from './pages/ProductsPage'
 import ContactPage from './pages/ContactPage'
 
@@ -31,6 +35,10 @@ export default function SiteRenderer({ site, basePath = '' }) {
         {sections.features?.enabled && <FeaturesSection site={site} />}
         {sections.network?.enabled && <NetworkSection site={site} />}
         {sections.aiSection?.enabled && <AISection site={site} />}
+        {sections.testimonials?.enabled && <TestimonialsSection site={site} />}
+        {sections.certifications?.enabled && <CertificationsSection site={site} />}
+        {sections.team?.enabled && <TeamSection site={site} />}
+        {sections.productsGrid?.enabled && <ProductsGridSection site={site} />}
         {sections.products?.enabled && (
           <section id="products" className="border-t border-white/5">
             <ProductsPage site={site} />
