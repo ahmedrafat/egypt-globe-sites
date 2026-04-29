@@ -53,52 +53,127 @@ export default async function PageRenderer({ page }) {
 
   const commodity = page.commodity_id ? await getCommodityById(page.commodity_id) : null
 
+  // Detect product detail page (has rich data) for the immersive hero
+  const isProductDetail =
+    page.specs && Object.keys(page.specs).length > 0 ||
+    (page.certifications || []).length > 0 ||
+    page.moq_mt
+  const sourceType = (page.specs?.source_type || '').toLowerCase()
+  const isRockSalt = sourceType.includes('rock')
+  const isSeaSalt = sourceType.includes('sea')
+
+  // Pick a hero gradient: rock salt → stone, sea salt / chemicals / general
+  // products → brand blue, services hub → teal-blue, applications hub → violet
+  const heroGradient = page.hero_photo_url ? null : (
+    isRockSalt
+      ? 'bg-gradient-to-br from-stone-700 via-stone-800 to-stone-900'
+      : isSeaSalt
+      ? 'bg-gradient-to-br from-cyan-700 via-blue-800 to-[#0f1f3a]'
+      : isApplicationLanding || isApplicationsHub
+      ? 'bg-gradient-to-br from-violet-700 via-purple-800 to-indigo-900'
+      : isServicesHub
+      ? 'bg-gradient-to-br from-teal-700 via-cyan-800 to-blue-900'
+      : isDivisionLanding && division
+      ? null  // use category color (set inline)
+      : 'bg-gradient-to-br from-[#1d5fa1] via-[#14467a] to-[#0f1f3a]'
+  )
+
   return (
     <article>
-      {/* Hero ──────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden">
-        {page.hero_photo_url ? (
-          <div className="relative h-[40vh] sm:h-[60vh] min-h-[360px] w-full">
+      {/* Hero — immersive brand-coloured banner ──────────────────── */}
+      <section className={`relative overflow-hidden ${heroGradient || ''}`}
+        style={!heroGradient && !page.hero_photo_url && division ? {
+          background: `linear-gradient(135deg, ${division.color} 0%, ${division.color}cc 50%, #0f1f3a 100%)`
+        } : undefined}>
+        {page.hero_photo_url && (
+          <div className="absolute inset-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={page.hero_photo_url} alt={page.title}
               className="absolute inset-0 w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#0f1f3a]/60 via-[#0f1f3a]/40 to-white" />
-          </div>
-        ) : (
-          <div className="h-[28vh] sm:h-[36vh] min-h-[220px] relative"
-            style={{ background: `linear-gradient(135deg, ${cat.color}1F 0%, transparent 60%), radial-gradient(circle at 80% 20%, ${cat.color}26, transparent 50%)` }}>
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white" />
-            <div aria-hidden="true"
-              className="absolute right-8 top-1/2 -translate-y-1/2 text-[180px] sm:text-[260px] opacity-10 animate-float select-none">
-              {cat.icon}
-            </div>
+            <div className="absolute inset-0 bg-gradient-to-br from-[#0f1f3a]/85 via-[#0f1f3a]/70 to-[#1d5fa1]/60" />
           </div>
         )}
 
-        <div className={`max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 ${page.hero_photo_url ? '-mt-40 sm:-mt-48' : '-mt-24 sm:-mt-32'} relative z-10 animate-fade-in-up`}>
-          <div className="flex items-center gap-2 mb-4 flex-wrap">
-            <Link href="/" className="text-xs font-medium text-slate-500 hover:text-[#1d5fa1] transition-colors">
-              Home
-            </Link>
-            <span className="text-slate-400 text-xs">›</span>
-            <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${cat.tone}`}>
+        {/* Decorative pattern */}
+        <div aria-hidden="true" className="absolute inset-0 opacity-10 pointer-events-none">
+          <div className="absolute right-0 top-0 w-[600px] h-[600px] rounded-full"
+            style={{ background: 'radial-gradient(circle, white 0%, transparent 70%)' }} />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+          {/* Breadcrumb */}
+          <nav className="flex items-center gap-2 text-xs text-white/50 mb-5 flex-wrap animate-fade-in">
+            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+            <span>›</span>
+            {!isHomePath && page.category && (
+              <>
+                <span className="text-white/70">{cat.label}</span>
+                <span>›</span>
+              </>
+            )}
+            <span className="text-white/80 truncate max-w-[300px]">{page.title}</span>
+          </nav>
+
+          {/* Chip rail */}
+          <div className="flex items-center gap-2 mb-4 flex-wrap animate-fade-in-up">
+            <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 text-white backdrop-blur-sm border border-white/20">
               <span aria-hidden="true">{cat.icon}</span> {cat.label}
             </span>
+            {isRockSalt && (
+              <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-stone-600/40 text-stone-100 border border-stone-400/30">
+                ⛏️ Rock Salt
+              </span>
+            )}
+            {isSeaSalt && (
+              <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-cyan-500/30 text-cyan-50 border border-cyan-400/30">
+                🌊 Sea Salt
+              </span>
+            )}
+            {page.specs?.nacl_min && (
+              <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 text-white border border-white/20">
+                NaCl {page.specs.nacl_min}
+              </span>
+            )}
+            {page.specs?.grain_label && (
+              <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 text-white border border-white/20">
+                {page.specs.grain_label}
+              </span>
+            )}
             {page.hs_code && (
-              <span className="inline-flex items-center text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
+              <span className="inline-flex items-center text-[11px] font-mono font-bold px-3 py-1.5 rounded-full bg-white/10 text-white/90 border border-white/15">
                 HS {page.hs_code}
               </span>
             )}
           </div>
 
-          <h1 className={`text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-5 ${page.hero_photo_url ? 'text-white drop-shadow-md' : 'text-slate-900'}`}>
-            {page.title}
-          </h1>
-          {page.description && (
-            <p className={`text-lg sm:text-xl leading-relaxed max-w-3xl ${page.hero_photo_url ? 'text-blue-50' : 'text-slate-600'}`}>
-              {page.description}
-            </p>
-          )}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-end">
+            <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-4 leading-[1.05] drop-shadow-sm">
+                {page.title}
+              </h1>
+              {page.description && (
+                <p className="text-base sm:text-lg leading-relaxed max-w-3xl text-white/80">
+                  {page.description}
+                </p>
+              )}
+            </div>
+
+            {/* Hero action buttons */}
+            {isProductDetail && (
+              <div className="flex flex-wrap gap-2 lg:justify-end animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
+                  className="inline-flex items-center gap-2 bg-[#FF6321] hover:bg-[#e0541b] text-white font-bold px-5 py-3 rounded-xl shadow-lg shadow-orange-500/25 transition-all hover:-translate-y-0.5">
+                  📋 Get Quote
+                </Link>
+                {page.datasheet_url && (
+                  <a href={page.datasheet_url} target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur text-white font-semibold border border-white/20 px-5 py-3 rounded-xl transition-colors">
+                    📄 TDS
+                  </a>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
