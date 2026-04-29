@@ -12,6 +12,7 @@ import {
   getRelatedPages,
   getDirectChildren,
   getPagesInCategory,
+  getDivisionSubcategories,
   getCommodityById,
   getPagesForApplication,
   CATEGORY_META,
@@ -19,6 +20,7 @@ import {
   SERVICE_DIVISIONS,
   APPLICATIONS,
 } from '../lib/corporatePages'
+import RichDivisionLanding from './RichDivisionLanding'
 
 const PRODUCT_DIVISION_BY_PATH = Object.fromEntries(PRODUCT_DIVISIONS.map(d => [d.path, d]))
 
@@ -46,6 +48,13 @@ export default async function PageRenderer({ page }) {
   const divisionPages = isDivisionLanding
     ? await getPagesInCategory(division.id, { excludePath: page.path })
     : []
+  const divisionSubcats = isDivisionLanding
+    ? await getDivisionSubcategories(page.path)
+    : []
+  // SKU pages = division pages with commodity_id (excluding sub-cat landings)
+  const divisionSkus = (divisionPages || []).filter(p =>
+    p.path.split('/').filter(Boolean).length >= 4
+  )
   const subcategoryProducts = isSubcategoryLanding
     ? await getDirectChildren(page.path)
     : []
@@ -55,6 +64,22 @@ export default async function PageRenderer({ page }) {
   const related = await getRelatedPages(page, 4)
 
   const commodity = page.commodity_id ? await getCommodityById(page.commodity_id) : null
+
+  // Division landing — early-return with the Pelot-style rich layout
+  // (skips the generic hero / body render below). Salt has its own
+  // dedicated app/products/salt/page.jsx; the other 6 divisions hit
+  // this branch.
+  if (isDivisionLanding && division) {
+    return (
+      <RichDivisionLanding
+        page={page}
+        division={division}
+        subcategories={divisionSubcats}
+        featured={divisionSkus}
+        allDivisionPages={divisionPages}
+      />
+    )
+  }
 
   // Detect product detail page (has rich data) for the immersive hero
   const isProductDetail =
@@ -367,48 +392,8 @@ export default async function PageRenderer({ page }) {
         </section>
       )}
 
-      {/* Division landing — show all pages in that category */}
-      {isDivisionLanding && divisionPages.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-100">
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">
-            {division.label} — full catalogue
-          </h2>
-          <p className="text-slate-600 mb-8">{divisionPages.length} {divisionPages.length === 1 ? 'product' : 'products'} available for export.</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 stagger-children">
-            {divisionPages.map(p => (
-              <Link key={p.id} href={p.path}
-                className="card-lift group rounded-xl border border-slate-200 bg-white overflow-hidden">
-                <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
-                  {p.hero_photo_url ? (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img src={p.hero_photo_url} alt={p.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-5xl opacity-30"
-                      style={{ background: `linear-gradient(135deg, ${division.color}10, transparent)` }}>
-                      {division.icon}
-                    </div>
-                  )}
-                </div>
-                <div className="p-4">
-                  {p.hs_code && (
-                    <div className="text-[10px] font-mono uppercase font-bold text-slate-400 mb-1">HS {p.hs_code}</div>
-                  )}
-                  <h3 className="text-sm font-bold text-slate-900 line-clamp-2 group-hover:text-[#1d5fa1] transition-colors">
-                    {p.title}
-                  </h3>
-                  {p.price_indication && (
-                    <p className="text-xs text-[#FF6321] font-semibold mt-1.5 line-clamp-1">{p.price_indication}</p>
-                  )}
-                  {p.description && !p.price_indication && (
-                    <p className="text-xs text-slate-500 mt-1 line-clamp-2">{p.description}</p>
-                  )}
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* Division landing branch removed — handled by RichDivisionLanding
+          via early-return at the top of this component. */}
 
       {/* Generic page — show direct children if any */}
       {!isProductsHub && !isServicesHub && !isApplicationsHub && !isApplicationLanding && !isDivisionLanding && !isSubcategoryLanding && directChildren.length > 0 && (
