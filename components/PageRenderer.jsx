@@ -21,6 +21,8 @@ import {
   APPLICATIONS,
 } from '../lib/corporatePages'
 import RichDivisionLanding from './RichDivisionLanding'
+import RichSubcategoryLanding from './RichSubcategoryLanding'
+import RichApplicationLanding from './RichApplicationLanding'
 
 const PRODUCT_DIVISION_BY_PATH = Object.fromEntries(PRODUCT_DIVISIONS.map(d => [d.path, d]))
 
@@ -66,9 +68,6 @@ export default async function PageRenderer({ page }) {
   const commodity = page.commodity_id ? await getCommodityById(page.commodity_id) : null
 
   // Division landing — early-return with the Pelot-style rich layout
-  // (skips the generic hero / body render below). Salt has its own
-  // dedicated app/products/salt/page.jsx; the other 6 divisions hit
-  // this branch.
   if (isDivisionLanding && division) {
     return (
       <RichDivisionLanding
@@ -77,6 +76,37 @@ export default async function PageRenderer({ page }) {
         subcategories={divisionSubcats}
         featured={divisionSkus}
         allDivisionPages={divisionPages}
+      />
+    )
+  }
+
+  // Sub-category landing — Pelot-style rich layout w/ parent division context
+  if (isSubcategoryLanding) {
+    const parentDivisionPath = '/' + page.path.split('/').slice(1, 3).join('/')
+    const parentDivision = PRODUCT_DIVISIONS.find(d => d.path === parentDivisionPath)
+    if (parentDivision) {
+      const allSibling = await getDivisionSubcategories(parentDivision.path)
+      const siblingSubcats = allSibling.filter(s => s.path !== page.path).slice(0, 8)
+      return (
+        <RichSubcategoryLanding
+          page={page}
+          division={parentDivision}
+          skus={subcategoryProducts}
+          siblingSubcats={siblingSubcats}
+        />
+      )
+    }
+  }
+
+  // Application landing — violet hero + matched products + related apps
+  if (isApplicationLanding && application) {
+    const siblingApps = APPLICATIONS.filter(a => a.id !== application.id).slice(0, 8)
+    return (
+      <RichApplicationLanding
+        page={page}
+        application={application}
+        products={applicationProducts}
+        siblingApps={siblingApps}
       />
     )
   }
