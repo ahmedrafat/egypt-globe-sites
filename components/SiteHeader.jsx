@@ -8,6 +8,7 @@
  */
 import Link from 'next/link'
 import Logo from './Logo'
+import MobileMenu from './MobileMenu'
 import {
   PRODUCT_DIVISIONS,
   SERVICE_DIVISIONS,
@@ -163,6 +164,13 @@ export default async function SiteHeader({ settings }) {
               className="hidden sm:flex items-center gap-1.5 text-sm font-bold text-white bg-[#FF6321] hover:bg-[#e0541b] px-4 py-2 rounded-lg shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg">
               📋 Get a Quote
             </Link>
+            {/* Mobile hamburger + drawer */}
+            <MobileMenu
+              productDivisions={PRODUCT_DIVISIONS}
+              serviceDivisions={SERVICE_DIVISIONS}
+              aboutPages={grouped.about || []}
+              settings={s}
+            />
           </div>
         </div>
       </div>

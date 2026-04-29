@@ -133,6 +133,144 @@ body {
 .prose-light a  { color: var(--egg-blue); }
 .prose-light a:hover { color: var(--egg-blue-dark); }
 
+/* ───── Drop 103 — revolutionary motion + visual flourishes ───────── */
+
+/* Glow / pulse for accent dots and CTAs */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 99, 33, 0.5); }
+  50%      { box-shadow: 0 0 0 12px rgba(255, 99, 33, 0); }
+}
+.pulse-glow { animation: pulse-glow 2.4s ease-in-out infinite; }
+
+/* Subtle shine sweep on hover (use with .group on parent + .group-hover:bg-shine) */
+@keyframes shine-sweep {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+.shine-sweep::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.4) 50%, transparent 70%);
+  transform: translateX(-100%);
+  pointer-events: none;
+}
+.shine-sweep:hover::after { animation: shine-sweep 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* Gradient text — apply to any element */
+.text-gradient {
+  background: linear-gradient(135deg, var(--egg-blue), var(--egg-orange));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Decorative grid-pattern background — for hero overlays */
+.bg-grid-pattern {
+  background-image: linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Decorative dots-pattern background */
+.bg-dots-pattern {
+  background-image: radial-gradient(rgba(29,95,161,0.18) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+}
+
+/* Soft top-edge gradient mask — fades content under sticky header */
+.fade-edge-top {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 32px);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 32px);
+}
+
+/* Spinning slow ring — for hero ornaments */
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow { animation: spin-slow 30s linear infinite; }
+
+/* Gentle horizontal drift — for floating decorative shapes */
+@keyframes drift {
+  0%, 100% { transform: translate(0,0); }
+  50%      { transform: translate(12px, -8px); }
+}
+.animate-drift { animation: drift 8s ease-in-out infinite; }
+
+/* Reveal-on-scroll using IntersectionObserver-free pure CSS:
+   start hidden; .scroll-reveal-active fires the animation.
+   We add the active class via a tiny inline script in layout.js
+   (or use Tailwind 'animate-fade-in-up' on small static pages). */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.scroll-reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Decorative section separators */
+.section-divider-wave {
+  position: relative;
+  overflow: hidden;
+}
+.section-divider-wave::before {
+  content: '';
+  position: absolute; left: 0; right: 0; top: -1px;
+  height: 32px;
+  background: linear-gradient(to bottom, transparent, white);
+  pointer-events: none;
+}
+
+/* Number-counter card sheen */
+.stat-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.stat-card::before {
+  content: '';
+  position: absolute; inset: -2px;
+  background: conic-gradient(from 180deg at 50% 50%,
+              rgba(29,95,161,0.0) 0deg,
+              rgba(29,95,161,0.18) 60deg,
+              rgba(255,99,33,0.18) 120deg,
+              rgba(29,95,161,0.0) 180deg,
+              rgba(29,95,161,0.0) 360deg);
+  animation: spin-slow 14s linear infinite;
+  z-index: -1;
+  border-radius: inherit;
+}
+.stat-card::after {
+  content: '';
+  position: absolute; inset: 1px;
+  background: white;
+  border-radius: inherit;
+  z-index: -1;
+}
+
+/* Better focus ring for keyboard nav */
+*:focus-visible {
+  outline: 2px solid var(--egg-blue);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Selection */
+::selection {
+  background: var(--egg-orange);
+  color: white;
+}
+
+/* Smooth body-scroll-lock support (iOS Safari fix) */
+body.no-scroll {
+  position: fixed;
+  width: 100%;
+}
+
 /* Respect users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -143,4 +281,5 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  .stat-card::before { animation: none; }
 }
