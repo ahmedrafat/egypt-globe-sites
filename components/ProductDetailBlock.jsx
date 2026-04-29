@@ -90,6 +90,7 @@ export default function ProductDetailBlock({ page, commodity }) {
   const packing = page.packing_options || []
   const applicationIds = page.applications || []
   const regions = page.regions || []
+  const loadingPorts = page.loading_ports || []
 
   const hasAnything =
     specEntries.length > 0 ||
@@ -97,6 +98,7 @@ export default function ProductDetailBlock({ page, commodity }) {
     packing.length > 0 ||
     applicationIds.length > 0 ||
     regions.length > 0 ||
+    loadingPorts.length > 0 ||
     page.hs_code ||
     page.moq_mt ||
     page.price_indication ||
@@ -221,26 +223,50 @@ export default function ProductDetailBlock({ page, commodity }) {
             </div>
           )}
 
-          {/* Active markets / regions */}
-          {regions.length > 0 && (
-            <div className="rounded-2xl bg-blue-50/70 border border-blue-100 p-6">
-              <h2 className="font-bold text-lg text-slate-900 mb-3 flex items-center gap-2">
-                <span className="text-xl">🌍</span> Active Destination Markets
-              </h2>
-              <div className="flex flex-wrap gap-2">
-                {regions.map(r => (
-                  <span key={r}
-                    className="inline-flex items-center text-xs font-medium bg-white text-blue-800 border border-blue-200 px-3 py-1.5 rounded-full">
-                    {r}
-                  </span>
-                ))}
+          {/* Loading ports + Active markets — paired row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {loadingPorts.length > 0 && (
+              <div className="rounded-2xl bg-amber-50/70 border border-amber-100 p-6">
+                <h2 className="font-bold text-lg text-slate-900 mb-3 flex items-center gap-2">
+                  <span className="text-xl">⚓</span> Loading Ports (Egypt)
+                </h2>
+                <div className="flex flex-wrap gap-2">
+                  {loadingPorts.map(p => (
+                    <span key={p}
+                      className="inline-flex items-center gap-1 text-xs font-semibold bg-white text-amber-900 border border-amber-200 px-3 py-1.5 rounded-full">
+                      ⚓ {p}
+                    </span>
+                  ))}
+                </div>
+                <p className="text-xs text-slate-600 mt-3">
+                  {isRock
+                    ? 'Rock-salt loading lanes — closest port to Siwa / Qattara.'
+                    : isSea
+                    ? 'Sea-salt loading lanes — closest port to source pans.'
+                    : 'Confirmed at quote stage based on destination.'}
+                </p>
               </div>
-              <p className="text-xs text-slate-600 mt-3">
-                Loaded FOB / CIF / CFR from 7 Egyptian ports.
-                <Link href="/services/logistics" className="text-[#1d5fa1] ml-1 hover:underline">View logistics →</Link>
-              </p>
-            </div>
-          )}
+            )}
+            {regions.length > 0 && (
+              <div className="rounded-2xl bg-blue-50/70 border border-blue-100 p-6">
+                <h2 className="font-bold text-lg text-slate-900 mb-3 flex items-center gap-2">
+                  <span className="text-xl">🌍</span> Active Destination Markets
+                </h2>
+                <div className="flex flex-wrap gap-2">
+                  {regions.map(r => (
+                    <span key={r}
+                      className="inline-flex items-center text-xs font-medium bg-white text-blue-800 border border-blue-200 px-3 py-1.5 rounded-full">
+                      {r}
+                    </span>
+                  ))}
+                </div>
+                <p className="text-xs text-slate-600 mt-3">
+                  FOB / CIF / CFR shipments worldwide.
+                  <Link href="/services/logistics" className="text-[#1d5fa1] ml-1 hover:underline">View logistics →</Link>
+                </p>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* ───────── Sidebar (right, 1/3) ───────── */}

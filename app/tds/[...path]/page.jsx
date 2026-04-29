@@ -191,14 +191,25 @@ export default async function TDSPage({ params }) {
 
           {/* Section 7 — Loading ports */}
           <Section n="7" title="Loading Ports (Egypt)">
-            <p className="text-sm text-slate-700 leading-relaxed">
-              Damietta · Port Said East · Alexandria · El-Dekheila · Ain Sokhna · Safaga · El-Arish.
-              {' '}{specs.source_type?.toLowerCase().includes('rock')
-                ? 'Rock salt loads from El-Dekheila, Alexandria, Damietta and Ain Sokhna.'
-                : specs.source_type?.toLowerCase().includes('sea')
-                ? 'Sea salt loads from Al-Arish, Port Said East, Damietta and Ain Sokhna.'
-                : 'Specific loading port confirmed at quote stage based on product source and destination.'}
-            </p>
+            {(page.loading_ports || []).length > 0 ? (
+              <>
+                <ul className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm text-slate-700 list-disc list-inside mb-2">
+                  {page.loading_ports.map(p => <li key={p}>{p}</li>)}
+                </ul>
+                <p className="text-xs text-slate-500 italic">
+                  {specs.source_type?.toLowerCase().includes('rock')
+                    ? 'Lanes optimised for rock-salt loading from Siwa / Qattara feed.'
+                    : specs.source_type?.toLowerCase().includes('sea')
+                    ? 'Lanes optimised for sea-salt loading — closest port to source pans.'
+                    : 'Specific loading port confirmed at quote stage.'}
+                </p>
+              </>
+            ) : (
+              <p className="text-sm text-slate-700 leading-relaxed">
+                Damietta · Port Said East · Alexandria · El-Dekheila · Ain Sokhna · Safaga · El-Arish.
+                Specific loading port confirmed at quote stage based on destination.
+              </p>
+            )}
           </Section>
 
           {/* Section 8 — Storage & shelf life */}
