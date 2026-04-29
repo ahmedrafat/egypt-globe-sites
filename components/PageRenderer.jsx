@@ -1,36 +1,35 @@
 /**
  * PageRenderer — shared layout for any egg_corporate_pages row.
  *
- * Renders: hero + breadcrumb, body markdown, gallery grid, child grid
- * (if this page has direct sub-pages — eg /products → 6 divisions),
- * and a "More in <category>" related strip. Light theme + entrance
- * animations on every section.
+ * Renders: hero + breadcrumb, body markdown, ProductDetailBlock when
+ * the page has rich product data, gallery, child grid for category
+ * landings, related-pages strip, and a CTA banner.
  */
 import Link from 'next/link'
 import MarkdownBody from './MarkdownBody'
+import ProductDetailBlock from './ProductDetailBlock'
 import {
   getRelatedPages,
   getDirectChildren,
   getPagesInCategory,
+  getCommodityById,
   CATEGORY_META,
   PRODUCT_DIVISIONS,
+  SERVICE_DIVISIONS,
 } from '../lib/corporatePages'
 
 const PRODUCT_DIVISION_BY_PATH = Object.fromEntries(PRODUCT_DIVISIONS.map(d => [d.path, d]))
-const PRODUCT_DIVISION_BY_CATEGORY = Object.fromEntries(PRODUCT_DIVISIONS.map(d => [d.id, d]))
 
 export default async function PageRenderer({ page }) {
   const cat = CATEGORY_META[page.category] || CATEGORY_META.other
 
-  // Decide what to show below the body:
-  // - On /products → list every product division as tiles (PRODUCT_DIVISIONS)
-  // - On /products/<division> landing → list every page in that category
-  // - On any other page with direct children → show those children
-  // - Always show a related-pages strip at the bottom (same category)
+  const isHomePath = page.path === '/'
   const isProductsHub = page.path === '/products'
+  const isServicesHub = page.path === '/services'
   const isDivisionLanding = !!PRODUCT_DIVISION_BY_PATH[page.path]
   const division = PRODUCT_DIVISION_BY_PATH[page.path]
-  const directChildren = !isProductsHub && !isDivisionLanding
+
+  const directChildren = !isProductsHub && !isServicesHub && !isDivisionLanding
     ? await getDirectChildren(page.path)
     : []
   const divisionPages = isDivisionLanding
@@ -38,9 +37,11 @@ export default async function PageRenderer({ page }) {
     : []
   const related = await getRelatedPages(page, 4)
 
+  const commodity = page.commodity_id ? await getCommodityById(page.commodity_id) : null
+
   return (
     <article>
-      {/* Hero */}
+      {/* Hero ──────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden">
         {page.hero_photo_url ? (
           <div className="relative h-[40vh] sm:h-[60vh] min-h-[360px] w-full">
@@ -61,7 +62,6 @@ export default async function PageRenderer({ page }) {
         )}
 
         <div className={`max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 ${page.hero_photo_url ? '-mt-40 sm:-mt-48' : '-mt-24 sm:-mt-32'} relative z-10 animate-fade-in-up`}>
-          {/* Breadcrumb chip */}
           <div className="flex items-center gap-2 mb-4 flex-wrap">
             <Link href="/" className="text-xs font-medium text-slate-500 hover:text-[#1d5fa1] transition-colors">
               Home
@@ -70,6 +70,11 @@ export default async function PageRenderer({ page }) {
             <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${cat.tone}`}>
               <span aria-hidden="true">{cat.icon}</span> {cat.label}
             </span>
+            {page.hs_code && (
+              <span className="inline-flex items-center text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
+                HS {page.hs_code}
+              </span>
+            )}
           </div>
 
           <h1 className={`text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-5 ${page.hero_photo_url ? 'text-white drop-shadow-md' : 'text-slate-900'}`}>
@@ -89,6 +94,9 @@ export default async function PageRenderer({ page }) {
           <MarkdownBody content={page.body_markdown} />
         </section>
       )}
+
+      {/* Rich product detail (only mounts when row has fields populated) */}
+      <ProductDetailBlock page={page} commodity={commodity} />
 
       {/* Products hub — always show every division */}
       {isProductsHub && (
@@ -112,6 +120,36 @@ export default async function PageRenderer({ page }) {
                   <p className="text-sm text-slate-600 mt-1.5 leading-relaxed">{div.blurb}</p>
                   <div className="mt-4 inline-flex items-center text-sm font-semibold text-[#1d5fa1] group-hover:gap-2 gap-1 transition-all">
                     Explore {div.label.toLowerCase()} <span>→</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Services hub — show every supply-chain service */}
+      {isServicesHub && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-100">
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">Our supply-chain services</h2>
+          <p className="text-slate-600 mb-8">Logistics, port operations, added value, packing, inspection and trade documentation — all in-house.</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
+            {SERVICE_DIVISIONS.map(svc => (
+              <Link key={svc.id} href={svc.path}
+                className="card-lift relative rounded-2xl border border-slate-200 bg-white p-6 group overflow-hidden">
+                <div className="absolute -right-6 -top-6 text-7xl opacity-[0.06] group-hover:opacity-[0.12] transition-opacity"
+                  aria-hidden="true">{svc.icon}</div>
+                <div className="relative">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4"
+                    style={{ background: `${svc.color}1A`, color: svc.color }}>
+                    {svc.icon}
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-[#1d5fa1] transition-colors">
+                    {svc.label}
+                  </h3>
+                  <p className="text-sm text-slate-600 mt-1.5 leading-relaxed">{svc.blurb}</p>
+                  <div className="mt-4 inline-flex items-center text-sm font-semibold text-[#1d5fa1] group-hover:gap-2 gap-1 transition-all">
+                    Learn more <span>→</span>
                   </div>
                 </div>
               </Link>
@@ -144,10 +182,16 @@ export default async function PageRenderer({ page }) {
                   )}
                 </div>
                 <div className="p-4">
+                  {p.hs_code && (
+                    <div className="text-[10px] font-mono uppercase font-bold text-slate-400 mb-1">HS {p.hs_code}</div>
+                  )}
                   <h3 className="text-sm font-bold text-slate-900 line-clamp-2 group-hover:text-[#1d5fa1] transition-colors">
                     {p.title}
                   </h3>
-                  {p.description && (
+                  {p.price_indication && (
+                    <p className="text-xs text-[#FF6321] font-semibold mt-1.5 line-clamp-1">{p.price_indication}</p>
+                  )}
+                  {p.description && !p.price_indication && (
                     <p className="text-xs text-slate-500 mt-1 line-clamp-2">{p.description}</p>
                   )}
                 </div>
@@ -158,7 +202,7 @@ export default async function PageRenderer({ page }) {
       )}
 
       {/* Generic page — show direct children if any */}
-      {!isProductsHub && !isDivisionLanding && directChildren.length > 0 && (
+      {!isProductsHub && !isServicesHub && !isDivisionLanding && directChildren.length > 0 && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-100">
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-8">In this section</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
@@ -200,22 +244,24 @@ export default async function PageRenderer({ page }) {
         </section>
       )}
 
-      {/* CTA strip */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="rounded-3xl bg-gradient-to-br from-[#1d5fa1] to-[#14467a] p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-5 shadow-xl shadow-blue-900/10">
-          <div className="flex-1">
-            <h3 className="text-2xl font-bold text-white mb-1">Ready for a quote?</h3>
-            <p className="text-blue-100 leading-relaxed">FOB / CIF / CFR pricing from 7 Egyptian ports — turnaround within 24 hours.</p>
+      {/* CTA strip — skip on hubs / division landings (they get their own treatment) */}
+      {!isProductsHub && !isServicesHub && !isDivisionLanding && (
+        <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+          <div className="rounded-3xl bg-gradient-to-br from-[#1d5fa1] to-[#14467a] p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-5 shadow-xl shadow-blue-900/10">
+            <div className="flex-1">
+              <h3 className="text-2xl font-bold text-white mb-1">Ready for a quote?</h3>
+              <p className="text-blue-100 leading-relaxed">FOB / CIF / CFR pricing from 7 Egyptian ports — turnaround within 24 hours.</p>
+            </div>
+            <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
+              className="bg-[#FF6321] hover:bg-[#e0541b] text-white font-bold px-7 py-3.5 rounded-xl shadow-lg whitespace-nowrap transition-all hover:-translate-y-0.5">
+              📋 Request Quote
+            </Link>
           </div>
-          <Link href="/rfq"
-            className="bg-[#FF6321] hover:bg-[#e0541b] text-white font-bold px-7 py-3.5 rounded-xl shadow-lg whitespace-nowrap transition-all hover:-translate-y-0.5">
-            📋 Request Quote
-          </Link>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* Related pages — only when there's no nested grid above */}
-      {related.length > 0 && !isProductsHub && !isDivisionLanding && directChildren.length === 0 && (
+      {/* Related pages */}
+      {related.length > 0 && !isProductsHub && !isServicesHub && !isDivisionLanding && directChildren.length === 0 && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 border-t border-slate-100">
           <h2 className="text-xl font-bold text-slate-900 mb-6">More in {cat.label}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 stagger-children">

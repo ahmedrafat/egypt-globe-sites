@@ -13,9 +13,10 @@
 import Link from 'next/link'
 import {
   PRODUCT_DIVISIONS,
-  COMPANY_INFO,
+  SERVICE_DIVISIONS,
   getPageByPath,
   getPagesInCategory,
+  getSiteSettings,
 } from '../lib/corporatePages'
 import MarkdownBody from '../components/MarkdownBody'
 
@@ -58,16 +59,14 @@ const WHY_US = [
 ]
 
 export default async function HomePage() {
-  // Pull a featured-products carousel from the most-populated divisions
   const featured = (await Promise.all(
     ['construction', 'salt', 'fertilizers', 'chemicals'].map(c =>
       getPagesInCategory(c, { limit: 2 })
     )
   )).flat().slice(0, 8)
 
-  // About preview = pull the /about row's description so the home stays
-  // in lock-step with whatever the admin edits there
   const aboutPage = await getPageByPath('/about')
+  const company = await getSiteSettings()
 
   return (
     <>
@@ -94,7 +93,7 @@ export default async function HomePage() {
             </h1>
 
             <p className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-2xl mb-8">
-              {COMPANY_INFO.name} is a multi-division trading conglomerate sourcing
+              {company.name} is a multi-division trading conglomerate sourcing
               salt, cement, fertilizers, chemicals, construction materials, agro &
               food, and industrial minerals direct from Egyptian producers — shipped
               FOB / CIF / CFR from 7 Egyptian ports to 60+ destination markets.
@@ -162,6 +161,40 @@ export default async function HomePage() {
               </div>
             </Link>
           ))}
+        </div>
+      </section>
+
+      {/* Services strip ───────────────────────────────────────── */}
+      <section className="bg-gradient-to-br from-slate-50 to-blue-50/40 py-20 sm:py-24 border-y border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-12 animate-fade-in-up">
+            <div className="inline-block bg-teal-50 text-teal-700 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
+              Beyond commodities
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+              Full supply-chain services in-house.
+            </h2>
+            <p className="text-lg text-slate-600">
+              Logistics, port operations, added-value processing, packing, inspection
+              and trade documentation — pair any product with the service it needs.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 stagger-children">
+            {SERVICE_DIVISIONS.map(svc => (
+              <Link key={svc.id} href={svc.path}
+                className="card-lift group rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 text-center">
+                <div className="w-12 h-12 mx-auto rounded-xl flex items-center justify-center text-2xl mb-3"
+                  style={{ background: `${svc.color}1A`, color: svc.color }}>
+                  {svc.icon}
+                </div>
+                <h3 className="font-bold text-slate-900 text-sm group-hover:text-[#1d5fa1] transition-colors leading-tight">
+                  {svc.label}
+                </h3>
+                <p className="text-[11px] text-slate-500 mt-1.5 leading-snug line-clamp-3">{svc.blurb}</p>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -262,23 +295,23 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
             <div className="rounded-2xl bg-white/5 border border-white/10 p-5 backdrop-blur">
               <div className="text-xs text-blue-300 uppercase tracking-wider font-semibold mb-2">📍 Head Office — Cairo</div>
-              <p className="text-sm text-slate-200 leading-relaxed">{COMPANY_INFO.headOffice}</p>
+              <p className="text-sm text-slate-200 leading-relaxed">{company.headOffice}</p>
             </div>
             <div className="rounded-2xl bg-white/5 border border-white/10 p-5 backdrop-blur">
               <div className="text-xs text-blue-300 uppercase tracking-wider font-semibold mb-2">⚓ Operations — Damietta</div>
-              <p className="text-sm text-slate-200 leading-relaxed">{COMPANY_INFO.operationsOffice}</p>
+              <p className="text-sm text-slate-200 leading-relaxed">{company.operationsOffice}</p>
             </div>
             <div className="rounded-2xl bg-white/5 border border-white/10 p-5 backdrop-blur">
               <div className="text-xs text-blue-300 uppercase tracking-wider font-semibold mb-2">📞 Sales / Export</div>
-              <a href={`tel:${COMPANY_INFO.phoneE164}`} className="block text-sm text-white font-semibold hover:text-orange-300">
-                {COMPANY_INFO.phone}
+              <a href={`tel:${company.phoneE164}`} className="block text-sm text-white font-semibold hover:text-orange-300">
+                {company.phone}
               </a>
-              <span className="block text-xs text-slate-400 mt-1">Tel & Fax: {COMPANY_INFO.telFax}</span>
+              <span className="block text-xs text-slate-400 mt-1">Tel & Fax: {company.telFax}</span>
             </div>
             <div className="rounded-2xl bg-white/5 border border-white/10 p-5 backdrop-blur">
               <div className="text-xs text-blue-300 uppercase tracking-wider font-semibold mb-2">✉ Email</div>
-              <a href={`mailto:${COMPANY_INFO.email}`} className="text-sm text-white font-semibold hover:text-orange-300">
-                {COMPANY_INFO.email}
+              <a href={`mailto:${company.email}`} className="text-sm text-white font-semibold hover:text-orange-300">
+                {company.email}
               </a>
             </div>
           </div>
