@@ -13,20 +13,24 @@ export const metadata = {
     template: '%s · Egypt Globe Group',
   },
   description:
-    'B2B export trading conglomerate. Salt, cement, fertilizers, chemicals, construction materials, agricultural products. 60+ countries. Quote in 24h.',
+    'Egyptian B2B export trading conglomerate. Salt, cement, fertilizers, chemicals, construction materials, agro & food, industrial minerals. FOB / CIF from 7 Egyptian ports to 60+ countries. Quote in 24h.',
+  keywords: ['Egypt Globe Group', 'Egyptian exporter', 'B2B trade', 'cement Egypt', 'salt Egypt', 'fertilizers Egypt', 'industrial minerals', 'Damietta export', 'Cairo trading house'],
   openGraph: {
     type: 'website',
     title: 'Egypt Globe Group',
     description: 'Egyptian industrial excellence connected to 60+ countries.',
     url: 'https://egyptglobe.com',
+    siteName: 'Egypt Globe Group',
+    locale: 'en_US',
   },
-  twitter: { card: 'summary_large_image' },
+  twitter: { card: 'summary_large_image', title: 'Egypt Globe Group', description: 'Egyptian industrial excellence connected to 60+ countries.' },
+  robots: { index: true, follow: true },
 }
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-[#0A0A0A] text-white">
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full`}>
+      <body className="min-h-full flex flex-col bg-white text-slate-900 antialiased">
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />

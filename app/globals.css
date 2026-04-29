@@ -1,26 +1,146 @@
 @import "tailwindcss";
 
 :root {
+  /* Egypt Globe brand palette — derived from the corporate logo */
+  --egg-blue:        #1d5fa1;
+  --egg-blue-dark:   #14467a;
+  --egg-blue-light:  #2b78c2;
+  --egg-orange:      #ff6321;
+  --egg-ink:         #0f172a;
+  --egg-mute:        #475569;
+  --egg-soft:        #f8fafc;
+  --egg-line:        #e2e8f0;
+
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: var(--egg-ink);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-egg-blue: var(--egg-blue);
+  --color-egg-blue-dark: var(--egg-blue-dark);
+  --color-egg-orange: var(--egg-orange);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Inter, ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ───── Animations ───────────────────────────────────────────────── */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+.animate-fade-in-up   { animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-fade-in      { animation: fadeIn 0.6s ease-out both; }
+.animate-scale-in     { animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-slide-in-left{ animation: slideInLeft 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-float        { animation: float 4s ease-in-out infinite; }
+
+/* Stagger children — apply to a parent, children reveal sequentially */
+.stagger-children > *           { animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.stagger-children > *:nth-child(1)  { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(2)  { animation-delay: 0.10s; }
+.stagger-children > *:nth-child(3)  { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(4)  { animation-delay: 0.20s; }
+.stagger-children > *:nth-child(5)  { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(6)  { animation-delay: 0.30s; }
+.stagger-children > *:nth-child(7)  { animation-delay: 0.35s; }
+.stagger-children > *:nth-child(8)  { animation-delay: 0.40s; }
+.stagger-children > *:nth-child(9)  { animation-delay: 0.45s; }
+.stagger-children > *:nth-child(10) { animation-delay: 0.50s; }
+.stagger-children > *:nth-child(11) { animation-delay: 0.55s; }
+.stagger-children > *:nth-child(12) { animation-delay: 0.60s; }
+
+/* Softer shimmer for skeletons or hero accents */
+.shimmer-bg {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s infinite;
+}
+
+/* Reusable card hover lift */
+.card-lift {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -16px rgba(15, 23, 42, 0.18),
+              0 8px 16px -8px rgba(15, 23, 42, 0.12);
+}
+
+/* Nice prose tweaks for MarkdownBody on light bg */
+.prose-light h2 { color: var(--egg-ink); }
+.prose-light h3 { color: var(--egg-ink); }
+.prose-light a  { color: var(--egg-blue); }
+.prose-light a:hover { color: var(--egg-blue-dark); }
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
