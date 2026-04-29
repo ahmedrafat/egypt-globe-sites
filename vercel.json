@@ -7,5 +7,29 @@
         { "key": "X-Frame-Options", "value": "DENY" }
       ]
     }
+  ],
+  "redirects": [
+    { "source": "/products/salt/de-icing-salt/0-8mm",  "destination": "/products/salt/de-icing-grade",       "permanent": true },
+    { "source": "/products/salt/de-icing-salt/:rest*", "destination": "/products/salt/de-icing-grade",       "permanent": true },
+    { "source": "/products/salt/industrial-salt",      "destination": "/products/salt/industrial-grade",     "permanent": true },
+    { "source": "/products/salt/sea-salt",             "destination": "/products/salt/food-grade",           "permanent": true },
+    { "source": "/products/salt/tablet-salt/994",      "destination": "/products/salt/pharmaceutical-grade", "permanent": true },
+    { "source": "/products/salt/tablet-salt/:rest*",   "destination": "/products/salt/pharmaceutical-grade", "permanent": true },
+    { "source": "/products/salt/vacuum-tablet/994",    "destination": "/products/salt/pharmaceutical-grade", "permanent": true },
+    { "source": "/products/salt/vacuum-tablet/:rest*", "destination": "/products/salt/pharmaceutical-grade", "permanent": true },
+    { "source": "/salt/pharmaceutical-salt",           "destination": "/products/salt/pharmaceutical-grade", "permanent": true },
+    { "source": "/salt/:rest*",                        "destination": "/products/salt",                      "permanent": true },
+    { "source": "/sl-animal-block-white",              "destination": "/products/salt/agricultural-grade",   "permanent": true },
+    { "source": "/sl-animal-:rest*",                   "destination": "/products/salt/agricultural-grade",   "permanent": true },
+    { "source": "/sl-food-:rest*",                     "destination": "/products/salt/food-grade",           "permanent": true },
+    { "source": "/sl-ind-:rest*",                      "destination": "/products/salt/industrial-grade",     "permanent": true },
+    { "source": "/sl-sea-:rest*",                      "destination": "/products/salt/food-grade",           "permanent": true },
+    { "source": "/sl-pharm-:rest*",                    "destination": "/products/salt/pharmaceutical-grade", "permanent": true },
+    { "source": "/sl-cosm-:rest*",                     "destination": "/products/salt/cosmetic-grade",       "permanent": true },
+    { "source": "/sl-pool-:rest*",                     "destination": "/products/salt/pool-grade",           "permanent": true },
+    { "source": "/sl-deic-:rest*",                     "destination": "/products/salt/de-icing-grade",       "permanent": true },
+    { "source": "/sl-aqua-:rest*",                     "destination": "/products/salt/aquaculture-grade",    "permanent": true },
+    { "source": "/sl-agri-:rest*",                     "destination": "/products/salt/agricultural-grade",   "permanent": true },
+    { "source": "/sl-:rest*",                          "destination": "/products/salt",                      "permanent": true }
   ]
 }

@@ -9,6 +9,7 @@ import {
   getPageByPath,
   getRfqProductOptions,
   getSiteSettings,
+  getMasterDestPorts,
 } from '../../lib/corporatePages'
 import RFQForm from '../../components/rfq/RFQForm'
 
@@ -24,10 +25,11 @@ export default async function RFQPage({ searchParams }) {
   const params = (await searchParams) || {}
   const preselectPath = typeof params.product === 'string' ? params.product : null
 
-  const [page, products, company] = await Promise.all([
+  const [page, products, company, destPorts] = await Promise.all([
     getPageByPath('/rfq'),
     getRfqProductOptions(),
     getSiteSettings(),
+    getMasterDestPorts(),
   ])
 
   return (
@@ -60,6 +62,7 @@ export default async function RFQPage({ searchParams }) {
           <div className="lg:col-span-8 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             <RFQForm
               products={products}
+              destPorts={destPorts}
               preselectPath={preselectPath}
               supabaseUrl={process.env.NEXT_PUBLIC_SUPABASE_URL}
               supabaseAnon={process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}

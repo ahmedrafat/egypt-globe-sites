@@ -7,9 +7,13 @@
  * allows anon INSERT only — no SELECT). Source is tagged
  * `egyptglobe-website` so the EGG OS triage UI can route correctly.
  *
- * Product selector pre-fills packaging + MOQ + HS code suggestions
- * from the chosen page row. `preselectPath` (from /rfq?product=...)
- * picks the dropdown automatically when arriving from a product page.
+ * Product selector pulls the full product row from the catalogue
+ * (specs jsonb + certifications + packing + applications + regions +
+ * commercial terms) so the form can render every QC parameter inline
+ * the moment a product is chosen — no second round trip.
+ *
+ * Destination ports come from the master `globe_ports` registry
+ * grouped by region (Mediterranean / North Europe / Far East / etc.).
  */
 import { useState, useMemo, useEffect } from 'react'
 import { createClient } from '@supabase/supabase-js'
@@ -27,15 +31,44 @@ const COUNTRIES = [
   'Australia','New Zealand',
   'Other',
 ]
-const COMMON_DEST_PORTS = [
-  'Rotterdam','Antwerp','Hamburg','Marseille','Genoa','Algeciras','Beirut','Mersin','Izmir',
-  'Mombasa','Dar es Salaam','Beira','Lagos','Tema','Abidjan',
-  'Mumbai','Karachi','Chittagong','Colombo','Singapore','Shanghai','Shenzhen',
-  'Houston','Veracruz','Buenos Aires','Sydney','Melbourne',
-]
 
-export default function RFQForm({ products, preselectPath, supabaseUrl, supabaseAnon }) {
-  // Lazy supabase client (created on first submit)
+const SPEC_LABELS = {
+  nacl_min: 'NaCl min',
+  moisture_max: 'Moisture max',
+  particle_size: 'Particle size',
+  bulk_density: 'Bulk density',
+  ca_max: 'Ca max',
+  mg_max: 'Mg max',
+  so4_max: 'SO₄ max',
+  water_insolubles: 'Water insolubles',
+  pb_max: 'Lead (Pb)',
+  as_max: 'Arsenic (As)',
+  cd_max: 'Cadmium (Cd)',
+  hg_max: 'Mercury (Hg)',
+  ph_range: 'pH range',
+  colour: 'Colour',
+  appearance: 'Appearance',
+  grain_label: 'Grain',
+  source_type: 'Source',
+  origin: 'Origin',
+  storage_conditions: 'Storage',
+  shelf_life_months: 'Shelf life',
+  product_code: 'Product code',
+  // Cement / fertilizer / chemical fallbacks
+  standard: 'Standard',
+  compressive_28d: 'Compressive 28-day',
+  blaine_fineness: 'Blaine fineness',
+  so3_max: 'SO₃ max',
+  c3a: 'C₃A',
+  nitrogen_min: 'N min',
+  k2o_min: 'K₂O min',
+  p2o5_min: 'P₂O₅ min',
+  concentration: 'Concentration',
+  un_number: 'UN number',
+}
+const prettyKey = k => SPEC_LABELS[k] || k.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+
+export default function RFQForm({ products, destPorts, preselectPath, supabaseUrl, supabaseAnon }) {
   const supabase = useMemo(
     () => createClient(supabaseUrl, supabaseAnon),
     [supabaseUrl, supabaseAnon]
@@ -52,6 +85,17 @@ export default function RFQForm({ products, preselectPath, supabaseUrl, supabase
     return g
   }, [products])
 
+  // Group dest ports by region for optgroup display
+  const portGroups = useMemo(() => {
+    const g = {}
+    for (const port of (destPorts || [])) {
+      const r = port.region || 'Other'
+      if (!g[r]) g[r] = []
+      g[r].push(port)
+    }
+    return g
+  }, [destPorts])
+
   const initialProduct = useMemo(() => {
     if (!preselectPath) return null
     return (products || []).find(p => p.path === preselectPath) || null
@@ -65,7 +109,7 @@ export default function RFQForm({ products, preselectPath, supabaseUrl, supabase
     target_price: '', currency: 'USD',
     incoterm: 'CIF', dest_port: '',
     packaging: (initialProduct?.packing_options?.[0]) || '',
-    certs_needed: '',
+    certs_needed: (initialProduct?.certifications || []).slice(0, 3).join(', '),
     timeline: '',
     message: '',
     requested_specs: '',
@@ -74,9 +118,8 @@ export default function RFQForm({ products, preselectPath, supabaseUrl, supabase
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState(null)
   const [refCode, setRefCode] = useState(null)
+  const [showAllSpecs, setShowAllSpecs] = useState(false)
 
-  // When the user picks a different product, sync the commodity name +
-  // suggest the first packing option.
   function selectProduct(path) {
     const p = (products || []).find(x => x.path === path)
     setForm(f => ({
@@ -84,16 +127,25 @@ export default function RFQForm({ products, preselectPath, supabaseUrl, supabase
       productPath: path,
       commodity: p?.title || '',
       packaging: p?.packing_options?.[0] || f.packaging,
+      certs_needed: (p?.certifications || []).slice(0, 3).join(', ') || f.certs_needed,
     }))
+    setShowAllSpecs(false)
   }
 
   function update(k, v) { setForm(f => ({ ...f, [k]: v })) }
 
-  // Selected product object (for sidebar hint card)
   const selected = useMemo(
     () => (products || []).find(p => p.path === form.productPath) || null,
     [products, form.productPath]
   )
+
+  // Spec entries we can show (only fields with values)
+  const specEntries = useMemo(() => {
+    if (!selected?.specs) return []
+    return Object.entries(selected.specs).filter(([, v]) => v != null && v !== '')
+  }, [selected])
+
+  const visibleSpecs = showAllSpecs ? specEntries : specEntries.slice(0, 4)
 
   async function onSubmit(e) {
     e.preventDefault()
@@ -125,10 +177,12 @@ export default function RFQForm({ products, preselectPath, supabaseUrl, supabase
       dest_port:     form.dest_port || null,
       packaging:     form.packaging || null,
       requested_packing: form.packaging || null,
-      message:       buildMessage(form),
+      message:       buildMessage(form, selected),
       status:        'new',
       referenced_page_id: selected?.id || null,
-      requested_specs: form.requested_specs ? { notes: form.requested_specs } : {},
+      requested_specs: selected?.specs
+        ? { product_specs: selected.specs, buyer_notes: form.requested_specs || null }
+        : (form.requested_specs ? { buyer_notes: form.requested_specs } : {}),
     }
 
     const { error: insertError } = await supabase.from('market_rfqs').insert(payload)
@@ -140,9 +194,7 @@ export default function RFQForm({ products, preselectPath, supabaseUrl, supabase
     }
     setRefCode(ref)
     setSubmitted(true)
-    if (typeof window !== 'undefined') {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    }
+    if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   if (submitted) {
@@ -195,7 +247,7 @@ export default function RFQForm({ products, preselectPath, supabaseUrl, supabase
       </FormSection>
 
       {/* Product */}
-      <FormSection title="What are you sourcing?" subtitle="Pick from our catalogue or describe your requirement.">
+      <FormSection title="What are you sourcing?" subtitle="Pick from our catalogue and we'll auto-fill the spec sheet.">
         <Grid>
           <Field label="Choose a product (optional)" full>
             <select value={form.productPath} onChange={e => selectProduct(e.target.value)}
@@ -213,15 +265,68 @@ export default function RFQForm({ products, preselectPath, supabaseUrl, supabase
             </select>
           </Field>
 
-          {selected && (
-            <div className="sm:col-span-2 rounded-xl bg-blue-50 border border-blue-100 p-4 text-sm">
-              <div className="font-semibold text-[#1d5fa1] mb-1">Linked: {selected.title}</div>
-              <div className="text-xs text-slate-600 flex flex-wrap gap-x-4 gap-y-1">
-                {selected.hs_code && <span><strong>HS:</strong> <span className="font-mono">{selected.hs_code}</span></span>}
-                {selected.moq_mt && <span><strong>Min order:</strong> {selected.moq_mt.toLocaleString()} MT</span>}
-                {selected.packing_options?.length > 0 && (
-                  <span><strong>Packing options:</strong> {selected.packing_options.join(' · ')}</span>
-                )}
+          {/* Auto-filled spec preview when a product is selected */}
+          {selected && (specEntries.length > 0 || selected.certifications?.length || selected.packing_options?.length || selected.applications?.length) && (
+            <div className="sm:col-span-2 rounded-2xl bg-blue-50 border border-blue-200 p-5 space-y-4">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <div className="font-bold text-[#1d5fa1] flex items-center gap-2">
+                    🧪 Auto-filled from catalogue: <span className="text-slate-900">{selected.title}</span>
+                  </div>
+                  <div className="text-xs text-slate-600 flex flex-wrap gap-x-4 gap-y-1 mt-1">
+                    {selected.hs_code && <span><strong>HS:</strong> <span className="font-mono">{selected.hs_code}</span></span>}
+                    {selected.moq_mt && <span><strong>MOQ:</strong> {Number(selected.moq_mt).toLocaleString()} MT</span>}
+                    {(selected.lead_time_min_weeks || selected.lead_time_max_weeks) && (
+                      <span><strong>Lead time:</strong> {selected.lead_time_min_weeks || '?'}–{selected.lead_time_max_weeks || '?'} weeks</span>
+                    )}
+                    {selected.price_indication && (
+                      <span><strong>Price:</strong> {selected.price_indication}</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Specs grid */}
+              {specEntries.length > 0 && (
+                <div>
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">
+                    Quality specifications ({specEntries.length} parameters)
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
+                    {visibleSpecs.map(([k, v]) => (
+                      <div key={k} className="flex justify-between text-xs border-b border-blue-200/60 pb-1">
+                        <span className="text-slate-600">{prettyKey(k)}</span>
+                        <span className="font-mono font-semibold text-slate-900 text-right">{String(v)}</span>
+                      </div>
+                    ))}
+                  </div>
+                  {specEntries.length > 4 && (
+                    <button type="button" onClick={() => setShowAllSpecs(s => !s)}
+                      className="mt-2 text-xs font-semibold text-[#1d5fa1] hover:underline">
+                      {showAllSpecs ? '▴ Show fewer specs' : `▾ Show all ${specEntries.length} parameters`}
+                    </button>
+                  )}
+                </div>
+              )}
+
+              {/* Certifications */}
+              {selected.certifications?.length > 0 && (
+                <div>
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">
+                    Certifications & standards
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {selected.certifications.map(c => (
+                      <span key={c} className="text-[11px] font-semibold bg-white text-blue-700 border border-blue-200 px-2 py-0.5 rounded-full">
+                        ✓ {c}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="text-[11px] text-slate-500 leading-relaxed border-t border-blue-200/60 pt-2">
+                The full specification sheet ships with your quote. Adjust anything below if your tender requires different parameters.
               </div>
             </div>
           )}
@@ -247,12 +352,22 @@ export default function RFQForm({ products, preselectPath, supabaseUrl, supabase
           <Field label="Incoterm *" required>
             <Select value={form.incoterm} onChange={v => update('incoterm', v)} options={INCOTERMS} required />
           </Field>
-          <Field label="Destination port">
-            <input list="rfq-dest-ports" value={form.dest_port} onChange={e => update('dest_port', e.target.value)} placeholder="e.g. Mombasa, Kenya"
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#1d5fa1] focus:border-transparent" />
-            <datalist id="rfq-dest-ports">
-              {COMMON_DEST_PORTS.map(p => <option key={p} value={p} />)}
-            </datalist>
+          <Field label="Destination port (master registry)">
+            <select value={form.dest_port} onChange={e => update('dest_port', e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#1d5fa1] focus:border-transparent">
+              <option value="">— Select a destination port —</option>
+              {Object.entries(portGroups).map(([region, ports]) => (
+                <optgroup key={region} label={`${region} (${ports.length} ports)`}>
+                  {ports.map(p => (
+                    <option key={p.id} value={`${p.name}, ${p.country}`}>
+                      {p.name}{p.unlocode ? ` (${p.unlocode})` : ''} — {p.country}
+                    </option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
+            <span className="text-[11px] text-slate-500 mt-1 block">Or type a custom port in the box below.</span>
+            <Input value={form.dest_port} onChange={v => update('dest_port', v)} placeholder="Custom destination port" />
           </Field>
 
           <Field label="Preferred packing" full>
@@ -281,9 +396,11 @@ export default function RFQForm({ products, preselectPath, supabaseUrl, supabase
       </FormSection>
 
       <FormSection title="Specs and notes" subtitle="The more detail, the tighter the quote.">
-        <Field label="Custom specs / tender requirements" full>
+        <Field label="Custom specs / tender deviations" full>
           <Textarea value={form.requested_specs} onChange={v => update('requested_specs', v)}
-            placeholder="e.g. NaCl ≥ 99.5%, moisture ≤ 0.5%, particle 0.5–2 mm. Or paste a tender clause."
+            placeholder={selected
+              ? `e.g. tighter NaCl threshold than ${(selected.specs?.nacl_min || 'std')}, custom particle range, additional cert. Or paste a tender clause.`
+              : 'e.g. NaCl ≥ 99.5%, moisture ≤ 0.5%, particle 0.5–2 mm. Or paste a tender clause.'}
             rows={3} />
         </Field>
         <Field label="Anything else?" full>
@@ -355,13 +472,15 @@ function Select({ value, onChange, options, placeholder, required, ...rest }) {
   )
 }
 
-/** Compose a free-text message body from the form fields so the
- *  backend trigger / inbox surface a readable summary. */
-function buildMessage(f) {
+/** Compose a free-text message body that captures every populated form
+ *  field plus the auto-filled product specs, so the inbox has a fully
+ *  readable summary. */
+function buildMessage(f, selected) {
   const parts = []
   parts.push(`RFQ from ${f.company} (${f.country || 'country n/a'})`)
   parts.push(``)
   if (f.commodity) parts.push(`Commodity: ${f.commodity}`)
+  if (selected?.path) parts.push(`Catalogue ref: egyptglobe.com${selected.path}`)
   if (f.quantity) parts.push(`Quantity: ${f.quantity} ${f.unit}`)
   if (f.target_price) parts.push(`Target price: ${f.target_price} ${f.currency}/${f.unit}`)
   if (f.incoterm) parts.push(`Incoterm: ${f.incoterm}`)
@@ -371,7 +490,14 @@ function buildMessage(f) {
   if (f.certs_needed) parts.push(`Certifications: ${f.certs_needed}`)
   if (f.requested_specs) {
     parts.push(``)
-    parts.push(`Specs: ${f.requested_specs}`)
+    parts.push(`Custom specs / deviations: ${f.requested_specs}`)
+  }
+  if (selected?.specs && Object.keys(selected.specs).length > 0) {
+    parts.push(``)
+    parts.push(`Catalogue specs:`)
+    for (const [k, v] of Object.entries(selected.specs)) {
+      if (v != null && v !== '') parts.push(`  • ${prettyKey(k)}: ${v}`)
+    }
   }
   if (f.message) {
     parts.push(``)
