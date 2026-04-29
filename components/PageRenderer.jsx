@@ -35,15 +35,18 @@ export default async function PageRenderer({ page }) {
   const application = applicationId ? APPLICATIONS.find(a => a.id === applicationId) : null
   const isDivisionLanding = !!PRODUCT_DIVISION_BY_PATH[page.path]
   const division = PRODUCT_DIVISION_BY_PATH[page.path]
-  const isGradeLanding = page.category === 'salt' && /^\/products\/salt\/[a-z-]+$/.test(page.path)
+  // Sub-category landing — exactly 3 path segments under /products/<division>/<subcat>
+  const isSubcategoryLanding = /^\/products\/[a-z-]+\/[a-z0-9-]+$/.test(page.path)
+                            && PRODUCT_DIVISIONS.some(d => page.path.startsWith(d.path + '/'))
+                            && !page.commodity_id
 
-  const directChildren = !isProductsHub && !isServicesHub && !isApplicationsHub && !isApplicationLanding && !isDivisionLanding
+  const directChildren = !isProductsHub && !isServicesHub && !isApplicationsHub && !isApplicationLanding && !isDivisionLanding && !isSubcategoryLanding
     ? await getDirectChildren(page.path)
     : []
   const divisionPages = isDivisionLanding
     ? await getPagesInCategory(division.id, { excludePath: page.path })
     : []
-  const gradeProducts = isGradeLanding
+  const subcategoryProducts = isSubcategoryLanding
     ? await getDirectChildren(page.path)
     : []
   const applicationProducts = isApplicationLanding
@@ -283,15 +286,18 @@ export default async function PageRenderer({ page }) {
         </section>
       )}
 
-      {/* Grade landing — show all SKUs in that grade (salt grade landings) */}
-      {isGradeLanding && gradeProducts.length > 0 && (
+      {/* Sub-category landing — show all SKUs in that sub-category
+          (e.g. /products/construction/cement-and-clinker → all cement SKUs) */}
+      {isSubcategoryLanding && subcategoryProducts.length > 0 && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-100">
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">
             {page.title} — full catalogue
           </h2>
-          <p className="text-slate-600 mb-8">{gradeProducts.length} SKUs available for export.</p>
+          <p className="text-slate-600 mb-8">
+            {subcategoryProducts.length} {subcategoryProducts.length === 1 ? 'SKU' : 'SKUs'} available for export.
+          </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 stagger-children">
-            {gradeProducts.map(p => (
+            {subcategoryProducts.map(p => (
               <Link key={p.id} href={p.path}
                 className="card-lift group rounded-xl border border-slate-200 bg-white overflow-hidden">
                 <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
@@ -300,7 +306,10 @@ export default async function PageRenderer({ page }) {
                     <img src={p.hero_photo_url} alt={p.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-5xl opacity-30 bg-gradient-to-br from-blue-50 to-cyan-50">🧂</div>
+                    <div className="w-full h-full flex items-center justify-center text-5xl opacity-30 bg-gradient-to-br from-blue-50 to-slate-50"
+                      style={{ background: `linear-gradient(135deg, ${cat.color}10, transparent)` }}>
+                      {cat.icon}
+                    </div>
                   )}
                 </div>
                 <div className="p-4">
@@ -310,7 +319,10 @@ export default async function PageRenderer({ page }) {
                   <h3 className="text-sm font-bold text-slate-900 line-clamp-2 group-hover:text-[#1d5fa1] transition-colors">
                     {p.title}
                   </h3>
-                  {p.description && (
+                  {p.price_indication && (
+                    <p className="text-xs text-[#FF6321] font-semibold mt-1.5 line-clamp-1">{p.price_indication}</p>
+                  )}
+                  {p.description && !p.price_indication && (
                     <p className="text-xs text-slate-500 mt-1 line-clamp-2">{p.description}</p>
                   )}
                 </div>
@@ -394,7 +406,7 @@ export default async function PageRenderer({ page }) {
       )}
 
       {/* Generic page — show direct children if any */}
-      {!isProductsHub && !isServicesHub && !isApplicationsHub && !isApplicationLanding && !isDivisionLanding && !isGradeLanding && directChildren.length > 0 && (
+      {!isProductsHub && !isServicesHub && !isApplicationsHub && !isApplicationLanding && !isDivisionLanding && !isSubcategoryLanding && directChildren.length > 0 && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-100">
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-8">In this section</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
@@ -437,7 +449,7 @@ export default async function PageRenderer({ page }) {
       )}
 
       {/* CTA strip — skip on hubs / division landings (they get their own treatment) */}
-      {!isProductsHub && !isServicesHub && !isApplicationsHub && !isApplicationLanding && !isDivisionLanding && !isGradeLanding && (
+      {!isProductsHub && !isServicesHub && !isApplicationsHub && !isApplicationLanding && !isDivisionLanding && !isSubcategoryLanding && (
         <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
           <div className="rounded-3xl bg-gradient-to-br from-[#1d5fa1] to-[#14467a] p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-5 shadow-xl shadow-blue-900/10">
             <div className="flex-1">
@@ -453,7 +465,7 @@ export default async function PageRenderer({ page }) {
       )}
 
       {/* Related pages */}
-      {related.length > 0 && !isProductsHub && !isServicesHub && !isApplicationsHub && !isApplicationLanding && !isDivisionLanding && !isGradeLanding && directChildren.length === 0 && (
+      {related.length > 0 && !isProductsHub && !isServicesHub && !isApplicationsHub && !isApplicationLanding && !isDivisionLanding && !isSubcategoryLanding && directChildren.length === 0 && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 border-t border-slate-100">
           <h2 className="text-xl font-bold text-slate-900 mb-6">More in {cat.label}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 stagger-children">
