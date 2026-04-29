@@ -36,7 +36,6 @@
 
     { "source": "/products/construction/cement-clinker",         "destination": "/products/construction/cement-and-clinker", "permanent": true },
     { "source": "/products/construction/cement-clinker/:rest*",  "destination": "/products/construction/cement-and-clinker", "permanent": true },
-    { "source": "/products/construction/aggregates/:rest*",      "destination": "/products/construction/aggregates",         "permanent": true },
     { "source": "/products/construction/gypsum-plaster",         "destination": "/products/construction/gypsum",             "permanent": true },
 
     { "source": "/products/fertilizers/nitrogen",          "destination": "/products/fertilizers", "permanent": true },
