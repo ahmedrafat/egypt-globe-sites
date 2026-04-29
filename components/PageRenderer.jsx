@@ -161,19 +161,21 @@ export default async function PageRenderer({ page }) {
               )}
             </div>
 
-            {/* Hero action buttons */}
+            {/* Hero action buttons — Quote + TDS + COA */}
             {isProductDetail && (
               <div className="flex flex-wrap gap-2 lg:justify-end animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
                 <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
                   className="inline-flex items-center gap-2 bg-[#FF6321] hover:bg-[#e0541b] text-white font-bold px-5 py-3 rounded-xl shadow-lg shadow-orange-500/25 transition-all hover:-translate-y-0.5">
                   📋 Get Quote
                 </Link>
-                {page.datasheet_url && (
-                  <a href={page.datasheet_url} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur text-white font-semibold border border-white/20 px-5 py-3 rounded-xl transition-colors">
-                    📄 TDS
-                  </a>
-                )}
+                <Link href={`/tds${page.path}`} target="_blank"
+                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur text-white font-semibold border border-white/20 px-5 py-3 rounded-xl transition-colors">
+                  📄 TDS
+                </Link>
+                <Link href={`/rfq?product=${encodeURIComponent(page.path)}&type=coa`}
+                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur text-white font-semibold border border-white/20 px-5 py-3 rounded-xl transition-colors">
+                  🧪 COA
+                </Link>
               </div>
             )}
           </div>

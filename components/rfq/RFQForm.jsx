@@ -68,7 +68,8 @@ const SPEC_LABELS = {
 }
 const prettyKey = k => SPEC_LABELS[k] || k.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
 
-export default function RFQForm({ products, destPorts, preselectPath, supabaseUrl, supabaseAnon }) {
+export default function RFQForm({ products, destPorts, preselectPath, requestType = 'quote', supabaseUrl, supabaseAnon }) {
+  const isCoa = requestType === 'coa'
   const supabase = useMemo(
     () => createClient(supabaseUrl, supabaseAnon),
     [supabaseUrl, supabaseAnon]
@@ -152,10 +153,11 @@ export default function RFQForm({ products, destPorts, preselectPath, supabaseUr
     setError(null)
     setSubmitting(true)
 
-    const ref = `EGG-RFQ-${Date.now().toString(36).toUpperCase()}`
+    const refPrefix = isCoa ? 'EGG-COA' : 'EGG-RFQ'
+    const ref = `${refPrefix}-${Date.now().toString(36).toUpperCase()}`
     const payload = {
       ref_code: ref,
-      source: 'egyptglobe-website',
+      source: isCoa ? 'egyptglobe-website-coa' : 'egyptglobe-website',
       buyer_company: form.company.trim(),
       company:       form.company.trim(),
       buyer_name:    form.contact.trim(),
@@ -201,10 +203,13 @@ export default function RFQForm({ products, destPorts, preselectPath, supabaseUr
     return (
       <div className="rounded-3xl bg-gradient-to-br from-emerald-50 to-blue-50 border border-emerald-200 p-10 text-center animate-scale-in">
         <div className="text-6xl mb-4">✅</div>
-        <h2 className="text-3xl font-extrabold text-slate-900 mb-3">RFQ received — thank you.</h2>
+        <h2 className="text-3xl font-extrabold text-slate-900 mb-3">
+          {isCoa ? 'CoA request received — thank you.' : 'RFQ received — thank you.'}
+        </h2>
         <p className="text-slate-700 max-w-xl mx-auto leading-relaxed mb-5">
-          Your request is in our queue. Our export desk reviews every RFQ within
-          1 hour and replies with a priced offer within 24 hours.
+          {isCoa
+            ? 'Your Certificate of Analysis request is in our queue. The QC team will email the latest signed CoA from the production plant within 24 hours.'
+            : 'Your request is in our queue. Our export desk reviews every RFQ within 1 hour and replies with a priced offer within 24 hours.'}
         </p>
         <div className="inline-block bg-white border border-slate-200 rounded-xl px-5 py-3 mb-6">
           <div className="text-[10px] uppercase tracking-wider font-bold text-slate-400">Reference</div>
@@ -412,8 +417,8 @@ export default function RFQForm({ products, destPorts, preselectPath, supabaseUr
 
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
         <button type="submit" disabled={submitting}
-          className="flex-1 inline-flex items-center justify-center gap-2 bg-[#FF6321] hover:bg-[#e0541b] disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold px-7 py-4 rounded-xl shadow-lg shadow-orange-500/20 transition-all hover:-translate-y-0.5 disabled:transform-none">
-          {submitting ? '⏳ Submitting…' : '📋 Submit RFQ'}
+          className={`flex-1 inline-flex items-center justify-center gap-2 ${isCoa ? 'bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/20' : 'bg-[#FF6321] hover:bg-[#e0541b] shadow-orange-500/20'} disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold px-7 py-4 rounded-xl shadow-lg transition-all hover:-translate-y-0.5 disabled:transform-none`}>
+          {submitting ? '⏳ Submitting…' : (isCoa ? '🧪 Request CoA' : '📋 Submit RFQ')}
         </button>
         <p className="text-xs text-slate-500 text-center sm:text-left max-w-xs">
           By submitting, you agree we may contact you about your RFQ. We do not send marketing email.

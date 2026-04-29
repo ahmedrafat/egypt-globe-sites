@@ -24,6 +24,7 @@ export const metadata = {
 export default async function RFQPage({ searchParams }) {
   const params = (await searchParams) || {}
   const preselectPath = typeof params.product === 'string' ? params.product : null
+  const requestType = params.type === 'coa' ? 'coa' : 'quote'
 
   const [page, products, company, destPorts] = await Promise.all([
     getPageByPath('/rfq'),
@@ -31,6 +32,13 @@ export default async function RFQPage({ searchParams }) {
     getSiteSettings(),
     getMasterDestPorts(),
   ])
+
+  const isCoa = requestType === 'coa'
+  const heroLabel    = isCoa ? 'Certificate of Analysis Request' : '24-Hour Response SLA'
+  const heroTitle    = isCoa ? 'Request a Certificate of Analysis.' : 'Request a Quote.'
+  const heroBlurb    = isCoa
+    ? 'Need a recent batch CoA before placing an order? Tell us which product and (optionally) which lot — we\'ll send the latest signed CoA from the production plant within 24 hours.'
+    : 'Tell us what commodity, quantity, destination port and Incoterm you need. Our export desk in Cairo + Damietta will come back within 24 hours with a priced FOB / CIF / CFR offer plus full L/C-bank document set.'
 
   return (
     <article>
@@ -41,17 +49,15 @@ export default async function RFQPage({ searchParams }) {
             style={{ background: 'radial-gradient(circle, #1d5fa133 0%, transparent 70%)' }} />
         </div>
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 animate-fade-in-up">
-          <div className="inline-flex items-center gap-2 bg-orange-50 text-[#FF6321] text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full mb-4">
-            <span className="w-2 h-2 rounded-full bg-[#FF6321] animate-pulse" />
-            24-Hour Response SLA
+          <div className={`inline-flex items-center gap-2 ${isCoa ? 'bg-emerald-50 text-emerald-700' : 'bg-orange-50 text-[#FF6321]'} text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full mb-4`}>
+            <span className={`w-2 h-2 rounded-full ${isCoa ? 'bg-emerald-600' : 'bg-[#FF6321]'} animate-pulse`} />
+            {heroLabel}
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight mb-4 leading-[1.05]">
-            Request a Quote.
+            {heroTitle}
           </h1>
           <p className="text-lg text-slate-600 max-w-2xl leading-relaxed">
-            Tell us what commodity, quantity, destination port and Incoterm you need.
-            Our export desk in Cairo + Damietta will come back within 24 hours with a
-            priced FOB / CIF / CFR offer plus full L/C-bank document set.
+            {heroBlurb}
           </p>
         </div>
       </section>
@@ -64,6 +70,7 @@ export default async function RFQPage({ searchParams }) {
               products={products}
               destPorts={destPorts}
               preselectPath={preselectPath}
+              requestType={requestType}
               supabaseUrl={process.env.NEXT_PUBLIC_SUPABASE_URL}
               supabaseAnon={process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}
             />

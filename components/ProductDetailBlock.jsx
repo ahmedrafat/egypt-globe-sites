@@ -246,7 +246,7 @@ export default function ProductDetailBlock({ page, commodity }) {
         {/* ───────── Sidebar (right, 1/3) ───────── */}
         <aside className="space-y-5 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
 
-          {/* Quote CTA */}
+          {/* Quote CTA + document actions */}
           <div className="bg-gradient-to-br from-[#1d5fa1] to-[#14467a] rounded-2xl p-6 text-white shadow-xl shadow-blue-900/15">
             <h3 className="font-bold text-lg mb-2">Request a Quote</h3>
             <p className="text-blue-100 text-sm leading-relaxed mb-4">
@@ -256,6 +256,16 @@ export default function ProductDetailBlock({ page, commodity }) {
               className="block w-full text-center bg-[#FF6321] hover:bg-[#e0541b] text-white font-bold py-3 rounded-xl transition-all hover:-translate-y-0.5 shadow-lg">
               📋 Get Quote
             </Link>
+            <div className="grid grid-cols-2 gap-2 mt-2">
+              <Link href={`/tds${page.path}`} target="_blank"
+                className="flex items-center justify-center gap-1.5 border border-white/25 text-white/85 hover:text-white hover:bg-white/10 text-xs font-bold py-2.5 rounded-lg transition-colors">
+                📄 Download TDS
+              </Link>
+              <Link href={`/rfq?product=${encodeURIComponent(page.path)}&type=coa`}
+                className="flex items-center justify-center gap-1.5 border border-white/25 text-white/85 hover:text-white hover:bg-white/10 text-xs font-bold py-2.5 rounded-lg transition-colors">
+                🧪 Request COA
+              </Link>
+            </div>
             <p className="text-blue-200 text-xs text-center mt-3">24-hour response · No spam</p>
           </div>
 
