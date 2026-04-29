@@ -13,6 +13,9 @@
  *   6. Bottom CTA banner
  */
 import Link from 'next/link'
+import { APPLICATIONS } from '../lib/corporatePages'
+
+const APP_BY_ID = Object.fromEntries(APPLICATIONS.map(a => [a.id, a]))
 
 const STAT_LABELS = {
   skus:    'SKUs in catalogue',
@@ -22,6 +25,13 @@ const STAT_LABELS = {
 }
 
 export default function RichDivisionLanding({ page, division, subcategories, featured, allDivisionPages }) {
+  // Collect unique applications across the division's SKUs
+  const appIds = new Set()
+  for (const p of (allDivisionPages || [])) {
+    for (const a of (p.applications || [])) appIds.add(a)
+  }
+  const apps = [...appIds].map(id => APP_BY_ID[id]).filter(Boolean)
+
   const skuCount    = (allDivisionPages || []).filter(p => /\/products\/[a-z-]+\/[a-z0-9-]+\/[a-z0-9-]+$/.test(p.path)).length
   const subCount    = subcategories?.length || 0
   const heroBg      = `linear-gradient(135deg, ${division.color} 0%, ${division.color}cc 50%, #0f1f3a 100%)`
@@ -156,6 +166,39 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
                 </div>
               </Link>
             ))}
+          </div>
+        </section>
+      )}
+
+      {/* Applications served (only renders when SKUs are app-tagged) */}
+      {apps.length > 0 && (
+        <section className="bg-gradient-to-br from-violet-50/50 via-white to-blue-50/50 py-16 sm:py-20 border-y border-slate-200 scroll-reveal">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10">
+              <div className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
+                {division.label} by Industry
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+                {apps.length} application{apps.length === 1 ? '' : 's'} served from this division.
+              </h2>
+              <p className="text-slate-600 max-w-3xl mx-auto">
+                Each industry has its own technical-spec window, certifications and tender language.
+                Click any card to see SKUs matching that application.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 stagger-children">
+              {apps.map(a => (
+                <Link key={a.id} href={a.path}
+                  className="card-lift group rounded-2xl border border-slate-200 bg-white p-5 text-center">
+                  <div className="w-14 h-14 mx-auto rounded-xl flex items-center justify-center text-3xl mb-3 bg-gradient-to-br from-violet-100 to-blue-100">
+                    {a.icon}
+                  </div>
+                  <h3 className="font-bold text-slate-900 group-hover:text-[#1d5fa1] transition-colors text-sm">
+                    {a.label}
+                  </h3>
+                </Link>
+              ))}
+            </div>
           </div>
         </section>
       )}
