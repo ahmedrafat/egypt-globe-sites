@@ -104,6 +104,7 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
 
   const [form, setForm] = useState({
     company: '', contact: '', email: '', phone: '', country: '',
+    productCategory: initialProduct?.category || '',
     productPath: initialProduct?.path || '',
     commodity: initialProduct?.title || '',
     quantity: '', unit: 'MT',
@@ -121,11 +122,47 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
   const [refCode, setRefCode] = useState(null)
   const [showAllSpecs, setShowAllSpecs] = useState(false)
 
+  // Sorted category list with icons for the first-step picker
+  const CATEGORY_META_LIST = [
+    { id: 'salt',         label: 'Salt',                icon: '🧂' },
+    { id: 'fertilizers',  label: 'Fertilizers',         icon: '🌾' },
+    { id: 'chemicals',    label: 'Chemicals',           icon: '⚗️' },
+    { id: 'construction', label: 'Construction',        icon: '🏗' },
+    { id: 'agro',         label: 'Agro & Food',         icon: '🍅' },
+    { id: 'minerals',     label: 'Industrial Minerals', icon: '⛰' },
+    { id: 'metals',       label: 'Metals & Alloys',     icon: '⚙️' },
+  ]
+  // Only show categories that actually have products
+  const availableCategories = useMemo(
+    () => CATEGORY_META_LIST.filter(c => (productGroups[c.id] || []).length > 0),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [productGroups]
+  )
+
+  // Products filtered to the chosen category (alphabetically)
+  const productsInCategory = useMemo(() => {
+    if (!form.productCategory) return []
+    return [...(productGroups[form.productCategory] || [])]
+      .sort((a, b) => a.title.localeCompare(b.title))
+  }, [form.productCategory, productGroups])
+
+  function selectCategory(catId) {
+    setForm(f => ({
+      ...f,
+      productCategory: catId,
+      // Clear the product selection when category changes
+      productPath: '',
+      commodity: '',
+    }))
+    setShowAllSpecs(false)
+  }
+
   function selectProduct(path) {
     const p = (products || []).find(x => x.path === path)
     setForm(f => ({
       ...f,
       productPath: path,
+      productCategory: p?.category || f.productCategory,
       commodity: p?.title || '',
       packaging: p?.packing_options?.[0] || f.packaging,
       certs_needed: (p?.certifications || []).slice(0, 3).join(', ') || f.certs_needed,
@@ -254,21 +291,64 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
       {/* Product */}
       <FormSection title="What are you sourcing?" subtitle="Pick from our catalogue and we'll auto-fill the spec sheet.">
         <Grid>
-          <Field label="Choose a product (optional)" full>
-            <select value={form.productPath} onChange={e => selectProduct(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#1d5fa1] focus:border-transparent">
-              <option value="">— or describe in the commodity field below —</option>
-              {Object.entries(productGroups).map(([cat, items]) => (
-                <optgroup key={cat} label={cat.charAt(0).toUpperCase() + cat.slice(1)}>
-                  {items.map(p => (
-                    <option key={p.id} value={p.path}>
-                      {p.title}{p.hs_code ? ` (HS ${p.hs_code})` : ''}
-                    </option>
-                  ))}
-                </optgroup>
-              ))}
-            </select>
+          {/* Step 1 — Pick a category (chip grid) */}
+          <Field label={form.productCategory ? '✓ Step 1 — Category selected' : 'Step 1 — Choose a product category'} full>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+              {availableCategories.map(c => {
+                const isActive = form.productCategory === c.id
+                const count = (productGroups[c.id] || []).length
+                return (
+                  <button key={c.id} type="button" onClick={() => selectCategory(c.id)}
+                    className={`text-left px-3 py-2.5 rounded-xl border transition-all ${isActive
+                      ? 'bg-[#1d5fa1] text-white border-[#1d5fa1] shadow-md shadow-blue-200'
+                      : 'bg-white text-slate-700 border-slate-200 hover:border-[#1d5fa1] hover:bg-blue-50/50'}`}>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl">{c.icon}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-bold leading-tight truncate">{c.label}</div>
+                        <div className={`text-[10px] ${isActive ? 'text-blue-100' : 'text-slate-500'}`}>
+                          {count} {count === 1 ? 'product' : 'products'}
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
+            {form.productCategory && (
+              <button type="button"
+                onClick={() => setForm(f => ({ ...f, productCategory: '', productPath: '', commodity: '' }))}
+                className="text-xs text-slate-500 hover:text-[#1d5fa1] mt-2 inline-flex items-center gap-1">
+                ← Change category
+              </button>
+            )}
           </Field>
+
+          {/* Step 2 — Pick a specific product within the chosen category */}
+          {form.productCategory && (
+            <Field label={`Step 2 — Choose a ${availableCategories.find(c => c.id === form.productCategory)?.label || 'product'} SKU`} full>
+              <select value={form.productPath} onChange={e => selectProduct(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#1d5fa1] focus:border-transparent">
+                <option value="">— Select a product (or describe in the commodity field below) —</option>
+                {productsInCategory.map(p => (
+                  <option key={p.id} value={p.path}>
+                    {p.title}{p.hs_code ? ` (HS ${p.hs_code})` : ''}
+                  </option>
+                ))}
+              </select>
+              <p className="text-[11px] text-slate-500 mt-1.5">
+                {productsInCategory.length} {productsInCategory.length === 1 ? 'product' : 'products'} in this category.
+              </p>
+            </Field>
+          )}
+
+          {/* Skip-step: free-text commodity (always visible as escape hatch) */}
+          {!form.productCategory && (
+            <div className="sm:col-span-2 rounded-xl bg-slate-50 border border-slate-200 p-4 text-sm text-slate-600">
+              <strong>Don't see your category?</strong> Skip the picker and describe your
+              commodity in the field below — our export desk handles bespoke sourcing too.
+            </div>
+          )}
 
           {/* Auto-filled spec preview when a product is selected */}
           {selected && (specEntries.length > 0 || selected.certifications?.length || selected.packing_options?.length || selected.applications?.length) && (
