@@ -14,8 +14,10 @@ import Link from 'next/link'
 import {
   PRODUCT_DIVISIONS,
   SERVICE_DIVISIONS,
+  APPLICATIONS,
   getPageByPath,
   getPagesInCategory,
+  getPagesByCategory,
   getSiteSettings,
 } from '../lib/corporatePages'
 import MarkdownBody from '../components/MarkdownBody'
@@ -31,8 +33,24 @@ export const metadata = {
 const TRUST = [
   { big: '60+', label: 'Destination markets' },
   { big: '7',   label: 'Egyptian seaports' },
-  { big: '6',   label: 'Product divisions' },
+  { big: '7',   label: 'Product divisions' },
   { big: '24h', label: 'Quote turnaround' },
+]
+
+// Standards & certifications shown in the trust strip
+const TRUST_CERTS = [
+  { name: 'ISO 22000',     hint: 'Food safety' },
+  { name: 'ISO 9001:2015', hint: 'Quality mgmt' },
+  { name: 'EN 197-1',      hint: 'Cement spec' },
+  { name: 'EN 16811-1',    hint: 'De-icing salt' },
+  { name: 'USP / BP',      hint: 'Pharma grade' },
+  { name: 'NSF/ANSI 60',   hint: 'Drinking water' },
+  { name: 'API 13B-1',     hint: 'Drilling mud' },
+  { name: 'HACCP',         hint: 'Food chain' },
+  { name: 'Halal',         hint: 'Food cert' },
+  { name: 'EU REACH',      hint: 'Chemical reg' },
+  { name: 'GOEIC',         hint: 'Egyptian export' },
+  { name: 'EUR1',          hint: 'Pref. origin' },
 ]
 
 const WHY_US = [
@@ -59,14 +77,18 @@ const WHY_US = [
 ]
 
 export default async function HomePage() {
-  const featured = (await Promise.all(
-    ['construction', 'salt', 'fertilizers', 'chemicals'].map(c =>
-      getPagesInCategory(c, { limit: 2 })
-    )
-  )).flat().slice(0, 8)
-
-  const aboutPage = await getPageByPath('/about')
-  const company = await getSiteSettings()
+  const [featuredAll, aboutPage, company, grouped] = await Promise.all([
+    Promise.all(
+      ['construction', 'salt', 'fertilizers', 'chemicals'].map(c =>
+        getPagesInCategory(c, { limit: 2 })
+      )
+    ),
+    getPageByPath('/about'),
+    getSiteSettings(),
+    getPagesByCategory(),
+  ])
+  const featured = featuredAll.flat().slice(0, 8)
+  const blogPosts = (grouped.blog || []).slice(0, 3)
 
   return (
     <>
@@ -198,8 +220,47 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Industries we serve ─────────────────────────────────── */}
+      <section className="bg-gradient-to-br from-violet-50/40 via-white to-blue-50/40 py-20 sm:py-24 border-y border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-12 animate-fade-in-up">
+            <div className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
+              Industries we serve
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+              {APPLICATIONS.length} industries · 60+ markets · one export desk.
+            </h2>
+            <p className="text-lg text-slate-600">
+              From food processing to chlor-alkali to road de-icing — pick your
+              application to see the matching SKUs across our 7 product divisions.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3 stagger-children">
+            {APPLICATIONS.map(app => (
+              <Link key={app.id} href={app.path}
+                className="card-lift group rounded-2xl border border-slate-200 bg-white p-4 text-center">
+                <div className="w-12 h-12 mx-auto rounded-xl flex items-center justify-center text-2xl mb-2.5 bg-gradient-to-br from-violet-100 to-blue-100">
+                  {app.icon}
+                </div>
+                <h3 className="font-bold text-slate-900 group-hover:text-[#1d5fa1] transition-colors text-xs leading-tight">
+                  {app.label}
+                </h3>
+              </Link>
+            ))}
+          </div>
+
+          <div className="text-center mt-8">
+            <Link href="/applications"
+              className="inline-flex items-center gap-1.5 text-sm font-bold text-[#1d5fa1] hover:underline">
+              All {APPLICATIONS.length} applications →
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Why us ────────────────────────────────────────────────── */}
-      <section className="bg-[#f8fafc] py-20 sm:py-24 border-y border-slate-200">
+      <section className="bg-[#f8fafc] py-20 sm:py-24 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12 animate-fade-in-up">
             <div className="inline-block bg-orange-50 text-[#FF6321] text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
@@ -216,6 +277,33 @@ export default async function HomePage() {
                 <div className="text-4xl mb-4">{card.icon}</div>
                 <h3 className="font-bold text-slate-900 text-lg mb-2">{card.title}</h3>
                 <p className="text-sm text-slate-600 leading-relaxed">{card.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Certifications & standards trust strip ──────────────── */}
+      <section className="bg-white py-16 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10 animate-fade-in-up">
+            <div className="inline-block bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
+              Standards & Certifications
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
+              Per-shipment paperwork ready for the world's tender standards.
+            </h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">
+              Every order ships with the certificates your destination market requires —
+              from food-safety to drinking-water to drilling-mud spec.
+            </p>
+          </div>
+          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3 stagger-children">
+            {TRUST_CERTS.map(c => (
+              <div key={c.name}
+                className="card-lift bg-gradient-to-br from-white to-slate-50 border border-slate-200 rounded-xl px-4 py-4 text-center">
+                <div className="text-sm font-bold text-slate-900 leading-tight">{c.name}</div>
+                <div className="text-[10px] text-slate-500 uppercase tracking-wider mt-1">{c.hint}</div>
               </div>
             ))}
           </div>
@@ -317,6 +405,60 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Latest insights / blog teaser ─────────────────────────── */}
+      {blogPosts.length > 0 && (
+        <section className="bg-gradient-to-br from-slate-50 to-blue-50/30 py-20 sm:py-24 border-y border-slate-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-end justify-between mb-10 flex-wrap gap-4 animate-fade-in-up">
+              <div>
+                <div className="inline-block bg-rose-50 text-rose-700 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
+                  Latest insights
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                  News, market commentary & company updates.
+                </h2>
+              </div>
+              <Link href="/blog"
+                className="text-sm font-bold text-[#1d5fa1] hover:underline">
+                Read all insights →
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 stagger-children">
+              {blogPosts.map((post, i) => (
+                <Link key={post.id} href={post.path}
+                  className="card-lift group rounded-2xl border border-slate-200 bg-white overflow-hidden">
+                  <div className="aspect-[16/9] overflow-hidden bg-gradient-to-br from-rose-100 to-orange-100 relative">
+                    {post.hero_photo_url ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img src={post.hero_photo_url} alt={post.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <span className="text-7xl opacity-30">📝</span>
+                      </div>
+                    )}
+                    <div className="absolute top-3 left-3 bg-white/95 backdrop-blur text-rose-700 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm">
+                      📝 Article
+                    </div>
+                  </div>
+                  <div className="p-5">
+                    <h3 className="text-base sm:text-lg font-bold text-slate-900 line-clamp-2 group-hover:text-[#1d5fa1] transition-colors leading-tight">
+                      {post.title}
+                    </h3>
+                    {post.description && (
+                      <p className="text-sm text-slate-500 mt-2 line-clamp-3 leading-relaxed">{post.description}</p>
+                    )}
+                    <div className="mt-3 inline-flex items-center text-xs font-bold text-[#1d5fa1] group-hover:gap-2 gap-1 transition-all">
+                      Read more <span>→</span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Bottom CTA ────────────────────────────────────────────── */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
