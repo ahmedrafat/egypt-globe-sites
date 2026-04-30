@@ -13,7 +13,7 @@ import Link from 'next/link'
 import MarkdownBody from './MarkdownBody'
 import { APPLICATIONS } from '../lib/corporatePages'
 
-export default function RichApplicationLanding({ page, application, products, siblingApps }) {
+export default function RichApplicationLanding({ page, application, products, siblingApps, visibility }) {
   // Aggregate certs across matched products
   const certs = new Set()
   for (const p of (products || [])) {

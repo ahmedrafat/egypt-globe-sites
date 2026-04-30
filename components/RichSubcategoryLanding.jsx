@@ -16,7 +16,7 @@ import { APPLICATIONS } from '../lib/corporatePages'
 
 const APP_BY_ID = Object.fromEntries(APPLICATIONS.map(a => [a.id, a]))
 
-export default function RichSubcategoryLanding({ page, division, skus, siblingSubcats }) {
+export default function RichSubcategoryLanding({ page, division, skus, siblingSubcats, visibility }) {
   // Aggregate apps + certifications across SKUs
   const appIds = new Set()
   const certs = new Set()
@@ -156,12 +156,11 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
                   {p.specs?.nacl_min && (
                     <div className="text-xs font-mono text-slate-500 mt-1.5">NaCl {p.specs.nacl_min}</div>
                   )}
-                  {p.price_indication && (
+                  {p.price_indication && visibility?.showPrices ? (
                     <p className="text-xs text-[#FF6321] font-semibold mt-1.5 line-clamp-1">{p.price_indication}</p>
-                  )}
-                  {p.certifications?.length > 0 && !p.price_indication && (
+                  ) : p.certifications?.length > 0 ? (
                     <div className="text-xs text-slate-500 mt-1.5 line-clamp-1">{p.certifications.slice(0, 3).join(' · ')}</div>
-                  )}
+                  ) : null}
                 </div>
               </Link>
             ))}

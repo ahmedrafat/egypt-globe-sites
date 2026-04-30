@@ -12,6 +12,7 @@
  */
 import Link from 'next/link'
 import { APPLICATIONS } from '../lib/corporatePages'
+import PriceDisplay from './PriceDisplay'
 
 const SPEC_LABELS = {
   // Salt
@@ -83,7 +84,7 @@ function prettyKey(k) {
   return SPEC_LABELS[k] || k.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
 }
 
-export default function ProductDetailBlock({ page, commodity }) {
+export default function ProductDetailBlock({ page, commodity, visibility }) {
   const specs = page.specs || {}
   const specEntries = Object.entries(specs).filter(([, v]) => v !== null && v !== '' && v !== undefined)
   const certifications = page.certifications || []
@@ -391,7 +392,7 @@ export default function ProductDetailBlock({ page, commodity }) {
                 {page.price_indication && (
                   <div className="col-span-2 pt-2 border-t border-orange-200">
                     <div className="text-slate-500 mb-0.5">Indicative Price</div>
-                    <div className="font-bold text-[#FF6321] text-sm">{page.price_indication}</div>
+                    <PriceDisplay price={page.price_indication} visibility={visibility} size="lg" placeholder="Sign in to see indicative price" />
                   </div>
                 )}
               </div>

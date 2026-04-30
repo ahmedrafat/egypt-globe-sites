@@ -23,6 +23,7 @@ import {
 import RichDivisionLanding from './RichDivisionLanding'
 import RichSubcategoryLanding from './RichSubcategoryLanding'
 import RichApplicationLanding from './RichApplicationLanding'
+import { getBuyerVisibility, filterPagesByVisibility, isPageVisible } from '../lib/supabaseServer'
 
 const PRODUCT_DIVISION_BY_PATH = Object.fromEntries(PRODUCT_DIVISIONS.map(d => [d.path, d]))
 
@@ -66,6 +67,13 @@ export default async function PageRenderer({ page }) {
   const related = await getRelatedPages(page, 4)
 
   const commodity = page.commodity_id ? await getCommodityById(page.commodity_id) : null
+  const visibility = await getBuyerVisibility()
+
+  // Approved buyers with scoped access who navigate to a SKU outside
+  // their scope see a soft access-denied panel instead of the page
+  if (page.commodity_id && !isPageVisible(page, visibility)) {
+    return <AccessRestricted page={page} visibility={visibility} />
+  }
 
   // Division landing — early-return with the Pelot-style rich layout
   if (isDivisionLanding && division) {
@@ -73,9 +81,10 @@ export default async function PageRenderer({ page }) {
       <RichDivisionLanding
         page={page}
         division={division}
-        subcategories={divisionSubcats}
-        featured={divisionSkus}
-        allDivisionPages={divisionPages}
+        subcategories={filterPagesByVisibility(divisionSubcats, visibility)}
+        featured={filterPagesByVisibility(divisionSkus, visibility)}
+        allDivisionPages={filterPagesByVisibility(divisionPages, visibility)}
+        visibility={visibility}
       />
     )
   }
@@ -91,8 +100,9 @@ export default async function PageRenderer({ page }) {
         <RichSubcategoryLanding
           page={page}
           division={parentDivision}
-          skus={subcategoryProducts}
+          skus={filterPagesByVisibility(subcategoryProducts, visibility)}
           siblingSubcats={siblingSubcats}
+          visibility={visibility}
         />
       )
     }
@@ -105,8 +115,9 @@ export default async function PageRenderer({ page }) {
       <RichApplicationLanding
         page={page}
         application={application}
-        products={applicationProducts}
+        products={filterPagesByVisibility(applicationProducts, visibility)}
         siblingApps={siblingApps}
+        visibility={visibility}
       />
     )
   }
@@ -248,7 +259,7 @@ export default async function PageRenderer({ page }) {
       )}
 
       {/* Rich product detail (only mounts when row has fields populated) */}
-      <ProductDetailBlock page={page} commodity={commodity} />
+      <ProductDetailBlock page={page} commodity={commodity} visibility={visibility} />
 
       {/* Products hub — always show every division */}
       {isProductsHub && (
@@ -379,12 +390,11 @@ export default async function PageRenderer({ page }) {
                   <h3 className="text-sm font-bold text-slate-900 line-clamp-2 group-hover:text-[#1d5fa1] transition-colors">
                     {p.title}
                   </h3>
-                  {p.price_indication && (
+                  {p.price_indication && visibility.showPrices ? (
                     <p className="text-xs text-[#FF6321] font-semibold mt-1.5 line-clamp-1">{p.price_indication}</p>
-                  )}
-                  {p.description && !p.price_indication && (
+                  ) : p.description ? (
                     <p className="text-xs text-slate-500 mt-1 line-clamp-2">{p.description}</p>
-                  )}
+                  ) : null}
                 </div>
               </Link>
             ))}
@@ -510,6 +520,37 @@ export default async function PageRenderer({ page }) {
           </div>
         </section>
       )}
+    </article>
+  )
+}
+
+/* Buyer-scope guard — shown when an authenticated buyer hits a page
+   outside their visible_paths/visible_categories scope. Anon users
+   never hit this branch (they have visibleAll=true). */
+function AccessRestricted({ page, visibility }) {
+  return (
+    <article>
+      <section className="bg-gradient-to-br from-slate-50 via-white to-blue-50/50 min-h-[60vh] flex items-center">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+          <div className="text-5xl mb-4">🔒</div>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3">{page.title}</h1>
+          <p className="text-slate-600 mb-8 leading-relaxed">
+            This product is outside the catalogue scope assigned to your buyer
+            profile. If you'd like access, contact our export desk and we'll
+            review your sourcing requirements.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <a href="mailto:export@egyptglobe.com?subject=Catalogue%20access%20request"
+              className="inline-flex items-center gap-2 bg-[#1d5fa1] hover:bg-[#14467a] text-white font-bold px-6 py-3 rounded-xl shadow-md transition-all">
+              ✉ Request access
+            </a>
+            <Link href="/buyer"
+              className="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-slate-900 font-bold border border-slate-200 px-6 py-3 rounded-xl transition-all">
+              ← Back to your dashboard
+            </Link>
+          </div>
+        </div>
+      </section>
     </article>
   )
 }

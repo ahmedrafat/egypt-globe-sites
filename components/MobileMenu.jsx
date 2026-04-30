@@ -12,7 +12,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
-export default function MobileMenu({ productDivisions, serviceDivisions, aboutPages, settings }) {
+export default function MobileMenu({ productDivisions, serviceDivisions, aboutPages, settings, visibility }) {
   const [open, setOpen] = useState(false)
   const [section, setSection] = useState(null) // 'products' | 'services' | 'about' | null
 
@@ -143,6 +143,15 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
           <Link href="/contact" onClick={close} className={topLinkCls}>
             <span className="text-xl mr-3" aria-hidden="true">📞</span> Contact
           </Link>
+          {visibility?.authenticated ? (
+            <Link href="/buyer" onClick={close} className={topLinkCls + ' bg-emerald-50/40'}>
+              <span className="text-xl mr-3" aria-hidden="true">👤</span> My buyer catalogue
+            </Link>
+          ) : (
+            <Link href="/login" onClick={close} className={topLinkCls + ' bg-blue-50/40'}>
+              <span className="text-xl mr-3" aria-hidden="true">🔒</span> Sign in (see prices)
+            </Link>
+          )}
         </nav>
 
         {/* Drawer footer — sticky CTA + contact */}

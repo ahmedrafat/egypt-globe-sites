@@ -24,7 +24,7 @@ const STAT_LABELS = {
   markets: '60+',
 }
 
-export default function RichDivisionLanding({ page, division, subcategories, featured, allDivisionPages }) {
+export default function RichDivisionLanding({ page, division, subcategories, featured, allDivisionPages, visibility }) {
   // Collect unique applications across the division's SKUs
   const appIds = new Set()
   for (const p of (allDivisionPages || [])) {
@@ -271,7 +271,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
                   <h3 className="text-sm font-bold text-slate-900 line-clamp-2 group-hover:text-[#1d5fa1] transition-colors min-h-[2.5em]">
                     {p.title}
                   </h3>
-                  {p.price_indication && (
+                  {p.price_indication && visibility?.showPrices && (
                     <p className="text-xs text-[#FF6321] font-semibold mt-1.5 line-clamp-1">{p.price_indication}</p>
                   )}
                 </div>

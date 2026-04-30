@@ -15,10 +15,14 @@ import {
   COMPANY_INFO_DEFAULT,
   getPagesByCategory,
 } from '../lib/corporatePages'
+import { getBuyerVisibility } from '../lib/supabaseServer'
 
 export default async function SiteHeader({ settings }) {
   const s = settings || COMPANY_INFO_DEFAULT
-  const grouped = await getPagesByCategory()
+  const [grouped, visibility] = await Promise.all([
+    getPagesByCategory(),
+    getBuyerVisibility(),
+  ])
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/85 backdrop-blur-md">
@@ -160,6 +164,21 @@ export default async function SiteHeader({ settings }) {
           </nav>
 
           <div className="flex items-center gap-2">
+            {/* Buyer auth link */}
+            {visibility.authenticated ? (
+              <Link href="/buyer"
+                className="hidden md:flex items-center gap-1.5 text-sm font-semibold text-slate-700 hover:text-[#1d5fa1] px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors">
+                <span className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-bold">
+                  {(visibility.contactName || visibility.email || '?').charAt(0).toUpperCase()}
+                </span>
+                <span className="hidden lg:inline">My catalogue</span>
+              </Link>
+            ) : (
+              <Link href="/login"
+                className="hidden md:flex items-center gap-1.5 text-sm font-semibold text-slate-700 hover:text-[#1d5fa1] px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors">
+                🔒 <span className="hidden lg:inline">Sign in</span>
+              </Link>
+            )}
             <Link href="/rfq"
               className="hidden sm:flex items-center gap-1.5 text-sm font-bold text-white bg-[#FF6321] hover:bg-[#e0541b] px-4 py-2 rounded-lg shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg">
               📋 Get a Quote
@@ -170,6 +189,7 @@ export default async function SiteHeader({ settings }) {
               serviceDivisions={SERVICE_DIVISIONS}
               aboutPages={grouped.about || []}
               settings={s}
+              visibility={visibility}
             />
           </div>
         </div>
