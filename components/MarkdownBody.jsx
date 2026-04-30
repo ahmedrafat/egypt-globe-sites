@@ -1,17 +1,27 @@
 /**
  * MarkdownBody — rich-prose markdown renderer.
  *
- * Renders headings with gradient accent bars, brand-blue bullet markers,
- * styled tables, blockquotes, code chips, and proper paragraph rhythm.
- * Server-side, zero client JS, supports the basics admins use.
- *
- * Drop 103 — full visual revolution from plain prose to proper editorial layout.
+ * Now exports both a default React component AND a `parseMarkdown` helper
+ * so the new RichPageBody can grab heading metadata for a sticky TOC.
  */
+
 function escapeHtml(s) {
   return String(s)
     .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;')
+}
+
+function slugify(s) {
+  return String(s)
+    .toLowerCase()
+    .replace(/<[^>]+>/g, '')
+    .replace(/&[a-z]+;/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 60) || 'section'
 }
 
 function renderInline(text) {
@@ -24,10 +34,16 @@ function renderInline(text) {
   return out
 }
 
-export default function MarkdownBody({ content }) {
-  if (!content?.trim()) return null
+/**
+ * Parse markdown → { html, headings, wordCount }.
+ * Headings is an array of { id, level, text } for TOC.
+ * Word count is a rough text-only word total for reading-time estimation.
+ */
+export function parseMarkdown(content) {
+  if (!content?.trim()) return { html: '', headings: [], wordCount: 0 }
   const lines = content.split('\n')
   const blocks = []
+  const headings = []
   let buffer = []
   let inList = false
   let inOrderedList = false
@@ -35,10 +51,31 @@ export default function MarkdownBody({ content }) {
   let tableRows = []
   let inBlockquote = false
   let blockquoteLines = []
+  let h2Number = 0
+  let firstParagraphRendered = false
+  let wordCount = 0
+
+  const usedIds = new Set()
+  function uniqueId(base) {
+    let id = base; let n = 2
+    while (usedIds.has(id)) id = `${base}-${n++}`
+    usedIds.add(id); return id
+  }
+
+  function countWords(text) {
+    wordCount += String(text).trim().split(/\s+/).filter(Boolean).length
+  }
 
   function flushParagraph() {
     if (buffer.length) {
-      blocks.push(`<p class="mb-5 leading-[1.8] text-slate-700 text-[1.05rem]">${buffer.map(renderInline).join('<br/>')}</p>`)
+      // First paragraph gets a drop-cap treatment
+      const isFirst = !firstParagraphRendered
+      firstParagraphRendered = true
+      const cls = isFirst
+        ? 'mb-6 leading-[1.85] text-slate-700 text-[1.08rem] first-paragraph'
+        : 'mb-5 leading-[1.8] text-slate-700 text-[1.05rem]'
+      buffer.forEach(countWords)
+      blocks.push(`<p class="${cls}">${buffer.map(renderInline).join('<br/>')}</p>`)
       buffer = []
     }
   }
@@ -49,19 +86,20 @@ export default function MarkdownBody({ content }) {
   function flushTable() {
     if (!inTable) return
     if (tableRows.length === 0) { inTable = false; return }
-    let html = '<div class="my-6 overflow-x-auto rounded-xl border border-slate-200 shadow-sm">'
+    let html = '<div class="my-8 overflow-x-auto rounded-2xl border border-slate-200 shadow-sm bg-white">'
     html += '<table class="w-full text-sm">'
     const [header, ...rest] = tableRows
     if (header) {
       html += '<thead class="bg-gradient-to-r from-blue-50 to-slate-50 border-b border-slate-200">'
-      html += '<tr>' + header.map(c => `<th class="px-4 py-3 text-left font-bold text-slate-900 text-xs uppercase tracking-wider">${renderInline(c)}</th>`).join('') + '</tr>'
+      html += '<tr>' + header.map(c => `<th class="px-5 py-3 text-left font-bold text-slate-900 text-xs uppercase tracking-wider">${renderInline(c)}</th>`).join('') + '</tr>'
       html += '</thead>'
     }
     if (rest.length) {
       html += '<tbody class="divide-y divide-slate-100">'
       for (const row of rest) {
+        row.forEach(countWords)
         html += '<tr class="hover:bg-slate-50/60 transition-colors">' +
-          row.map(c => `<td class="px-4 py-3 text-slate-700 align-top">${renderInline(c)}</td>`).join('') + '</tr>'
+          row.map(c => `<td class="px-5 py-3 text-slate-700 align-top">${renderInline(c)}</td>`).join('') + '</tr>'
       }
       html += '</tbody>'
     }
@@ -72,7 +110,13 @@ export default function MarkdownBody({ content }) {
   }
   function flushBlockquote() {
     if (!inBlockquote) return
-    blocks.push(`<blockquote class="my-6 border-l-4 border-[#FF6321] bg-orange-50/50 pl-5 pr-4 py-4 rounded-r-xl text-slate-700 italic leading-relaxed text-[1.05rem]">${blockquoteLines.map(renderInline).join(' ')}</blockquote>`)
+    blockquoteLines.forEach(countWords)
+    blocks.push(`<figure class="my-10">
+      <blockquote class="relative border-l-4 border-[#FF6321] bg-gradient-to-br from-orange-50 via-amber-50/40 to-white pl-7 pr-6 py-6 rounded-r-2xl text-slate-800 italic leading-relaxed text-[1.15rem] shadow-sm">
+        <span aria-hidden="true" class="absolute -top-3 left-3 text-5xl text-[#FF6321]/30 font-serif select-none">"</span>
+        ${blockquoteLines.map(renderInline).join(' ')}
+      </blockquote>
+    </figure>`)
     inBlockquote = false
     blockquoteLines = []
   }
@@ -86,17 +130,12 @@ export default function MarkdownBody({ content }) {
   for (const raw of lines) {
     const line = raw.trimEnd()
 
-    // Empty line — break paragraphs / lists / blockquotes
-    if (!line) {
-      flushAll()
-      continue
-    }
+    if (!line) { flushAll(); continue }
 
     // Markdown table row: starts and ends with |
     if (line.startsWith('|') && line.endsWith('|')) {
       flushParagraph(); flushList(); flushBlockquote()
       const cells = line.slice(1, -1).split('|').map(s => s.trim())
-      // Skip the alignment row (---|---)
       if (cells.every(c => /^:?-+:?$/.test(c))) continue
       if (!inTable) { inTable = true; tableRows = [] }
       tableRows.push(cells)
@@ -104,7 +143,7 @@ export default function MarkdownBody({ content }) {
     }
     if (inTable) flushTable()
 
-    // Blockquote: > text
+    // Blockquote
     if (line.startsWith('> ')) {
       flushParagraph(); flushList()
       if (!inBlockquote) { inBlockquote = true; blockquoteLines = [] }
@@ -113,60 +152,84 @@ export default function MarkdownBody({ content }) {
     }
     if (inBlockquote) flushBlockquote()
 
-    // Horizontal rule
+    // Horizontal rule — fancy gradient
     if (/^---+$/.test(line)) {
       flushAll()
-      blocks.push('<hr class="my-10 border-0 h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent"/>')
+      blocks.push('<div class="my-12 flex items-center gap-3" aria-hidden="true"><span class="flex-1 h-px bg-gradient-to-r from-transparent to-slate-300"></span><span class="text-slate-400 text-xs">◆</span><span class="flex-1 h-px bg-gradient-to-l from-transparent to-slate-300"></span></div>')
       continue
     }
 
     // Headings
     if (line.startsWith('### ')) {
       flushAll()
-      blocks.push(`<h3 class="text-xl sm:text-2xl font-bold mt-10 mb-4 text-slate-900 tracking-tight relative pl-4 before:content-[''] before:absolute before:left-0 before:top-2 before:bottom-2 before:w-1 before:bg-gradient-to-b before:from-[#1d5fa1] before:to-[#FF6321] before:rounded-full">${renderInline(line.slice(4))}</h3>`)
+      const text = line.slice(4)
+      const id = uniqueId(slugify(text))
+      countWords(text)
+      headings.push({ id, level: 3, text: text.replace(/[*`]/g, '') })
+      blocks.push(`<h3 id="${id}" class="text-xl sm:text-2xl font-bold mt-12 mb-4 text-slate-900 tracking-tight relative pl-5 before:content-[''] before:absolute before:left-0 before:top-2.5 before:bottom-2.5 before:w-1.5 before:bg-gradient-to-b before:from-[#1d5fa1] before:to-[#FF6321] before:rounded-full scroll-mt-28">${renderInline(text)}</h3>`)
       continue
     }
     if (line.startsWith('## ')) {
       flushAll()
-      blocks.push(`<h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold mt-14 mb-6 text-slate-900 tracking-tight relative pb-3 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-16 after:h-1 after:rounded-full after:bg-gradient-to-r after:from-[#1d5fa1] after:to-[#FF6321]">${renderInline(line.slice(3))}</h2>`)
+      const text = line.slice(3)
+      const id = uniqueId(slugify(text))
+      h2Number++
+      countWords(text)
+      headings.push({ id, level: 2, text: text.replace(/[*`]/g, '') })
+      // Numbered section badge + gradient underline
+      blocks.push(`<div class="mt-16 mb-8 scroll-mt-28" id="${id}">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-[#1d5fa1] to-[#14467a] text-white text-sm font-bold shadow-md shadow-blue-200/50">${String(h2Number).padStart(2, '0')}</span>
+          <span class="h-px flex-1 bg-gradient-to-r from-slate-200 via-slate-200 to-transparent"></span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight relative pb-3 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-20 after:h-1 after:rounded-full after:bg-gradient-to-r after:from-[#1d5fa1] after:to-[#FF6321]">${renderInline(text)}</h2>
+      </div>`)
+      // Reset first-paragraph drop-cap so it's just on the very first ¶ of the doc
       continue
     }
     if (line.startsWith('# ')) {
       flushAll()
-      blocks.push(`<h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold mt-12 mb-6 text-slate-900 tracking-tight">${renderInline(line.slice(2))}</h1>`)
+      const text = line.slice(2)
+      const id = uniqueId(slugify(text))
+      countWords(text)
+      headings.push({ id, level: 1, text: text.replace(/[*`]/g, '') })
+      blocks.push(`<h1 id="${id}" class="text-3xl sm:text-4xl lg:text-5xl font-extrabold mt-12 mb-6 text-slate-900 tracking-tight scroll-mt-28">${renderInline(text)}</h1>`)
       continue
     }
 
-    // Ordered list: 1. text
+    // Ordered list
     const olMatch = line.match(/^(\d+)\.\s+(.*)$/)
     if (olMatch) {
       flushParagraph(); flushTable(); flushBlockquote()
       if (inList) { blocks.push('</ul>'); inList = false }
       if (!inOrderedList) {
-        blocks.push('<ol class="my-5 space-y-2.5 text-slate-700 leading-relaxed counter-reset-[step] [list-style:none] pl-0">')
+        blocks.push('<ol class="my-6 space-y-3 text-slate-700 leading-relaxed [list-style:none] pl-0">')
         inOrderedList = true
       }
+      countWords(olMatch[2])
       blocks.push(
-        `<li class="relative pl-12 text-[1.05rem]">
-          <span class="absolute left-0 top-0 w-9 h-9 rounded-xl bg-gradient-to-br from-[#1d5fa1] to-[#14467a] text-white font-bold text-sm flex items-center justify-center shadow-md shadow-blue-200/50">${olMatch[1]}</span>
-          ${renderInline(olMatch[2])}
+        `<li class="relative pl-14 text-[1.05rem] py-0.5">
+          <span class="absolute left-0 top-0 w-10 h-10 rounded-xl bg-gradient-to-br from-[#1d5fa1] to-[#14467a] text-white font-bold text-sm flex items-center justify-center shadow-md shadow-blue-200/50">${olMatch[1]}</span>
+          <span class="block pt-2">${renderInline(olMatch[2])}</span>
         </li>`
       )
       continue
     }
 
-    // Unordered list: - text or * text
+    // Unordered list
     if (line.startsWith('- ') || line.startsWith('* ')) {
       flushParagraph(); flushTable(); flushBlockquote()
       if (inOrderedList) { blocks.push('</ol>'); inOrderedList = false }
       if (!inList) {
-        blocks.push('<ul class="my-5 space-y-2.5 text-slate-700 leading-relaxed [list-style:none] pl-0">')
+        blocks.push('<ul class="my-6 space-y-2.5 text-slate-700 leading-relaxed [list-style:none] pl-0">')
         inList = true
       }
+      const text = line.slice(2)
+      countWords(text)
       blocks.push(
         `<li class="relative pl-7 text-[1.05rem]">
-          <span class="absolute left-0 top-2.5 w-2 h-2 rounded-full bg-gradient-to-br from-[#1d5fa1] to-[#FF6321] shadow-sm"></span>
-          ${renderInline(line.slice(2))}
+          <span aria-hidden="true" class="absolute left-0 top-[0.7em] w-2.5 h-2.5 rounded-full bg-gradient-to-br from-[#1d5fa1] to-[#FF6321] shadow-sm"></span>
+          ${renderInline(text)}
         </li>`
       )
       continue
@@ -177,7 +240,14 @@ export default function MarkdownBody({ content }) {
   }
   flushAll()
 
+  return { html: blocks.join('\n'), headings, wordCount }
+}
+
+export default function MarkdownBody({ content }) {
+  const { html } = parseMarkdown(content)
+  if (!html) return null
   return (
-    <div className="prose-egg max-w-none [&_a]:break-words" dangerouslySetInnerHTML={{ __html: blocks.join('\n') }} />
+    <div className="prose-egg max-w-none [&_a]:break-words [&_.first-paragraph::first-letter]:float-left [&_.first-paragraph::first-letter]:text-[3.5rem] [&_.first-paragraph::first-letter]:leading-[0.9] [&_.first-paragraph::first-letter]:font-extrabold [&_.first-paragraph::first-letter]:text-[#1d5fa1] [&_.first-paragraph::first-letter]:mr-2 [&_.first-paragraph::first-letter]:mt-1 [&_.first-paragraph::first-letter]:font-serif"
+      dangerouslySetInnerHTML={{ __html: html }} />
   )
 }

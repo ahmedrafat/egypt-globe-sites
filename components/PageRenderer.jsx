@@ -7,6 +7,7 @@
  */
 import Link from 'next/link'
 import MarkdownBody from './MarkdownBody'
+import RichPageBody from './RichPageBody'
 import ProductDetailBlock from './ProductDetailBlock'
 import {
   getRelatedPages,
@@ -248,13 +249,10 @@ export default async function PageRenderer({ page }) {
         </div>
       </section>
 
-      {/* Body */}
+      {/* Body — magazine-style with TOC sidebar */}
       {page.body_markdown && (
-        <section className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-reveal">
-          {/* Decorative side accent (desktop) */}
-          <div aria-hidden="true"
-            className="hidden lg:block absolute -left-12 top-20 w-1 h-40 rounded-full bg-gradient-to-b from-[#1d5fa1] via-[#FF6321] to-transparent opacity-30" />
-          <MarkdownBody content={page.body_markdown} />
+        <section id="top" className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-reveal">
+          <RichPageBody content={page.body_markdown} title={page.title} />
         </section>
       )}
 

@@ -10,7 +10,7 @@
  *   6. Bottom CTA
  */
 import Link from 'next/link'
-import MarkdownBody from './MarkdownBody'
+import RichPageBody from './RichPageBody'
 import { APPLICATIONS } from '../lib/corporatePages'
 
 export default function RichApplicationLanding({ page, application, products, siblingApps, visibility }) {
@@ -99,10 +99,8 @@ export default function RichApplicationLanding({ page, application, products, si
 
       {/* Industry overview body */}
       {page.body_markdown && (
-        <section className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-reveal">
-          <div aria-hidden="true"
-            className="hidden lg:block absolute -left-12 top-20 w-1 h-40 rounded-full bg-gradient-to-b from-violet-600 via-[#FF6321] to-transparent opacity-40" />
-          <MarkdownBody content={page.body_markdown} />
+        <section id="top" className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-reveal">
+          <RichPageBody content={page.body_markdown} title={page.title} />
         </section>
       )}
 
