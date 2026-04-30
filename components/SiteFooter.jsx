@@ -8,7 +8,7 @@
  */
 import Link from 'next/link'
 import Logo from './Logo'
-import { PRODUCT_DIVISIONS, SERVICE_DIVISIONS, COMPANY_INFO_DEFAULT } from '../lib/corporatePages'
+import { PRODUCT_DIVISIONS, SERVICE_DIVISIONS, COMPANY_INFO_DEFAULT, LOGISTICS_PORTAL_URL } from '../lib/corporatePages'
 
 export default function SiteFooter({ settings }) {
   const s = settings || COMPANY_INFO_DEFAULT
@@ -77,6 +77,13 @@ export default function SiteFooter({ settings }) {
                 <Link href="/services" className="text-[#FF6321] font-semibold hover:underline text-xs">
                   All services →
                 </Link>
+              </li>
+              <li className="pt-2 border-t border-white/10">
+                <a href={LOGISTICS_PORTAL_URL} target="_blank" rel="noopener noreferrer"
+                  className="text-slate-400 hover:text-white text-xs flex items-center gap-1.5">
+                  ⚓ Provider portal <span aria-hidden="true">↗</span>
+                </a>
+                <span className="text-[10px] text-slate-600 block mt-0.5">For freight carriers</span>
               </li>
             </ul>
           </div>
