@@ -197,19 +197,15 @@ body {
 }
 .animate-drift { animation: drift 8s ease-in-out infinite; }
 
-/* Reveal-on-scroll: only HIDE if JS is loaded (the ScrollRevealInit
-   client island adds .js-enabled to <html> on mount). Without JS we
-   show the content immediately so SSR / first-paint never looks blank. */
-.js-enabled .scroll-reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+/* Section reveal — pure CSS animation, NO JS gating.
+   Sections animate on first paint via fadeInUp; content is never
+   hidden waiting for JS hydration (this caused the "need to refresh"
+   bug pre-Drop-110). The .in-view class is kept as a no-op for
+   backwards compat with any markup that still references it. */
+.scroll-reveal {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
-.scroll-reveal.in-view {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-}
+.scroll-reveal.in-view { /* no-op */ }
 
 /* Decorative section separators */
 .section-divider-wave {
