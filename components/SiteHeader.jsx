@@ -153,9 +153,17 @@ export default async function SiteHeader({ settings }) {
               </div>
             )}
 
+            <Link href="/applications"
+              className="px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:text-[#1d5fa1] hover:bg-blue-50 transition-colors">
+              Applications
+            </Link>
             <Link href="/global-presence"
               className="px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:text-[#1d5fa1] hover:bg-blue-50 transition-colors">
-              Global Presence
+              Global
+            </Link>
+            <Link href="/blog"
+              className="px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:text-[#1d5fa1] hover:bg-blue-50 transition-colors">
+              News
             </Link>
             <Link href="/contact"
               className="px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:text-[#1d5fa1] hover:bg-blue-50 transition-colors">
