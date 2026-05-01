@@ -1,32 +1,86 @@
 /**
- * MarkdownBody — clean, business-prose markdown renderer.
+ * MarkdownBody — clean business prose with smart visual blocks.
  *
- * Designed for B2B export catalogue pages — readable, scannable,
- * professional. NO magazine-style ornaments (chapter numbers, drop
- * caps, giant pull-quote marks). Just clean typography with restrained
- * brand accents.
+ * Auto-detects content patterns and upgrades them to visual elements:
+ *   • Bold-prefix bullet lists  → icon feature card grid
+ *   • H2 / H3 headings          → keyword-derived inline icon
+ *   • Bullet items with bold    → mini cards
+ *   • Tables                    → clean dashboard styling
  *
- * Exports parseMarkdown(content) → { html, headings, wordCount } for
- * any consumer that wants the heading metadata.
+ * Exports parseMarkdown(content) → { html, headings, wordCount }.
  */
 
 function escapeHtml(s) {
-  return String(s)
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
+  return String(s).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
 }
 
 function slugify(s) {
-  return String(s)
-    .toLowerCase()
-    .replace(/<[^>]+>/g, '')
-    .replace(/&[a-z]+;/g, '')
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '')
-    .slice(0, 60) || 'section'
+  return String(s).toLowerCase()
+    .replace(/<[^>]+>/g, '').replace(/&[a-z]+;/g, '')
+    .replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-')
+    .replace(/-+/g, '-').replace(/^-|-$/g, '').slice(0, 60) || 'section'
+}
+
+/**
+ * Pick a representative icon (emoji) for a piece of text based on its
+ * keywords. Used for H2 section icons + feature-card icons. Order
+ * matters: more-specific patterns first.
+ */
+const ICON_RULES = [
+  // Egyptian ports & loading
+  [/\b(port|loading|damietta|alexandria|sokhna|safaga|al.?arish|el.?dekheila|bardawil)\b/i, '⚓'],
+  // Salt-source specifics
+  [/\bsea salt|sea.salt|solar.evaporated\b/i, '🌊'],
+  [/\brock salt|siwa|qattara|mining|mine\b/i, '⛏️'],
+  // Quality / certs / standards
+  [/\b(quality|qc|certif|standard|inspection|sgs|intertek|iso \d|en \d|astm|gmp|nsf|usp|reach)\b/i, '🏅'],
+  // Documentation / paperwork
+  [/\b(document|paperwork|invoice|bill of lading|coa|certificate of analysis|l\/c|letter of credit)\b/i, '📋'],
+  // Logistics / shipping / fleet
+  [/\b(logistics|freight|shipping|vessel|container|truck|rail|multimodal|stevedor)\b/i, '🚢'],
+  // Packing
+  [/\b(pack|bag|fibc|jumbo|pallet|container)\b/i, '📦'],
+  // People / team / careers
+  [/\b(team|career|hire|hr|people|staff)\b/i, '👥'],
+  // Office / location / address
+  [/\b(office|location|address|cairo|hq|headquarter|operations)\b/i, '🏢'],
+  // Contact / email / phone
+  [/\b(contact|email|phone|reach|get in touch)\b/i, '📞'],
+  // Mission / vision / values
+  [/\b(mission|vision|values?|principles?)\b/i, '🎯'],
+  // Markets / global / regions / countries
+  [/\b(market|global|destination|region|country|countries|export|presence|worldwide)\b/i, '🌍'],
+  // Industries / use cases / applications
+  [/\b(application|industr|use case|sector|use)\b/i, '🏭'],
+  // Time / lead time / SLA
+  [/\b(lead time|response|sla|24h|24 hour|turnaround|hour|day|week|month)\b/i, '⏱'],
+  // Money / price / pricing
+  [/\b(price|pricing|cost|fob|cif|cfr|currency|usd|eur|finance|trade finance|payment)\b/i, '💰'],
+  // History / years / since / founded
+  [/\b(history|founded|since|origin|story|journey)\b/i, '📜'],
+  // News / blog / insights
+  [/\b(news|blog|article|insight|press|media|update)\b/i, '📝'],
+  // Compliance / law / registry
+  [/\b(complian|registry|license|tax|legal|regulator)\b/i, '⚖️'],
+  // Agriculture / food
+  [/\b(agro|agricultur|food|crop|grain|harvest)\b/i, '🌾'],
+  // Chemicals
+  [/\b(chemical|acid|alkali|polymer|chlor)\b/i, '⚗️'],
+  // Construction
+  [/\b(construct|cement|concrete|aggregat|granit|marble)\b/i, '🏗'],
+  // Metals
+  [/\b(metal|aluminum|aluminium|copper|steel|zinc|lead|ferro)\b/i, '⚙️'],
+  // Fertilizer
+  [/\b(fertili|urea|nitrogen|phosphate|potash|npk|mop|tsp|dap)\b/i, '🌾'],
+  // Salt (generic)
+  [/\bsalt\b/i, '🧂'],
+  // Default
+  [/.*/, '✦'],
+]
+function keywordIcon(text) {
+  const t = String(text || '')
+  for (const [re, ico] of ICON_RULES) if (re.test(t)) return ico
+  return '✦'
 }
 
 function renderInline(text) {
@@ -39,12 +93,64 @@ function renderInline(text) {
   return out
 }
 
+/** Detect a "**Bold** sep rest" item; return parts when matched. */
+function parseBoldPrefixItem(line) {
+  // Matches: **Title** — rest, **Title**: rest, **Title** - rest, **Title** rest
+  const m = line.match(/^\*\*([^*]+)\*\*\s*(?:[—:\-–]\s*)?(.*)$/)
+  if (!m) return null
+  return { title: m[1].trim(), body: (m[2] || '').trim() }
+}
+
+/** Render a feature-card grid (used when a bullet list is all bold-prefix items). */
+function renderFeatureCardGrid(items) {
+  // Pick column count from item count: 2 → 2, 3-4 → 2 (sm) / N (lg), 5-6 → 3, 7+ → 3
+  const n = items.length
+  const lgCols = n === 2 ? 2 : n === 3 ? 3 : n === 4 ? 2 : n <= 6 ? 3 : n <= 9 ? 3 : 4
+  const smCols = n === 2 ? 2 : 2
+  let html = `<div class="my-7 grid grid-cols-1 sm:grid-cols-${smCols} lg:grid-cols-${lgCols} gap-4">`
+  for (const it of items) {
+    const ico = keywordIcon(it.title + ' ' + it.body)
+    html += `<div class="rounded-2xl border border-slate-200 bg-gradient-to-br from-white to-slate-50/50 p-5 hover:border-[#1d5fa1]/40 hover:shadow-sm transition-all">
+      <div class="flex items-start gap-3">
+        <div class="flex-shrink-0 w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center text-2xl">${ico}</div>
+        <div class="flex-1 min-w-0">
+          <div class="font-bold text-slate-900 text-[0.95rem] leading-tight">${escapeHtml(it.title)}</div>
+          ${it.body ? `<div class="text-sm text-slate-600 mt-1.5 leading-relaxed">${renderInline(it.body)}</div>` : ''}
+        </div>
+      </div>
+    </div>`
+  }
+  html += '</div>'
+  return html
+}
+
+/** Render a numeric stat strip when items match "**N(+|%)?** label" pattern. */
+function parseStatItem(line) {
+  const m = line.match(/^\*\*([\d.,]+\s*[%+]?)\*\*\s*(?:[—:\-–]\s*)?(.*)$/)
+  if (!m) return null
+  return { value: m[1].trim(), label: (m[2] || '').trim() }
+}
+function renderStatStrip(stats) {
+  const n = stats.length
+  const cols = n <= 4 ? n : 4
+  let html = `<div class="my-7 grid grid-cols-2 sm:grid-cols-${Math.min(cols, 4)} gap-3">`
+  for (const s of stats) {
+    html += `<div class="rounded-2xl bg-gradient-to-br from-blue-50 to-white border border-blue-100 px-5 py-5">
+      <div class="text-3xl sm:text-4xl font-extrabold text-[#1d5fa1] tracking-tight">${escapeHtml(s.value)}</div>
+      <div class="text-xs text-slate-600 mt-1">${escapeHtml(s.label)}</div>
+    </div>`
+  }
+  html += '</div>'
+  return html
+}
+
 export function parseMarkdown(content) {
   if (!content?.trim()) return { html: '', headings: [], wordCount: 0 }
   const lines = content.split('\n')
   const blocks = []
   const headings = []
   let buffer = []
+  let listItems = []          // collected items for the current list
   let inList = false
   let inOrderedList = false
   let inTable = false
@@ -59,7 +165,6 @@ export function parseMarkdown(content) {
     while (usedIds.has(id)) id = `${base}-${n++}`
     usedIds.add(id); return id
   }
-
   function countWords(text) {
     wordCount += String(text).trim().split(/\s+/).filter(Boolean).length
   }
@@ -71,14 +176,56 @@ export function parseMarkdown(content) {
       buffer = []
     }
   }
+
   function flushList() {
-    if (inList) { blocks.push('</ul>'); inList = false }
-    if (inOrderedList) { blocks.push('</ol>'); inOrderedList = false }
+    if (!inList && !inOrderedList) return
+    if (listItems.length === 0) {
+      inList = false; inOrderedList = false; return
+    }
+    // Smart-detect: are ALL items bold-prefix? → feature card grid.
+    if (inList) {
+      const stats = listItems.map(parseStatItem)
+      const allStats = stats.every(Boolean) && stats.length >= 2 && stats.length <= 8
+      if (allStats) {
+        stats.forEach(s => { countWords(s.value); countWords(s.label) })
+        blocks.push(renderStatStrip(stats))
+        listItems = []; inList = false; return
+      }
+      const features = listItems.map(parseBoldPrefixItem)
+      const allFeatures = features.every(Boolean) && features.length >= 2
+      if (allFeatures) {
+        features.forEach(f => { countWords(f.title); countWords(f.body) })
+        blocks.push(renderFeatureCardGrid(features))
+        listItems = []; inList = false; return
+      }
+      // Plain bullet list
+      let html = '<ul class="my-5 space-y-2 text-slate-700 leading-relaxed [list-style:none] pl-0">'
+      for (const it of listItems) {
+        countWords(it)
+        html += `<li class="relative pl-6 text-[1.0625rem]">
+          <span aria-hidden="true" class="absolute left-0 top-[0.7em] w-1.5 h-1.5 rounded-sm bg-[#1d5fa1] rotate-45"></span>
+          ${renderInline(it)}
+        </li>`
+      }
+      html += '</ul>'
+      blocks.push(html)
+      listItems = []; inList = false; return
+    }
+    // Ordered list — keep simple decimal styling
+    let html = '<ol class="my-5 space-y-2 text-slate-700 leading-relaxed list-decimal pl-6 marker:text-[#1d5fa1] marker:font-semibold">'
+    for (const it of listItems) {
+      countWords(it)
+      html += `<li class="text-[1.0625rem] pl-1">${renderInline(it)}</li>`
+    }
+    html += '</ol>'
+    blocks.push(html)
+    listItems = []; inOrderedList = false
   }
+
   function flushTable() {
     if (!inTable) return
     if (tableRows.length === 0) { inTable = false; return }
-    let html = '<div class="my-7 overflow-x-auto rounded-xl border border-slate-200 bg-white">'
+    let html = '<div class="my-7 overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">'
     html += '<table class="w-full text-sm">'
     const [header, ...rest] = tableRows
     if (header) {
@@ -97,21 +244,18 @@ export function parseMarkdown(content) {
     }
     html += '</table></div>'
     blocks.push(html)
-    inTable = false
-    tableRows = []
+    inTable = false; tableRows = []
   }
+
   function flushBlockquote() {
     if (!inBlockquote) return
     blockquoteLines.forEach(countWords)
     blocks.push(`<blockquote class="my-6 border-l-2 border-[#1d5fa1] bg-blue-50/40 pl-5 pr-4 py-3 rounded-r-md text-slate-700 leading-relaxed text-[1.0625rem]">${blockquoteLines.map(renderInline).join(' ')}</blockquote>`)
-    inBlockquote = false
-    blockquoteLines = []
+    inBlockquote = false; blockquoteLines = []
   }
+
   function flushAll() {
-    flushParagraph()
-    flushList()
-    flushTable()
-    flushBlockquote()
+    flushParagraph(); flushList(); flushTable(); flushBlockquote()
   }
 
   for (const raw of lines) {
@@ -138,30 +282,38 @@ export function parseMarkdown(content) {
     }
     if (inBlockquote) flushBlockquote()
 
-    // Horizontal rule — clean thin slate divider
+    // HR
     if (/^---+$/.test(line)) {
       flushAll()
       blocks.push('<hr class="my-10 border-0 h-px bg-slate-200" />')
       continue
     }
 
-    // Headings
+    // Headings — H2/H3 get a keyword-derived icon prefix
     if (line.startsWith('### ')) {
       flushAll()
       const text = line.slice(4)
       const id = uniqueId(slugify(text))
+      const ico = keywordIcon(text)
       countWords(text)
       headings.push({ id, level: 3, text: text.replace(/[*`]/g, '') })
-      blocks.push(`<h3 id="${id}" class="text-lg sm:text-xl font-bold mt-8 mb-3 text-slate-900 tracking-tight scroll-mt-28">${renderInline(text)}</h3>`)
+      blocks.push(`<h3 id="${id}" class="text-lg sm:text-xl font-bold mt-9 mb-3 text-slate-900 tracking-tight scroll-mt-28 flex items-center gap-2.5">
+        <span aria-hidden="true" class="text-xl opacity-80">${ico}</span>
+        <span>${renderInline(text)}</span>
+      </h3>`)
       continue
     }
     if (line.startsWith('## ')) {
       flushAll()
       const text = line.slice(3)
       const id = uniqueId(slugify(text))
+      const ico = keywordIcon(text)
       countWords(text)
       headings.push({ id, level: 2, text: text.replace(/[*`]/g, '') })
-      blocks.push(`<h2 id="${id}" class="text-xl sm:text-2xl lg:text-[1.625rem] font-bold mt-12 mb-4 text-slate-900 tracking-tight scroll-mt-28 relative pl-4 border-l-[3px] border-[#1d5fa1]">${renderInline(text)}</h2>`)
+      blocks.push(`<h2 id="${id}" class="text-xl sm:text-2xl lg:text-[1.625rem] font-bold mt-12 mb-5 text-slate-900 tracking-tight scroll-mt-28 flex items-center gap-3">
+        <span aria-hidden="true" class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-50 to-orange-50 border border-blue-100 text-2xl shadow-sm">${ico}</span>
+        <span class="flex-1">${renderInline(text)}</span>
+      </h2>`)
       continue
     }
     if (line.startsWith('# ')) {
@@ -174,36 +326,22 @@ export function parseMarkdown(content) {
       continue
     }
 
-    // Ordered list
+    // Ordered list line
     const olMatch = line.match(/^(\d+)\.\s+(.*)$/)
     if (olMatch) {
       flushParagraph(); flushTable(); flushBlockquote()
-      if (inList) { blocks.push('</ul>'); inList = false }
-      if (!inOrderedList) {
-        blocks.push('<ol class="my-5 space-y-2 text-slate-700 leading-relaxed list-decimal pl-6 marker:text-[#1d5fa1] marker:font-semibold">')
-        inOrderedList = true
-      }
-      countWords(olMatch[2])
-      blocks.push(`<li class="text-[1.0625rem] pl-1">${renderInline(olMatch[2])}</li>`)
+      if (inList) flushList() // close any unordered list
+      if (!inOrderedList) { inOrderedList = true; listItems = [] }
+      listItems.push(olMatch[2])
       continue
     }
 
-    // Unordered list
+    // Unordered list line
     if (line.startsWith('- ') || line.startsWith('* ')) {
       flushParagraph(); flushTable(); flushBlockquote()
-      if (inOrderedList) { blocks.push('</ol>'); inOrderedList = false }
-      if (!inList) {
-        blocks.push('<ul class="my-5 space-y-2 text-slate-700 leading-relaxed [list-style:none] pl-0">')
-        inList = true
-      }
-      const text = line.slice(2)
-      countWords(text)
-      blocks.push(
-        `<li class="relative pl-6 text-[1.0625rem]">
-          <span aria-hidden="true" class="absolute left-0 top-[0.7em] w-1.5 h-1.5 rounded-sm bg-[#1d5fa1] rotate-45"></span>
-          ${renderInline(text)}
-        </li>`
-      )
+      if (inOrderedList) flushList()
+      if (!inList) { inList = true; listItems = [] }
+      listItems.push(line.slice(2))
       continue
     }
 

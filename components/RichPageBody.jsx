@@ -10,7 +10,7 @@ import MarkdownBody from './MarkdownBody'
 export default function RichPageBody({ content }) {
   if (!content?.trim()) return null
   return (
-    <div className="max-w-3xl mx-auto">
+    <div className="max-w-4xl mx-auto">
       <MarkdownBody content={content} />
     </div>
   )
