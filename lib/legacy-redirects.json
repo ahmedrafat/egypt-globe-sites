@@ -1,0 +1,1182 @@
+[
+  {
+    "source": "/about/awards-certifications",
+    "destination": "/about/quality-compliance",
+    "permanent": true
+  },
+  {
+    "source": "/about/company-overview",
+    "destination": "/about",
+    "permanent": true
+  },
+  {
+    "source": "/about/operations-logistics",
+    "destination": "/services/logistics",
+    "permanent": true
+  },
+  {
+    "source": "/about/pelot-globe",
+    "destination": "/partners/pelot/globe",
+    "permanent": true
+  },
+  {
+    "source": "/about/pelot-group",
+    "destination": "/partners/pelot/globe",
+    "permanent": true
+  },
+  {
+    "source": "/about/pelot-slovenia",
+    "destination": "/partners/pelot/slovenia",
+    "permanent": true
+  },
+  {
+    "source": "/about/values",
+    "destination": "/about/mission-vision",
+    "permanent": true
+  },
+  {
+    "source": "/accessibility-statement",
+    "destination": "/about",
+    "permanent": true
+  },
+  {
+    "source": "/agriculture",
+    "destination": "/products/agro",
+    "permanent": true
+  },
+  {
+    "source": "/agro-products",
+    "destination": "/products/agro",
+    "permanent": true
+  },
+  {
+    "source": "/agro-products/edible-oils",
+    "destination": "/products/agro/edible-oils",
+    "permanent": true
+  },
+  {
+    "source": "/agro-products/fresh-fruits",
+    "destination": "/products/agro/fresh-produce",
+    "permanent": true
+  },
+  {
+    "source": "/agro-products/fresh-vegetables",
+    "destination": "/products/agro/fresh-produce",
+    "permanent": true
+  },
+  {
+    "source": "/agro-products/frozen-foods",
+    "destination": "/products/agro/processed-foods",
+    "permanent": true
+  },
+  {
+    "source": "/agro-products/grains-legumes",
+    "destination": "/products/agro/grains",
+    "permanent": true
+  },
+  {
+    "source": "/agro-products/honey-natural-products",
+    "destination": "/products/agro/processed-foods",
+    "permanent": true
+  },
+  {
+    "source": "/agro-products/juices-concentrates",
+    "destination": "/products/agro/processed-foods",
+    "permanent": true
+  },
+  {
+    "source": "/agro-products/processed-food-products",
+    "destination": "/products/agro/processed-foods",
+    "permanent": true
+  },
+  {
+    "source": "/all-products",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/blog/company-news",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/company-news/annual-report-growth-and-innovation-at-egypt-globe-group",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/company-news/awarded-for-excellence-in-sustainability-practices",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/company-news/egypt-globe-group-achieves-new-export-milestone",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/company-news/strategic-partnership-announced-with-leading-global-retailer",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/customer-stories",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/customer-stories/building-trust-a-long-term-partnership-with-a-global-retailer",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/customer-stories/client-testimonial-efficiency-in-logistics-and-delivery",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/customer-stories/egyptian-salt-in-the-global-market-success-stories",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/customer-stories/empowering-local-industries-customer-story-from-the-middle-east",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/customer-stories/how-our-salt-solutions-enhanced-product-quality",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/customer-stories/transforming-businesses-a-customer-success-story",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/industry-news-trends",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/industry-news-trends/forecasting-the-future-industry-trends-and-market-predictions",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/industry-news-trends/industrial-market-shifts-what-to-expect-in-2024",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/industry-news-trends/latest-trends-in-global-industrial-materials",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/industry-news-trends/trade-wars-and-their-impact-on-industrial-exports",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/innovation-technology",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/innovation-technology/blockchain-in-global-trade-enhancing-transparency",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/innovation-technology/how-robotics-is-transforming-packaging-solutions",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/innovation-technology/integrating-ai-in-salt-processing-operations",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/innovation-technology/leveraging-big-data-for-supply-chain-optimization",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/innovation-technology/the-role-of-iot-in-monitoring-production-efficiency",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/logistics-supply-chain",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/logistics-supply-chain/how-our-hub-enhances-global-trade-efficiency",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/logistics-supply-chain/innovative-warehousing-solutions-to-boost-efficiency",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/logistics-supply-chain/optimizing-global-supply-chains-for-industrial-success",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/logistics-supply-chain/streamlining-transportation-a-logistics-perspective",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/logistics-supply-chain/the-future-of-freight-digital-innovations-in-shipping",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/market-insights",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/market-insights/analyzing-global-trade-patterns-in-the-salt-industry",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/market-insights/economic-trends-affecting-industrial-production-in-2024",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/market-insights/emerging-markets-opportunities-in-africa-and-the-middle-east",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/market-insights/market-forecast-2024-trends-in-industrial-materials",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/market-insights/the-impact-of-geopolitical-shifts-on-material-exports",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/product-highlights",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/product-highlights/cutting-edge-gypsum-for-modern-construction",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/product-highlights/enhanced-clinker-building-a-stronger-future",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/product-highlights/innovative-calcium-chloride-breaking-new-ground",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/product-highlights/revolutionizing-industrial-urea-a-product-overview",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/product-highlights/spotlight-on-our-premium-food-salt",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/regulatory-updates",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/regulatory-updates/navigating-new-environmental-regulations-in-salt-production",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/regulatory-updates/new-global-trade-regulations-impacting-salt-exports",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/regulatory-updates/policy-changes-and-their-impact-on-global-logistics",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/regulatory-updates/regulatory-shifts-what-they-mean-for-industrial-materials",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/regulatory-updates/understanding-the-latest-compliance-standards-in-chemical-manufacturing",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/research-development",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/research-development/advanced-mineral-processing-for-enhanced-purity",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/research-development/cutting-edge-research-in-chemical-formulations",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/research-development/exploring-sustainable-practices-in-salt-production",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/research-development/innovating-salt-extraction-new-techniques-in-rd",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/research-development/the-future-of-industrial-materials-rd-insights",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/sustainability-csr",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/sustainability-csr/community-engagement-making-a-difference-locally",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/sustainability-csr/corporate-social-responsibility-our-green-initiatives",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/sustainability-csr/implementing-eco-friendly-packaging-solutions",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/sustainability-csr/our-commitment-to-reducing-carbon-footprint",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/sustainability-csr/sustainable-practices-in-salt-production",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/blog/yaaazzeedd",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/building-materials",
+    "destination": "/products/construction",
+    "permanent": true
+  },
+  {
+    "source": "/building-materials/cement",
+    "destination": "/products/construction",
+    "permanent": true
+  },
+  {
+    "source": "/building-materials/clinker",
+    "destination": "/products/construction",
+    "permanent": true
+  },
+  {
+    "source": "/building-materials/plaster-of-paris",
+    "destination": "/products/construction",
+    "permanent": true
+  },
+  {
+    "source": "/by-products-waste-management",
+    "destination": "/about/quality-compliance",
+    "permanent": true
+  },
+  {
+    "source": "/chemicals",
+    "destination": "/products/chemicals",
+    "permanent": true
+  },
+  {
+    "source": "/chemicals/food-grade-chemicals",
+    "destination": "/products/chemicals",
+    "permanent": true
+  },
+  {
+    "source": "/chemicals/industrial-chemicals",
+    "destination": "/products/chemicals/industrial-chemicals",
+    "permanent": true
+  },
+  {
+    "source": "/consumables",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/corn-exports",
+    "destination": "/products/agro/grains",
+    "permanent": true
+  },
+  {
+    "source": "/corporate-responsibility-and-amp-impact",
+    "destination": "/about/quality-compliance",
+    "permanent": true
+  },
+  {
+    "source": "/corporate-social-responsibility",
+    "destination": "/about/quality-compliance",
+    "permanent": true
+  },
+  {
+    "source": "/customer-success-stories",
+    "destination": "/case-studies",
+    "permanent": true
+  },
+  {
+    "source": "/fertilizers",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/fertilizers/dap",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/fertilizers/npk",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/fertilizers/triple-super-phosphate",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/fertilizers/urea",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/food",
+    "destination": "/products/agro",
+    "permanent": true
+  },
+  {
+    "source": "/home",
+    "destination": "/",
+    "permanent": true
+  },
+  {
+    "source": "/industries-overview",
+    "destination": "/applications",
+    "permanent": true
+  },
+  {
+    "source": "/investment-and-amp-trade-opportunities",
+    "destination": "/investors",
+    "permanent": true
+  },
+  {
+    "source": "/investor-relations",
+    "destination": "/investors",
+    "permanent": true
+  },
+  {
+    "source": "/legal/cookies",
+    "destination": "/",
+    "permanent": true
+  },
+  {
+    "source": "/legal/privacy",
+    "destination": "/",
+    "permanent": true
+  },
+  {
+    "source": "/legal/return-policy",
+    "destination": "/",
+    "permanent": true
+  },
+  {
+    "source": "/legal/terms",
+    "destination": "/",
+    "permanent": true
+  },
+  {
+    "source": "/logistics-and-export",
+    "destination": "/services/logistics",
+    "permanent": true
+  },
+  {
+    "source": "/logistics-services",
+    "destination": "/services/logistics",
+    "permanent": true
+  },
+  {
+    "source": "/machinery-equipment",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/minerals",
+    "destination": "/products/minerals",
+    "permanent": true
+  },
+  {
+    "source": "/minerals/gypsum",
+    "destination": "/products/minerals",
+    "permanent": true
+  },
+  {
+    "source": "/minerals/phosphate",
+    "destination": "/products/minerals",
+    "permanent": true
+  },
+  {
+    "source": "/minerals/silica",
+    "destination": "/products/minerals",
+    "permanent": true
+  },
+  {
+    "source": "/mining-and-extraction",
+    "destination": "/products/minerals",
+    "permanent": true
+  },
+  {
+    "source": "/orange-exports",
+    "destination": "/products/agro/fresh-produce",
+    "permanent": true
+  },
+  {
+    "source": "/partners",
+    "destination": "/",
+    "permanent": true
+  },
+  {
+    "source": "/potato-exports",
+    "destination": "/products/agro/fresh-produce",
+    "permanent": true
+  },
+  {
+    "source": "/privacy-policy",
+    "destination": "/cookies-policy",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/acids",
+    "destination": "/products/chemicals/solvents-and-acids",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/acids/acetic-acid-ch3cooh",
+    "destination": "/products/chemicals/solvents-and-acids",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/acids/hydrochloric-acid-hcl",
+    "destination": "/products/chemicals/solvents-and-acids",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/acids/nitric-acid-hno3",
+    "destination": "/products/chemicals/solvents-and-acids",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/acids/phosphoric-acid-h3po4",
+    "destination": "/products/chemicals/solvents-and-acids",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/acids/sulfuric-acid-h2so4",
+    "destination": "/products/chemicals/solvents-and-acids",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/alkalis-salts",
+    "destination": "/products/chemicals/industrial-chemicals",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/alkalis-salts/calcium-chloride-cacl2",
+    "destination": "/products/chemicals/industrial-chemicals",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/alkalis-salts/caustic-soda-naoh",
+    "destination": "/products/chemicals/industrial-chemicals",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/alkalis-salts/magnesium-chloride-mgcl2",
+    "destination": "/products/chemicals/industrial-chemicals",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/alkalis-salts/potassium-hydroxide-koh",
+    "destination": "/products/chemicals/industrial-chemicals",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/alkalis-salts/soda-ash-na2co3",
+    "destination": "/products/chemicals/industrial-chemicals",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/alkalis-salts/sodium-bicarbonate-nahco3",
+    "destination": "/products/chemicals/industrial-chemicals",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/solvents",
+    "destination": "/products/chemicals/solvents-and-acids",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/solvents/acetone",
+    "destination": "/products/chemicals/solvents-and-acids",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/solvents/isopropyl-alcohol-ipa",
+    "destination": "/products/chemicals/solvents-and-acids",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/solvents/methanol",
+    "destination": "/products/chemicals/solvents-and-acids",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/water-treatment",
+    "destination": "/products/chemicals/industrial-chemicals",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/water-treatment/aluminum-sulfate-alum",
+    "destination": "/products/chemicals/industrial-chemicals",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/water-treatment/ferric-chloride-fecl3",
+    "destination": "/products/chemicals/industrial-chemicals",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/water-treatment/pac-polyaluminum-chloride",
+    "destination": "/products/chemicals/industrial-chemicals",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/water-treatment/sodium-hypochlorite-naclo",
+    "destination": "/products/chemicals/industrial-chemicals",
+    "permanent": true
+  },
+  {
+    "source": "/products/chemicals/water-treatment/sodium-metabisulfite-smbs",
+    "destination": "/products/chemicals/industrial-chemicals",
+    "permanent": true
+  },
+  {
+    "source": "/products/construction/aggregates/crushed-stone",
+    "destination": "/products/construction/aggregates",
+    "permanent": true
+  },
+  {
+    "source": "/products/construction/aggregates/gravel",
+    "destination": "/products/construction/aggregates",
+    "permanent": true
+  },
+  {
+    "source": "/products/construction/aggregates/sub-base",
+    "destination": "/products/construction/aggregates",
+    "permanent": true
+  },
+  {
+    "source": "/products/construction/aggregates/washed-sand",
+    "destination": "/products/construction/aggregates",
+    "permanent": true
+  },
+  {
+    "source": "/products/construction/cement-clinker",
+    "destination": "/products/construction",
+    "permanent": true
+  },
+  {
+    "source": "/products/construction/cement-clinker/cement-cem-ii-a-l-42-5",
+    "destination": "/products/construction",
+    "permanent": true
+  },
+  {
+    "source": "/products/construction/cement-clinker/cement-cem-ii-b-l-32-5",
+    "destination": "/products/construction",
+    "permanent": true
+  },
+  {
+    "source": "/products/construction/cement-clinker/cement-masonry",
+    "destination": "/products/construction",
+    "permanent": true
+  },
+  {
+    "source": "/products/construction/cement-clinker/cement-opc-42-5",
+    "destination": "/products/construction",
+    "permanent": true
+  },
+  {
+    "source": "/products/construction/cement-clinker/cement-opc-52-5",
+    "destination": "/products/construction",
+    "permanent": true
+  },
+  {
+    "source": "/products/construction/cement-clinker/cement-ppc",
+    "destination": "/products/construction",
+    "permanent": true
+  },
+  {
+    "source": "/products/construction/cement-clinker/cement-src-42-5",
+    "destination": "/products/construction",
+    "permanent": true
+  },
+  {
+    "source": "/products/construction/cement-clinker/cement-src-52-5",
+    "destination": "/products/construction",
+    "permanent": true
+  },
+  {
+    "source": "/products/construction/gypsum-plaster",
+    "destination": "/products/construction",
+    "permanent": true
+  },
+  {
+    "source": "/products/construction/gypsum-plaster/gypsum-powder",
+    "destination": "/products/construction",
+    "permanent": true
+  },
+  {
+    "source": "/products/construction/gypsum-plaster/plaster-of-paris-pop",
+    "destination": "/products/construction",
+    "permanent": true
+  },
+  {
+    "source": "/products/construction/gypsum-plaster/ready-mix-plaster",
+    "destination": "/products/construction",
+    "permanent": true
+  },
+  {
+    "source": "/products/construction/limestone/construction-limestone",
+    "destination": "/products/construction/limestone",
+    "permanent": true
+  },
+  {
+    "source": "/products/construction/limestone/ground-limestone-filler",
+    "destination": "/products/construction/limestone",
+    "permanent": true
+  },
+  {
+    "source": "/products/edible-oils/canola-and-coconut-oil",
+    "destination": "/",
+    "permanent": true
+  },
+  {
+    "source": "/products/edible-oils/edible-oils-and-derivatives",
+    "destination": "/",
+    "permanent": true
+  },
+  {
+    "source": "/products/edible-oils/extra-virgin-olive-oil",
+    "destination": "/",
+    "permanent": true
+  },
+  {
+    "source": "/products/edible-oils/premium-palm-oil",
+    "destination": "/",
+    "permanent": true
+  },
+  {
+    "source": "/products/edible-oils/sunflower-and-soybean-oil",
+    "destination": "/",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/nitrogen",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/nitrogen/ammonium-nitrate-an",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/nitrogen/ammonium-sulfate-as",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/nitrogen/calcium-ammonium-nitrate-can",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/nitrogen/uan-32",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/nitrogen/urea-46-n",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/npk-blends",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/npk-blends/npk-10-26-26",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/npk-blends/npk-12-24-12",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/npk-blends/npk-15-15-15",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/npk-blends/npk-16-16-16",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/phosphates",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/phosphates/dap-18-46-0",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/phosphates/map-11-52-0",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/phosphates/mkp-0-52-34",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/phosphates/ssp-16-20-0",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/phosphates/tsp-46",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/potassium",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/potassium/k-mag-langbeinite",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/potassium/mop-kcl-60",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/potassium/nop-13-0-46",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/potassium/sop-50",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/fertilizers/soil-amendments",
+    "destination": "/products/fertilizers",
+    "permanent": true
+  },
+  {
+    "source": "/products/minerals/agricultural-gypsum",
+    "destination": "/products/minerals",
+    "permanent": true
+  },
+  {
+    "source": "/products/minerals/calcium-carbonate",
+    "destination": "/products/minerals",
+    "permanent": true
+  },
+  {
+    "source": "/products/minerals/gypsum",
+    "destination": "/products/minerals",
+    "permanent": true
+  },
+  {
+    "source": "/products/minerals/gypsum-and-plaster",
+    "destination": "/products/minerals",
+    "permanent": true
+  },
+  {
+    "source": "/products/minerals/plaster-of-paris-pop",
+    "destination": "/products/minerals",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/animal-feed-salt",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/animal-feed-salt/blocks-licks",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/animal-feed-salt/loose-granular",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/de-icing-salt/0-4mm",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/de-icing-salt/0-8mm",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/de-icing-salt/4-10mm",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/food-grade-salt",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/food-grade-salt/iodized",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/food-grade-salt/refined-991",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/food-grade-salt/ultra-995",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/industrial-salt",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/industrial-salt/process-brine",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/logistics-packaging",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/rock-salt",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/sea-salt",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/sea-salt/double-washed",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/sea-salt/raw",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/sea-salt/washed",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/tablet-salt",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/tablet-salt/991",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/tablet-salt/994",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/vacuum-salt",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/vacuum-salt/994",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/vacuum-salt/997",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/vacuum-tablet",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/vacuum-tablet/994",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/salt/vacuum-tablet/997",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/products/water-treatment/water-treatment",
+    "destination": "/",
+    "permanent": true
+  },
+  {
+    "source": "/raw-materials",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/salt",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/salt/animal-salt",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/salt/brine-liquid-salt",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/salt/deicing-salt",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/salt/food-salt",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/salt/industrial-salt",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/salt/pharmaceutical-salt",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/salt/tablet-salt",
+    "destination": "/products/salt",
+    "permanent": true
+  },
+  {
+    "source": "/shop-by-category",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/sugar-exports",
+    "destination": "/products/agro/sugar",
+    "permanent": true
+  },
+  {
+    "source": "/sustainability-and-environmental-impact",
+    "destination": "/about/quality-compliance",
+    "permanent": true
+  },
+  {
+    "source": "/terms-and-conditions",
+    "destination": "/cookies-policy",
+    "permanent": true
+  },
+  {
+    "source": "/wheat-exports",
+    "destination": "/products/agro/grains",
+    "permanent": true
+  },
+  {
+    "source": "/why-invest-in",
+    "destination": "/investors",
+    "permanent": true
+  }
+]
