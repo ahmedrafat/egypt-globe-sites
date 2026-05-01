@@ -24,7 +24,30 @@ import {
 import RichDivisionLanding from './RichDivisionLanding'
 import RichSubcategoryLanding from './RichSubcategoryLanding'
 import RichApplicationLanding from './RichApplicationLanding'
+import { BreadcrumbJsonLd, ProductJsonLd } from './StructuredData'
 import { getBuyerVisibility, filterPagesByVisibility, isPageVisible } from '../lib/supabaseServer'
+
+/**
+ * Build a list of {name, path} crumbs from a page's path.
+ * "/products/salt/food-grade/ultra-pure" →
+ *   [{Home,/}, {Products,/products}, {Salt,/products/salt},
+ *    {Food grade,/products/salt/food-grade}, {Ultra pure,/...}]
+ */
+function buildCrumbs(page) {
+  if (!page?.path || page.path === '/') return [{ name: 'Home', path: '/' }]
+  const segs = page.path.split('/').filter(Boolean)
+  const crumbs = [{ name: 'Home', path: '/' }]
+  let acc = ''
+  for (let i = 0; i < segs.length; i++) {
+    acc += '/' + segs[i]
+    const isLast = i === segs.length - 1
+    const name = isLast
+      ? page.title
+      : segs[i].replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+    crumbs.push({ name, path: acc })
+  }
+  return crumbs
+}
 
 const PRODUCT_DIVISION_BY_PATH = Object.fromEntries(PRODUCT_DIVISIONS.map(d => [d.path, d]))
 
@@ -148,8 +171,20 @@ export default async function PageRenderer({ page }) {
       : 'bg-gradient-to-br from-[#1d5fa1] via-[#14467a] to-[#0f1f3a]'
   )
 
+  // Drop 122 — JSON-LD: BreadcrumbList always; Product when this is a SKU page
+  const crumbs = buildCrumbs(page)
+  const isSkuPage = !!page.commodity_id || (
+    isProductDetail && /^\/(salt|fertilizers|chemicals|construction|agro|minerals|metals|products)\//.test(page.path)
+  )
+
   return (
     <article>
+      {/* Drop 122 — structured data ──────────────────────────────── */}
+      <BreadcrumbJsonLd crumbs={crumbs} />
+      {isSkuPage && (
+        <ProductJsonLd page={page} commodity={commodity} visibility={visibility} />
+      )}
+
       {/* Hero — immersive brand-coloured banner ──────────────────── */}
       <section className={`relative overflow-hidden ${heroGradient || ''}`}
         style={!heroGradient && !page.hero_photo_url && division ? {
