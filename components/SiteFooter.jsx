@@ -99,6 +99,8 @@ export default function SiteFooter({ settings }) {
               <li><Link href="/about/locations" className="text-slate-400 hover:text-white transition-colors">Locations</Link></li>
               <li><Link href="/about/quality-compliance" className="text-slate-400 hover:text-white transition-colors">Quality</Link></li>
               <li><Link href="/about/careers" className="text-slate-400 hover:text-white transition-colors">Careers</Link></li>
+              <li><Link href="/case-studies" className="text-slate-400 hover:text-white transition-colors">Case Studies</Link></li>
+              <li><Link href="/blog" className="text-slate-400 hover:text-white transition-colors">News & Blog</Link></li>
               <li><Link href="/global-presence" className="text-slate-400 hover:text-white transition-colors">Global Presence</Link></li>
               <li><Link href="/partners" className="text-slate-400 hover:text-white transition-colors">Partners</Link></li>
             </ul>

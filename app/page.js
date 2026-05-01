@@ -21,6 +21,8 @@ import {
   getSiteSettings,
 } from '../lib/corporatePages'
 import MarkdownBody from '../components/MarkdownBody'
+import CustomerLogosStrip from '../components/CustomerLogosStrip'
+import { getCaseStudies } from '../lib/corporatePages'
 
 export const revalidate = 60
 
@@ -89,6 +91,7 @@ export default async function HomePage() {
   ])
   const featured = featuredAll.flat().slice(0, 8)
   const blogPosts = (grouped.blog || []).slice(0, 3)
+  const caseStudies = await getCaseStudies({ limit: 3 })
 
   return (
     <>
@@ -145,6 +148,9 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Trusted by — customer-logos strip (right after hero) ─── */}
+      <CustomerLogosStrip variant="home" />
+
       {/* Product divisions — THE ONLY categories tile section ─── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
         <div className="text-center max-w-3xl mx-auto mb-12 animate-fade-in-up">
@@ -152,7 +158,7 @@ export default async function HomePage() {
             Our Product Divisions
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
-            Six divisions, one Egyptian export desk.
+            Seven divisions, one Egyptian export desk.
           </h2>
           <p className="text-lg text-slate-600">
             Each division has its own dedicated sourcing, batch traceability and
@@ -405,6 +411,64 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Case studies — real shipments ─────────────────────────── */}
+      {caseStudies.length > 0 && (
+        <section className="bg-white py-20 sm:py-24 border-y border-slate-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-end justify-between mb-10 flex-wrap gap-4 animate-fade-in-up">
+              <div>
+                <div className="inline-block bg-teal-50 text-teal-700 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
+                  📖 Case studies
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                  Real shipments, real numbers.
+                </h2>
+                <p className="text-slate-600 mt-2 max-w-2xl">
+                  Each case study walks through a real Egypt Globe export — sourcing,
+                  loading, documentation, distribution and the delivered numbers.
+                </p>
+              </div>
+              <Link href="/case-studies"
+                className="text-sm font-bold text-[#1d5fa1] hover:underline">
+                All case studies →
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 stagger-children">
+              {caseStudies.map(cs => (
+                <Link key={cs.id} href={cs.path}
+                  className="card-lift group rounded-2xl border border-slate-200 bg-white overflow-hidden">
+                  <div className="aspect-[16/9] overflow-hidden bg-gradient-to-br from-teal-100 via-emerald-100 to-cyan-100 relative">
+                    {cs.hero_photo_url ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img src={cs.hero_photo_url} alt={cs.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <span className="text-7xl opacity-30">📖</span>
+                      </div>
+                    )}
+                    <div className="absolute top-3 left-3 bg-white/95 backdrop-blur text-teal-700 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm">
+                      📖 Case study
+                    </div>
+                  </div>
+                  <div className="p-5">
+                    <h3 className="text-base sm:text-lg font-bold text-slate-900 line-clamp-2 group-hover:text-[#1d5fa1] transition-colors leading-tight">
+                      {cs.title}
+                    </h3>
+                    {cs.description && (
+                      <p className="text-sm text-slate-500 mt-2 line-clamp-3 leading-relaxed">{cs.description}</p>
+                    )}
+                    <div className="mt-3 inline-flex items-center text-xs font-bold text-teal-700 group-hover:gap-2 gap-1 transition-all">
+                      Read case study <span>→</span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Latest insights / blog teaser ─────────────────────────── */}
       {blogPosts.length > 0 && (
