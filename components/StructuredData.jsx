@@ -108,6 +108,66 @@ export function BreadcrumbJsonLd({ crumbs }) {
 }
 
 /**
+ * FAQPage — emits a FAQPage JSON-LD block. `qas` is an array of
+ * `{question, answer}` objects. Drop 125 — used for /contact + any blog
+ * post that contains a Q&A pattern. Google rewards FAQ schema with rich
+ * "People Also Ask" SERP cards.
+ */
+export function FAQJsonLd({ qas }) {
+  if (!qas?.length) return null
+  const json = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: qas.map(qa => ({
+      '@type': 'Question',
+      name: qa.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: qa.answer,
+      },
+    })),
+  }
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }}
+    />
+  )
+}
+
+/**
+ * WebPage — minimal WebPage schema for non-product editorial pages
+ * (about, services, blog, case studies). Drop 125 — gives Google an
+ * explicit page-type hint and lets us declare lastReviewed + reviewer.
+ */
+export function WebPageJsonLd({ page, type = 'WebPage' }) {
+  if (!page) return null
+  const json = {
+    '@context': 'https://schema.org',
+    '@type': type,  // 'WebPage' | 'AboutPage' | 'ContactPage' | 'CollectionPage' | 'Article'
+    name: page.title,
+    description: page.description,
+    url: `${BASE}${page.path}`,
+    isPartOf: { '@id': `${BASE}#website` },
+    publisher: { '@id': `${BASE}#org` },
+    ...(page.updated_at ? { dateModified: new Date(page.updated_at).toISOString() } : {}),
+    ...(page.hero_photo_url ? {
+      primaryImageOfPage: {
+        '@type': 'ImageObject',
+        url: page.hero_photo_url.startsWith('/') ? `${BASE}${page.hero_photo_url}` : page.hero_photo_url,
+      },
+    } : {}),
+    inLanguage: 'en',
+  }
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }}
+    />
+  )
+}
+
+/**
  * Product — emits a Product JSON-LD block for SKU pages.
  * `page` is an egg_corporate_pages row (with specs / certifications /
  * loading_ports / hs_code / moq_mt / lead_time_*_weeks / etc.).

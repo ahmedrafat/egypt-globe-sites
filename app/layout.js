@@ -28,7 +28,13 @@ export async function generateMetadata() {
     icons: settings.faviconUrl ? {
       icon: [{ url: settings.faviconUrl }],
       apple: [{ url: settings.faviconUrl }],
-    } : undefined,
+    } : {
+      // Drop 125 — fallback so Apple touch + PWA icons resolve cleanly
+      icon: [{ url: '/favicon.ico' }],
+      apple: [{ url: '/og-image.png' }],
+    },
+    manifest: '/site.webmanifest',
+    alternates: { canonical: 'https://egyptglobe.com' },
     openGraph: {
       type: 'website',
       title: settings.name,
@@ -58,10 +64,15 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-white text-slate-900 antialiased">
+        {/* Drop 125 — accessibility skip link (visible only on keyboard focus) */}
+        <a href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-[#1d5fa1] focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-bold focus:shadow-lg">
+          Skip to main content
+        </a>
         {/* Drop 122 — sitewide Organization + WebSite schema (rich SERP) */}
         <OrganizationJsonLd settings={settings} />
         <SiteHeader settings={settings} />
-        <main className="flex-1">{children}</main>
+        <main id="main-content" className="flex-1">{children}</main>
         <SiteFooter settings={settings} />
         <WhatsAppFab url={settings.whatsappUrl} label={`Chat with ${settings.name} on WhatsApp`} />
       </body>

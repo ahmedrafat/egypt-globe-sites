@@ -26,13 +26,39 @@ export async function generateMetadata({ params }) {
   const fullPath = '/' + (Array.isArray(path) ? path.join('/') : path)
   const page = await getPageByPath(fullPath)
   if (!page) return { title: 'Not found' }
+
+  // Drop 125 — pick the per-page OG card from /ogs/<slug>.png if generated.
+  // Slug derivation matches scripts/generate-page-ogs.mjs::pathToSlug exactly.
+  const slug = (page.path || '/').replace(/^\//, '').replace(/\//g, '-')
+    .replace(/[^a-z0-9-]/gi, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') || 'home'
+  const ogImage = `/ogs/${slug}.png`
+
   return {
     title: page.title,
     description: page.description || undefined,
+    alternates: { canonical: `https://egyptglobe.com${page.path}` },
     openGraph: {
+      type: page.path?.startsWith('/blog/') ? 'article' : 'website',
       title: page.title,
       description: page.description || undefined,
-      images: page.hero_photo_url ? [page.hero_photo_url] : undefined,
+      url: `https://egyptglobe.com${page.path}`,
+      images: [
+        // Per-page OG card from Drop 125 generator
+        { url: ogImage, width: 1200, height: 630, alt: page.title },
+        // CMS hero photo as secondary image (richer for product pages)
+        ...(page.hero_photo_url ? [{
+          url: page.hero_photo_url.startsWith('/')
+            ? `https://egyptglobe.com${page.hero_photo_url}`
+            : page.hero_photo_url,
+          alt: page.title,
+        }] : []),
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: page.title,
+      description: page.description || undefined,
+      images: [ogImage],
     },
   }
 }

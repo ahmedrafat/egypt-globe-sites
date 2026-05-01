@@ -24,7 +24,7 @@ import {
 import RichDivisionLanding from './RichDivisionLanding'
 import RichSubcategoryLanding from './RichSubcategoryLanding'
 import RichApplicationLanding from './RichApplicationLanding'
-import { BreadcrumbJsonLd, ProductJsonLd } from './StructuredData'
+import { BreadcrumbJsonLd, ProductJsonLd, WebPageJsonLd } from './StructuredData'
 import { getBuyerVisibility, filterPagesByVisibility, isPageVisible } from '../lib/supabaseServer'
 
 /**
@@ -179,10 +179,21 @@ export default async function PageRenderer({ page }) {
 
   return (
     <article>
-      {/* Drop 122 — structured data ──────────────────────────────── */}
+      {/* Drop 122 + 125 — structured data ────────────────────────── */}
       <BreadcrumbJsonLd crumbs={crumbs} />
-      {isSkuPage && (
+      {isSkuPage ? (
         <ProductJsonLd page={page} commodity={commodity} visibility={visibility} />
+      ) : (
+        <WebPageJsonLd
+          page={page}
+          type={
+            page.path === '/contact'           ? 'ContactPage' :
+            page.path?.startsWith('/about')    ? 'AboutPage'  :
+            page.path?.startsWith('/blog/')    ? 'Article'     :
+            isProductsHub || isDivisionLanding || isSubcategoryLanding ? 'CollectionPage' :
+            'WebPage'
+          }
+        />
       )}
 
       {/* Hero — immersive brand-coloured banner ──────────────────── */}

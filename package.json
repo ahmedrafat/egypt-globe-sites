@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "eslint",
     "og": "node scripts/generate-og-image.mjs",
-    "redirects": "node scripts/build-legacy-redirects.mjs"
+    "redirects": "node scripts/build-legacy-redirects.mjs",
+    "heroes": "node scripts/generate-page-heroes.mjs",
+    "heroes:all": "node scripts/generate-page-heroes.mjs --all",
+    "ogs": "node scripts/generate-page-ogs.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.2",
