@@ -266,6 +266,41 @@ body.no-scroll {
   width: 100%;
 }
 
+/* Hero stat-card icon size helper */
+.stat-card-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  opacity: 0.55;
+  margin-bottom: 0.5rem;
+}
+
+/* Bottom gradient reveal bar for cards */
+.card-bottom-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--egg-blue), var(--egg-orange));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.group:hover .card-bottom-bar {
+  transform: scaleX(1);
+}
+
+/* Eye-brow pill label above headings (consistent across sections) */
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+}
+
 /* Respect users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
