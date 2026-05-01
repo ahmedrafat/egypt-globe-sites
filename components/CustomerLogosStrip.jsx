@@ -9,7 +9,7 @@ export default async function CustomerLogosStrip({ variant = 'home' }) {
   if (logos.length === 0) return null
 
   if (variant === 'compact') {
-    // Compact strip — used in the footer
+    // Compact strip — used in the footer (dark bg variant)
     return (
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
         {logos.slice(0, 8).map(l => <CompactCard key={l.id} logo={l} />)}
@@ -19,19 +19,24 @@ export default async function CustomerLogosStrip({ variant = 'home' }) {
 
   // Full home-strip variant
   return (
-    <section className="bg-white py-14 sm:py-16 border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8 animate-fade-in-up">
-          <div className="inline-block bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
-            Trusted by
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            B2B importers across {logos.length}+ countries.
+    <section className="bg-gradient-to-b from-slate-50 to-white py-16 sm:py-20 border-b border-slate-200 relative overflow-hidden">
+      {/* Subtle background dots */}
+      <div aria-hidden="true" className="absolute inset-0 bg-dots-pattern opacity-[0.35] pointer-events-none" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section heading */}
+        <div className="text-center mb-10 animate-fade-in-up">
+          <span className="section-eyebrow bg-emerald-50 text-emerald-700 border border-emerald-100 mb-4">
+            <span aria-hidden="true">✦</span> Trusted by B2B buyers worldwide
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-4">
+            Import partners across {logos.length}+ countries
           </h2>
-          <p className="text-slate-500 mt-2 text-sm">
+          <p className="text-slate-500 mt-2 text-sm max-w-md mx-auto">
             Some buyer names withheld at the customer's request — anonymized below.
           </p>
         </div>
+
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 stagger-children">
           {logos.map(l => <FullCard key={l.id} logo={l} />)}
         </div>
@@ -42,23 +47,37 @@ export default async function CustomerLogosStrip({ variant = 'home' }) {
 
 function FullCard({ logo }) {
   const Inner = (
-    <div className="rounded-xl border border-slate-200 bg-gradient-to-br from-white to-slate-50/50 p-4 hover:border-[#1d5fa1]/40 hover:shadow-sm transition-all h-full flex items-center gap-3">
+    <div className="group relative rounded-2xl border border-slate-200 bg-white p-4 hover:border-[#1d5fa1]/40 hover:shadow-md transition-all h-full flex items-center gap-3.5 overflow-hidden">
+      {/* Hover bottom bar */}
+      <span aria-hidden="true" className="card-bottom-bar" />
+
+      {/* Icon / logo */}
       {logo.logo_url ? (
         /* eslint-disable-next-line @next/next/no-img-element */
-        <img src={logo.logo_url} alt={logo.label} className="h-10 w-10 object-contain flex-shrink-0" />
+        <img src={logo.logo_url} alt={logo.label} className="h-10 w-10 object-contain flex-shrink-0 rounded-lg" />
       ) : (
-        <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-blue-100 to-emerald-100 flex items-center justify-center text-lg">
+        <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-blue-50 to-emerald-50 border border-slate-100 flex items-center justify-center text-xl">
           {iconForSector(logo.sector)}
         </div>
       )}
+
       <div className="flex-1 min-w-0">
-        <div className="font-semibold text-slate-900 text-sm leading-tight line-clamp-2">{logo.label}</div>
-        <div className="text-[11px] text-slate-500 mt-0.5 flex items-center gap-1.5">
-          {logo.country && <span>{logo.country}</span>}
-          {logo.country && logo.sector && <span className="text-slate-300">·</span>}
-          {logo.sector && <span>{logo.sector}</span>}
+        <div className="font-semibold text-slate-900 text-sm leading-snug line-clamp-2 group-hover:text-[#1d5fa1] transition-colors">
+          {logo.label}
         </div>
-        {logo.hint && <div className="text-[11px] text-slate-400 mt-1 line-clamp-1 italic">{logo.hint}</div>}
+        <div className="text-[11px] text-slate-400 mt-0.5 flex items-center gap-1.5 flex-wrap">
+          {logo.country && (
+            <span className="flex items-center gap-1">
+              <span aria-hidden="true" className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              {logo.country}
+            </span>
+          )}
+          {logo.country && logo.sector && <span className="text-slate-200">·</span>}
+          {logo.sector && <span className="text-slate-400">{logo.sector}</span>}
+        </div>
+        {logo.hint && (
+          <div className="text-[11px] text-slate-400 mt-1 line-clamp-1 italic">{logo.hint}</div>
+        )}
       </div>
     </div>
   )
@@ -69,10 +88,10 @@ function FullCard({ logo }) {
 
 function CompactCard({ logo }) {
   return (
-    <div className="rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-center min-h-[60px] flex items-center justify-center">
+    <div className="rounded-xl bg-white/5 border border-white/10 px-3 py-2.5 text-center min-h-[64px] flex items-center justify-center hover:bg-white/10 hover:border-white/20 transition-colors">
       {logo.logo_url ? (
         /* eslint-disable-next-line @next/next/no-img-element */
-        <img src={logo.logo_url} alt={logo.label} className="h-7 w-auto object-contain opacity-80" />
+        <img src={logo.logo_url} alt={logo.label} className="h-8 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" />
       ) : (
         <span className="text-[10px] font-semibold text-slate-400 line-clamp-2 leading-tight">{logo.label}</span>
       )}
@@ -89,5 +108,8 @@ function iconForSector(sector) {
   if (s.includes('fertilizer')) return '🌾'
   if (s.includes('public')) return '🏛'
   if (s.includes('multi')) return '🌐'
+  if (s.includes('mining')) return '⛏️'
+  if (s.includes('water')) return '💧'
+  if (s.includes('textile') || s.includes('leather')) return '🧵'
   return '✦'
 }

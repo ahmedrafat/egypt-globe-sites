@@ -164,7 +164,8 @@ export default async function PageRenderer({ page }) {
           </div>
         )}
 
-        {/* Decorative pattern */}
+        {/* Decorative patterns */}
+        <div aria-hidden="true" className="absolute inset-0 bg-grid-pattern opacity-[0.07] pointer-events-none" />
         <div aria-hidden="true" className="absolute inset-0 opacity-10 pointer-events-none">
           <div className="absolute right-0 top-0 w-[600px] h-[600px] rounded-full"
             style={{ background: 'radial-gradient(circle, white 0%, transparent 70%)' }} />
@@ -172,16 +173,20 @@ export default async function PageRenderer({ page }) {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-xs text-white/50 mb-5 flex-wrap animate-fade-in">
+          <nav className="flex items-center gap-1.5 text-xs text-white/50 mb-5 flex-wrap animate-fade-in">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
-            <span>›</span>
+            <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7"/>
+            </svg>
             {!isHomePath && page.category && (
               <>
-                <span className="text-white/70">{cat.label}</span>
-                <span>›</span>
+                <span className="text-white/70 hover:text-white transition-colors cursor-default">{cat.label}</span>
+                <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7"/>
+                </svg>
               </>
             )}
-            <span className="text-white/80 truncate max-w-[300px]">{page.title}</span>
+            <span className="text-white/90 font-medium truncate max-w-[300px]">{page.title}</span>
           </nav>
 
           {/* Chip rail */}
@@ -261,9 +266,14 @@ export default async function PageRenderer({ page }) {
 
       {/* Products hub — always show every division */}
       {isProductsHub && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-100">
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">Browse our 6 product divisions</h2>
-          <p className="text-slate-600 mb-8">Each division ships from Egyptian ports under FOB / CIF / CFR Incoterms with per-shipment certificate of analysis.</p>
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 border-t border-slate-100">
+          <div className="mb-8">
+            <span className="section-eyebrow bg-blue-50 text-[#1d5fa1] border border-blue-100 mb-4">
+              <span aria-hidden="true">📦</span> Product catalogue
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2 mt-4 tracking-tight">Browse our 6 product divisions</h2>
+            <p className="text-slate-500">Each division ships from Egyptian ports under FOB / CIF / CFR Incoterms with per-shipment certificate of analysis.</p>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
             {PRODUCT_DIVISIONS.map(div => (
               <Link key={div.id} href={div.path}
@@ -291,9 +301,14 @@ export default async function PageRenderer({ page }) {
 
       {/* Applications hub — list every industry */}
       {isApplicationsHub && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-100">
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">Salt by industry</h2>
-          <p className="text-slate-600 mb-8">12 standard applications served from our 74-SKU Egyptian salt catalogue.</p>
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 border-t border-slate-100">
+          <div className="mb-8">
+            <span className="section-eyebrow bg-violet-50 text-violet-700 border border-violet-100 mb-4">
+              <span aria-hidden="true">🏭</span> Applications
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2 mt-4 tracking-tight">Salt by industry</h2>
+            <p className="text-slate-500">12 standard applications served from our 74-SKU Egyptian salt catalogue.</p>
+          </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 stagger-children">
             {APPLICATIONS.map(a => (
               <Link key={a.id} href={a.path}
@@ -402,9 +417,14 @@ export default async function PageRenderer({ page }) {
 
       {/* Services hub — show every supply-chain service */}
       {isServicesHub && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-100">
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">Our supply-chain services</h2>
-          <p className="text-slate-600 mb-8">Logistics, port operations, added value, packing, inspection and trade documentation — all in-house.</p>
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 border-t border-slate-100">
+          <div className="mb-8">
+            <span className="section-eyebrow bg-teal-50 text-teal-700 border border-teal-100 mb-4">
+              <span aria-hidden="true">🚢</span> Supply-chain services
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2 mt-4 tracking-tight">Our supply-chain services</h2>
+            <p className="text-slate-500">Logistics, port operations, added value, packing, inspection and trade documentation — all in-house.</p>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
             {SERVICE_DIVISIONS.map(svc => (
               <Link key={svc.id} href={svc.path}
@@ -479,13 +499,19 @@ export default async function PageRenderer({ page }) {
       {/* CTA strip — skip on hubs / division landings (they get their own treatment) */}
       {!isProductsHub && !isServicesHub && !isApplicationsHub && !isApplicationLanding && !isDivisionLanding && !isSubcategoryLanding && (
         <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-          <div className="rounded-3xl bg-gradient-to-br from-[#1d5fa1] to-[#14467a] p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-5 shadow-xl shadow-blue-900/10">
-            <div className="flex-1">
-              <h3 className="text-2xl font-bold text-white mb-1">Ready for a quote?</h3>
-              <p className="text-blue-100 leading-relaxed">FOB / CIF / CFR pricing from 7 Egyptian ports — turnaround within 24 hours.</p>
+          <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#1a5490] via-[#1d5fa1] to-[#155187] p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-5 shadow-xl shadow-blue-900/20">
+            {/* Grid overlay */}
+            <div aria-hidden="true" className="absolute inset-0 bg-grid-pattern opacity-[0.06] pointer-events-none" />
+            {/* Orange glow */}
+            <div aria-hidden="true" className="absolute -bottom-10 -right-10 w-48 h-48 rounded-full opacity-20 pointer-events-none"
+              style={{ background: 'radial-gradient(circle, #FF6321 0%, transparent 70%)' }} />
+            <div className="relative flex-1">
+              <div className="text-[11px] font-bold uppercase tracking-widest text-blue-300 mb-2">24-hour SLA</div>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-white mb-1 tracking-tight">Ready for a quote?</h3>
+              <p className="text-blue-100 leading-relaxed text-sm sm:text-base">FOB / CIF / CFR pricing from 7 Egyptian ports — turnaround within 24 hours.</p>
             </div>
             <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
-              className="bg-[#FF6321] hover:bg-[#e0541b] text-white font-bold px-7 py-3.5 rounded-xl shadow-lg whitespace-nowrap transition-all hover:-translate-y-0.5">
+              className="relative bg-[#FF6321] hover:bg-[#e0541b] text-white font-bold px-7 py-3.5 rounded-xl shadow-lg shadow-orange-900/30 whitespace-nowrap transition-all hover:-translate-y-0.5 hover:shadow-xl">
               📋 Request Quote
             </Link>
           </div>
