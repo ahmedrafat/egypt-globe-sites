@@ -23,16 +23,19 @@ export const dynamic = 'force-dynamic'  // never SSG — every request hits cach
 export const runtime = 'nodejs'         // need Node fetch + DB driver
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://ohobjnbsybdxntaewqdi.supabase.co'
-// Service-role key bypasses RLS for the cache upsert (authenticated_full_access
-// is the only ALL policy on tariff_cache). Accept either env-var name so we
-// can use whichever is already wired into the project. Falls through to the
-// publishable anon key as a last resort — anon SELECT works, anon INSERT/UPDATE
-// will be rejected by RLS and the cache write silently no-ops (response is
-// still correct, just not cached).
-const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
-  || process.env.SUPABASE_SERVICE_KEY
-  || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  || 'sb_publishable_L9dqQRDBn1bISOu8Y4C0wg_KYZ1NJEC'
+// Drop 138c-fix v3 — earlier we tried SUPABASE_SERVICE_KEY as a service-role
+// fallback, but Vercel's value for that env var is a legacy JWT that was
+// disabled in the Apr 17 group migration. Using it silently broke every
+// query (Supabase rejected the dead key and supabase-js swallowed the
+// 401 inside our cache try/catch). Cache writes go through cache_tariff_lookup()
+// SECURITY DEFINER RPC instead, so the publishable anon key is sufficient.
+// Only accept the modern sb_secret_* prefix as service fallback (skip JWTs).
+function pickKey() {
+  const candidates = [process.env.SUPABASE_SERVICE_ROLE_KEY, process.env.SUPABASE_SERVICE_KEY]
+  for (const k of candidates) if (k && k.startsWith('sb_secret_')) return k
+  return process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable_L9dqQRDBn1bISOu8Y4C0wg_KYZ1NJEC'
+}
+const SUPABASE_KEY = pickKey()
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } })
 
