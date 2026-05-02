@@ -30,22 +30,28 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
 
   return (
     <>
-      {/* Hamburger — 44×44 for Apple HIG-compliant tap target */}
-      <button onClick={() => setOpen(true)} aria-label="Open navigation menu"
+      {/* Hamburger — 44×44 for Apple HIG-compliant tap target.
+         Drop 144 — explicit type="button" + touch-manipulation for iOS Safari +
+         z-50 so it's never under a sticky element. Defensive event handling
+         prevents bubbling that any parent listener might intercept. */}
+      <button type="button" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setOpen(true) }}
+        aria-label="Open navigation menu"
         aria-expanded={open}
-        className="lg:hidden flex items-center justify-center w-11 h-11 rounded-xl text-slate-700 hover:bg-slate-100 active:bg-slate-200 transition-colors -mr-1">
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        style={{ touchAction: 'manipulation' }}
+        className="lg:hidden relative z-50 flex items-center justify-center w-11 h-11 rounded-xl text-slate-700 hover:bg-slate-100 active:bg-slate-200 cursor-pointer transition-colors -mr-1">
+        <svg className="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
       </button>
 
-      {/* Backdrop */}
+      {/* Backdrop — z-50 (under drawer at z-60). Pointer-events-none when
+         closed so it never blocks a click on whatever's behind it. */}
       <div onClick={close} aria-hidden="true"
         className={`lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-300 ${open ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} />
 
-      {/* Drawer */}
+      {/* Drawer — z-60 (above backdrop + sticky header at z-40) */}
       <aside role="dialog" aria-label="Mobile navigation" aria-modal="true"
-        className={`lg:hidden fixed inset-y-0 right-0 z-50 w-full max-w-[360px] bg-white shadow-2xl flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${open ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`lg:hidden fixed inset-y-0 right-0 z-[60] w-full max-w-[360px] bg-white shadow-2xl flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${open ? 'translate-x-0' : 'translate-x-full pointer-events-none'}`}
         style={{ paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'env(safe-area-inset-bottom)' }}>
 
         {/* Drawer header — compact 56px so body has more room */}
@@ -62,9 +68,10 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
               <div className="text-[10px] text-blue-200 leading-tight">B2B Export · 60+ markets</div>
             </div>
           </Link>
-          <button onClick={close} aria-label="Close menu"
-            className="relative w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/15 active:bg-white/25 transition-colors flex-shrink-0">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <button type="button" onClick={close} aria-label="Close menu"
+            style={{ touchAction: 'manipulation' }}
+            className="relative w-11 h-11 flex items-center justify-center rounded-lg hover:bg-white/15 active:bg-white/25 cursor-pointer transition-colors flex-shrink-0">
+            <svg className="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12"/>
             </svg>
           </button>
