@@ -10,6 +10,9 @@ import MarkdownBody from './MarkdownBody'
 import RichPageBody from './RichPageBody'
 import ProductDetailBlock from './ProductDetailBlock'
 import ProductTabs from './interactive/ProductTabs'
+import MarkdownTabs from './interactive/MarkdownTabs'
+import TariffCalculator from './interactive/TariffCalculator'
+import HSCodeBrowser from './interactive/HSCodeBrowser'
 import {
   getRelatedPages,
   getDirectChildren,
@@ -304,13 +307,15 @@ export default async function PageRenderer({ page }) {
         </div>
       </section>
 
-      {/* Drop 132 — interactive product tabs replace the long-scroll
-         body+ProductDetailBlock combo on SKU pages. body_markdown is
-         no longer rendered to humans on SKU pages (data still lives in
-         the DB so /llms-full.txt feeds AI crawlers + the migration is
-         reversible). On non-SKU pages (about / services / case studies /
-         pillars), keep the prior RichPageBody + ProductDetailBlock
-         behaviour — those pages benefit from editorial markdown. */}
+      {/* Drop 132 + 133 — interactive layouts replace markdown long-scroll.
+         SKU pages → ProductTabs (Drop 132).
+         Editorial pages (about / services / case-studies / blog / country
+         guides / HS-code glossary / division pillars) → MarkdownTabs which
+         auto-splits body_markdown by ## H2 boundaries into clickable tabs
+         (Drop 133). Plus per-page-category interactive widget on top:
+           /trade-tools/import-guides/<country>  → <TariffCalculator>
+           /trade-tools/hs-codes                  → <HSCodeBrowser>
+         body_markdown column kept in DB for /llms-full.txt + reversibility. */}
       {isSkuPage ? (
         <ProductTabs
           page={page}
@@ -318,15 +323,24 @@ export default async function PageRenderer({ page }) {
           applications={(page.applications || []).map(id => APPLICATIONS.find(a => a.id === id)).filter(Boolean)}
           visibility={visibility}
         />
+      ) : page.path === '/trade-tools/hs-codes' ? (
+        // HS-code glossary becomes a fully interactive searchable browser —
+        // markdown body suppressed entirely (browser carries every code).
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <HSCodeBrowser />
+        </section>
+      ) : page.path?.startsWith('/trade-tools/import-guides/') && page.path !== '/trade-tools/import-guides' ? (
+        // Country import guide — TariffCalculator above the auto-tabs.
+        <MarkdownTabs body={page.body_markdown} title={page.title}
+          leadingWidget={<TariffCalculator countryId={page.path.split('/').pop()} />}
+        />
+      ) : page.body_markdown ? (
+        // Every other editorial page — auto-tabbed body_markdown.
+        <MarkdownTabs body={page.body_markdown} title={page.title} />
       ) : (
-        <>
-          {page.body_markdown && (
-            <section id="top" className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-reveal">
-              <RichPageBody content={page.body_markdown} title={page.title} />
-            </section>
-          )}
-          <ProductDetailBlock page={page} commodity={commodity} visibility={visibility} />
-        </>
+        // Pages with no body_markdown — keep ProductDetailBlock for any
+        // structured product data they carry (mostly subcategory landings).
+        <ProductDetailBlock page={page} commodity={commodity} visibility={visibility} />
       )}
 
       {/* Products hub — always show every division */}
