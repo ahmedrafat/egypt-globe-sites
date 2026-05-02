@@ -9,15 +9,18 @@ import { notFound } from 'next/navigation'
 import { getPageByPath, getAllPaths } from '../../lib/corporatePages'
 import PageRenderer from '../../components/PageRenderer'
 
-export const revalidate = 60
+// Drop 139c — render on demand. Layout uses cookies() (via
+// getBuyerVisibility) which forces dynamic context anyway; declaring
+// it explicitly avoids the DYNAMIC_SERVER_USAGE error that fired when
+// the build worker tried to pre-render with cookies present in the
+// layout chain. Per-request runtime cost is bounded by the withTimeout
+// wrappers in lib/corporatePages.js.
+export const dynamic = 'force-dynamic'
 
-/** Pre-render every published path at build time. */
+/** No-op — generateStaticParams not used in dynamic mode. Kept for
+ *  reference / quick revert when Supabase performance is stable. */
 export async function generateStaticParams() {
-  const paths = await getAllPaths()
-  return paths.map(p => ({
-    // `path` is a catch-all segment → array of strings
-    path: p.replace(/^\//, '').split('/').filter(Boolean),
-  }))
+  return []
 }
 
 /** Per-page <head> via Next 16 metadata API. */
