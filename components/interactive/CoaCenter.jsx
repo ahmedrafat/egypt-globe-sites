@@ -249,6 +249,52 @@ export default function CoaCenter({ coas = [], commodityName, requestPath }) {
                 {coa.expiry_date && <div><div className="text-slate-400">Expires</div><div className={`font-bold normal-case tracking-normal ${expired ? 'text-red-700' : expiringSoon ? 'text-amber-700' : 'text-slate-700'}`}>{fmtDate(coa.expiry_date)}</div></div>}
               </div>
 
+              {/* Drop 148 — Packing + cargo metadata strip (only if any field set) */}
+              {(coa.packing_name || coa.packing_label || coa.quantity_mt || coa.vessel_name || coa.pol_unlocode || coa.pod_unlocode) && (
+                <div className="rounded-xl border border-slate-200 bg-slate-50/40 p-3 mb-4">
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">Cargo & packing</div>
+                  <div className="flex flex-wrap gap-2 text-xs">
+                    {(coa.packing_name || coa.packing_label) && (
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white border border-slate-200 text-slate-800">
+                        📦 <span className="font-semibold">{coa.packing_name || coa.packing_label}</span>
+                        {coa.packing_size_kg && <span className="text-slate-500">· {Number(coa.packing_size_kg)} kg</span>}
+                        {coa.packing_material && <span className="text-slate-500">· {coa.packing_material}</span>}
+                      </span>
+                    )}
+                    {coa.quantity_mt && (
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white border border-slate-200 text-slate-800">
+                        ⚖️ <span className="font-semibold">{Number(coa.quantity_mt)} MT</span>
+                      </span>
+                    )}
+                    {coa.container_count && (
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white border border-slate-200 text-slate-800">
+                        🚛 <span className="font-semibold">{coa.container_count}× container</span>
+                      </span>
+                    )}
+                    {coa.vessel_name && (
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white border border-slate-200 text-slate-800">
+                        🚢 <span className="font-semibold">{coa.vessel_name}</span>
+                      </span>
+                    )}
+                    {coa.pol_unlocode && coa.pod_unlocode && (
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white border border-slate-200 text-slate-800 font-mono">
+                        ⚓ {coa.pol_unlocode} → {coa.pod_unlocode}
+                      </span>
+                    )}
+                    {coa.bl_no && (
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white border border-slate-200 text-slate-700 font-mono text-[10px]">
+                        B/L {coa.bl_no}
+                      </span>
+                    )}
+                    {coa.attached_shipments_count > 0 && (
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-800">
+                        ✓ {coa.attached_shipments_count} shipment{coa.attached_shipments_count === 1 ? '' : 's'} attached
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
+
               {/* Parameters table */}
               {paramKeys.length > 0 && (
                 <div className="rounded-xl border border-slate-200 overflow-hidden bg-slate-50/30">
