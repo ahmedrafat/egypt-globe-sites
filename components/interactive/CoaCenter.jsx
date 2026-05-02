@@ -13,6 +13,7 @@
  * Falls back to GLOBAL CoA when no region-specific cert exists yet.
  */
 import { useMemo, useState } from 'react'
+import { printCoa } from '../../lib/coaPrint'
 
 const REGION_META = {
   'GLOBAL':         { icon: '🌍', label: 'Global / default',     tone: 'bg-slate-50 text-slate-700 border-slate-200' },
@@ -233,12 +234,27 @@ export default function CoaCenter({ coas = [], commodityName, requestPath }) {
                     <p className="text-xs text-emerald-700 font-semibold mt-1">{coa.overall_result}</p>
                   )}
                 </div>
-                {coa.pdf_url && (
-                  <a href={coa.pdf_url} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold bg-[#1d5fa1] hover:bg-[#14467a] text-white px-3 py-2 rounded-lg shadow-sm transition-colors flex-shrink-0">
-                    📄 Download PDF
-                  </a>
-                )}
+                <div className="flex items-center gap-1.5 flex-shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => printCoa(coa, { commodityName })}
+                    className="inline-flex items-center gap-1.5 text-xs font-bold bg-[#1d5fa1] hover:bg-[#14467a] text-white px-3 py-2 rounded-lg shadow-sm transition-colors"
+                    title="Open print dialog — choose Save as PDF or send to printer"
+                  >
+                    🖨 Print / PDF
+                  </button>
+                  {coa.pdf_url && (
+                    <a
+                      href={coa.pdf_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold bg-white hover:bg-slate-50 text-[#1d5fa1] border border-slate-300 px-3 py-2 rounded-lg shadow-sm transition-colors"
+                      title="Download the lab's original PDF (uploaded by QC)"
+                    >
+                      📄 Original PDF
+                    </a>
+                  )}
+                </div>
               </div>
 
               {/* Date strip */}
