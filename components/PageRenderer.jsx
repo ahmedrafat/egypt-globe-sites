@@ -413,31 +413,11 @@ export default async function PageRenderer({ page }) {
         </section>
       )}
 
-      {/* Applications hub — list every industry */}
-      {isApplicationsHub && (
-        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 border-t border-slate-100">
-          <div className="mb-8">
-            <span className="section-eyebrow bg-violet-50 text-violet-700 border border-violet-100 mb-4">
-              <span aria-hidden="true">🏭</span> Applications
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2 mt-4 tracking-tight">Salt by industry</h2>
-            <p className="text-slate-500">12 standard applications served from our 74-SKU Egyptian salt catalogue.</p>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 stagger-children">
-            {APPLICATIONS.map(a => (
-              <Link key={a.id} href={a.path}
-                className="card-lift group rounded-2xl border border-slate-200 bg-white p-5 text-center">
-                <div className="w-14 h-14 mx-auto rounded-xl flex items-center justify-center text-3xl mb-3 bg-violet-50 text-violet-700">
-                  {a.icon}
-                </div>
-                <h3 className="font-bold text-slate-900 group-hover:text-[#1d5fa1] transition-colors text-sm">
-                  {a.label}
-                </h3>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* Applications hub — Drop 145 grouped-by-source-division layout.
+         Each PRODUCT_DIVISIONS gets its own section with the matching
+         applications underneath. Apps that serve multiple divisions
+         appear under each (clear "where this comes from" signal). */}
+      {isApplicationsHub && <ApplicationsHubByDivision />}
 
       {/* Application landing — show all matching salt products */}
       {isApplicationLanding && (
@@ -680,6 +660,158 @@ export default async function PageRenderer({ page }) {
         <StickyRfqBar pageTitle={page.title} pagePath={page.path}
           whatsappUrl="https://wa.me/201007729844" />
       )}
+    </article>
+  )
+}
+
+/**
+ * Drop 145 — Applications hub layout grouped by source product division.
+ *
+ * Renders one section per division (Salt / Cement & Construction / Fertilizers
+ * / Chemicals / Agro & Food / Industrial Minerals / Metals & Alloys), each
+ * with the applications it supplies. Apps that serve multiple divisions
+ * appear under each — buyers immediately see "what cement does for me" vs
+ * "what salt does for me" without mixing.
+ */
+function ApplicationsHubByDivision() {
+  const divisionsList = PRODUCT_DIVISIONS
+  // Build {divisionId: [app, ...]} map by walking APPLICATIONS.divisions[]
+  const grouped = {}
+  for (const d of divisionsList) grouped[d.id] = []
+  for (const app of APPLICATIONS) {
+    for (const divId of (app.divisions || [])) {
+      if (grouped[divId]) grouped[divId].push(app)
+    }
+  }
+
+  // Total count for the summary line
+  const totalApps = APPLICATIONS.length
+  const divisionsWithApps = divisionsList.filter(d => grouped[d.id].length > 0)
+
+  return (
+    <article>
+      {/* Hub intro */}
+      <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16 border-t border-slate-100">
+        <div className="mb-10 max-w-3xl">
+          <span className="section-eyebrow bg-violet-50 text-violet-700 border border-violet-100 mb-4 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full">
+            <span aria-hidden="true">🏭</span> Industries we serve
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-4 mb-3">
+            {totalApps} industries — grouped by the division that supplies them.
+          </h2>
+          <p className="text-slate-600 leading-relaxed">
+            Egypt Globe Group's 7 product divisions serve {totalApps} distinct
+            industries worldwide. Pick the division you source from, then drill
+            into the application landing for matching SKUs, certifications,
+            packing formats and lead times.
+          </p>
+        </div>
+
+        {/* Quick-jump nav chips — scroll to per-division section */}
+        <nav className="flex flex-wrap gap-2 mb-8" aria-label="Jump to division">
+          {divisionsWithApps.map(d => (
+            <a key={d.id} href={`#${d.id}`}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-[#1d5fa1] hover:text-[#1d5fa1] transition-colors">
+              <span aria-hidden="true">{d.icon}</span>
+              {d.label}
+              <span className="ml-1 text-[10px] font-bold tabular-nums text-slate-400">{grouped[d.id].length}</span>
+            </a>
+          ))}
+        </nav>
+      </section>
+
+      {/* Per-division sections */}
+      {divisionsWithApps.map(d => {
+        const apps = grouped[d.id]
+        return (
+          <section key={d.id} id={d.id}
+            className="border-t border-slate-100 scroll-mt-24"
+            style={{ background: `linear-gradient(180deg, ${d.color}05 0%, white 80%)` }}>
+            <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10 sm:py-14">
+              {/* Section header — branded by division colour */}
+              <div className="flex items-start gap-4 mb-6">
+                <div className="flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center text-3xl shadow-sm"
+                  style={{ background: `${d.color}20`, color: d.color }}>
+                  {d.icon}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap mb-1">
+                    <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                      {d.label}
+                    </h3>
+                    <Link href={d.path} className="text-xs font-bold px-2.5 py-1 rounded-full border border-slate-200 bg-white text-slate-600 hover:border-[#1d5fa1] hover:text-[#1d5fa1] transition-colors">
+                      View {d.label.toLowerCase()} →
+                    </Link>
+                  </div>
+                  <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">{d.blurb}</p>
+                  <div className="mt-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                    {apps.length} application{apps.length === 1 ? '' : 's'} served from this division
+                  </div>
+                </div>
+              </div>
+
+              {/* Application cards — branded with division colour ring */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 stagger-children">
+                {apps.map(a => (
+                  <Link key={a.id} href={a.path}
+                    className="card-lift group rounded-2xl border bg-white p-4 transition-all hover:shadow-md"
+                    style={{ borderColor: `${d.color}20` }}>
+                    <div className="flex items-start gap-3">
+                      <div className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center text-xl"
+                        style={{ background: `${d.color}15`, color: d.color }}>
+                        {a.icon}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-bold text-sm text-slate-900 group-hover:text-[#1d5fa1] transition-colors leading-tight mb-1">
+                          {a.label}
+                        </h4>
+                        {a.blurb && (
+                          <p className="text-[11px] text-slate-500 leading-relaxed line-clamp-2">{a.blurb}</p>
+                        )}
+                        {/* If this app is also served by other divisions,
+                           show small chips so buyers see the multi-source option */}
+                        {(a.divisions || []).length > 1 && (
+                          <div className="flex flex-wrap items-center gap-1 mt-2 text-[9px] font-semibold uppercase tracking-wider text-slate-400">
+                            <span>Also from:</span>
+                            {(a.divisions || []).filter(id => id !== d.id).slice(0, 3).map(otherId => {
+                              const other = PRODUCT_DIVISIONS.find(x => x.id === otherId)
+                              return other ? (
+                                <span key={otherId} className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-slate-100"
+                                  style={{ color: other.color }}>
+                                  <span>{other.icon}</span>{other.label}
+                                </span>
+                              ) : null
+                            })}
+                          </div>
+                        )}
+                      </div>
+                      <span className="text-slate-300 group-hover:text-[#1d5fa1] transition-colors mt-1">→</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )
+      })}
+
+      {/* Bottom CTA */}
+      <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <div className="rounded-3xl bg-gradient-to-br from-[#1d5fa1] via-[#14467a] to-[#0f1f3a] p-8 sm:p-10 text-center text-white shadow-xl shadow-blue-900/20">
+          <h3 className="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight">
+            Don't see your industry?
+          </h3>
+          <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
+            We export to 60+ countries across many sub-industries beyond the
+            ones listed here. Submit your sourcing requirement and we'll match
+            it to the right division within 24 hours.
+          </p>
+          <Link href="/rfq"
+            className="inline-flex items-center gap-2 bg-[#FF6321] hover:bg-[#e0541b] text-white font-bold px-7 py-3.5 rounded-xl shadow-lg transition-all hover:-translate-y-0.5">
+            📋 Request a Quote
+          </Link>
+        </div>
+      </section>
     </article>
   )
 }

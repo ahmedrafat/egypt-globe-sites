@@ -11,7 +11,7 @@
  */
 import Link from 'next/link'
 import RichPageBody from './RichPageBody'
-import { APPLICATIONS } from '../lib/corporatePages'
+import { APPLICATIONS, PRODUCT_DIVISIONS, CATEGORY_META } from '../lib/corporatePages'
 
 export default function RichApplicationLanding({ page, application, products, siblingApps, visibility }) {
   // Aggregate certs across matched products
@@ -104,54 +104,115 @@ export default function RichApplicationLanding({ page, application, products, si
         </section>
       )}
 
-      {/* Matched products */}
-      {(products || []).length > 0 ? (
-        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16 border-t border-slate-100 scroll-reveal">
-          <div className="flex items-end justify-between gap-4 mb-10 flex-wrap">
-            <div>
-              <div className="inline-block bg-violet-50 text-violet-700 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
-                Matching SKUs
+      {/* Matched products — Drop 145: grouped by source division so buyers
+         see "Salt for water treatment" and "Chemicals for water treatment"
+         as separate sub-sections instead of one mixed grid. */}
+      {(products || []).length > 0 ? (() => {
+        // Group products by their `category` (= page division)
+        const byDivision = {}
+        for (const p of products) {
+          const k = p.category || 'other'
+          if (!byDivision[k]) byDivision[k] = []
+          byDivision[k].push(p)
+        }
+        // Render in canonical PRODUCT_DIVISIONS order (salt first, then
+        // fertilizers, chemicals, construction, agro, minerals, metals)
+        const divisionsToRender = PRODUCT_DIVISIONS.filter(d => byDivision[d.id]?.length)
+        const otherKeys = Object.keys(byDivision).filter(k => !PRODUCT_DIVISIONS.find(d => d.id === k))
+
+        return (
+          <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16 border-t border-slate-100 scroll-reveal">
+            <div className="flex items-end justify-between gap-4 mb-8 flex-wrap">
+              <div>
+                <div className="inline-block bg-violet-50 text-violet-700 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
+                  Matching SKUs
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                  {products.length} product{products.length === 1 ? '' : 's'} for {page.title.toLowerCase()}
+                </h2>
+                <p className="text-sm text-slate-500 mt-2">
+                  Sourced from {divisionsToRender.length} of our 7 product division{divisionsToRender.length === 1 ? '' : 's'}.
+                </p>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-                {(products || []).length} product{(products || []).length === 1 ? '' : 's'} for {page.title.toLowerCase()}
-              </h2>
-            </div>
-            <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
-              className="text-sm font-semibold text-violet-700 hover:underline">
-              Custom blend? →
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 stagger-children">
-            {products.map(p => (
-              <Link key={p.id} href={p.path}
-                className="card-lift group rounded-xl border border-slate-200 bg-white overflow-hidden">
-                <div className="aspect-[16/9] bg-gradient-to-br from-violet-50 to-blue-50 overflow-hidden">
-                  {p.hero_photo_url ? (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img src={p.hero_photo_url} alt={p.title}
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-5xl opacity-40">
-                      {application?.icon || '📦'}
-                    </div>
-                  )}
-                </div>
-                <div className="p-4">
-                  {p.hs_code && (
-                    <div className="text-[10px] font-mono uppercase font-bold text-slate-400 mb-1">HS {p.hs_code}</div>
-                  )}
-                  <h3 className="text-sm font-bold text-slate-900 line-clamp-2 group-hover:text-[#1d5fa1] transition-colors min-h-[2.5em]">
-                    {p.title}
-                  </h3>
-                  {p.certifications?.length > 0 && (
-                    <div className="text-xs text-slate-500 mt-1.5 line-clamp-1">{p.certifications.slice(0, 3).join(' · ')}</div>
-                  )}
-                </div>
+              <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
+                className="text-sm font-semibold text-violet-700 hover:underline">
+                Custom blend? →
               </Link>
-            ))}
-          </div>
-        </section>
-      ) : (
+            </div>
+
+            {/* Per-division sub-sections */}
+            <div className="space-y-10">
+              {divisionsToRender.map(d => {
+                const items = byDivision[d.id]
+                return (
+                  <div key={d.id}>
+                    {/* Division header */}
+                    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100">
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
+                        style={{ background: `${d.color}1A`, color: d.color }}>
+                        {d.icon}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-bold text-slate-900 text-lg">
+                          From {d.label} <span className="text-slate-400 font-medium tabular-nums">({items.length})</span>
+                        </h3>
+                      </div>
+                      <Link href={d.path} className="text-xs font-bold px-2.5 py-1 rounded-full border border-slate-200 bg-white text-slate-600 hover:border-[#1d5fa1] hover:text-[#1d5fa1] transition-colors flex-shrink-0">
+                        All {d.label.toLowerCase()} →
+                      </Link>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                      {items.map(p => (
+                        <Link key={p.id} href={p.path}
+                          className="card-lift group rounded-xl border bg-white overflow-hidden"
+                          style={{ borderColor: `${d.color}25` }}>
+                          <div className="aspect-[16/9] overflow-hidden"
+                            style={{ background: `linear-gradient(135deg, ${d.color}10, ${d.color}05)` }}>
+                            {p.hero_photo_url ? (
+                              /* eslint-disable-next-line @next/next/no-img-element */
+                              <img src={p.hero_photo_url} alt={p.title}
+                                className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-5xl opacity-40">
+                                {d.icon}
+                              </div>
+                            )}
+                          </div>
+                          <div className="p-4">
+                            {p.hs_code && (
+                              <div className="text-[10px] font-mono uppercase font-bold text-slate-400 mb-1">HS {p.hs_code}</div>
+                            )}
+                            <h4 className="text-sm font-bold text-slate-900 line-clamp-2 group-hover:text-[#1d5fa1] transition-colors min-h-[2.5em]">
+                              {p.title}
+                            </h4>
+                            {p.certifications?.length > 0 && (
+                              <div className="text-xs text-slate-500 mt-1.5 line-clamp-1">{p.certifications.slice(0, 3).join(' · ')}</div>
+                            )}
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )
+              })}
+              {otherKeys.length > 0 && otherKeys.map(k => (
+                <div key={k}>
+                  <h3 className="font-bold text-slate-900 text-lg mb-4">Other ({byDivision[k].length})</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    {byDivision[k].map(p => (
+                      <Link key={p.id} href={p.path} className="card-lift group rounded-xl border border-slate-200 bg-white overflow-hidden">
+                        <div className="p-4">
+                          <h4 className="text-sm font-bold text-slate-900 line-clamp-2 group-hover:text-[#1d5fa1] transition-colors">{p.title}</h4>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )
+      })() : (
         <section className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-12 text-center scroll-reveal">
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-8 text-slate-500">
             <p>No products tagged for this application yet.</p>
