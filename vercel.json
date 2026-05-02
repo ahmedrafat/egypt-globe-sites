@@ -22,19 +22,15 @@
     { "source": "/products/construction/cement-clinker/:rest*",  "destination": "/products/construction/cement-and-clinker", "permanent": true },
     { "source": "/products/construction/gypsum-plaster",         "destination": "/products/construction/gypsum",             "permanent": true },
 
-    { "source": "/products/fertilizers/nitrogen",          "destination": "/products/fertilizers", "permanent": true },
-    { "source": "/products/fertilizers/nitrogen/:rest*",   "destination": "/products/fertilizers", "permanent": true },
     { "source": "/products/fertilizers/phosphates",        "destination": "/products/fertilizers/phosphate", "permanent": true },
     { "source": "/products/fertilizers/phosphates/:rest*", "destination": "/products/fertilizers/phosphate", "permanent": true },
-    { "source": "/products/fertilizers/potassium",         "destination": "/products/fertilizers", "permanent": true },
-    { "source": "/products/fertilizers/potassium/:rest*",  "destination": "/products/fertilizers", "permanent": true },
+    { "source": "/products/fertilizers/potassium",         "destination": "/products/fertilizers/potash", "permanent": true },
+    { "source": "/products/fertilizers/potassium/:rest*",  "destination": "/products/fertilizers/potash", "permanent": true },
 
-    { "source": "/products/chemicals/acids",                "destination": "/products/chemicals/industrial-chemicals", "permanent": true },
-    { "source": "/products/chemicals/acids/:rest*",         "destination": "/products/chemicals/industrial-chemicals", "permanent": true },
+    { "source": "/products/chemicals/acids",                "destination": "/products/chemicals/solvents-and-acids", "permanent": true },
+    { "source": "/products/chemicals/acids/:rest*",         "destination": "/products/chemicals/solvents-and-acids", "permanent": true },
     { "source": "/products/chemicals/alkalis-salts",        "destination": "/products/chemicals/industrial-chemicals", "permanent": true },
     { "source": "/products/chemicals/alkalis-salts/:rest*", "destination": "/products/chemicals/industrial-chemicals", "permanent": true },
-    { "source": "/products/chemicals/water-treatment",      "destination": "/products/chemicals/industrial-chemicals", "permanent": true },
-    { "source": "/products/chemicals/water-treatment/:rest*","destination": "/products/chemicals/industrial-chemicals", "permanent": true },
 
     { "source": "/products/edible-oils",                    "destination": "/products/agro/edible-oils", "permanent": true },
     { "source": "/products/edible-oils/:rest*",             "destination": "/products/agro/edible-oils", "permanent": true },
