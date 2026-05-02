@@ -19,6 +19,7 @@ import {
   getPagesInCategory,
   getDivisionSubcategories,
   getCommodityById,
+  getQualitySpecsForCommodity,
   getPagesForApplication,
   CATEGORY_META,
   PRODUCT_DIVISIONS,
@@ -98,6 +99,9 @@ export default async function PageRenderer({ page }) {
   const related = await getRelatedPages(page, 4)
 
   const commodity = page.commodity_id ? await getCommodityById(page.commodity_id) : null
+  // Drop 137b — fetch quality_specs reference for the commodity (one row
+  // per QC parameter with target / test method / standard / cert body).
+  const qualitySpecs = page.commodity_id ? await getQualitySpecsForCommodity(page.commodity_id) : []
   const visibility = await getBuyerVisibility()
 
   // Approved buyers with scoped access who navigate to a SKU outside
@@ -321,6 +325,7 @@ export default async function PageRenderer({ page }) {
           page={page}
           commodity={commodity}
           applications={(page.applications || []).map(id => APPLICATIONS.find(a => a.id === id)).filter(Boolean)}
+          qualitySpecs={qualitySpecs}
           visibility={visibility}
         />
       ) : page.path === '/trade-tools/hs-codes' ? (

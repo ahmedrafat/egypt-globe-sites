@@ -56,7 +56,7 @@ const TABS = [
   { id: 'quote',        label: 'Get a quote',  icon: '📨' },
 ]
 
-export default function ProductTabs({ page, commodity, applications: matchedApps, visibility }) {
+export default function ProductTabs({ page, commodity, applications: matchedApps, qualitySpecs, visibility }) {
   const [active, setActive] = useState('overview')
   const [transitSelection, setTransitSelection] = useState({})
 
@@ -142,6 +142,9 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
           {/* Specs */}
           <div className={active === 'specs' ? 'animate-fade-in-up' : 'hidden'}>
             <SpecsTable page={page} specs={specs} commodity={commodity} specEntries={specEntries} />
+            {qualitySpecs && qualitySpecs.length > 0 && (
+              <QualityReferenceTable specs={qualitySpecs} />
+            )}
             {certs.length > 0 && <CertificationsBlock certs={certs} />}
           </div>
 
@@ -250,6 +253,65 @@ function SpecsTable({ page, specs, commodity, specEntries }) {
           📄 Download Technical Data Sheet (PDF) →
         </a>
       )}
+    </div>
+  )
+}
+
+/**
+ * QualityReferenceTable — Drop 137b. Renders the cross-product quality_specs
+ * reference (Drop 136 master) for this commodity. One row per parameter
+ * carrying target value + test method + standard + cert body + sampling
+ * frequency + required flag. Mounted under the SpecsTable in the Specs tab.
+ */
+function QualityReferenceTable({ specs }) {
+  const required = specs.filter(s => s.required)
+  const optional = specs.filter(s => !s.required)
+  return (
+    <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm mt-4">
+      <div className="px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-amber-50/40 via-white to-amber-50/40 flex items-center justify-between">
+        <h3 className="font-bold text-lg text-slate-900 flex items-center gap-2">
+          <span className="text-xl">🛡</span> Quality reference + test methods
+        </h3>
+        <span className="text-xs font-medium text-slate-500">
+          {required.length} required · {optional.length} optional · {specs.length} total
+        </span>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead className="bg-slate-50/60 border-b border-slate-100">
+            <tr>
+              <th className="text-left text-[10px] uppercase tracking-wider font-bold text-slate-500 px-4 py-2">Parameter</th>
+              <th className="text-left text-[10px] uppercase tracking-wider font-bold text-slate-500 px-4 py-2">Target</th>
+              <th className="text-left text-[10px] uppercase tracking-wider font-bold text-slate-500 px-4 py-2">Test method</th>
+              <th className="text-left text-[10px] uppercase tracking-wider font-bold text-slate-500 px-4 py-2 hidden md:table-cell">Standard</th>
+              <th className="text-left text-[10px] uppercase tracking-wider font-bold text-slate-500 px-4 py-2 hidden lg:table-cell">Cert body</th>
+              <th className="text-center text-[10px] uppercase tracking-wider font-bold text-slate-500 px-4 py-2">Req</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[...required, ...optional].map(s => (
+              <tr key={s.id} className="border-b border-slate-100 hover:bg-slate-50/40">
+                <td className="px-4 py-2.5 text-slate-900 text-xs font-semibold">{s.parameter_name}</td>
+                <td className="px-4 py-2.5 text-amber-700 font-mono text-xs font-bold">
+                  {s.target_value} {s.unit && <span className="text-slate-400 font-normal">{s.unit}</span>}
+                </td>
+                <td className="px-4 py-2.5 text-slate-600 text-xs">{s.test_method}</td>
+                <td className="px-4 py-2.5 text-slate-500 text-xs hidden md:table-cell">{s.standard_ref}</td>
+                <td className="px-4 py-2.5 text-slate-500 text-xs hidden lg:table-cell">{s.certification_body}</td>
+                <td className="px-4 py-2.5 text-center text-xs">
+                  {s.required
+                    ? <span className="inline-flex items-center gap-0.5 text-red-700 font-bold">●</span>
+                    : <span className="text-slate-300">○</span>}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="px-4 py-3 text-[11px] text-slate-500 bg-slate-50/40 border-t border-slate-100">
+        ● Required = mandatory per shipment. ○ Optional = on-request.
+        Independent third-party verification (SGS / Intertek / Bureau Veritas) available — typically 0.3-0.5% of FOB value.
+      </p>
     </div>
   )
 }
