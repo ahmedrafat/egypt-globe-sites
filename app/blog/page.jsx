@@ -5,7 +5,8 @@ import Link from 'next/link'
 import { getPagesByCategory, getPageByPath } from '../../lib/corporatePages'
 import RichPageBody from '../../components/RichPageBody'
 
-export const revalidate = 60
+// Drop 139c — render on demand. See app/case-studies/page.jsx note.
+export const dynamic = 'force-dynamic'
 
 export const metadata = {
   title: 'News & Insights — Blog',

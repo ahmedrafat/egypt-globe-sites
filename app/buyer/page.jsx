@@ -11,6 +11,10 @@ import {
 } from '../../lib/corporatePages'
 import SignOutButton from '../../components/auth/SignOutButton'
 
+// Drop 139c — buyer dashboard reads cookies → must be dynamic anyway.
+// Force-dynamic so the build worker doesn't try to pre-render it.
+export const dynamic = 'force-dynamic'
+
 export const metadata = {
   title: 'Buyer Dashboard',
   description: 'Your Egypt Globe Group buyer profile, scoped catalogue, and recent quotes.',

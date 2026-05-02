@@ -5,7 +5,12 @@ import Link from 'next/link'
 import { getCaseStudies, getPageByPath } from '../../lib/corporatePages'
 import RichPageBody from '../../components/RichPageBody'
 
-export const revalidate = 60
+// Drop 139c — render on demand instead of pre-building. The build worker has
+// a 60s/page hard limit; if Supabase is slow during build, this page hung 3
+// retries and failed the entire build. Runtime-rendered pages benefit from
+// the withTimeout wrappers in lib/corporatePages.js (degrade gracefully)
+// while keeping the build queue moving.
+export const dynamic = 'force-dynamic'
 
 export const metadata = {
   title: 'Case Studies — Real Egypt Globe Shipments',

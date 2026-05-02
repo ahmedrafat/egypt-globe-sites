@@ -12,6 +12,9 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { getBuyerVisibility, createSupabaseServerClient } from '../../../lib/supabaseServer'
 
+// Drop 139c — auth-cookie-dependent, must be dynamic.
+export const dynamic = 'force-dynamic'
+
 export const metadata = {
   title: 'Your RFQs',
   description: 'Recent quotation requests you submitted to Egypt Globe Group.',

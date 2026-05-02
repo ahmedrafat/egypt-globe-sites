@@ -48,4 +48,7 @@ This file concatenates every published page on egyptglobe.com so AI crawlers and
   })
 }
 
-export const revalidate = 3600
+// Drop 139c — render on demand. Build-time generation chokes when
+// Supabase is slow (full-corpus dump runs through getAllPages).
+// Cache-Control header above keeps the runtime cost low (CDN cached 1h).
+export const dynamic = 'force-dynamic'
