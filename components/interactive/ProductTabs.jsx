@@ -115,70 +115,60 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
         </div>
       </div>
 
-      {/* Panels — render all so SEO crawlers see all content even pre-JS */}
+      {/* Panels — ALL render in DOM so SEO crawlers + AI crawlers see every
+         fact even pre-JS. Non-active panels hidden via Tailwind `hidden`
+         class (display:none) — invisible to humans, visible to bots. */}
       <div className="pt-8 grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8">
         <div className="min-w-0 space-y-8">
           {/* Overview */}
-          {active === 'overview' && (
-            <div className="space-y-6 animate-fade-in-up">
-              {page.description && (
-                <p className="text-lg text-slate-700 leading-relaxed font-medium">{page.description}</p>
-              )}
-              {isSalt && <SourceStorySwitcher pageSourceType={specs.source_type} />}
-              {!isSalt && (
-                <div className="rounded-2xl border border-slate-200 bg-white p-6">
-                  <h3 className="text-lg font-bold text-slate-900 mb-3">Origin & sourcing</h3>
-                  <p className="text-sm text-slate-700 leading-relaxed">
-                    {specs.origin || 'Sourced from Egypt Globe Group operations.'}
-                    {' '}Provenance documented on Egyptian Chamber of Commerce Certificate of Origin —
-                    qualifies for COMESA / PAFTA / EU-Med preferential treatment where applicable.
-                  </p>
-                </div>
-              )}
-              <KeyStatsStrip page={page} specs={specs} />
-            </div>
-          )}
+          <div className={`space-y-6 ${active === 'overview' ? 'animate-fade-in-up' : 'hidden'}`}>
+            {page.description && (
+              <p className="text-lg text-slate-700 leading-relaxed font-medium">{page.description}</p>
+            )}
+            {isSalt && <SourceStorySwitcher pageSourceType={specs.source_type} />}
+            {!isSalt && (
+              <div className="rounded-2xl border border-slate-200 bg-white p-6">
+                <h3 className="text-lg font-bold text-slate-900 mb-3">Origin & sourcing</h3>
+                <p className="text-sm text-slate-700 leading-relaxed">
+                  {specs.origin || 'Sourced from Egypt Globe Group operations.'}
+                  {' '}Provenance documented on Egyptian Chamber of Commerce Certificate of Origin —
+                  qualifies for COMESA / PAFTA / EU-Med preferential treatment where applicable.
+                </p>
+              </div>
+            )}
+            <KeyStatsStrip page={page} specs={specs} />
+          </div>
 
           {/* Specs */}
-          {active === 'specs' && (
-            <div className="animate-fade-in-up">
-              <SpecsTable page={page} specs={specs} commodity={commodity} specEntries={specEntries} />
-              {certs.length > 0 && <CertificationsBlock certs={certs} />}
-            </div>
-          )}
+          <div className={active === 'specs' ? 'animate-fade-in-up' : 'hidden'}>
+            <SpecsTable page={page} specs={specs} commodity={commodity} specEntries={specEntries} />
+            {certs.length > 0 && <CertificationsBlock certs={certs} />}
+          </div>
 
           {/* Applications */}
-          {active === 'applications' && (
-            <div className="animate-fade-in-up space-y-6">
-              <ApplicationsGrid apps={apps} pageTitle={page.title} />
-              {packing.length > 0 && <PackingGrid packing={packing} />}
-            </div>
-          )}
+          <div className={`space-y-6 ${active === 'applications' ? 'animate-fade-in-up' : 'hidden'}`}>
+            <ApplicationsGrid apps={apps} pageTitle={page.title} />
+            {packing.length > 0 && <PackingGrid packing={packing} />}
+          </div>
 
           {/* Logistics */}
-          {active === 'logistics' && (
-            <div className="animate-fade-in-up space-y-6">
-              <TransitTimeCalculator
-                defaultPorts={page.loading_ports || []}
-                onSelect={(s) => setTransitSelection(s)}
-              />
-              <LoadingPortsCard ports={page.loading_ports || []} regions={page.regions || []} />
-            </div>
-          )}
+          <div className={`space-y-6 ${active === 'logistics' ? 'animate-fade-in-up' : 'hidden'}`}>
+            <TransitTimeCalculator
+              defaultPorts={page.loading_ports || []}
+              onSelect={(s) => setTransitSelection(s)}
+            />
+            <LoadingPortsCard ports={page.loading_ports || []} regions={page.regions || []} />
+          </div>
 
           {/* Documents */}
-          {active === 'documents' && (
-            <div className="animate-fade-in-up">
-              <DocumentChecklist />
-            </div>
-          )}
+          <div className={active === 'documents' ? 'animate-fade-in-up' : 'hidden'}>
+            <DocumentChecklist />
+          </div>
 
           {/* Quote */}
-          {active === 'quote' && (
-            <div className="animate-fade-in-up">
-              <InlineQuoteCard page={page} prefill={transitSelection} />
-            </div>
-          )}
+          <div className={active === 'quote' ? 'animate-fade-in-up' : 'hidden'}>
+            <InlineQuoteCard page={page} prefill={transitSelection} />
+          </div>
         </div>
 
         {/* Sticky right rail — Quick Quote + Commercial Terms always visible */}
