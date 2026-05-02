@@ -4,6 +4,7 @@ import SiteHeader from '../components/SiteHeader'
 import SiteFooter from '../components/SiteFooter'
 import WhatsAppFab from '../components/WhatsAppFab'
 import { OrganizationJsonLd } from '../components/StructuredData'
+import WebVitalsReporter from '../components/WebVitalsReporter'
 import { getSiteSettings } from '../lib/corporatePages'
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
@@ -71,6 +72,8 @@ export default async function RootLayout({ children }) {
         </a>
         {/* Drop 122 — sitewide Organization + WebSite schema (rich SERP) */}
         <OrganizationJsonLd settings={settings} />
+        {/* Drop 130 — Web Vitals telemetry beacon (LCP/INP/CLS/FCP/TTFB) */}
+        <WebVitalsReporter />
         <SiteHeader settings={settings} />
         <main id="main-content" className="flex-1">{children}</main>
         <SiteFooter settings={settings} />
