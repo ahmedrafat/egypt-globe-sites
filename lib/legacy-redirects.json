@@ -675,11 +675,6 @@
     "permanent": true
   },
   {
-    "source": "/products/chemicals/water-treatment",
-    "destination": "/products/chemicals/industrial-chemicals",
-    "permanent": true
-  },
-  {
     "source": "/products/chemicals/water-treatment/aluminum-sulfate-alum",
     "destination": "/products/chemicals/industrial-chemicals",
     "permanent": true
@@ -822,11 +817,6 @@
   {
     "source": "/products/edible-oils/sunflower-and-soybean-oil",
     "destination": "/",
-    "permanent": true
-  },
-  {
-    "source": "/products/fertilizers/nitrogen",
-    "destination": "/products/fertilizers",
     "permanent": true
   },
   {
