@@ -12,7 +12,7 @@
  * the actual rates; the widget exists to give the buyer a fast
  * "Is this worth it?" gut-check before they commit to a quote.
  */
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 
 // Commodity → HS code → MFN duty rate per country (representative — verify
 // per current Customs Tariff schedule). PAFTA / COMESA / ECOWAS preferential
@@ -83,19 +83,55 @@ const COUNTRY_TARIFFS = {
   },
 }
 
+// Drop 138c — country slug → ISO3 for WITS lookup
+const ISO3_BY_SLUG = {
+  kenya: 'KEN', nigeria: 'NGA', india: 'IND', 'saudi-arabia': 'SAU',
+  egypt: 'EGY', uae: 'ARE', 'south-africa': 'ZAF',
+}
+
 export default function TariffCalculator({ countryId = 'kenya' }) {
   const country = COUNTRY_TARIFFS[countryId] || COUNTRY_TARIFFS.kenya
   const [commodity, setCommodity] = useState('cement')
   const [cifValue, setCifValue]   = useState(100000)
   const [usePref, setUsePref]     = useState(true)
+  // Drop 138c — live tariff override from /api/tariff-lookup (WITS-backed)
+  const [liveRate, setLiveRate]   = useState(null)
+  const [liveLoading, setLiveLoading] = useState(false)
+  const [liveSource, setLiveSource]   = useState(null)
+  const [useLive, setUseLive]     = useState(true)
+
+  // Fetch live tariff whenever commodity changes
+  useEffect(() => {
+    const reporter = ISO3_BY_SLUG[countryId]
+    const com = COMMODITIES[commodity]
+    if (!reporter || !com?.hs) return
+    setLiveLoading(true); setLiveRate(null); setLiveSource(null)
+    fetch(`/api/tariff-lookup?reporter=${reporter}&hs=${com.hs.replace(/\D/g, '')}`)
+      .then(r => r.ok ? r.json() : null)
+      .then(j => {
+        if (!j) return
+        setLiveRate(j.mfn_rate_pct)
+        setLiveSource(j.cached ? `${j.source} (cached)` : j.source)
+      })
+      .catch(() => {})
+      .finally(() => setLiveLoading(false))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [commodity, countryId])
 
   const breakdown = useMemo(() => {
     const cif = Number(cifValue) || 0
-    const dutyRate = usePref && country.pref?.[commodity] !== undefined
-      ? country.pref[commodity]
-      : (country.mfn[commodity] ?? 5)
+    // Resolution order: preferential (FTA) wins → live WITS rate (if toggled + available)
+    // → hardcoded MFN fallback. Same precedence the user sees in the UI badges.
+    let dutyRate, dutySrc
+    if (usePref && country.pref?.[commodity] !== undefined) {
+      dutyRate = country.pref[commodity]; dutySrc = `${country.fta} preferential`
+    } else if (useLive && liveRate != null) {
+      dutyRate = liveRate; dutySrc = liveSource || 'WITS live'
+    } else {
+      dutyRate = country.mfn[commodity] ?? 5; dutySrc = 'MFN (indicative)'
+    }
     const duty = (cif * dutyRate) / 100
-    const lines = [{ label: `Customs duty (${dutyRate}%)`, value: duty, kind: 'duty' }]
+    const lines = [{ label: `Customs duty (${dutyRate}% — ${dutySrc})`, value: duty, kind: 'duty' }]
     let cumulative = duty
     for (const l of country.levies) {
       let base = cif
@@ -108,7 +144,7 @@ export default function TariffCalculator({ countryId = 'kenya' }) {
       cumulative += v
     }
     return { lines, total: cif + cumulative, cif, totalCharges: cumulative }
-  }, [country, commodity, cifValue, usePref])
+  }, [country, commodity, cifValue, usePref, useLive, liveRate, liveSource])
 
   const com = COMMODITIES[commodity]
   const sample = (cifValue || 0).toLocaleString()
@@ -165,6 +201,36 @@ export default function TariffCalculator({ countryId = 'kenya' }) {
               </label>
             </div>
           )}
+
+          {/* Drop 138c — Live WITS rate badge (informational + toggle) */}
+          <div className={`rounded-xl border p-3 ${liveLoading ? 'border-slate-200 bg-slate-50/60' : liveRate != null ? 'border-blue-200 bg-blue-50/50' : 'border-amber-200 bg-amber-50/50'}`}>
+            {liveLoading ? (
+              <div className="flex items-center gap-2 text-xs text-slate-500">
+                <span className="inline-block w-3 h-3 rounded-full border-2 border-slate-300 border-t-slate-600 animate-spin" />
+                Looking up live tariff from World Bank WITS…
+              </div>
+            ) : liveRate != null ? (
+              <label className="flex items-start gap-2.5 cursor-pointer">
+                <input type="checkbox" checked={useLive} onChange={e => setUseLive(e.target.checked)}
+                  className="mt-0.5 w-4 h-4 accent-blue-600" disabled={usePref && country.pref?.[commodity] !== undefined} />
+                <div className="flex-1">
+                  <div className="text-sm font-bold text-blue-900">
+                    Live MFN rate: <span className="font-mono">{liveRate}%</span>
+                    <span className="ml-2 text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-blue-100 text-blue-700 font-bold align-middle">{liveSource}</span>
+                  </div>
+                  <div className="text-[11px] text-blue-700 mt-0.5">
+                    {usePref && country.pref?.[commodity] !== undefined
+                      ? `${country.fta} preferential (0%) overrides — uncheck above to compare against live MFN.`
+                      : `Pulled live from World Bank UNCTAD TRAINS, cached 30 days. Uncheck to use the static fallback (${country.mfn[commodity] ?? 5}%).`}
+                  </div>
+                </div>
+              </label>
+            ) : (
+              <div className="text-[11px] text-amber-800">
+                <span className="font-bold">Using indicative MFN ({country.mfn[commodity] ?? 5}%).</span> Live WITS data unavailable for this HS code / country combination.
+              </div>
+            )}
+          </div>
         </div>
 
         <div>
