@@ -30,7 +30,12 @@ import MarkdownBody from '../components/MarkdownBody'
 import CustomerLogosStrip from '../components/CustomerLogosStrip'
 import { getCaseStudies } from '../lib/corporatePages'
 
-export const revalidate = 60
+// Drop 139c — render on demand. Home pulls from 4-5 Supabase queries
+// across PRODUCT_DIVISIONS / case studies / featured SKUs etc.; with
+// withTimeout wrappers each cap at 4s, but chained that exceeds the
+// 60s build worker budget when Supabase is slow. Runtime renders
+// degrade gracefully via the same timeouts.
+export const dynamic = 'force-dynamic'
 
 export const metadata = {
   title: 'Egypt Globe Group — B2B Export Trading Conglomerate',

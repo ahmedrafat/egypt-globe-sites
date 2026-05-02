@@ -13,7 +13,8 @@ import {
   APPLICATIONS,
 } from '../../../lib/corporatePages'
 
-export const revalidate = 60
+// Drop 139c — render on demand (multi-query salt catalogue page)
+export const dynamic = 'force-dynamic'
 
 export const metadata = {
   title: 'Salt — Sea & Rock from Egypt',

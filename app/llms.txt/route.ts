@@ -94,4 +94,5 @@ We supply commodities to manufacturers, water utilities, oil & gas operators, fe
   })
 }
 
-export const revalidate = 3600
+// Drop 139c — render on demand (CDN cache header above keeps cost low)
+export const dynamic = 'force-dynamic'
