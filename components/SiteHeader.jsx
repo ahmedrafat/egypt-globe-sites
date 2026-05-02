@@ -59,12 +59,12 @@ export default async function SiteHeader({ settings }) {
       </div>
 
       {/* ── Main nav row ─────────────────────────────────────────── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-14 sm:h-16 gap-2">
 
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group flex-shrink-0">
-            <Logo imageUrl={s.logoUrl} className="h-9 w-auto transition-transform group-hover:scale-105" />
+          {/* Logo — slightly smaller on mobile to leave room for CTAs */}
+          <Link href="/" className="flex items-center gap-2 group flex-shrink-0 min-w-0">
+            <Logo imageUrl={s.logoUrl} className="h-8 sm:h-9 w-auto transition-transform group-hover:scale-105" />
           </Link>
 
           {/* Desktop nav */}
@@ -201,7 +201,7 @@ export default async function SiteHeader({ settings }) {
           </nav>
 
           {/* Right-side actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
             {visibility.authenticated ? (
               <Link href="/buyer"
                 className="hidden md:flex items-center gap-1.5 text-sm font-semibold text-slate-700 hover:text-[#1d5fa1] px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors">
@@ -213,16 +213,21 @@ export default async function SiteHeader({ settings }) {
             ) : (
               <Link href="/login"
                 className="hidden md:flex items-center gap-1.5 text-sm font-semibold text-slate-600 hover:text-[#1d5fa1] px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                 </svg>
                 <span className="hidden lg:inline">Sign in</span>
               </Link>
             )}
 
-            <Link href="/rfq"
-              className="hidden sm:flex items-center gap-1.5 text-sm font-bold text-white bg-[#FF6321] hover:bg-[#e0541b] px-5 py-2.5 rounded-lg shadow-md shadow-orange-500/20 transition-all hover:-translate-y-0.5 hover:shadow-lg">
-              📋 <span>Get a Quote</span>
+            {/* CTA — compact icon-only on mobile (<sm), full label sm+ */}
+            <Link href="/rfq" aria-label="Get a quote"
+              className="flex items-center gap-1.5 text-sm font-bold text-white bg-[#FF6321] hover:bg-[#e0541b] active:bg-[#c84512] px-3 sm:px-5 h-10 sm:h-auto sm:py-2.5 rounded-xl sm:rounded-lg shadow-md shadow-orange-500/25 transition-all sm:hover:-translate-y-0.5">
+              <svg className="w-4 h-4 sm:hidden" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+              </svg>
+              <span className="hidden sm:inline">📋 Get a Quote</span>
+              <span className="sm:hidden">Quote</span>
             </Link>
 
             {/* Mobile hamburger */}

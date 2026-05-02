@@ -228,7 +228,7 @@ export default async function PageRenderer({ page }) {
             style={{ background: 'radial-gradient(circle, white 0%, transparent 70%)' }} />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-20">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-1.5 text-xs text-white/50 mb-5 flex-wrap animate-fade-in">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
@@ -246,33 +246,33 @@ export default async function PageRenderer({ page }) {
             <span className="text-white/90 font-medium truncate max-w-[300px]">{page.title}</span>
           </nav>
 
-          {/* Chip rail */}
-          <div className="flex items-center gap-2 mb-4 flex-wrap animate-fade-in-up">
-            <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 text-white backdrop-blur-sm border border-white/20">
+          {/* Chip rail — tighter on mobile, hide HS chip on <sm */}
+          <div className="flex items-center gap-1.5 sm:gap-2 mb-4 flex-wrap animate-fade-in-up">
+            <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-white/15 text-white backdrop-blur-sm border border-white/20">
               <span aria-hidden="true">{cat.icon}</span> {cat.label}
             </span>
             {isRockSalt && (
-              <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-stone-600/40 text-stone-100 border border-stone-400/30">
+              <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-stone-600/40 text-stone-100 border border-stone-400/30">
                 ⛏️ Rock Salt
               </span>
             )}
             {isSeaSalt && (
-              <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-cyan-500/30 text-cyan-50 border border-cyan-400/30">
+              <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-cyan-500/30 text-cyan-50 border border-cyan-400/30">
                 🌊 Sea Salt
               </span>
             )}
             {page.specs?.nacl_min && (
-              <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 text-white border border-white/20">
+              <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-white/15 text-white border border-white/20">
                 NaCl {page.specs.nacl_min}
               </span>
             )}
             {page.specs?.grain_label && (
-              <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 text-white border border-white/20">
+              <span className="hidden sm:inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 text-white border border-white/20">
                 {page.specs.grain_label}
               </span>
             )}
             {page.hs_code && (
-              <span className="inline-flex items-center text-[11px] font-mono font-bold px-3 py-1.5 rounded-full bg-white/10 text-white/90 border border-white/15">
+              <span className="hidden sm:inline-flex items-center text-[11px] font-mono font-bold px-3 py-1.5 rounded-full bg-white/10 text-white/90 border border-white/15">
                 HS {page.hs_code}
               </span>
             )}
@@ -280,31 +280,34 @@ export default async function PageRenderer({ page }) {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-end">
             <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-4 leading-[1.05] drop-shadow-sm">
+              <h1 className="text-[28px] sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-3 sm:mb-4 leading-[1.1] sm:leading-[1.05] drop-shadow-sm">
                 {page.title}
               </h1>
               {page.description && (
-                <p className="text-base sm:text-lg leading-relaxed max-w-3xl text-white/80">
+                <p className="text-sm sm:text-lg leading-relaxed max-w-3xl text-white/80">
                   {page.description}
                 </p>
               )}
             </div>
 
-            {/* Hero action buttons — Quote + TDS + COA */}
+            {/* Hero action buttons — Quote dominates on mobile,
+                TDS/COA become secondary chips */}
             {isProductDetail && (
-              <div className="flex flex-wrap gap-2 lg:justify-end animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+              <div className="flex flex-wrap items-center gap-2 lg:justify-end animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
                 <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
-                  className="inline-flex items-center gap-2 bg-[#FF6321] hover:bg-[#e0541b] text-white font-bold px-5 py-3 rounded-xl shadow-lg shadow-orange-500/25 transition-all hover:-translate-y-0.5">
+                  className="inline-flex items-center justify-center gap-2 bg-[#FF6321] hover:bg-[#e0541b] active:bg-[#c84512] text-white font-bold px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl shadow-lg shadow-orange-500/25 transition-all sm:hover:-translate-y-0.5 w-full sm:w-auto">
                   📋 Get Quote
                 </Link>
-                <Link href={`/tds${page.path}`} target="_blank"
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur text-white font-semibold border border-white/20 px-5 py-3 rounded-xl transition-colors">
-                  📄 TDS
-                </Link>
-                <Link href={`/rfq?product=${encodeURIComponent(page.path)}&type=coa`}
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur text-white font-semibold border border-white/20 px-5 py-3 rounded-xl transition-colors">
-                  🧪 COA
-                </Link>
+                <div className="flex gap-2 w-full sm:w-auto">
+                  <Link href={`/tds${page.path}`} target="_blank"
+                    className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 active:bg-white/30 backdrop-blur text-white font-semibold border border-white/20 px-4 py-2.5 rounded-xl transition-colors text-sm">
+                    📄 TDS
+                  </Link>
+                  <Link href={`/rfq?product=${encodeURIComponent(page.path)}&type=coa`}
+                    className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 active:bg-white/30 backdrop-blur text-white font-semibold border border-white/20 px-4 py-2.5 rounded-xl transition-colors text-sm">
+                    🧪 COA
+                  </Link>
+                </div>
               </div>
             )}
           </div>

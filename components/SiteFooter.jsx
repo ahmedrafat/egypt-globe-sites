@@ -13,16 +13,16 @@ import { PRODUCT_DIVISIONS, SERVICE_DIVISIONS, COMPANY_INFO_DEFAULT, LOGISTICS_P
 export default function SiteFooter({ settings }) {
   const s = settings || COMPANY_INFO_DEFAULT
   return (
-    <footer className="bg-[#0d1b30] text-slate-300 mt-24">
+    <footer className="bg-[#0d1b30] text-slate-300 mt-16 sm:mt-24">
 
       {/* Orange accent top bar */}
       <div className="h-1 bg-gradient-to-r from-[#FF6321] via-[#ff8c55] to-[#FF6321]" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-8 sm:pb-10">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-12 gap-x-6 gap-y-8 sm:gap-8">
 
-          {/* ── Brand block ────────────────────────────────────── */}
-          <div className="lg:col-span-3">
+          {/* ── Brand block — spans full width on mobile ───────── */}
+          <div className="col-span-2 sm:col-span-2 md:col-span-2 lg:col-span-3">
             <div className="bg-white inline-flex p-3 rounded-xl shadow-lg mb-5">
               <Logo imageUrl={s.logoUrl} className="h-10 w-auto" />
             </div>
@@ -45,7 +45,7 @@ export default function SiteFooter({ settings }) {
           </div>
 
           {/* ── Product divisions ──────────────────────────────── */}
-          <div className="lg:col-span-2">
+          <div className="col-span-1 lg:col-span-2">
             <h4 className="text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-4 flex items-center gap-2">
               <span className="w-4 h-0.5 bg-[#FF6321] rounded-full" />
               Products
@@ -70,7 +70,7 @@ export default function SiteFooter({ settings }) {
           </div>
 
           {/* ── Service divisions ──────────────────────────────── */}
-          <div className="lg:col-span-2">
+          <div className="col-span-1 lg:col-span-2">
             <h4 className="text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-4 flex items-center gap-2">
               <span className="w-4 h-0.5 bg-[#FF6321] rounded-full" />
               Services
@@ -102,7 +102,7 @@ export default function SiteFooter({ settings }) {
           </div>
 
           {/* ── Company links ──────────────────────────────────── */}
-          <div className="lg:col-span-2">
+          <div className="col-span-1 lg:col-span-2">
             <h4 className="text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-4 flex items-center gap-2">
               <span className="w-4 h-0.5 bg-[#FF6321] rounded-full" />
               Company
@@ -128,8 +128,8 @@ export default function SiteFooter({ settings }) {
             </ul>
           </div>
 
-          {/* ── Contact block ──────────────────────────────────── */}
-          <div className="lg:col-span-3">
+          {/* ── Contact block — spans full on mobile so address reads cleanly ── */}
+          <div className="col-span-2 sm:col-span-1 lg:col-span-3">
             <h4 className="text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-4 flex items-center gap-2">
               <span className="w-4 h-0.5 bg-[#FF6321] rounded-full" />
               Contact

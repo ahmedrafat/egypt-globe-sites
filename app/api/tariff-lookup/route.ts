@@ -110,9 +110,8 @@ export async function GET(request: Request) {
   }
 
   // 1. Cache check
-  let cacheDiag: any = null
   try {
-    const r = await supabase
+    const { data: cached } = await supabase
       .from('tariff_cache')
       .select('mfn_rate_pct, preferential_pct, bound_rate_pct, source, fetched_at, expires_at')
       .eq('reporter_iso3', reporter)
@@ -121,11 +120,10 @@ export async function GET(request: Request) {
       .eq('year',          year)
       .gt('expires_at',    new Date().toISOString())
       .maybeSingle()
-    cacheDiag = { hasData: !!r.data, error: r.error?.message || null, status: r.status }
-    if (r.data) {
-      return Response.json({ ...r.data, cached: true, hs_code: hs6, reporter, year })
+    if (cached) {
+      return Response.json({ ...cached, cached: true, hs_code: hs6, reporter, year })
     }
-  } catch (e: any) { cacheDiag = { caught: e?.message || String(e) } }
+  } catch { /* cache miss is non-fatal */ }
 
   // 2. WITS live call
   const wits = await fetchFromWits(reporter, hs6, year)
@@ -135,10 +133,9 @@ export async function GET(request: Request) {
 
   // 4. Cache write via SECURITY DEFINER RPC (bypasses anon RLS — see
   //    cache_tariff_lookup definition for input-validation guards)
-  let writeDiag: any = null
   if (result.mfn_rate_pct != null && result.source !== 'no-data') {
     try {
-      const w = await supabase.rpc('cache_tariff_lookup', {
+      await supabase.rpc('cache_tariff_lookup', {
         p_reporter_iso3:    reporter,
         p_hs_code:          hs6,
         p_year:             year,
@@ -147,9 +144,8 @@ export async function GET(request: Request) {
         p_bound_rate_pct:   result.bound_rate_pct,
         p_source:           result.source,
       })
-      writeDiag = { ok: !w.error, error: w.error?.message || null }
-    } catch (e: any) { writeDiag = { caught: e?.message || String(e) } }
+    } catch { /* write rejected — keep going, response is correct */ }
   }
 
-  return Response.json({ ...result, cached: false, hs_code: hs6, reporter, year, raw: undefined, _diag: { cache: cacheDiag, write: writeDiag } })
+  return Response.json({ ...result, cached: false, hs_code: hs6, reporter, year, raw: undefined })
 }

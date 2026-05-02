@@ -28,11 +28,12 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
 
   return (
     <>
-      {/* Hamburger */}
+      {/* Hamburger — 44×44 for Apple HIG-compliant tap target */}
       <button onClick={() => setOpen(true)} aria-label="Open navigation menu"
-        className="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors">
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/>
+        aria-expanded={open}
+        className="lg:hidden flex items-center justify-center w-11 h-11 rounded-xl text-slate-700 hover:bg-slate-100 active:bg-slate-200 transition-colors -mr-1">
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
       </button>
 
@@ -41,31 +42,65 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
         className={`lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-300 ${open ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} />
 
       {/* Drawer */}
-      <aside role="dialog" aria-label="Mobile navigation"
-        className={`lg:hidden fixed inset-y-0 right-0 z-50 w-full max-w-[340px] bg-white shadow-2xl flex flex-col transition-transform duration-300 ease-out ${open ? 'translate-x-0' : 'translate-x-full'}`}>
+      <aside role="dialog" aria-label="Mobile navigation" aria-modal="true"
+        className={`lg:hidden fixed inset-y-0 right-0 z-50 w-full max-w-[360px] bg-white shadow-2xl flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${open ? 'translate-x-0' : 'translate-x-full'}`}
+        style={{ paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'env(safe-area-inset-bottom)' }}>
 
         {/* Drawer header */}
-        <div className="flex items-center justify-between px-5 py-4 bg-gradient-to-r from-[#1d5fa1] to-[#14467a] text-white flex-shrink-0">
-          <Link href="/" onClick={close} className="flex items-center gap-2.5">
-            {/* Mini wordmark */}
-            <div className="w-8 h-8 rounded-lg bg-white/20 border border-white/30 flex items-center justify-center">
-              <span className="text-white font-extrabold text-sm leading-none">EG</span>
+        <div className="flex items-center justify-between px-5 py-4 bg-gradient-to-br from-[#1d5fa1] via-[#185289] to-[#14467a] text-white flex-shrink-0 relative overflow-hidden">
+          {/* Decorative orange dot */}
+          <div aria-hidden="true" className="absolute -top-12 -right-12 w-32 h-32 rounded-full opacity-20"
+            style={{ background: 'radial-gradient(circle, #FF6321 0%, transparent 70%)' }} />
+
+          <Link href="/" onClick={close} className="relative flex items-center gap-2.5 group">
+            <div className="w-9 h-9 rounded-xl bg-white text-[#1d5fa1] border border-white/30 flex items-center justify-center group-active:scale-95 transition-transform">
+              <span className="font-black text-sm leading-none">EG</span>
             </div>
             <div>
               <div className="font-extrabold text-sm leading-tight">Egypt Globe Group</div>
-              <div className="text-[10px] text-blue-200 leading-tight">B2B Export Trading</div>
+              <div className="text-[10px] text-blue-200 leading-tight">B2B Export · 60+ markets</div>
             </div>
           </Link>
           <button onClick={close} aria-label="Close menu"
-            className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/15 transition-colors flex-shrink-0">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/>
+            className="relative w-11 h-11 flex items-center justify-center rounded-xl hover:bg-white/15 active:bg-white/25 transition-colors flex-shrink-0">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12"/>
             </svg>
           </button>
         </div>
 
         {/* Drawer body — scrollable */}
         <nav className="flex-1 overflow-y-auto divide-y divide-slate-100">
+
+          {/* Quick-actions row — RFQ / call / mail. One-tap conversion
+              paths visible immediately without scrolling. */}
+          <div className="grid grid-cols-3 gap-2 p-3 bg-gradient-to-b from-slate-50 to-white">
+            <Link href="/rfq" onClick={close}
+              className="flex flex-col items-center justify-center gap-1 h-16 rounded-xl bg-[#FF6321] hover:bg-[#e0541b] active:bg-[#c84512] text-white shadow-md shadow-orange-500/25 transition-colors">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+              </svg>
+              <span className="text-[11px] font-bold leading-none">Quote</span>
+            </Link>
+            {settings?.phoneE164 && (
+              <a href={`tel:${settings.phoneE164}`}
+                className="flex flex-col items-center justify-center gap-1 h-16 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 active:bg-slate-100 text-slate-900 transition-colors">
+                <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                </svg>
+                <span className="text-[11px] font-bold leading-none">Call</span>
+              </a>
+            )}
+            {settings?.email && (
+              <a href={`mailto:${settings.email}`}
+                className="flex flex-col items-center justify-center gap-1 h-16 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 active:bg-slate-100 text-slate-900 transition-colors">
+                <svg className="w-5 h-5 text-[#1d5fa1]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                <span className="text-[11px] font-bold leading-none">Email</span>
+              </a>
+            )}
+          </div>
 
           {/* Products accordion */}
           <Accordion label="Products" icon="📦" isOpen={section === 'products'} onToggle={() => toggle('products')}>
@@ -170,28 +205,31 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
   )
 }
 
-const topLinkCls = 'flex items-center gap-3 px-5 py-3.5 text-slate-800 font-semibold hover:bg-slate-50 hover:text-[#1d5fa1] transition-colors text-sm'
-const subLinkCls = 'flex items-center gap-3 px-5 py-3 text-slate-600 text-sm hover:bg-slate-50 hover:text-[#1d5fa1] transition-colors'
+const topLinkCls = 'flex items-center gap-3 px-5 py-3.5 text-slate-800 font-semibold hover:bg-slate-50 hover:text-[#1d5fa1] active:bg-slate-100 transition-colors text-sm min-h-[52px]'
+const subLinkCls = 'flex items-center gap-3 px-5 py-3 text-slate-600 text-sm hover:bg-slate-100 hover:text-[#1d5fa1] active:bg-slate-200 transition-colors min-h-[44px]'
 
 function Accordion({ label, icon, isOpen, onToggle, children }) {
   return (
     <div>
       <button onClick={onToggle} aria-expanded={isOpen}
-        className="w-full flex items-center justify-between px-5 py-3.5 text-slate-800 font-semibold hover:bg-slate-50 transition-colors text-sm">
+        className="w-full flex items-center justify-between px-5 py-4 text-slate-900 font-bold hover:bg-slate-50 active:bg-slate-100 transition-colors text-sm min-h-[56px]">
         <span className="flex items-center gap-3">
-          <span aria-hidden className="w-7 h-7 rounded-lg bg-blue-100 flex items-center justify-center text-base">
+          <span aria-hidden className="w-8 h-8 rounded-lg bg-blue-100 text-[#1d5fa1] flex items-center justify-center text-base">
             {icon}
           </span>
           {label}
         </span>
-        <svg className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-          fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7"/>
-        </svg>
+        <span className={`w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center transition-transform duration-300 ${isOpen ? 'rotate-180 bg-blue-100' : ''}`}>
+          <svg className="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7"/>
+          </svg>
+        </span>
       </button>
-      <div className={`overflow-hidden transition-[max-height] duration-300 ease-out ${isOpen ? 'max-h-[640px]' : 'max-h-0'}`}>
-        <div className="bg-slate-50/60 border-t border-slate-100">
-          {children}
+      <div className={`grid transition-[grid-template-rows] duration-300 ease-out ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
+        <div className="overflow-hidden">
+          <div className="bg-slate-50/80 border-t border-slate-100 py-1">
+            {children}
+          </div>
         </div>
       </div>
     </div>
