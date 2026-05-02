@@ -23,10 +23,14 @@ export const dynamic = 'force-dynamic'  // never SSG — every request hits cach
 export const runtime = 'nodejs'         // need Node fetch + DB driver
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://ohobjnbsybdxntaewqdi.supabase.co'
-// Anon publishable key — safe (RLS gates writes to authenticated only,
-// but we need a service-bypass via the secret if available; otherwise
-// fall back to anon-write attempt and just skip caching on RLS reject).
+// Service-role key bypasses RLS for the cache upsert (authenticated_full_access
+// is the only ALL policy on tariff_cache). Accept either env-var name so we
+// can use whichever is already wired into the project. Falls through to the
+// publishable anon key as a last resort — anon SELECT works, anon INSERT/UPDATE
+// will be rejected by RLS and the cache write silently no-ops (response is
+// still correct, just not cached).
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
+  || process.env.SUPABASE_SERVICE_KEY
   || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   || 'sb_publishable_L9dqQRDBn1bISOu8Y4C0wg_KYZ1NJEC'
 
