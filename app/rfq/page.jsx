@@ -48,7 +48,7 @@ export default async function RFQPage({ searchParams }) {
           <div className="absolute -top-24 -right-32 w-[500px] h-[500px] rounded-full opacity-30"
             style={{ background: 'radial-gradient(circle, #1d5fa133 0%, transparent 70%)' }} />
         </div>
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 animate-fade-in-up">
+        <div className="relative max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 animate-fade-in-up">
           <div className={`inline-flex items-center gap-2 ${isCoa ? 'bg-emerald-50 text-emerald-700' : 'bg-orange-50 text-[#FF6321]'} text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full mb-4`}>
             <span className={`w-2 h-2 rounded-full ${isCoa ? 'bg-emerald-600' : 'bg-[#FF6321]'} animate-pulse`} />
             {heroLabel}
@@ -63,7 +63,7 @@ export default async function RFQPage({ searchParams }) {
       </section>
 
       {/* Three-column layout: form (8 cols) + sidebar (4 cols) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+      <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           <div className="lg:col-span-8 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             <RFQForm
@@ -133,7 +133,7 @@ export default async function RFQPage({ searchParams }) {
 
       {/* Body markdown if present (admin-editable copy below the form) */}
       {page?.body_markdown && (
-        <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <section className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-12">
           <div className="prose prose-slate max-w-none text-slate-600">
             {page.description}
           </div>

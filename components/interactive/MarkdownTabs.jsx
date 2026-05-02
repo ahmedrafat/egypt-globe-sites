@@ -126,13 +126,16 @@ export default function MarkdownTabs({ body, title, leadingWidget = null }) {
   }
 
   return (
-    <section id="mdtabs" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <section id="mdtabs" className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10">
       {/* Optional category widget above tabs */}
       {leadingWidget && <div className="mb-8">{leadingWidget}</div>}
 
-      {/* Sticky tab bar */}
-      <div className="sticky top-0 z-20 -mx-4 sm:-mx-6 lg:-mx-8 bg-white/85 backdrop-blur-md border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 overflow-x-auto">
+      {/* Sticky tab bar — Drop 142: bump inner padding from px-2 → px-4 on
+         mobile so first/last tab labels don't touch the screen edge. The
+         outer -mx-* still breaks out of the section padding for a true
+         edge-to-edge sticky surface. */}
+      <div className="sticky top-0 z-20 -mx-5 sm:-mx-6 lg:-mx-8 bg-white/85 backdrop-blur-md border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-4 lg:px-6 overflow-x-auto">
           <div className="flex gap-1">
             {tabs.map(t => (
               <button

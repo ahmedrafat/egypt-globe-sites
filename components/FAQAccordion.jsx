@@ -16,7 +16,7 @@ import { FAQJsonLd } from './StructuredData'
 export default function FAQAccordion({ faqs, title = 'Frequently asked questions', subtitle = null, dense = false }) {
   if (!faqs?.length) return null
   return (
-    <section className={`max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 ${dense ? 'py-8' : 'py-14 lg:py-20'}`}>
+    <section className={`max-w-4xl mx-auto px-5 sm:px-6 lg:px-8 ${dense ? 'py-8' : 'py-14 lg:py-20'}`}>
       <FAQJsonLd qas={faqs} />
 
       <div className="mb-8">

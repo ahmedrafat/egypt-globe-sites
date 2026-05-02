@@ -33,7 +33,7 @@ export default function RichApplicationLanding({ page, application, products, si
         </div>
         <div className="absolute inset-0 bg-grid-pattern opacity-25" aria-hidden="true" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20">
           <nav className="flex items-center gap-2 text-xs text-white/60 mb-5 flex-wrap animate-fade-in">
             <Link href="/" className="hover:text-white">Home</Link>
             <span>›</span>
@@ -99,14 +99,14 @@ export default function RichApplicationLanding({ page, application, products, si
 
       {/* Industry overview body */}
       {page.body_markdown && (
-        <section id="top" className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-reveal">
+        <section id="top" className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-reveal">
           <RichPageBody content={page.body_markdown} title={page.title} />
         </section>
       )}
 
       {/* Matched products */}
       {(products || []).length > 0 ? (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 border-t border-slate-100 scroll-reveal">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16 border-t border-slate-100 scroll-reveal">
           <div className="flex items-end justify-between gap-4 mb-10 flex-wrap">
             <div>
               <div className="inline-block bg-violet-50 text-violet-700 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
@@ -152,7 +152,7 @@ export default function RichApplicationLanding({ page, application, products, si
           </div>
         </section>
       ) : (
-        <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center scroll-reveal">
+        <section className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-12 text-center scroll-reveal">
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-8 text-slate-500">
             <p>No products tagged for this application yet.</p>
             <Link href="/rfq" className="text-[#1d5fa1] font-semibold hover:underline mt-2 inline-block">
@@ -164,7 +164,7 @@ export default function RichApplicationLanding({ page, application, products, si
 
       {/* Certifications strip */}
       {certList.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 scroll-reveal">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 scroll-reveal">
           <div className="rounded-2xl border border-violet-100 bg-gradient-to-br from-violet-50/40 to-white p-6 sm:p-8">
             <div className="flex items-start gap-3 mb-4">
               <div className="text-2xl">🏅</div>
@@ -186,7 +186,7 @@ export default function RichApplicationLanding({ page, application, products, si
 
       {/* Related applications */}
       {(siblingApps || []).length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 scroll-reveal">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 scroll-reveal">
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-8">
             Other applications served
           </h2>
@@ -207,7 +207,7 @@ export default function RichApplicationLanding({ page, application, products, si
       )}
 
       {/* Bottom CTA */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20">
         <div className="rounded-3xl bg-gradient-to-br from-violet-700 to-indigo-900 p-10 sm:p-14 text-center relative overflow-hidden shadow-2xl shadow-violet-900/20 animate-scale-in">
           <div aria-hidden="true" className="absolute -top-12 -right-12 text-[280px] opacity-10 select-none">{application?.icon}</div>
           <h2 className="relative text-3xl sm:text-4xl font-extrabold text-white mb-3 tracking-tight">

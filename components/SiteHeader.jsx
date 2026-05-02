@@ -28,7 +28,7 @@ export default async function SiteHeader({ settings }) {
 
       {/* ── Top info strip ───────────────────────────────────────── */}
       <div className="hidden md:block bg-[#1d5fa1]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1.5 flex items-center justify-between text-xs">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-1.5 flex items-center justify-between text-xs">
           <div className="flex items-center gap-4 text-blue-100">
             <span className="hidden lg:flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-300 animate-pulse" />

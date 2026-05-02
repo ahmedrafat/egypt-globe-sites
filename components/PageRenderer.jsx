@@ -239,7 +239,7 @@ export default async function PageRenderer({ page }) {
             style={{ background: 'radial-gradient(circle, white 0%, transparent 70%)' }} />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-20">
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-20">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-1.5 text-xs text-white/50 mb-5 flex-wrap animate-fade-in">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
@@ -346,7 +346,7 @@ export default async function PageRenderer({ page }) {
       ) : page.path === '/trade-tools/hs-codes' ? (
         // HS-code glossary becomes a fully interactive searchable browser —
         // markdown body suppressed entirely (browser carries every code).
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10">
           <HSCodeBrowser />
         </section>
       ) : page.path?.startsWith('/trade-tools/import-guides/') && page.path !== '/trade-tools/import-guides' ? (
@@ -365,7 +365,7 @@ export default async function PageRenderer({ page }) {
 
       {/* Products hub — always show every division */}
       {isProductsHub && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 border-t border-slate-100">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 border-t border-slate-100">
           <div className="mb-8">
             <span className="section-eyebrow bg-blue-50 text-[#1d5fa1] border border-blue-100 mb-4">
               <span aria-hidden="true">📦</span> Product catalogue
@@ -400,7 +400,7 @@ export default async function PageRenderer({ page }) {
 
       {/* Applications hub — list every industry */}
       {isApplicationsHub && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 border-t border-slate-100">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 border-t border-slate-100">
           <div className="mb-8">
             <span className="section-eyebrow bg-violet-50 text-violet-700 border border-violet-100 mb-4">
               <span aria-hidden="true">🏭</span> Applications
@@ -426,7 +426,7 @@ export default async function PageRenderer({ page }) {
 
       {/* Application landing — show all matching salt products */}
       {isApplicationLanding && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-100">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 border-t border-slate-100">
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">
             Salt for {application?.label || 'this industry'}
           </h2>
@@ -472,7 +472,7 @@ export default async function PageRenderer({ page }) {
       {/* Sub-category landing — show all SKUs in that sub-category
           (e.g. /products/construction/cement-and-clinker → all cement SKUs) */}
       {isSubcategoryLanding && subcategoryProducts.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-100">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 border-t border-slate-100">
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">
             {page.title} — full catalogue
           </h2>
@@ -516,7 +516,7 @@ export default async function PageRenderer({ page }) {
 
       {/* Services hub — show every supply-chain service */}
       {isServicesHub && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 border-t border-slate-100">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 border-t border-slate-100">
           <div className="mb-8">
             <span className="section-eyebrow bg-teal-50 text-teal-700 border border-teal-100 mb-4">
               <span aria-hidden="true">🚢</span> Supply-chain services
@@ -554,7 +554,7 @@ export default async function PageRenderer({ page }) {
 
       {/* Generic page — show direct children if any */}
       {!isProductsHub && !isServicesHub && !isApplicationsHub && !isApplicationLanding && !isDivisionLanding && !isSubcategoryLanding && directChildren.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-100">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 border-t border-slate-100">
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-8">In this section</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
             {directChildren.map(p => {
@@ -582,7 +582,7 @@ export default async function PageRenderer({ page }) {
 
       {/* Gallery */}
       {(page.gallery_urls || []).length > 0 && (
-        <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-10">
           <h2 className="text-xl font-bold text-slate-900 mb-5">Gallery</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 stagger-children">
             {page.gallery_urls.map((url, i) => (
@@ -597,7 +597,7 @@ export default async function PageRenderer({ page }) {
 
       {/* CTA strip — skip on hubs / division landings (they get their own treatment) */}
       {!isProductsHub && !isServicesHub && !isApplicationsHub && !isApplicationLanding && !isDivisionLanding && !isSubcategoryLanding && (
-        <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+        <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-14">
           <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#1a5490] via-[#1d5fa1] to-[#155187] p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-5 shadow-xl shadow-blue-900/20">
             {/* Grid overlay */}
             <div aria-hidden="true" className="absolute inset-0 bg-grid-pattern opacity-[0.06] pointer-events-none" />
@@ -619,7 +619,7 @@ export default async function PageRenderer({ page }) {
 
       {/* Related pages */}
       {related.length > 0 && !isProductsHub && !isServicesHub && !isApplicationsHub && !isApplicationLanding && !isDivisionLanding && !isSubcategoryLanding && directChildren.length === 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 border-t border-slate-100">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 border-t border-slate-100">
           <h2 className="text-xl font-bold text-slate-900 mb-6">More in {cat.label}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 stagger-children">
             {related.map(p => (
@@ -676,7 +676,7 @@ function AccessRestricted({ page, visibility }) {
   return (
     <article>
       <section className="bg-gradient-to-br from-slate-50 via-white to-blue-50/50 min-h-[60vh] flex items-center">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+        <div className="max-w-2xl mx-auto px-5 sm:px-6 lg:px-8 py-20 text-center">
           <div className="text-5xl mb-4">🔒</div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3">{page.title}</h1>
           <p className="text-slate-600 mb-8 leading-relaxed">

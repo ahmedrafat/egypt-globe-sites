@@ -18,7 +18,7 @@ export default function SiteFooter({ settings }) {
       {/* Orange accent top bar */}
       <div className="h-1 bg-gradient-to-r from-[#FF6321] via-[#ff8c55] to-[#FF6321]" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-8 sm:pb-10">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-8 sm:pb-10">
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-12 gap-x-6 gap-y-8 sm:gap-8">
 
           {/* ── Brand block — spans full width on mobile ───────── */}
@@ -184,7 +184,7 @@ export default function SiteFooter({ settings }) {
 
       {/* ── Bottom bar ───────────────────────────────────────────── */}
       <div className="border-t border-white/8 bg-black/25">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
           <span className="text-slate-600">
             © {new Date().getFullYear()} {s.name} · All rights reserved · Egypt
           </span>

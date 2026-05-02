@@ -56,7 +56,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
         </div>
         <div className="absolute inset-0 bg-grid-pattern opacity-30" aria-hidden="true" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-24">
           <nav className="flex items-center gap-2 text-xs text-white/50 mb-5 flex-wrap animate-fade-in">
             <Link href="/" className="hover:text-white">Home</Link>
             <span>›</span>
@@ -120,7 +120,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
 
       {/* Sub-categories grid */}
       {subCount > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 scroll-reveal">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 scroll-reveal">
           <div className="text-center mb-10">
             <div className="inline-block bg-blue-50 text-[#1d5fa1] text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
               Browse the catalogue
@@ -173,7 +173,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
       {/* Applications served (only renders when SKUs are app-tagged) */}
       {apps.length > 0 && (
         <section className="bg-gradient-to-br from-violet-50/50 via-white to-blue-50/50 py-16 sm:py-20 border-y border-slate-200 scroll-reveal">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
             <div className="text-center mb-10">
               <div className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
                 {division.label} by Industry
@@ -205,7 +205,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
 
       {/* Why Egypt Globe */}
       <section className="bg-gradient-to-br from-slate-50 to-blue-50/40 py-16 sm:py-20 border-y border-slate-200 scroll-reveal">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <div className="inline-block bg-orange-50 text-[#FF6321] text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
               Why Egypt Globe
@@ -233,7 +233,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
 
       {/* Featured catalogue */}
       {(featured || []).length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 scroll-reveal">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 scroll-reveal">
           <div className="flex items-end justify-between gap-4 mb-10 flex-wrap">
             <div>
               <div className="inline-block bg-blue-50 text-[#1d5fa1] text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
@@ -282,7 +282,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
       )}
 
       {/* Bottom CTA */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20">
         <div className="rounded-3xl p-10 sm:p-14 text-center relative overflow-hidden shadow-2xl shadow-blue-900/15 animate-scale-in"
           style={{ background: `linear-gradient(135deg, ${division.color}, ${division.color}99 60%, #0f1f3a)` }}>
           <div aria-hidden="true" className="absolute -top-12 -right-12 text-[280px] opacity-10 select-none">{division.icon}</div>

@@ -123,7 +123,7 @@ export default async function HomePage() {
             style={{ background: 'radial-gradient(circle, #FF632122 0%, transparent 65%)' }} />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 lg:pt-24 pb-20 sm:pb-28 lg:pb-32">
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 pt-16 sm:pt-20 lg:pt-24 pb-20 sm:pb-28 lg:pb-32">
           <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-center">
 
             {/* Left: Text content */}
@@ -191,7 +191,7 @@ export default async function HomePage() {
       <CustomerLogosStrip variant="home" />
 
       {/* ─── Product divisions ─────────────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
+      <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-20 sm:py-24">
         <div className="text-center max-w-3xl mx-auto mb-12 animate-fade-in-up">
           <div className="inline-flex items-center gap-2 bg-blue-50 text-[#1d5fa1] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-4 border border-blue-100">
             Our Product Divisions
@@ -242,7 +242,7 @@ export default async function HomePage() {
 
       {/* ─── Services strip ────────────────────────────────────────── */}
       <section className="bg-gradient-to-br from-slate-50 to-blue-50/40 py-20 sm:py-24 border-y border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12 animate-fade-in-up">
             <div className="inline-flex items-center gap-2 bg-teal-50 text-teal-700 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-4 border border-teal-100">
               Beyond commodities
@@ -276,7 +276,7 @@ export default async function HomePage() {
 
       {/* ─── Industries we serve ───────────────────────────────────── */}
       <section className="bg-gradient-to-br from-violet-50/40 via-white to-blue-50/40 py-20 sm:py-24 border-y border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12 animate-fade-in-up">
             <div className="inline-flex items-center gap-2 bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-4 border border-violet-200">
               Industries we serve
@@ -315,7 +315,7 @@ export default async function HomePage() {
 
       {/* ─── Why Egypt Globe ───────────────────────────────────────── */}
       <section className="bg-[#f8fafc] py-20 sm:py-24 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12 animate-fade-in-up">
             <div className="inline-flex items-center gap-2 bg-orange-50 text-[#FF6321] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-4 border border-orange-100">
               Why Egypt Globe
@@ -352,7 +352,7 @@ export default async function HomePage() {
 
       {/* ─── Certifications & standards ────────────────────────────── */}
       <section className="bg-white py-16 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
           <div className="text-center mb-10 animate-fade-in-up">
             <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-4 border border-emerald-100">
               Standards &amp; Certifications
@@ -379,7 +379,7 @@ export default async function HomePage() {
 
       {/* ─── Featured products ─────────────────────────────────────── */}
       {featured.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-20 sm:py-24">
           <div className="flex items-end justify-between mb-10 flex-wrap gap-4 animate-fade-in-up">
             <div>
               <div className="inline-flex items-center gap-2 bg-blue-50 text-[#1d5fa1] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-3 border border-blue-100">
@@ -430,7 +430,7 @@ export default async function HomePage() {
           <div className="absolute bottom-0 -left-10 w-[400px] h-[400px] rounded-full opacity-15"
             style={{ background: 'radial-gradient(circle, #FF632133 0%, transparent 70%)' }} />
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           <div className="animate-fade-in-up">
             <div className="inline-flex items-center gap-2 bg-white/10 text-blue-200 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-5 border border-white/15">
               About the Group
@@ -473,7 +473,7 @@ export default async function HomePage() {
       {/* ─── Case studies ──────────────────────────────────────────── */}
       {caseStudies.length > 0 && (
         <section className="bg-white py-20 sm:py-24 border-y border-slate-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
             <div className="flex items-end justify-between mb-10 flex-wrap gap-4 animate-fade-in-up">
               <div>
                 <div className="inline-flex items-center gap-2 bg-teal-50 text-teal-700 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-3 border border-teal-100">
@@ -530,7 +530,7 @@ export default async function HomePage() {
       {/* ─── Blog teaser ───────────────────────────────────────────── */}
       {blogPosts.length > 0 && (
         <section className="bg-gradient-to-br from-slate-50 to-blue-50/30 py-20 sm:py-24 border-y border-slate-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
             <div className="flex items-end justify-between mb-10 flex-wrap gap-4 animate-fade-in-up">
               <div>
                 <div className="inline-flex items-center gap-2 bg-rose-50 text-rose-700 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-3 border border-rose-100">
@@ -581,7 +581,7 @@ export default async function HomePage() {
       )}
 
       {/* ─── Bottom CTA ────────────────────────────────────────────── */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20">
         <div className="rounded-3xl bg-gradient-to-br from-[#1a5490] via-[#1d5fa1] to-[#155187] p-10 sm:p-16 text-center relative overflow-hidden shadow-2xl shadow-blue-900/20 animate-scale-in">
           {/* Decorative overlays */}
           <div aria-hidden="true" className="absolute inset-0 bg-grid-pattern opacity-25" />

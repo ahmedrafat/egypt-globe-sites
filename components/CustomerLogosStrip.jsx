@@ -23,7 +23,7 @@ export default async function CustomerLogosStrip({ variant = 'home' }) {
       {/* Subtle background dots */}
       <div aria-hidden="true" className="absolute inset-0 bg-dots-pattern opacity-[0.35] pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         {/* Section heading */}
         <div className="text-center mb-10 animate-fade-in-up">
           <span className="section-eyebrow bg-emerald-50 text-emerald-700 border border-emerald-100 mb-4">

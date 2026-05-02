@@ -94,9 +94,9 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
   }
 
   return (
-    <section id="product-tabs" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <section id="product-tabs" className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10">
       {/* Sticky tab bar */}
-      <div className="sticky top-0 z-20 -mx-4 sm:-mx-6 lg:-mx-8 bg-white/85 backdrop-blur-md border-b border-slate-200">
+      <div className="sticky top-0 z-20 -mx-5 sm:-mx-6 lg:-mx-8 bg-white/85 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 overflow-x-auto">
           <div className="flex gap-1">
             {TABS.map(t => (

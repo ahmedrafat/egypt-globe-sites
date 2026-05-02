@@ -356,8 +356,14 @@ export function parseMarkdown(content) {
 export default function MarkdownBody({ content }) {
   const { html } = parseMarkdown(content)
   if (!html) return null
+  // Drop 142 — `[&_table]:block` + `[&_table]:overflow-x-auto` handles
+  // any wide table inside markdown without forcing horizontal scroll on
+  // the whole page. `[&_pre]:overflow-x-auto` does the same for code
+  // blocks. `[&_img]:max-w-full [&_img]:h-auto` keeps inline images
+  // from breaking out of the parent's padding.
   return (
-    <div className="max-w-none [&_a]:break-words"
+    <div
+      className="max-w-none [&_a]:break-words [&_pre]:overflow-x-auto [&_img]:max-w-full [&_img]:h-auto [&_table]:w-full"
       dangerouslySetInnerHTML={{ __html: html }} />
   )
 }

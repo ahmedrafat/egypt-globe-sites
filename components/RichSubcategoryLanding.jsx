@@ -44,7 +44,7 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
         </div>
         <div className="absolute inset-0 bg-grid-pattern opacity-25" aria-hidden="true" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20">
           <nav className="flex items-center gap-2 text-xs text-white/60 mb-5 flex-wrap animate-fade-in">
             <Link href="/" className="hover:text-white">Home</Link>
             <span>›</span>
@@ -114,7 +114,7 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
 
       {/* SKU catalogue */}
       {(skus || []).length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 scroll-reveal">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 scroll-reveal">
           <div className="flex items-end justify-between gap-4 mb-10 flex-wrap">
             <div>
               <div className="inline-block bg-blue-50 text-[#1d5fa1] text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
@@ -171,7 +171,7 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
       {/* Applications served */}
       {apps.length > 0 && (
         <section className="bg-gradient-to-br from-violet-50/50 via-white to-blue-50/50 py-16 sm:py-20 border-y border-slate-200 scroll-reveal">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
             <div className="text-center mb-10">
               <div className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
                 {page.title} by Industry
@@ -199,7 +199,7 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
 
       {/* Certifications strip */}
       {certList.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 scroll-reveal">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 scroll-reveal">
           <div className="rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-6 sm:p-8">
             <div className="flex items-start gap-3 mb-4">
               <div className="text-2xl">🏅</div>
@@ -221,7 +221,7 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
 
       {/* Related sub-categories in same division */}
       {(siblingSubcats || []).length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 scroll-reveal">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 scroll-reveal">
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">
             Other sub-categories in {division.label}
           </h2>
@@ -251,7 +251,7 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
       )}
 
       {/* Bottom CTA */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20">
         <div className="rounded-3xl p-10 sm:p-14 text-center relative overflow-hidden shadow-2xl shadow-blue-900/15 animate-scale-in"
           style={{ background: `linear-gradient(135deg, ${division.color}, ${division.color}99 60%, #0f1f3a)` }}>
           <div aria-hidden="true" className="absolute -top-12 -right-12 text-[280px] opacity-10 select-none">{division.icon}</div>

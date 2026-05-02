@@ -35,7 +35,7 @@ export default async function CaseStudiesIndex() {
         </div>
         <div className="absolute inset-0 bg-grid-pattern opacity-25" aria-hidden="true" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20">
           <nav className="flex items-center gap-2 text-xs text-white/60 mb-5 flex-wrap animate-fade-in">
             <Link href="/" className="hover:text-white">Home</Link>
             <span>›</span>
@@ -70,7 +70,7 @@ export default async function CaseStudiesIndex() {
       </section>
 
       {posts.length === 0 ? (
-        <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+        <section className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-20 text-center">
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-10 text-slate-500">
             <div className="text-5xl mb-3">📖</div>
             <p>Case studies publish here as we receive customer permission to share details.
@@ -82,7 +82,7 @@ export default async function CaseStudiesIndex() {
         <>
           {/* Featured (first one) */}
           {posts[0] && (
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+            <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16">
               <div className="text-xs uppercase tracking-wider font-bold text-teal-700 mb-3">Featured</div>
               <Link href={posts[0].path}
                 className="card-lift group block rounded-3xl border border-slate-200 bg-white overflow-hidden">
@@ -119,7 +119,7 @@ export default async function CaseStudiesIndex() {
 
           {/* Rest */}
           {posts.length > 1 && (
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20">
+            <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 pb-16 sm:pb-20">
               <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-8">All case studies</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
                 {posts.slice(1).map(cs => (
@@ -157,14 +157,14 @@ export default async function CaseStudiesIndex() {
 
       {hubPage?.body_markdown && (
         <section className="bg-slate-50/40 py-16 border-y border-slate-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
             <RichPageBody content={hubPage.body_markdown} title={hubPage.title} />
           </div>
         </section>
       )}
 
       {/* Bottom CTA */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20">
         <div className="rounded-3xl bg-gradient-to-br from-teal-700 via-emerald-800 to-[#0f1f3a] p-10 sm:p-12 text-center relative overflow-hidden shadow-2xl shadow-emerald-900/20">
           <div aria-hidden="true" className="absolute -top-12 -right-12 text-[260px] opacity-10 select-none">📖</div>
           <h2 className="relative text-2xl sm:text-3xl font-extrabold text-white mb-3 tracking-tight">

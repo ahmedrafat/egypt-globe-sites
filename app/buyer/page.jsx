@@ -45,7 +45,7 @@ export default async function BuyerDashboard() {
     <article>
       <section className="relative bg-gradient-to-br from-[#1d5fa1] via-[#14467a] to-[#0f1f3a] text-white overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-25" aria-hidden="true" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16">
           <div className="flex items-start justify-between gap-4 flex-wrap">
             <div>
               <div className="text-xs font-bold uppercase tracking-wider text-blue-200 mb-2">Buyer dashboard</div>
@@ -62,7 +62,7 @@ export default async function BuyerDashboard() {
         </div>
       </section>
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12">
         {v.status === 'pending' && (
           <div className="rounded-2xl bg-amber-50 border border-amber-200 px-5 py-4 text-sm text-amber-900 mb-6">
             Your account is awaiting approval. Catalogue and RFQ form are usable now;

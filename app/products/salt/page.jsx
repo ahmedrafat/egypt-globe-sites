@@ -49,7 +49,7 @@ export default async function SaltMainPage() {
           <div className="absolute -bottom-32 -left-24 w-[500px] h-[500px] rounded-full"
             style={{ background: 'radial-gradient(circle, rgba(255,99,33,0.25) 0%, transparent 70%)' }} />
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-24">
           <nav className="flex items-center gap-2 text-xs text-white/50 mb-5 flex-wrap animate-fade-in">
             <Link href="/" className="hover:text-white">Home</Link>
             <span>›</span>
@@ -110,7 +110,7 @@ export default async function SaltMainPage() {
       </section>
 
       {/* Source split — Sea Salt vs Rock Salt ──────────────────── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20">
         <div className="text-center mb-10 animate-fade-in-up">
           <div className="inline-block bg-blue-50 text-[#1d5fa1] text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
             Two Egyptian Sources
@@ -238,7 +238,7 @@ export default async function SaltMainPage() {
       {/* Applications served ──────────────────────────────────── */}
       {apps.length > 0 && (
         <section className="bg-gradient-to-br from-violet-50/50 via-white to-blue-50/50 py-16 sm:py-20 border-y border-slate-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
             <div className="text-center mb-10 animate-fade-in-up">
               <div className="inline-block bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
                 Salt by Industry
@@ -270,7 +270,7 @@ export default async function SaltMainPage() {
 
       {/* Sea salt catalogue ──────────────────────────────────── */}
       {sea.length > 0 && (
-        <section id="sea-catalogue" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 scroll-mt-20">
+        <section id="sea-catalogue" className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 scroll-mt-20">
           <div className="flex items-end justify-between gap-4 mb-8 flex-wrap animate-fade-in-up">
             <div>
               <div className="inline-block bg-cyan-50 text-cyan-700 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-2">
@@ -293,7 +293,7 @@ export default async function SaltMainPage() {
       {/* Rock salt catalogue ─────────────────────────────────── */}
       {rock.length > 0 && (
         <section id="rock-catalogue" className="bg-stone-50/60 py-16 border-y border-stone-200 scroll-mt-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
             <div className="flex items-end justify-between gap-4 mb-8 flex-wrap animate-fade-in-up">
               <div>
                 <div className="inline-block bg-stone-200 text-stone-800 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-2">
@@ -315,7 +315,7 @@ export default async function SaltMainPage() {
       )}
 
       {/* Bottom CTA */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20">
         <div className="rounded-3xl bg-gradient-to-br from-[#1d5fa1] to-[#14467a] p-10 sm:p-14 text-center relative overflow-hidden shadow-2xl shadow-blue-900/15 animate-scale-in">
           <div aria-hidden="true" className="absolute -top-12 -right-12 text-[280px] opacity-10 select-none">🧂</div>
           <h2 className="relative text-3xl sm:text-4xl font-extrabold text-white mb-3 tracking-tight">

@@ -61,7 +61,7 @@ export default function PackingMatrix({ packingOptions = [], productPackingOptio
   return (
     <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
       {/* Header */}
-      <div className="px-4 sm:px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white">
+      <div className="px-5 sm:px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white">
         <h2 className="font-bold text-lg text-slate-900 flex items-center gap-2">
           <span className="text-xl" aria-hidden>📦</span>
           Packing &amp; Containerisation
@@ -78,7 +78,7 @@ export default function PackingMatrix({ packingOptions = [], productPackingOptio
           const meta = CATEGORY_META[category] || { icon: '📦', tone: 'bg-slate-50 text-slate-700 border-slate-200', label: category }
           const items = byCategory[category]
           return (
-            <div key={category} className="px-4 sm:px-6 py-4">
+            <div key={category} className="px-5 sm:px-6 py-4">
               <div className="flex items-center gap-2 mb-3">
                 <span className={`inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border ${meta.tone}`}>
                   <span>{meta.icon}</span> {meta.label}
@@ -148,7 +148,7 @@ export default function PackingMatrix({ packingOptions = [], productPackingOptio
       </div>
 
       {/* Footer note */}
-      <div className="px-4 sm:px-6 py-3 bg-slate-50/60 border-t border-slate-100">
+      <div className="px-5 sm:px-6 py-3 bg-slate-50/60 border-t border-slate-100">
         <p className="text-[11px] text-slate-500 leading-relaxed">
           <strong className="text-slate-700">Bag-in-Jumbo</strong> means any inner bag (PP / PE / Kraft / Laminated)
           can be hand-stacked inside a 1MT FIBC and loaded on a <strong>bulk vessel</strong> — combines retail-ready

@@ -80,7 +80,7 @@ export default async function BuyerRfqs() {
     <article>
       <section className="relative bg-gradient-to-br from-[#1d5fa1] via-[#14467a] to-[#0f1f3a] text-white overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-25" aria-hidden="true" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10 sm:py-14">
           <nav className="text-xs text-white/60 mb-3 flex items-center gap-2 flex-wrap">
             <Link href="/buyer" className="hover:text-white">← Buyer dashboard</Link>
             <span>/</span>
@@ -95,7 +95,7 @@ export default async function BuyerRfqs() {
         </div>
       </section>
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10">
         {/* Status KPIs */}
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 mb-8">
           <div className="rounded-xl border border-slate-200 bg-white p-3">
