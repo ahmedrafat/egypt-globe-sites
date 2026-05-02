@@ -9,6 +9,7 @@ import Link from 'next/link'
 import MarkdownBody from './MarkdownBody'
 import RichPageBody from './RichPageBody'
 import ProductDetailBlock from './ProductDetailBlock'
+import ProductTabs from './interactive/ProductTabs'
 import {
   getRelatedPages,
   getDirectChildren,
@@ -303,15 +304,30 @@ export default async function PageRenderer({ page }) {
         </div>
       </section>
 
-      {/* Body — magazine-style with TOC sidebar */}
-      {page.body_markdown && (
-        <section id="top" className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-reveal">
-          <RichPageBody content={page.body_markdown} title={page.title} />
-        </section>
+      {/* Drop 132 — interactive product tabs replace the long-scroll
+         body+ProductDetailBlock combo on SKU pages. body_markdown is
+         no longer rendered to humans on SKU pages (data still lives in
+         the DB so /llms-full.txt feeds AI crawlers + the migration is
+         reversible). On non-SKU pages (about / services / case studies /
+         pillars), keep the prior RichPageBody + ProductDetailBlock
+         behaviour — those pages benefit from editorial markdown. */}
+      {isSkuPage ? (
+        <ProductTabs
+          page={page}
+          commodity={commodity}
+          applications={(page.applications || []).map(id => APPLICATIONS.find(a => a.id === id)).filter(Boolean)}
+          visibility={visibility}
+        />
+      ) : (
+        <>
+          {page.body_markdown && (
+            <section id="top" className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-reveal">
+              <RichPageBody content={page.body_markdown} title={page.title} />
+            </section>
+          )}
+          <ProductDetailBlock page={page} commodity={commodity} visibility={visibility} />
+        </>
       )}
-
-      {/* Rich product detail (only mounts when row has fields populated) */}
-      <ProductDetailBlock page={page} commodity={commodity} visibility={visibility} />
 
       {/* Products hub — always show every division */}
       {isProductsHub && (
