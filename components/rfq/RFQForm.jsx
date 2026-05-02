@@ -111,6 +111,11 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
     target_price: '', currency: 'USD',
     incoterm: 'CIF', dest_port: '',
     packaging: (initialProduct?.packing_options?.[0]) || '',
+    // Drop 141 — vessel_mode lets the buyer specify Bulk vessel vs Container,
+    // including the common "any inner bag stacked inside a 1MT FIBC and
+    // loaded on a bulk vessel" pattern (= packaging set to 'Bag-in-Jumbo'
+    // + vessel_mode='Bulk').
+    vessel_mode: 'either',
     certs_needed: (initialProduct?.certifications || []).slice(0, 3).join(', '),
     timeline: '',
     message: '',
@@ -225,6 +230,9 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
       dest_port:     form.dest_port || null,
       packaging:     form.packaging || null,
       requested_packing: form.packaging || null,
+      // Drop 141 — vessel mode lives in the message body since
+      // market_rfqs has no dedicated column. Quote-team picks it up
+      // via the human-readable summary.
       message:       buildMessage(form, selected),
       status:        'new',
       referenced_page_id: selected?.id || null,
@@ -465,19 +473,79 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
           </Field>
 
           <Field label="Preferred packing" full>
-            {selected?.packing_options?.length > 0 ? (
-              <div className="flex flex-wrap gap-2 mb-2">
-                {selected.packing_options.map(p => (
-                  <button key={p} type="button" onClick={() => update('packaging', p)}
-                    className={`text-xs font-semibold px-3 py-1.5 rounded-full border transition-colors ${form.packaging === p
-                      ? 'bg-[#1d5fa1] text-white border-[#1d5fa1]'
-                      : 'bg-white text-slate-700 border-slate-200 hover:border-[#1d5fa1] hover:text-[#1d5fa1]'}`}>
-                    {p}
-                  </button>
-                ))}
-              </div>
-            ) : null}
-            <Input value={form.packaging} onChange={v => update('packaging', v)} placeholder="50 kg PP bags / 1 MT FIBC / Bulk vessel" />
+            {/* Suggested for THIS product (from page.packing_options) */}
+            {selected?.packing_options?.length > 0 && (
+              <>
+                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Suggested for this product</div>
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {selected.packing_options.map(p => (
+                    <button key={p} type="button" onClick={() => update('packaging', p)}
+                      className={`text-xs font-semibold px-3 py-1.5 rounded-full border transition-colors ${form.packaging === p
+                        ? 'bg-[#1d5fa1] text-white border-[#1d5fa1]'
+                        : 'bg-white text-slate-700 border-slate-200 hover:border-[#1d5fa1] hover:text-[#1d5fa1]'}`}>
+                      {p}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+            {/* Drop 141 — comprehensive default chip-rail covering the
+               packing types every product can be supplied in. Includes
+               PE bags, all FIBC sizes, OEM and bag-in-jumbo. */}
+            <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Or pick from common formats</div>
+            <div className="flex flex-wrap gap-2 mb-3">
+              {[
+                'Loose Bulk',
+                '50 kg PP Bag',
+                '50 kg PE Bag',
+                '50 kg Laminated PP',
+                '50 kg Kraft Paper',
+                '25 kg PP Bag',
+                '25 kg PE Bag',
+                '5 kg Retail Pack',
+                '1 MT FIBC Jumbo',
+                '1 MT FIBC + PE Liner',
+                '1.25 MT FIBC Jumbo',
+                '1.5 MT FIBC Jumbo',
+                'Bag-in-Jumbo (PP in FIBC)',
+                'Bag-in-Jumbo (Kraft in FIBC)',
+                'OEM Custom Bag',
+              ].map(p => (
+                <button key={p} type="button" onClick={() => update('packaging', p)}
+                  className={`text-xs font-semibold px-3 py-1.5 rounded-full border transition-colors ${form.packaging === p
+                    ? 'bg-[#FF6321] text-white border-[#FF6321]'
+                    : 'bg-white text-slate-600 border-slate-200 hover:border-[#FF6321] hover:text-[#FF6321]'}`}>
+                  {p}
+                </button>
+              ))}
+            </div>
+            <Input value={form.packaging} onChange={v => update('packaging', v)} placeholder="Custom: 1MT FIBC with internal 25kg PE bags, OEM print buyer's logo, etc." />
+          </Field>
+
+          {/* Drop 141 — Loading-mode picker. "Any packing inside FIBC and
+             loaded in bulk vessels" = pack=Bag-in-Jumbo + vessel_mode=Bulk. */}
+          <Field label="Loading mode" full>
+            <div className="grid grid-cols-3 gap-2">
+              {[
+                { id: 'bulk',      icon: '⛴️', label: 'Bulk vessel', sub: 'Direct hold or FIBC stow' },
+                { id: 'container', icon: '📦', label: 'Container',   sub: '20ft / 40ft / HC' },
+                { id: 'either',    icon: '🔁', label: 'Either',       sub: 'Quote both options' },
+              ].map(m => (
+                <button key={m.id} type="button" onClick={() => update('vessel_mode', m.id)}
+                  className={`flex flex-col items-start gap-1 p-3 rounded-xl border-2 text-left transition-all ${form.vessel_mode === m.id
+                    ? 'border-[#1d5fa1] bg-blue-50/60 shadow-sm'
+                    : 'border-slate-200 bg-white hover:border-slate-300'}`}>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-base">{m.icon}</span>
+                    <span className="font-bold text-sm text-slate-900">{m.label}</span>
+                  </div>
+                  <span className="text-[10px] text-slate-500 leading-tight">{m.sub}</span>
+                </button>
+              ))}
+            </div>
+            <span className="text-[11px] text-slate-500 mt-2 block">
+              <strong>Tip:</strong> any inner bag (PP / PE / Kraft / Laminated) can be stacked inside a 1MT FIBC and loaded on a bulk vessel — combines retail-ready packing with bulk economics.
+            </span>
           </Field>
 
           <Field label="Required by (optional)">
@@ -580,6 +648,9 @@ function buildMessage(f, selected) {
   if (f.incoterm) parts.push(`Incoterm: ${f.incoterm}`)
   if (f.dest_port) parts.push(`Destination port: ${f.dest_port}`)
   if (f.packaging) parts.push(`Packing: ${f.packaging}`)
+  if (f.vessel_mode && f.vessel_mode !== 'either') {
+    parts.push(`Loading mode: ${f.vessel_mode === 'bulk' ? 'Bulk vessel' : 'Container'}`)
+  }
   if (f.timeline) parts.push(`Required by: ${f.timeline}`)
   if (f.certs_needed) parts.push(`Certifications: ${f.certs_needed}`)
   if (f.requested_specs) {

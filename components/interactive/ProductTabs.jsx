@@ -23,6 +23,7 @@ import TransitTimeCalculator from './TransitTimeCalculator'
 import DocumentChecklist from './DocumentChecklist'
 import InlineQuoteCard from './InlineQuoteCard'
 import PriceDisplay from '../PriceDisplay'
+import PackingMatrix from '../PackingMatrix'
 
 const SPEC_LABELS = {
   nacl_min: 'NaCl min', moisture_max: 'Moisture max', particle_size: 'Particle size',
@@ -56,7 +57,7 @@ const TABS = [
   { id: 'quote',        label: 'Get a quote',  icon: '📨' },
 ]
 
-export default function ProductTabs({ page, commodity, applications: matchedApps, qualitySpecs, visibility }) {
+export default function ProductTabs({ page, commodity, applications: matchedApps, qualitySpecs, packingOptions, visibility }) {
   const [active, setActive] = useState('overview')
   const [transitSelection, setTransitSelection] = useState({})
 
@@ -151,7 +152,13 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
           {/* Applications */}
           <div className={`space-y-6 ${active === 'applications' ? 'animate-fade-in-up' : 'hidden'}`}>
             <ApplicationsGrid apps={apps} pageTitle={page.title} />
-            {packing.length > 0 && <PackingGrid packing={packing} />}
+            {/* Drop 141 — comprehensive PackingMatrix from globe_packing_options
+                table. Falls back to product's own packing array when master
+                fetch returned empty (Supabase down, etc.). Mobile-friendly
+                stacked grid with vessel-mode chips + OEM badge per format. */}
+            {(packingOptions?.length > 0 || packing.length > 0) && (
+              <PackingMatrix packingOptions={packingOptions} productPackingOptions={packing} />
+            )}
           </div>
 
           {/* Logistics */}

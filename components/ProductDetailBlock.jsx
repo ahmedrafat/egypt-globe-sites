@@ -13,6 +13,7 @@
 import Link from 'next/link'
 import { APPLICATIONS } from '../lib/corporatePages'
 import PriceDisplay from './PriceDisplay'
+import PackingMatrix from './PackingMatrix'
 
 const SPEC_LABELS = {
   // Salt
@@ -84,7 +85,7 @@ function prettyKey(k) {
   return SPEC_LABELS[k] || k.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
 }
 
-export default function ProductDetailBlock({ page, commodity, visibility }) {
+export default function ProductDetailBlock({ page, commodity, packingOptions = [], visibility }) {
   const specs = page.specs || {}
   const specEntries = Object.entries(specs).filter(([, v]) => v !== null && v !== '' && v !== undefined)
   const certifications = page.certifications || []
@@ -201,27 +202,12 @@ export default function ProductDetailBlock({ page, commodity, visibility }) {
             </div>
           )}
 
-          {/* Packing options */}
-          {packing.length > 0 && (
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-              <h2 className="font-bold text-lg text-slate-900 mb-4 flex items-center gap-2">
-                <span className="text-xl">📦</span> Available Packing Formats
-              </h2>
-              <div className="grid sm:grid-cols-2 gap-3">
-                {packing.map((p, i) => (
-                  <div key={i} className="flex items-start gap-3 p-3 border border-slate-200 rounded-xl">
-                    <div className="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center text-xl shrink-0">📦</div>
-                    <div className="min-w-0">
-                      <div className="font-semibold text-slate-900 text-sm">{p}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <p className="text-xs text-slate-500 mt-4">
-                All formats available with full OEM / private label printing on request.
-                <Link href="/services/packing" className="text-[#1d5fa1] ml-1 hover:underline">View packing services →</Link>
-              </p>
-            </div>
+          {/* Packing options — Drop 141 PackingMatrix replaces the simple
+             chip grid. Shows ALL master packing formats (PE bags, OEM, all
+             FIBC sizes, bag-in-jumbo) not just the product's short array.
+             Mobile-friendly stacked layout. */}
+          {(packingOptions.length > 0 || packing.length > 0) && (
+            <PackingMatrix packingOptions={packingOptions} productPackingOptions={packing} />
           )}
 
           {/* Drop 131 — combined Loading + Markets row (was 2 separate cards

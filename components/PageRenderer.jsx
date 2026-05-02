@@ -21,6 +21,7 @@ import {
   getCommodityById,
   getQualitySpecsForCommodity,
   getPagesForApplication,
+  getPackingOptions,
   CATEGORY_META,
   PRODUCT_DIVISIONS,
   SERVICE_DIVISIONS,
@@ -102,6 +103,11 @@ export default async function PageRenderer({ page }) {
   // Drop 137b — fetch quality_specs reference for the commodity (one row
   // per QC parameter with target / test method / standard / cert body).
   const qualitySpecs = page.commodity_id ? await getQualitySpecsForCommodity(page.commodity_id) : []
+  // Drop 141 — pull comprehensive packing matrix from globe_packing_options
+  // scoped to this product's category (cement/salt/fertilizers/etc.). The
+  // PackingMatrix component shows all formats inc. PE bags / OEM / bag-in-jumbo
+  // even when the product's own packing_options array is sparse.
+  const packingOptions = page.commodity_id ? await getPackingOptions(page.category) : []
   const visibility = await getBuyerVisibility()
 
   // Approved buyers with scoped access who navigate to a SKU outside
@@ -334,6 +340,7 @@ export default async function PageRenderer({ page }) {
           commodity={commodity}
           applications={(page.applications || []).map(id => APPLICATIONS.find(a => a.id === id)).filter(Boolean)}
           qualitySpecs={qualitySpecs}
+          packingOptions={packingOptions}
           visibility={visibility}
         />
       ) : page.path === '/trade-tools/hs-codes' ? (
@@ -353,7 +360,7 @@ export default async function PageRenderer({ page }) {
       ) : (
         // Pages with no body_markdown — keep ProductDetailBlock for any
         // structured product data they carry (mostly subcategory landings).
-        <ProductDetailBlock page={page} commodity={commodity} visibility={visibility} />
+        <ProductDetailBlock page={page} commodity={commodity} packingOptions={packingOptions} visibility={visibility} />
       )}
 
       {/* Products hub — always show every division */}
