@@ -145,6 +145,11 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
               <span className="flex-1 font-semibold text-slate-900">Case Studies</span>
               <Chevron />
             </Link>
+            <Link href="/coa" onClick={close} className={itemCls}>
+              <span aria-hidden className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-lg flex-shrink-0">🧪</span>
+              <span className="flex-1 font-semibold text-slate-900">CoA Center</span>
+              <Chevron />
+            </Link>
             <Link href="/blog" onClick={close} className={itemCls}>
               <span aria-hidden className="w-9 h-9 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-lg flex-shrink-0">📝</span>
               <span className="flex-1 font-semibold text-slate-900">News &amp; Blog</span>

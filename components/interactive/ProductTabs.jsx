@@ -24,6 +24,7 @@ import DocumentChecklist from './DocumentChecklist'
 import InlineQuoteCard from './InlineQuoteCard'
 import PriceDisplay from '../PriceDisplay'
 import PackingMatrix from '../PackingMatrix'
+import CoaCenter from './CoaCenter'
 
 const SPEC_LABELS = {
   nacl_min: 'NaCl min', moisture_max: 'Moisture max', particle_size: 'Particle size',
@@ -51,13 +52,14 @@ function pretty(k) { return SPEC_LABELS[k] || k.replace(/_/g, ' ').replace(/\b\w
 const TABS = [
   { id: 'overview',     label: 'Overview',     icon: '📖' },
   { id: 'specs',        label: 'Specifications', icon: '🧪' },
+  { id: 'certificates', label: 'Certificates', icon: '🏅' },
   { id: 'applications', label: 'Applications', icon: '🏭' },
   { id: 'logistics',    label: 'Logistics',    icon: '🚢' },
   { id: 'documents',    label: 'Documents',    icon: '📋' },
   { id: 'quote',        label: 'Get a quote',  icon: '📨' },
 ]
 
-export default function ProductTabs({ page, commodity, applications: matchedApps, qualitySpecs, packingOptions, visibility }) {
+export default function ProductTabs({ page, commodity, applications: matchedApps, qualitySpecs, packingOptions, coas, visibility }) {
   const [active, setActive] = useState('overview')
   const [transitSelection, setTransitSelection] = useState({})
 
@@ -147,6 +149,11 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
               <QualityReferenceTable specs={qualitySpecs} />
             )}
             {certs.length > 0 && <CertificationsBlock certs={certs} />}
+          </div>
+
+          {/* Drop 146 — Certificates of Analysis (per-market region) */}
+          <div className={active === 'certificates' ? 'animate-fade-in-up' : 'hidden'}>
+            <CoaCenter coas={coas || []} commodityName={page.title} requestPath={page.path} />
           </div>
 
           {/* Applications */}

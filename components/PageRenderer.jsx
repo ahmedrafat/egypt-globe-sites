@@ -20,6 +20,7 @@ import {
   getDivisionSubcategories,
   getCommodityById,
   getQualitySpecsForCommodity,
+  getCommodityCoas,
   getPagesForApplication,
   getPackingOptions,
   CATEGORY_META,
@@ -104,6 +105,9 @@ export default async function PageRenderer({ page }) {
   // Drop 137b — fetch quality_specs reference for the commodity (one row
   // per QC parameter with target / test method / standard / cert body).
   const qualitySpecs = page.commodity_id ? await getQualitySpecsForCommodity(page.commodity_id) : []
+  // Drop 146 — fetch all active CoAs per market region for the new
+  // Certificates tab in ProductTabs.
+  const coas = page.commodity_id ? await getCommodityCoas(page.commodity_id) : []
   // Drop 141 — pull comprehensive packing matrix from globe_packing_options
   // scoped to this product's category (cement/salt/fertilizers/etc.). The
   // PackingMatrix component shows all formats inc. PE bags / OEM / bag-in-jumbo
@@ -347,6 +351,7 @@ export default async function PageRenderer({ page }) {
           applications={(page.applications || []).map(id => APPLICATIONS.find(a => a.id === id)).filter(Boolean)}
           qualitySpecs={qualitySpecs}
           packingOptions={packingOptions}
+          coas={coas}
           visibility={visibility}
         />
       ) : page.path === '/trade-tools/hs-codes' ? (

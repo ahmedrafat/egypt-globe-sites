@@ -113,6 +113,7 @@ export default function SiteFooter({ settings }) {
                 ['/about/mission-vision', 'Mission & Vision'],
                 ['/about/locations', 'Locations'],
                 ['/about/quality-compliance', 'Quality'],
+                ['/coa', '🧪 CoA Center'],
                 ['/about/careers', 'Careers'],
                 ['/case-studies', 'Case Studies'],
                 ['/blog', 'News & Blog'],
