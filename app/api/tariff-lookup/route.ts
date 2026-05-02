@@ -131,23 +131,20 @@ export async function GET(request: Request) {
   // 3. Fallback to hardcoded if WITS empty
   const result = wits || fallbackRate(reporter, hs6) || { mfn_rate_pct: null, preferential_pct: null, bound_rate_pct: null, source: 'no-data' }
 
-  // 4. Cache write (best-effort — RLS may reject if anon-only key)
-  if (result.mfn_rate_pct != null) {
+  // 4. Cache write via SECURITY DEFINER RPC (bypasses anon RLS — see
+  //    cache_tariff_lookup definition for input-validation guards)
+  if (result.mfn_rate_pct != null && result.source !== 'no-data') {
     try {
-      await supabase.from('tariff_cache').upsert({
-        reporter_iso3: reporter,
-        partner_iso3:  'EGY',
-        hs_code:       hs6,
-        year,
-        mfn_rate_pct:  result.mfn_rate_pct,
-        preferential_pct: result.preferential_pct,
-        bound_rate_pct:   result.bound_rate_pct,
-        source:        result.source,
-        raw:           (wits as any)?.raw || null,
-        fetched_at:    new Date().toISOString(),
-        expires_at:    new Date(Date.now() + 30 * 86400 * 1000).toISOString(),
-      }, { onConflict: 'reporter_iso3,partner_iso3,hs_code,year' })
-    } catch { /* write rejected by RLS — keep going, response is correct */ }
+      await supabase.rpc('cache_tariff_lookup', {
+        p_reporter_iso3:    reporter,
+        p_hs_code:          hs6,
+        p_year:             year,
+        p_mfn_rate_pct:     result.mfn_rate_pct,
+        p_preferential_pct: result.preferential_pct,
+        p_bound_rate_pct:   result.bound_rate_pct,
+        p_source:           result.source,
+      })
+    } catch { /* write rejected — keep going, response is correct */ }
   }
 
   return Response.json({ ...result, cached: false, hs_code: hs6, reporter, year, raw: undefined })
