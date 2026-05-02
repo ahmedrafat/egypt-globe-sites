@@ -25,6 +25,9 @@ import RichDivisionLanding from './RichDivisionLanding'
 import RichSubcategoryLanding from './RichSubcategoryLanding'
 import RichApplicationLanding from './RichApplicationLanding'
 import { BreadcrumbJsonLd, ProductJsonLd, WebPageJsonLd } from './StructuredData'
+import FAQAccordion from './FAQAccordion'
+import StickyRfqBar from './StickyRfqBar'
+import { faqsForPage } from '../lib/faqs'
 import { getBuyerVisibility, filterPagesByVisibility, isPageVisible } from '../lib/supabaseServer'
 
 /**
@@ -589,6 +592,28 @@ export default async function PageRenderer({ page }) {
             ))}
           </div>
         </section>
+      )}
+
+      {/* Drop 127 — FAQ accordion + FAQPage JSON-LD (CRO + rich SERP cards) */}
+      {(() => {
+        const faqs = faqsForPage(page, commodity)
+        return faqs.length > 0 ? (
+          <div className="bg-slate-50/40 border-t border-slate-200">
+            <FAQAccordion
+              faqs={faqs}
+              title={isSkuPage ? `Frequently asked about ${page.title}` : 'Frequently asked questions'}
+              subtitle={isSkuPage
+                ? 'Common procurement questions for this product. Other questions? Email export@egyptglobe.com.'
+                : null}
+            />
+          </div>
+        ) : null
+      })()}
+
+      {/* Drop 127 — sticky mobile RFQ bar on product / SKU pages */}
+      {isSkuPage && (
+        <StickyRfqBar pageTitle={page.title} pagePath={page.path}
+          whatsappUrl="https://wa.me/201007729844" />
       )}
     </article>
   )
