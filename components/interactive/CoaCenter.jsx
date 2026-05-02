@@ -127,7 +127,9 @@ export default function CoaCenter({ coas = [], commodityName, requestPath }) {
         <div className="text-4xl mb-3">🧪</div>
         <h3 className="font-bold text-lg text-slate-900 mb-2">No Certificate of Analysis on file yet</h3>
         <p className="text-sm text-slate-500 mb-4 max-w-md mx-auto">
-          We issue independent SGS / Intertek / Bureau Veritas CoAs per shipment.
+          Our internal Egypt Globe QC Lab issues a CoA with every shipment, and
+          we can arrange independent third-party verification (SGS / Intertek /
+          Bureau Veritas / TUV) on request — typically 0.3-0.5% of FOB value.
           Submit a quote request and we'll attach the latest CoA to the response.
         </p>
         {requestPath && (
@@ -155,7 +157,7 @@ export default function CoaCenter({ coas = [], commodityName, requestPath }) {
             </h2>
             <p className="text-xs text-slate-500 mt-1">
               {coas.length} active CoA{coas.length === 1 ? '' : 's'} across {regions.length} market{regions.length === 1 ? '' : 's'}.
-              Independent SGS / Intertek / Bureau Veritas labs.
+              Issued by our Egypt Globe QC Lab — third-party verification (SGS / Intertek / Bureau Veritas / TUV) on request.
             </p>
           </div>
           {requestPath && (
@@ -350,8 +352,10 @@ export default function CoaCenter({ coas = [], commodityName, requestPath }) {
       {/* Footer */}
       <div className="px-5 sm:px-6 py-3 bg-slate-50/60 border-t border-slate-100">
         <p className="text-[11px] text-slate-500 leading-relaxed">
-          Per-shipment CoAs are issued from independent labs (SGS Egypt /
-          Intertek Cairo / Bureau Veritas). Region-specific certificates
+          Per-shipment CoAs are issued by our internal Egypt Globe QC Lab.
+          Independent third-party verification (SGS Egypt / Intertek Cairo /
+          Bureau Veritas / TUV) is available on request, typically at
+          0.3-0.5% of FOB value. Region-specific certificates
           attest compliance with the destination market's standard
           (EN 197-1 / ASTM C150 / GB/T / KEBS / SASO / FCO etc.).
         </p>
