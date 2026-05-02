@@ -224,50 +224,56 @@ export default function ProductDetailBlock({ page, commodity, visibility }) {
             </div>
           )}
 
-          {/* Loading ports + Active markets — paired row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {loadingPorts.length > 0 && (
-              <div className="rounded-2xl bg-amber-50/70 border border-amber-100 p-6">
-                <h2 className="font-bold text-lg text-slate-900 mb-3 flex items-center gap-2">
-                  <span className="text-xl">⚓</span> Loading Ports (Egypt)
-                </h2>
-                <div className="flex flex-wrap gap-2">
-                  {loadingPorts.map(p => (
-                    <span key={p}
-                      className="inline-flex items-center gap-1 text-xs font-semibold bg-white text-amber-900 border border-amber-200 px-3 py-1.5 rounded-full">
-                      ⚓ {p}
-                    </span>
-                  ))}
-                </div>
-                <p className="text-xs text-slate-600 mt-3">
-                  {isRock
-                    ? 'Rock-salt loading lanes — closest port to Siwa / Qattara.'
-                    : isSea
-                    ? 'Sea-salt loading lanes — closest port to source pans.'
-                    : 'Confirmed at quote stage based on destination.'}
-                </p>
+          {/* Drop 131 — combined Loading + Markets row (was 2 separate cards
+             that ate vertical space). Single card with two columns keeps the
+             chip rails close together — they're conceptually paired (load HERE
+             → ship THERE). */}
+          {(loadingPorts.length > 0 || regions.length > 0) && (
+            <div className="rounded-2xl border border-slate-200 bg-gradient-to-r from-amber-50/40 via-white to-blue-50/40 p-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
+                {loadingPorts.length > 0 && (
+                  <div>
+                    <h3 className="font-bold text-slate-900 text-sm mb-2 flex items-center gap-1.5">
+                      <span className="text-lg">⚓</span> Loads from
+                    </h3>
+                    <div className="flex flex-wrap gap-1.5">
+                      {loadingPorts.map(p => (
+                        <span key={p}
+                          className="inline-flex items-center gap-1 text-xs font-semibold bg-white text-amber-900 border border-amber-200 px-2.5 py-1 rounded-full">
+                          {p}
+                        </span>
+                      ))}
+                    </div>
+                    {(isRock || isSea) && (
+                      <p className="text-[11px] text-slate-500 mt-2">
+                        {isRock
+                          ? 'Closest ports to Siwa / Qattara mines.'
+                          : 'Closest ports to source pans.'}
+                      </p>
+                    )}
+                  </div>
+                )}
+                {regions.length > 0 && (
+                  <div>
+                    <h3 className="font-bold text-slate-900 text-sm mb-2 flex items-center gap-1.5">
+                      <span className="text-lg">🌍</span> Ships to
+                    </h3>
+                    <div className="flex flex-wrap gap-1.5">
+                      {regions.map(r => (
+                        <span key={r}
+                          className="inline-flex items-center text-xs font-medium bg-white text-blue-800 border border-blue-200 px-2.5 py-1 rounded-full">
+                          {r}
+                        </span>
+                      ))}
+                    </div>
+                    <p className="text-[11px] text-slate-500 mt-2">
+                      FOB / CIF / CFR worldwide. <Link href="/services/logistics" className="text-[#1d5fa1] hover:underline">Logistics →</Link>
+                    </p>
+                  </div>
+                )}
               </div>
-            )}
-            {regions.length > 0 && (
-              <div className="rounded-2xl bg-blue-50/70 border border-blue-100 p-6">
-                <h2 className="font-bold text-lg text-slate-900 mb-3 flex items-center gap-2">
-                  <span className="text-xl">🌍</span> Active Destination Markets
-                </h2>
-                <div className="flex flex-wrap gap-2">
-                  {regions.map(r => (
-                    <span key={r}
-                      className="inline-flex items-center text-xs font-medium bg-white text-blue-800 border border-blue-200 px-3 py-1.5 rounded-full">
-                      {r}
-                    </span>
-                  ))}
-                </div>
-                <p className="text-xs text-slate-600 mt-3">
-                  FOB / CIF / CFR shipments worldwide.
-                  <Link href="/services/logistics" className="text-[#1d5fa1] ml-1 hover:underline">View logistics →</Link>
-                </p>
-              </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
 
         {/* ───────── Sidebar (right, 1/3) ───────── */}
@@ -337,30 +343,11 @@ export default function ProductDetailBlock({ page, commodity, visibility }) {
             </div>
           )}
 
-          {/* Key specs mini card — first 3 most-relevant */}
-          {(specs.nacl_min || specs.moisture_max || specs.particle_size) && (
-            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-3">
-              <h3 className="font-bold text-slate-900 text-sm">Key Specs at a Glance</h3>
-              {specs.nacl_min && (
-                <div>
-                  <div className="text-xs text-slate-500 mb-0.5">NaCl Purity</div>
-                  <div className="text-lg font-bold text-[#1d5fa1] font-mono">{specs.nacl_min}</div>
-                </div>
-              )}
-              {specs.moisture_max && (
-                <div className="pt-2 border-t border-slate-100">
-                  <div className="text-xs text-slate-500 mb-0.5">Moisture</div>
-                  <div className="text-lg font-bold text-[#1d5fa1] font-mono">{specs.moisture_max}</div>
-                </div>
-              )}
-              {specs.particle_size && (
-                <div className="pt-2 border-t border-slate-100">
-                  <div className="text-xs text-slate-500 mb-0.5">Particle Size</div>
-                  <div className="text-base font-bold text-[#1d5fa1] font-mono">{specs.particle_size}</div>
-                </div>
-              )}
-            </div>
-          )}
+          {/* Drop 131 — "Key Specs at a Glance" right card removed.
+             Same data is in the full Specifications table on the left
+             (NaCl / Moisture / Particle Size are always among the first
+             rows there) — surfacing it twice was the #1 duplication
+             complaint on salt SKU pages. */}
 
           {/* MOQ + Lead Time + HS code commercial card */}
           {(page.moq_mt || page.lead_time_min_weeks || page.hs_code) && (
