@@ -13,6 +13,11 @@
 import type { MetadataRoute } from 'next'
 import { getAllPages, getCustomerLogos, getCaseStudies } from '../lib/corporatePages'
 
+// Drop 139c — render on demand. Sitemap pulls every published row from
+// Supabase; with Supabase slow at build, this hung the build worker
+// past 60s/page. CDN can cache the response heavily at runtime.
+export const dynamic = 'force-dynamic'
+
 const BASE = 'https://egyptglobe.com'
 
 // Priority + change-frequency tuned per category
