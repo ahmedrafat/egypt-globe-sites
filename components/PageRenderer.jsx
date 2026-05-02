@@ -30,6 +30,7 @@ import {
 import RichDivisionLanding from './RichDivisionLanding'
 import RichSubcategoryLanding from './RichSubcategoryLanding'
 import RichApplicationLanding from './RichApplicationLanding'
+import PackingMatrix from './PackingMatrix'
 import { BreadcrumbJsonLd, ProductJsonLd, WebPageJsonLd } from './StructuredData'
 import FAQAccordion from './FAQAccordion'
 import StickyRfqBar from './StickyRfqBar'
@@ -107,7 +108,12 @@ export default async function PageRenderer({ page }) {
   // scoped to this product's category (cement/salt/fertilizers/etc.). The
   // PackingMatrix component shows all formats inc. PE bags / OEM / bag-in-jumbo
   // even when the product's own packing_options array is sparse.
-  const packingOptions = page.commodity_id ? await getPackingOptions(page.category) : []
+  // Drop 143 — also fetch packing options on the dedicated /services/packing
+  // page so the editorial body sits above the comprehensive PackingMatrix.
+  const isPackingService = page.path === '/services/packing'
+  const packingOptions = (page.commodity_id || isPackingService)
+    ? await getPackingOptions(isPackingService ? null : page.category)
+    : []
   const visibility = await getBuyerVisibility()
 
   // Approved buyers with scoped access who navigate to a SKU outside
@@ -353,6 +359,15 @@ export default async function PageRenderer({ page }) {
         // Country import guide — TariffCalculator above the auto-tabs.
         <MarkdownTabs body={page.body_markdown} title={page.title}
           leadingWidget={<TariffCalculator countryId={page.path.split('/').pop()} />}
+        />
+      ) : isPackingService ? (
+        // Drop 143 — packing service page surfaces the comprehensive
+        // PackingMatrix above the editorial body so buyers see every
+        // format (PE bags, OEM, FIBC sizes, bag-in-jumbo) at a glance.
+        <MarkdownTabs body={page.body_markdown} title={page.title}
+          leadingWidget={
+            <PackingMatrix packingOptions={packingOptions} productPackingOptions={[]} />
+          }
         />
       ) : page.body_markdown ? (
         // Every other editorial page — auto-tabbed body_markdown.
