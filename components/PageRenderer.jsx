@@ -23,6 +23,7 @@ import {
   getCommodityCoas,
   getPagesForApplication,
   getPackingOptions,
+  getApplicationDivisionMatrix,
   CATEGORY_META,
   PRODUCT_DIVISIONS,
   SERVICE_DIVISIONS,
@@ -678,14 +679,27 @@ export default async function PageRenderer({ page }) {
  * appear under each — buyers immediately see "what cement does for me" vs
  * "what salt does for me" without mixing.
  */
-function ApplicationsHubByDivision() {
+async function ApplicationsHubByDivision() {
   const divisionsList = PRODUCT_DIVISIONS
+  // Drop 154 — pull the actual SKU count per (app × division) so we can
+  // (a) show "(N)" badges per app card and (b) auto-prune (app × division)
+  // pairs that have zero matching SKUs.
+  const matrix = await getApplicationDivisionMatrix()
+
   // Build {divisionId: [app, ...]} map by walking APPLICATIONS.divisions[]
+  // BUT only include the app under that division if it has at least 1 SKU
+  // there. Falls back to the static include if the matrix lookup is empty
+  // (so we never show a fully empty hub if the catalogue query failed).
+  const matrixIsEmpty = !matrix || Object.keys(matrix).length === 0
   const grouped = {}
   for (const d of divisionsList) grouped[d.id] = []
   for (const app of APPLICATIONS) {
     for (const divId of (app.divisions || [])) {
-      if (grouped[divId]) grouped[divId].push(app)
+      if (!grouped[divId]) continue
+      const count = matrix?.[app.id]?.[divId] || 0
+      if (matrixIsEmpty || count > 0) {
+        grouped[divId].push({ ...app, _count: count })
+      }
     }
   }
 
@@ -728,6 +742,9 @@ function ApplicationsHubByDivision() {
       {/* Per-division sections */}
       {divisionsWithApps.map(d => {
         const apps = grouped[d.id]
+        // Drop 154 — sum SKU counts across all apps in this division so the
+        // header shows total exporting volume from this division
+        const divisionSkuTotal = apps.reduce((sum, a) => sum + (a._count || 0), 0)
         return (
           <section key={d.id} id={d.id}
             className="border-t border-slate-100 scroll-mt-24"
@@ -751,6 +768,11 @@ function ApplicationsHubByDivision() {
                   <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">{d.blurb}</p>
                   <div className="mt-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">
                     {apps.length} application{apps.length === 1 ? '' : 's'} served from this division
+                    {divisionSkuTotal > 0 && (
+                      <span className="ml-1.5 text-slate-500">
+                        · {divisionSkuTotal} SKU{divisionSkuTotal === 1 ? '' : 's'} matched
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -767,28 +789,54 @@ function ApplicationsHubByDivision() {
                         {a.icon}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-bold text-sm text-slate-900 group-hover:text-[#1d5fa1] transition-colors leading-tight mb-1">
-                          {a.label}
-                        </h4>
+                        <div className="flex items-start gap-1.5 mb-1">
+                          <h4 className="flex-1 font-bold text-sm text-slate-900 group-hover:text-[#1d5fa1] transition-colors leading-tight">
+                            {a.label}
+                          </h4>
+                          {a._count > 0 && (
+                            <span
+                              className="flex-shrink-0 inline-flex items-center justify-center min-w-[26px] h-[20px] px-1.5 rounded-full text-[10px] font-bold tabular-nums"
+                              style={{ background: `${d.color}15`, color: d.color }}
+                              title={`${a._count} ${d.label} SKU${a._count === 1 ? '' : 's'} match this application`}>
+                              {a._count}
+                            </span>
+                          )}
+                        </div>
                         {a.blurb && (
                           <p className="text-[11px] text-slate-500 leading-relaxed line-clamp-2">{a.blurb}</p>
                         )}
-                        {/* If this app is also served by other divisions,
-                           show small chips so buyers see the multi-source option */}
-                        {(a.divisions || []).length > 1 && (
-                          <div className="flex flex-wrap items-center gap-1 mt-2 text-[9px] font-semibold uppercase tracking-wider text-slate-400">
-                            <span>Also from:</span>
-                            {(a.divisions || []).filter(id => id !== d.id).slice(0, 3).map(otherId => {
-                              const other = PRODUCT_DIVISIONS.find(x => x.id === otherId)
-                              return other ? (
-                                <span key={otherId} className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-slate-100"
-                                  style={{ color: other.color }}>
-                                  <span>{other.icon}</span>{other.label}
-                                </span>
-                              ) : null
-                            })}
-                          </div>
-                        )}
+                        {/* If this app is also served by other divisions WITH
+                           at least one matching SKU, show small chips so
+                           buyers see the multi-source option (Drop 154 prunes
+                           empties using the matrix). */}
+                        {(() => {
+                          const otherDivIds = (a.divisions || []).filter(id => {
+                            if (id === d.id) return false
+                            // When matrix is populated, only show divisions that
+                            // actually have matching SKUs; otherwise fall back
+                            // to static list (defensive — empty matrix path).
+                            if (matrixIsEmpty) return true
+                            return (matrix?.[a.id]?.[id] || 0) > 0
+                          })
+                          if (otherDivIds.length === 0) return null
+                          return (
+                            <div className="flex flex-wrap items-center gap-1 mt-2 text-[9px] font-semibold uppercase tracking-wider text-slate-400">
+                              <span>Also from:</span>
+                              {otherDivIds.slice(0, 3).map(otherId => {
+                                const other = PRODUCT_DIVISIONS.find(x => x.id === otherId)
+                                if (!other) return null
+                                const otherCount = matrix?.[a.id]?.[otherId] || 0
+                                return (
+                                  <span key={otherId} className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-slate-100"
+                                    style={{ color: other.color }}>
+                                    <span>{other.icon}</span>{other.label}
+                                    {otherCount > 0 && <span className="text-slate-400">·{otherCount}</span>}
+                                  </span>
+                                )
+                              })}
+                            </div>
+                          )
+                        })()}
                       </div>
                       <span className="text-slate-300 group-hover:text-[#1d5fa1] transition-colors mt-1">→</span>
                     </div>
