@@ -190,6 +190,14 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
     setError(null)
     setSubmitting(true)
 
+    // Drop 129 — if the buyer is signed in (egyptglobe.com /buyer flow),
+    // stamp buyer_user_id so the RFQ shows up in their dashboard.
+    let buyerUserId = null
+    try {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user?.id) buyerUserId = user.id
+    } catch { /* anon — leave null */ }
+
     const refPrefix = isCoa ? 'EGG-COA' : 'EGG-RFQ'
     const ref = `${refPrefix}-${Date.now().toString(36).toUpperCase()}`
     const payload = {
@@ -205,6 +213,7 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
       phone:         form.phone.trim() || null,
       buyer_country: form.country || null,
       country:       form.country || null,
+      buyer_user_id: buyerUserId,  // Drop 129 — back-link for /buyer/rfqs
       commodity_name: form.commodity.trim(),
       quantity:      form.quantity ? Number(form.quantity) : null,
       unit:          form.unit,

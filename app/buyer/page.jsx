@@ -99,6 +99,28 @@ export default async function BuyerDashboard() {
           </div>
         </div>
 
+        {/* Drop 129 — quick-action cards (Your RFQs) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+          <Link href="/buyer/rfqs"
+            className="card-lift group rounded-2xl border border-slate-200 bg-gradient-to-br from-blue-50 to-white p-5 flex items-center gap-4">
+            <div className="shrink-0 w-12 h-12 rounded-xl bg-[#1d5fa1] text-white flex items-center justify-center text-2xl">📋</div>
+            <div className="flex-1 min-w-0">
+              <div className="font-bold text-slate-900 group-hover:text-[#1d5fa1]">Your RFQs</div>
+              <div className="text-xs text-slate-500">Track quotation requests + their status</div>
+            </div>
+            <span className="text-[#1d5fa1] font-bold">→</span>
+          </Link>
+          <Link href="/rfq"
+            className="card-lift group rounded-2xl border border-slate-200 bg-gradient-to-br from-orange-50 to-white p-5 flex items-center gap-4">
+            <div className="shrink-0 w-12 h-12 rounded-xl bg-[#FF6321] text-white flex items-center justify-center text-2xl">＋</div>
+            <div className="flex-1 min-w-0">
+              <div className="font-bold text-slate-900 group-hover:text-[#FF6321]">New RFQ</div>
+              <div className="text-xs text-slate-500">Submit a new quotation request — 24h response</div>
+            </div>
+            <span className="text-[#FF6321] font-bold">→</span>
+          </Link>
+        </div>
+
         <h2 className="text-2xl font-extrabold text-slate-900 mb-5">Your catalogue</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {PRODUCT_DIVISIONS
