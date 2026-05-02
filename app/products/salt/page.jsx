@@ -341,11 +341,11 @@ function SaltCard({ p, type }) {
   return (
     <Link href={p.path}
       className="card-lift group rounded-xl border border-slate-200 bg-white overflow-hidden">
-      <div className={`aspect-[4/3] overflow-hidden ${isSea ? 'bg-gradient-to-br from-cyan-50 to-blue-50' : 'bg-gradient-to-br from-stone-100 to-amber-50'}`}>
+      <div className={`aspect-[16/9] overflow-hidden ${isSea ? 'bg-gradient-to-br from-cyan-50 to-blue-50' : 'bg-gradient-to-br from-stone-100 to-amber-50'}`}>
         {p.hero_photo_url ? (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img src={p.hero_photo_url} alt={p.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-5xl opacity-30">
             {isSea ? '🌊' : '⛏️'}

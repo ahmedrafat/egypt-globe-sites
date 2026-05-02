@@ -91,7 +91,7 @@ export default async function CaseStudiesIndex() {
                     {posts[0].hero_photo_url ? (
                       /* eslint-disable-next-line @next/next/no-img-element */
                       <img src={posts[0].hero_photo_url} alt={posts[0].title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
                         <span className="text-9xl opacity-30">📖</span>
@@ -129,7 +129,7 @@ export default async function CaseStudiesIndex() {
                       {cs.hero_photo_url ? (
                         /* eslint-disable-next-line @next/next/no-img-element */
                         <img src={cs.hero_photo_url} alt={cs.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
                           <span className="text-7xl opacity-30">📖</span>

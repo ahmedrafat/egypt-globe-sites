@@ -214,9 +214,14 @@ export default async function PageRenderer({ page }) {
         } : undefined}>
         {page.hero_photo_url && (
           <div className="absolute inset-0">
+            {/* Drop 140 — hero photos are typically 1200×675 (16:9). Hero
+               container is taller than 16:9 on mobile (portrait-ish), so
+               object-cover crops top + bottom. Use object-top to favor the
+               TOP of the photo (where product labels / branding sit) when
+               the crop is necessary. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={page.hero_photo_url} alt={page.title}
-              className="absolute inset-0 w-full h-full object-cover" />
+              className="absolute inset-0 w-full h-full object-cover object-top" />
             <div className="absolute inset-0 bg-gradient-to-br from-[#0f1f3a]/85 via-[#0f1f3a]/70 to-[#1d5fa1]/60" />
           </div>
         )}
@@ -426,11 +431,11 @@ export default async function PageRenderer({ page }) {
               {applicationProducts.map(p => (
                 <Link key={p.id} href={p.path}
                   className="card-lift group rounded-xl border border-slate-200 bg-white overflow-hidden">
-                  <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
+                  <div className="aspect-[16/9] bg-slate-100 overflow-hidden">
                     {p.hero_photo_url ? (
                       /* eslint-disable-next-line @next/next/no-img-element */
                       <img src={p.hero_photo_url} alt={p.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-5xl opacity-30 bg-gradient-to-br from-violet-100 to-blue-100">🧂</div>
                     )}
@@ -471,11 +476,11 @@ export default async function PageRenderer({ page }) {
             {subcategoryProducts.map(p => (
               <Link key={p.id} href={p.path}
                 className="card-lift group rounded-xl border border-slate-200 bg-white overflow-hidden">
-                <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
+                <div className="aspect-[16/9] bg-slate-100 overflow-hidden">
                   {p.hero_photo_url ? (
                     /* eslint-disable-next-line @next/next/no-img-element */
                     <img src={p.hero_photo_url} alt={p.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-5xl opacity-30 bg-gradient-to-br from-blue-50 to-slate-50"
                       style={{ background: `linear-gradient(135deg, ${cat.color}10, transparent)` }}>
@@ -576,7 +581,7 @@ export default async function PageRenderer({ page }) {
             {page.gallery_urls.map((url, i) => (
               <div key={i} className="aspect-square rounded-xl overflow-hidden bg-slate-100 card-lift">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={url} alt="" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                <img src={url} alt="" className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" />
               </div>
             ))}
           </div>
@@ -613,11 +618,11 @@ export default async function PageRenderer({ page }) {
             {related.map(p => (
               <Link key={p.id} href={p.path}
                 className="card-lift group rounded-xl border border-slate-200 bg-white overflow-hidden">
-                <div className="aspect-[4/3] bg-slate-100">
+                <div className="aspect-[16/9] bg-slate-100">
                   {p.hero_photo_url ? (
                     /* eslint-disable-next-line @next/next/no-img-element */
                     <img src={p.hero_photo_url} alt={p.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-3xl opacity-30">{cat.icon}</div>
                   )}

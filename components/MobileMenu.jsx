@@ -3,17 +3,20 @@
 /**
  * MobileMenu — slide-in drawer navigation for screens < lg.
  *
- * Replaces the desktop mega-menus on mobile/tablet. Touch-friendly
- * tap targets, accordion sub-sections for Products / Services / About,
- * deep links into Contact / Global / RFQ. Locks scroll + closes on
- * Escape, link tap, or backdrop tap.
+ * Drop 140 — flat-list redesign. Previous version (Drop 139) put
+ * Products / Services / About behind collapsed accordions, so the user
+ * opening the drawer only saw the Quote/Call/Email quick-row at the
+ * top + the Phone/Email block at the footer with three accordion stubs
+ * in between. People reported "I only see phone and email." Fix: every
+ * menu item is now visible without taps. Sectioned by category with
+ * sticky-feeling headers, scrollable. Quote/Call/Email move to the
+ * footer where they're sticky and reachable from any scroll position.
  */
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 export default function MobileMenu({ productDivisions, serviceDivisions, aboutPages, settings, visibility }) {
   const [open, setOpen] = useState(false)
-  const [section, setSection] = useState(null) // 'products' | 'services' | 'about' | null
 
   useEffect(() => {
     if (!open) { document.body.style.overflow = ''; return }
@@ -23,8 +26,7 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
     return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = '' }
   }, [open])
 
-  function close() { setOpen(false); setSection(null) }
-  function toggle(name) { setSection(s => (s === name ? null : name)) }
+  function close() { setOpen(false) }
 
   return (
     <>
@@ -46,15 +48,14 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
         className={`lg:hidden fixed inset-y-0 right-0 z-50 w-full max-w-[360px] bg-white shadow-2xl flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${open ? 'translate-x-0' : 'translate-x-full'}`}
         style={{ paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'env(safe-area-inset-bottom)' }}>
 
-        {/* Drawer header */}
-        <div className="flex items-center justify-between px-5 py-4 bg-gradient-to-br from-[#1d5fa1] via-[#185289] to-[#14467a] text-white flex-shrink-0 relative overflow-hidden">
-          {/* Decorative orange dot */}
+        {/* Drawer header — compact 56px so body has more room */}
+        <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-br from-[#1d5fa1] via-[#185289] to-[#14467a] text-white flex-shrink-0 relative overflow-hidden">
           <div aria-hidden="true" className="absolute -top-12 -right-12 w-32 h-32 rounded-full opacity-20"
             style={{ background: 'radial-gradient(circle, #FF6321 0%, transparent 70%)' }} />
 
           <Link href="/" onClick={close} className="relative flex items-center gap-2.5 group">
-            <div className="w-9 h-9 rounded-xl bg-white text-[#1d5fa1] border border-white/30 flex items-center justify-center group-active:scale-95 transition-transform">
-              <span className="font-black text-sm leading-none">EG</span>
+            <div className="w-8 h-8 rounded-lg bg-white text-[#1d5fa1] border border-white/30 flex items-center justify-center group-active:scale-95 transition-transform">
+              <span className="font-black text-xs leading-none">EG</span>
             </div>
             <div>
               <div className="font-extrabold text-sm leading-tight">Egypt Globe Group</div>
@@ -62,176 +63,181 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
             </div>
           </Link>
           <button onClick={close} aria-label="Close menu"
-            className="relative w-11 h-11 flex items-center justify-center rounded-xl hover:bg-white/15 active:bg-white/25 transition-colors flex-shrink-0">
+            className="relative w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/15 active:bg-white/25 transition-colors flex-shrink-0">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12"/>
             </svg>
           </button>
         </div>
 
-        {/* Drawer body — scrollable */}
-        <nav className="flex-1 overflow-y-auto divide-y divide-slate-100">
+        {/* Drawer body — flat scrollable list, all menu items visible */}
+        <nav className="flex-1 overflow-y-auto">
 
-          {/* Quick-actions row — RFQ / call / mail. One-tap conversion
-              paths visible immediately without scrolling. */}
-          <div className="grid grid-cols-3 gap-2 p-3 bg-gradient-to-b from-slate-50 to-white">
-            <Link href="/rfq" onClick={close}
-              className="flex flex-col items-center justify-center gap-1 h-16 rounded-xl bg-[#FF6321] hover:bg-[#e0541b] active:bg-[#c84512] text-white shadow-md shadow-orange-500/25 transition-colors">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-              </svg>
-              <span className="text-[11px] font-bold leading-none">Quote</span>
+          {/* PRODUCTS section — all 7 divisions visible */}
+          <Section label="Products" linkHref="/products" linkLabel="All →" />
+          <div>
+            {productDivisions.map(d => (
+              <Link key={d.id} href={d.path} onClick={close} className={itemCls}>
+                <span className="w-9 h-9 rounded-xl flex items-center justify-center text-lg flex-shrink-0"
+                  style={{ background: `${d.color}1A`, color: d.color }}>
+                  {d.icon}
+                </span>
+                <span className="flex-1 min-w-0">
+                  <span className="font-semibold text-slate-900 block truncate">{d.label}</span>
+                  {d.blurb && <span className="text-[11px] text-slate-500 block truncate">{d.blurb}</span>}
+                </span>
+                <Chevron />
+              </Link>
+            ))}
+          </div>
+
+          {/* SERVICES section */}
+          <Section label="Services" linkHref="/services" linkLabel="All →" />
+          <div>
+            {serviceDivisions.map(s => (
+              <Link key={s.id} href={s.path} onClick={close} className={itemCls}>
+                <span className="w-9 h-9 rounded-xl flex items-center justify-center text-lg flex-shrink-0"
+                  style={{ background: `${s.color}1A`, color: s.color }}>
+                  {s.icon}
+                </span>
+                <span className="flex-1 min-w-0">
+                  <span className="font-semibold text-slate-900 block truncate">{s.label}</span>
+                  {s.blurb && <span className="text-[11px] text-slate-500 block truncate">{s.blurb}</span>}
+                </span>
+                <Chevron />
+              </Link>
+            ))}
+          </div>
+
+          {/* COMPANY section — about + global + applications + blog + contact */}
+          <Section label="Company" />
+          <div>
+            <Link href="/about" onClick={close} className={itemCls}>
+              <span aria-hidden className="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-lg flex-shrink-0">🏢</span>
+              <span className="flex-1 font-semibold text-slate-900">About</span>
+              <Chevron />
             </Link>
+            {aboutPages?.slice(0, 4).map(p => (
+              <Link key={p.id} href={p.path} onClick={close} className={subItemCls}>
+                <span className="w-2 h-2 rounded-full bg-slate-300 ml-3 flex-shrink-0" aria-hidden />
+                <span className="flex-1 text-slate-600 text-sm">{p.title}</span>
+              </Link>
+            ))}
+            <Link href="/applications" onClick={close} className={itemCls}>
+              <span aria-hidden className="w-9 h-9 rounded-xl bg-violet-100 text-violet-700 flex items-center justify-center text-lg flex-shrink-0">🏭</span>
+              <span className="flex-1 font-semibold text-slate-900">Applications</span>
+              <Chevron />
+            </Link>
+            <Link href="/global-presence" onClick={close} className={itemCls}>
+              <span aria-hidden className="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center text-lg flex-shrink-0">🌍</span>
+              <span className="flex-1 font-semibold text-slate-900">Global Presence</span>
+              <Chevron />
+            </Link>
+            <Link href="/case-studies" onClick={close} className={itemCls}>
+              <span aria-hidden className="w-9 h-9 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center text-lg flex-shrink-0">📖</span>
+              <span className="flex-1 font-semibold text-slate-900">Case Studies</span>
+              <Chevron />
+            </Link>
+            <Link href="/blog" onClick={close} className={itemCls}>
+              <span aria-hidden className="w-9 h-9 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-lg flex-shrink-0">📝</span>
+              <span className="flex-1 font-semibold text-slate-900">News &amp; Blog</span>
+              <Chevron />
+            </Link>
+            <Link href="/contact" onClick={close} className={itemCls}>
+              <span aria-hidden className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-lg flex-shrink-0">📞</span>
+              <span className="flex-1 font-semibold text-slate-900">Contact</span>
+              <Chevron />
+            </Link>
+          </div>
+
+          {/* ACCOUNT section */}
+          <Section label="Account" />
+          <div className="pb-4">
+            {visibility?.authenticated ? (
+              <Link href="/buyer" onClick={close} className={itemCls + ' bg-emerald-50/60'}>
+                <span className="w-9 h-9 rounded-full bg-emerald-200 text-emerald-800 flex items-center justify-center text-sm font-bold flex-shrink-0">
+                  {(visibility.contactName || visibility.email || '?').charAt(0).toUpperCase()}
+                </span>
+                <span className="flex-1 min-w-0">
+                  <span className="font-semibold text-slate-900 block">My buyer catalogue</span>
+                  <span className="text-[11px] text-slate-500 block truncate">{visibility.email}</span>
+                </span>
+                <Chevron />
+              </Link>
+            ) : (
+              <Link href="/login" onClick={close} className={itemCls + ' bg-blue-50/60'}>
+                <span aria-hidden className="w-9 h-9 rounded-xl bg-blue-200 text-blue-800 flex items-center justify-center text-lg flex-shrink-0">🔒</span>
+                <span className="flex-1 min-w-0">
+                  <span className="font-semibold text-slate-900 block">Sign in</span>
+                  <span className="text-[11px] text-slate-500 block">See your prices &amp; RFQ history</span>
+                </span>
+                <Chevron />
+              </Link>
+            )}
+          </div>
+        </nav>
+
+        {/* Drawer footer — sticky conversion CTAs */}
+        <div className="border-t border-slate-200 p-3 bg-gradient-to-b from-slate-50 to-white flex-shrink-0">
+          {/* Quote — primary CTA, full width */}
+          <Link href="/rfq" onClick={close}
+            className="flex items-center justify-center gap-2 w-full bg-[#FF6321] hover:bg-[#e0541b] active:bg-[#c84512] text-white font-bold h-12 rounded-xl shadow-md shadow-orange-500/25 transition-colors mb-2">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+            </svg>
+            Get a Quote in 24 hours
+          </Link>
+          {/* Call + Email — secondary, side-by-side */}
+          <div className="grid grid-cols-2 gap-2">
             {settings?.phoneE164 && (
               <a href={`tel:${settings.phoneE164}`}
-                className="flex flex-col items-center justify-center gap-1 h-16 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 active:bg-slate-100 text-slate-900 transition-colors">
-                <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+                className="flex items-center justify-center gap-1.5 h-11 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 active:bg-slate-100 text-slate-900 font-semibold text-sm transition-colors">
+                <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                 </svg>
-                <span className="text-[11px] font-bold leading-none">Call</span>
+                Call
               </a>
             )}
             {settings?.email && (
               <a href={`mailto:${settings.email}`}
-                className="flex flex-col items-center justify-center gap-1 h-16 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 active:bg-slate-100 text-slate-900 transition-colors">
-                <svg className="w-5 h-5 text-[#1d5fa1]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+                className="flex items-center justify-center gap-1.5 h-11 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 active:bg-slate-100 text-slate-900 font-semibold text-sm transition-colors">
+                <svg className="w-4 h-4 text-[#1d5fa1]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
-                <span className="text-[11px] font-bold leading-none">Email</span>
+                Email
               </a>
             )}
           </div>
-
-          {/* Products accordion */}
-          <Accordion label="Products" icon="📦" isOpen={section === 'products'} onToggle={() => toggle('products')}>
-            <Link href="/products" onClick={close} className={subLinkCls + ' font-bold text-[#1d5fa1]'}>
-              All Products →
-            </Link>
-            {productDivisions.map(d => (
-              <Link key={d.id} href={d.path} onClick={close} className={subLinkCls}>
-                <span className="w-7 h-7 rounded-lg flex items-center justify-center text-base flex-shrink-0"
-                  style={{ background: `${d.color}18` }}>
-                  {d.icon}
-                </span>
-                <span>{d.label}</span>
-              </Link>
-            ))}
-          </Accordion>
-
-          {/* Services accordion */}
-          <Accordion label="Services" icon="🚢" isOpen={section === 'services'} onToggle={() => toggle('services')}>
-            <Link href="/services" onClick={close} className={subLinkCls + ' font-bold text-[#1d5fa1]'}>
-              All Services →
-            </Link>
-            {serviceDivisions.map(s => (
-              <Link key={s.id} href={s.path} onClick={close} className={subLinkCls}>
-                <span className="w-7 h-7 rounded-lg flex items-center justify-center text-base flex-shrink-0"
-                  style={{ background: `${s.color}18` }}>
-                  {s.icon}
-                </span>
-                <span>{s.label}</span>
-              </Link>
-            ))}
-          </Accordion>
-
-          {/* About accordion */}
-          {aboutPages?.length > 0 && (
-            <Accordion label="About" icon="🏢" isOpen={section === 'about'} onToggle={() => toggle('about')}>
-              <Link href="/about" onClick={close} className={subLinkCls + ' font-bold text-[#1d5fa1]'}>
-                About Egypt Globe →
-              </Link>
-              {aboutPages.map(p => (
-                <Link key={p.id} href={p.path} onClick={close} className={subLinkCls}>
-                  {p.title}
-                </Link>
-              ))}
-            </Accordion>
-          )}
-
-          {/* Direct links */}
-          <Link href="/applications" onClick={close} className={topLinkCls}>
-            <span aria-hidden className="w-7 h-7 rounded-lg bg-violet-100 flex items-center justify-center text-base">🏭</span>
-            Applications
-          </Link>
-          <Link href="/global-presence" onClick={close} className={topLinkCls}>
-            <span aria-hidden className="w-7 h-7 rounded-lg bg-blue-100 flex items-center justify-center text-base">🌍</span>
-            Global Presence
-          </Link>
-          <Link href="/blog" onClick={close} className={topLinkCls}>
-            <span aria-hidden className="w-7 h-7 rounded-lg bg-rose-100 flex items-center justify-center text-base">📝</span>
-            News &amp; Blog
-          </Link>
-          <Link href="/contact" onClick={close} className={topLinkCls}>
-            <span aria-hidden className="w-7 h-7 rounded-lg bg-emerald-100 flex items-center justify-center text-base">📞</span>
-            Contact
-          </Link>
-
-          {visibility?.authenticated ? (
-            <Link href="/buyer" onClick={close} className={topLinkCls + ' bg-emerald-50/50'}>
-              <span className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-bold flex-shrink-0">
-                {(visibility.contactName || visibility.email || '?').charAt(0).toUpperCase()}
-              </span>
-              My buyer catalogue
-            </Link>
-          ) : (
-            <Link href="/login" onClick={close} className={topLinkCls + ' bg-blue-50/50'}>
-              <span aria-hidden className="w-7 h-7 rounded-lg bg-blue-100 flex items-center justify-center text-base">🔒</span>
-              Sign in — see prices
-            </Link>
-          )}
-        </nav>
-
-        {/* Drawer footer */}
-        <div className="border-t border-slate-200 p-4 bg-slate-50/80 space-y-2.5 flex-shrink-0">
-          <Link href="/rfq" onClick={close}
-            className="flex items-center justify-center gap-2 w-full bg-[#FF6321] hover:bg-[#e0541b] text-white font-bold py-3 rounded-xl shadow-md transition-all hover:-translate-y-0.5">
-            📋 Get a Quote in 24 hours
-          </Link>
-          {settings?.phoneE164 && (
-            <a href={`tel:${settings.phoneE164}`}
-              className="flex items-center justify-center gap-2 w-full bg-white border border-slate-200 text-slate-900 font-semibold py-2.5 rounded-xl hover:bg-slate-50 transition-colors text-sm">
-              ☎ {settings.phone}
-            </a>
-          )}
-          {settings?.email && (
-            <a href={`mailto:${settings.email}`}
-              className="block w-full text-center text-xs text-slate-500 hover:text-[#1d5fa1] transition-colors pt-0.5">
-              ✉ {settings.email}
-            </a>
-          )}
         </div>
       </aside>
     </>
   )
 }
 
-const topLinkCls = 'flex items-center gap-3 px-5 py-3.5 text-slate-800 font-semibold hover:bg-slate-50 hover:text-[#1d5fa1] active:bg-slate-100 transition-colors text-sm min-h-[52px]'
-const subLinkCls = 'flex items-center gap-3 px-5 py-3 text-slate-600 text-sm hover:bg-slate-100 hover:text-[#1d5fa1] active:bg-slate-200 transition-colors min-h-[44px]'
-
-function Accordion({ label, icon, isOpen, onToggle, children }) {
+// Section header — small uppercase label with optional "All →" right-side link
+function Section({ label, linkHref, linkLabel }) {
   return (
-    <div>
-      <button onClick={onToggle} aria-expanded={isOpen}
-        className="w-full flex items-center justify-between px-5 py-4 text-slate-900 font-bold hover:bg-slate-50 active:bg-slate-100 transition-colors text-sm min-h-[56px]">
-        <span className="flex items-center gap-3">
-          <span aria-hidden className="w-8 h-8 rounded-lg bg-blue-100 text-[#1d5fa1] flex items-center justify-center text-base">
-            {icon}
-          </span>
-          {label}
-        </span>
-        <span className={`w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center transition-transform duration-300 ${isOpen ? 'rotate-180 bg-blue-100' : ''}`}>
-          <svg className="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7"/>
-          </svg>
-        </span>
-      </button>
-      <div className={`grid transition-[grid-template-rows] duration-300 ease-out ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
-        <div className="overflow-hidden">
-          <div className="bg-slate-50/80 border-t border-slate-100 py-1">
-            {children}
-          </div>
-        </div>
-      </div>
+    <div className="flex items-center justify-between px-4 pt-4 pb-1.5 bg-white">
+      <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
+        {label}
+      </h3>
+      {linkHref && (
+        <Link href={linkHref} className="text-[11px] font-bold text-[#1d5fa1] hover:underline">
+          {linkLabel}
+        </Link>
+      )}
     </div>
   )
 }
+
+// Tiny chevron at the end of every list item — gives "tap me" affordance
+function Chevron() {
+  return (
+    <svg className="w-4 h-4 text-slate-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7"/>
+    </svg>
+  )
+}
+
+const itemCls = 'flex items-center gap-3 px-4 py-3 hover:bg-slate-50 active:bg-slate-100 transition-colors min-h-[60px]'
+const subItemCls = 'flex items-center gap-3 px-4 py-2 hover:bg-slate-50 active:bg-slate-100 transition-colors min-h-[40px]'

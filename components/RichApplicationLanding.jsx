@@ -125,11 +125,11 @@ export default function RichApplicationLanding({ page, application, products, si
             {products.map(p => (
               <Link key={p.id} href={p.path}
                 className="card-lift group rounded-xl border border-slate-200 bg-white overflow-hidden">
-                <div className="aspect-[4/3] bg-gradient-to-br from-violet-50 to-blue-50 overflow-hidden">
+                <div className="aspect-[16/9] bg-gradient-to-br from-violet-50 to-blue-50 overflow-hidden">
                   {p.hero_photo_url ? (
                     /* eslint-disable-next-line @next/next/no-img-element */
                     <img src={p.hero_photo_url} alt={p.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-5xl opacity-40">
                       {application?.icon || '📦'}

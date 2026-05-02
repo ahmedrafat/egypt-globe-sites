@@ -143,7 +143,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
                   {sc.hero_photo_url ? (
                     /* eslint-disable-next-line @next/next/no-img-element */
                     <img src={sc.hero_photo_url} alt={sc.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
                       <span className="text-7xl opacity-30">{division.icon}</span>
@@ -252,12 +252,12 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
             {featured.slice(0, 8).map(p => (
               <Link key={p.id} href={p.path}
                 className="card-lift group rounded-xl border border-slate-200 bg-white overflow-hidden">
-                <div className="aspect-[4/3] overflow-hidden"
+                <div className="aspect-[16/9] overflow-hidden"
                   style={{ background: `linear-gradient(135deg, ${division.color}15, transparent)` }}>
                   {p.hero_photo_url ? (
                     /* eslint-disable-next-line @next/next/no-img-element */
                     <img src={p.hero_photo_url} alt={p.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-5xl opacity-30">
                       {division.icon}
