@@ -237,7 +237,13 @@ export default function CoaCenter({ coas = [], commodityName, requestPath }) {
                 <div className="flex items-center gap-1.5 flex-shrink-0">
                   <button
                     type="button"
-                    onClick={() => printCoa(coa, { commodityName })}
+                    onClick={() => printCoa(coa, {
+                      commodityName: commodityName || coa.commodity_name,
+                      commoditySku: coa.commodity_code || coa.commodity_sku,
+                      commodityHsCode: coa.commodity_hs_code,
+                      commodityOrigin: coa.commodity_origin,
+                      commodityGrade: coa.commodity_grade,
+                    })}
                     className="inline-flex items-center gap-1.5 text-xs font-bold bg-[#1d5fa1] hover:bg-[#14467a] text-white px-3 py-2 rounded-lg shadow-sm transition-colors"
                     title="Open print dialog — choose Save as PDF or send to printer"
                   >
