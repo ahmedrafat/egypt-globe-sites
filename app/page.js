@@ -37,10 +37,28 @@ import { getCaseStudies } from '../lib/corporatePages'
 // degrade gracefully via the same timeouts.
 export const dynamic = 'force-dynamic'
 
-export const metadata = {
-  title: 'Egypt Globe Group — B2B Export Trading Conglomerate',
-  description:
-    'Egyptian industrial excellence delivered to 60+ countries. Salt, cement, fertilizers, chemicals, construction materials, agro & food, industrial minerals. FOB / CIF / CFR from 7 Egyptian ports. Quote in 24 hours.',
+// Drop 167 — home-page metadata derives from the active brand. Falls
+// back to umbrella EGG defaults when no brand domain hits.
+import { getCurrentBrand, brandMeta } from '../lib/brand'
+
+export async function generateMetadata() {
+  const brandCode = await getCurrentBrand()
+  const m = brandMeta(brandCode)
+  const isUmbrella = brandCode === 'EGG'
+  const title = isUmbrella
+    ? 'Egypt Globe Group — B2B Export Trading Conglomerate'
+    : (brandCode === 'SINAI_SALT' ? 'Sinai Salt — Egyptian Sea Salt from North Sinai (Bardawil + El-Arish)'
+      : brandCode === 'EG_SALT'    ? 'EG Salt — Bulk Egyptian Industrial & Deicing Salt'
+      : brandCode === 'GLOBE_SALT' ? 'Globe Salt — Wholesale Egyptian Salt Exporter to 60+ Countries'
+      : brandCode === 'PELOT_SALT' ? 'Pelot Salt — Premium Egyptian Sea & Rock Salt'
+      : `${m.siteName} — Egyptian Salt Brand`)
+  const description = isUmbrella
+    ? 'Egyptian industrial excellence delivered to 60+ countries. Salt, cement, fertilizers, chemicals, construction materials, agro & food, industrial minerals. FOB / CIF / CFR from 7 Egyptian ports. Quote in 24 hours.'
+    : (brandCode === 'SINAI_SALT' ? 'Egyptian sea salt from North Sinai (Bardawil + El-Arish solar pans). Bulk wholesale FOB Damietta + Port Said East. Sinai Salt — sea salt specialist brand of Egypt Globe Group.'
+      : brandCode === 'EG_SALT'    ? 'Bulk Egyptian industrial salt — chlor-alkali, deicing, water treatment, oilfield. 50+ SKUs. Min 260 MT FOB Damietta. EG Salt — bulk industrial brand of Egypt Globe Group.'
+      : brandCode === 'GLOBE_SALT' ? 'Wholesale Egyptian salt to 60+ countries. 100 SKUs across food, deicing, industrial, pharma, chlor-alkali grades. FOB / CIF / CFR from 7 Egyptian ports. Globe Salt — wholesale export brand of Egypt Globe Group.'
+      : 'Egyptian salt — wholesale bulk export.')
+  return { title, description }
 }
 
 const TRUST = [

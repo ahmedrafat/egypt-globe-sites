@@ -6,6 +6,7 @@ import WhatsAppFab from '../components/WhatsAppFab'
 import { OrganizationJsonLd } from '../components/StructuredData'
 import WebVitalsReporter from '../components/WebVitalsReporter'
 import { getSiteSettings } from '../lib/corporatePages'
+import { getCurrentBrand, brandMeta } from '../lib/brand'
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
 const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] })
@@ -17,43 +18,61 @@ const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin']
  */
 export async function generateMetadata() {
   const settings = await getSiteSettings()
+  // Drop 167 — multi-tenant: read current brand from middleware-stamped header
+  const brandCode = await getCurrentBrand()
+  const meta = brandMeta(brandCode)
+  const isUmbrella = brandCode === 'EGG'
+  const brandName = isUmbrella ? settings.name : meta.siteName
+  const canonicalBase = `https://${meta.host}`
+  const description = isUmbrella
+    ? 'Egyptian B2B export trading conglomerate. Salt, cement, fertilizers, chemicals, construction materials, agro & food, industrial minerals. FOB / CIF from 7 Egyptian ports to 60+ countries. Quote in 24h.'
+    : (meta.brandCode === 'SINAI_SALT' ? 'Egyptian sea salt from North Sinai (Bardawil + El-Arish coast). Bulk wholesale FOB Damietta + Port Said East. Sea salt specialist brand of Egypt Globe Group.'
+      : meta.brandCode === 'EG_SALT'    ? 'Bulk Egyptian industrial salt — chlor-alkali, deicing, water treatment, oilfield. 50+ SKUs. Min 260 MT FOB Damietta. EG Salt — bulk industrial brand of Egypt Globe Group.'
+      : meta.brandCode === 'GLOBE_SALT' ? 'Wholesale Egyptian salt to 60+ countries. 100 SKUs across food, deicing, industrial, pharma, chlor-alkali. FOB / CIF / CFR from 7 Egyptian ports. Globe Salt — wholesale export brand of Egypt Globe Group.'
+      : 'Egyptian salt. FOB Damietta + Alexandria + Port Said East. Brand of Egypt Globe Group.')
+
   return {
-    metadataBase: new URL('https://egyptglobe.com'),
+    metadataBase: new URL(canonicalBase),
     title: {
-      default: `${settings.name} — B2B Export Trading Conglomerate`,
-      template: `%s · ${settings.name}`,
+      default: isUmbrella
+        ? `${brandName} — B2B Export Trading Conglomerate`
+        : `${brandName} — ${meta.titleSuffix.replace('· ', '')}`,
+      template: `%s ${meta.titleSuffix}`,
     },
-    description:
-      'Egyptian B2B export trading conglomerate. Salt, cement, fertilizers, chemicals, construction materials, agro & food, industrial minerals. FOB / CIF from 7 Egyptian ports to 60+ countries. Quote in 24h.',
-    keywords: ['Egypt Globe Group', 'Egyptian exporter', 'B2B trade', 'cement Egypt', 'salt Egypt', 'fertilizers Egypt', 'industrial minerals', 'Damietta export', 'Cairo trading house'],
+    description,
+    keywords: isUmbrella
+      ? ['Egypt Globe Group', 'Egyptian exporter', 'B2B trade', 'cement Egypt', 'salt Egypt', 'fertilizers Egypt', 'industrial minerals', 'Damietta export', 'Cairo trading house']
+      : (meta.brandCode === 'SINAI_SALT' ? ['Sinai Salt', 'Egyptian sea salt', 'Bardawil sea salt', 'North Sinai sea salt', 'sea salt suppliers Egypt', 'bulk Mediterranean sea salt', 'Egyptian solar salt', 'Sinai Salt brand']
+        : meta.brandCode === 'EG_SALT'    ? ['EG Salt', 'bulk Egyptian salt', 'industrial salt suppliers Egypt', 'chlor-alkali salt', 'deicing salt suppliers', 'bulk rock salt for sale', 'wholesale industrial salt']
+        : meta.brandCode === 'GLOBE_SALT' ? ['Globe Salt', 'wholesale Egyptian salt', 'salt exporters Egypt', 'salt suppliers Egypt', 'bulk salt wholesale', 'Egyptian salt 60 countries', 'FOB Damietta salt']
+        : ['Egyptian salt', 'salt FOB Damietta', 'wholesale salt']),
     icons: settings.faviconUrl ? {
       icon: [{ url: settings.faviconUrl }],
       apple: [{ url: settings.faviconUrl }],
     } : {
-      // Drop 125 — fallback so Apple touch + PWA icons resolve cleanly
       icon: [{ url: '/favicon.ico' }],
       apple: [{ url: '/og-image.png' }],
     },
     manifest: '/site.webmanifest',
-    alternates: { canonical: 'https://egyptglobe.com' },
+    // Drop 167 — per-brand canonical so Google indexes products on the brand
+    // domain (not the umbrella) when the request comes through the brand host.
+    alternates: { canonical: canonicalBase },
     openGraph: {
       type: 'website',
-      title: settings.name,
-      description: 'Egyptian industrial excellence connected to 60+ countries.',
-      url: 'https://egyptglobe.com',
-      siteName: settings.name,
+      title: brandName,
+      description,
+      url: canonicalBase,
+      siteName: brandName,
       locale: 'en_US',
-      // Drop 122 — fallback to the static /og-image.png (sharp-generated)
-      // when the CMS-driven settings.ogImageUrl is not set.
       images: [{
         url: settings.ogImageUrl || '/og-image.png',
-        width: 1200, height: 630, alt: settings.name,
+        width: 1200, height: 630, alt: brandName,
       }],
     },
     twitter: {
       card: 'summary_large_image',
-      title: settings.name,
-      description: 'Egyptian industrial excellence connected to 60+ countries.',
+      title: brandName,
+      description,
       images: [settings.ogImageUrl || '/og-image.png'],
     },
     robots: { index: true, follow: true },

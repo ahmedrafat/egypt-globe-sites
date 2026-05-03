@@ -34,6 +34,7 @@ import RichDivisionLanding from './RichDivisionLanding'
 import RichSubcategoryLanding from './RichSubcategoryLanding'
 import RichApplicationLanding from './RichApplicationLanding'
 import PackingMatrix from './PackingMatrix'
+import SkuRelatedLinks from './SkuRelatedLinks'
 import { BreadcrumbJsonLd, ProductJsonLd, WebPageJsonLd } from './StructuredData'
 import FAQAccordion from './FAQAccordion'
 import StickyRfqBar from './StickyRfqBar'
@@ -666,6 +667,13 @@ export default async function PageRenderer({ page }) {
           </div>
         ) : null
       })()}
+
+      {/* Drop 168 — internal-link cluster (application + wholesale + standard +
+           port + blog) on every salt SKU page. Drives ranking equity into the
+           new landing pages built in drops 163-166. */}
+      {isSkuPage && page.path?.startsWith('/products/salt/') && (
+        <SkuRelatedLinks page={page} commodity={commodity} />
+      )}
 
       {/* Drop 127 — sticky mobile RFQ bar on product / SKU pages */}
       {isSkuPage && (
