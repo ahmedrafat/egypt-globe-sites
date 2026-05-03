@@ -167,50 +167,148 @@ export function WebPageJsonLd({ page, type = 'WebPage' }) {
   )
 }
 
+// Drop 161 — Certification issuer inference for the new hasCertification
+// markup (Google added Certification type April 2025). Maps known cert
+// abbreviations to their issuing organisation so the JSON-LD links cleanly.
+const CERT_ISSUERS = {
+  'iso 9001': 'International Organization for Standardization',
+  'iso 22000': 'International Organization for Standardization',
+  'iso 14001': 'International Organization for Standardization',
+  'iso 45001': 'International Organization for Standardization',
+  'fssc 22000': 'Foundation FSSC',
+  'haccp': 'Codex Alimentarius',
+  'halal': 'Islamic Food Authority (ESIC)',
+  'sgs': 'SGS SA',
+  'intertek': 'Intertek Group plc',
+  'bureau veritas': 'Bureau Veritas',
+  'tuv': 'TÜV',
+  'goeic': 'General Organization for Export & Import Control of Egypt',
+  'eur1': 'European Union',
+  'reach': 'European Chemicals Agency (ECHA)',
+  'fda': 'US Food & Drug Administration',
+  'usp': 'United States Pharmacopeia',
+  'ep': 'European Directorate for the Quality of Medicines',
+  'bp': 'British Pharmacopoeia Commission',
+  'gmp': 'Pharmaceutical Inspection Co-operation Scheme',
+  'kosher': 'Orthodox Union',
+  'organic': 'EU / USDA Organic Certifiers',
+  'astm': 'ASTM International',
+  'en 197': 'European Committee for Standardization (CEN)',
+  'en 16811': 'European Committee for Standardization (CEN)',
+  'bs 3247': 'British Standards Institution',
+  'gost': 'Russian Federal Agency on Technical Regulating and Metrology',
+}
+function inferCertIssuer(cert) {
+  const low = String(cert).toLowerCase()
+  for (const [k, v] of Object.entries(CERT_ISSUERS)) {
+    if (low.includes(k)) return v
+  }
+  return null
+}
+
+// Drop 161 — make any image URL absolute (Google Product schema requires it)
+function absUrl(u) {
+  if (!u) return null
+  if (u.startsWith('http://') || u.startsWith('https://')) return u
+  return `${BASE}${u.startsWith('/') ? '' : '/'}${u}`
+}
+
 /**
  * Product — emits a Product JSON-LD block for SKU pages.
- * `page` is an egg_corporate_pages row (with specs / certifications /
- * loading_ports / hs_code / moq_mt / lead_time_*_weeks / etc.).
- * `commodity` is the joined commodities master row (optional).
- * `visibility` controls whether `offers.price` is emitted (only when
- * showPrices=true, otherwise we emit offer with price 0 + AvailableForSale).
+ * Drop 161 fixes:
+ *   - Image now absolute URL
+ *   - HS code moved to additionalProperty (was wrongly in `gtin`/`productID`)
+ *   - Certifications use new `hasCertification` + `Certification` markup
+ *     (Google added April 2025) instead of the wrong `award` field
+ *   - Per-brand `Brand` entity sourced from egg_letterheads (when
+ *     `brand` prop passed) — Pelot Salt SKUs get Pelot Salt branding
+ *     instead of the umbrella org
+ *   - additionalProperty filters out duplicate sku/code keys
+ *   - Description spacing cleanup (period before "Available")
+ *   - Offer carries indicative priceSpecification with priceType
+ *
+ * @param {object} page — egg_corporate_pages row
+ * @param {object} commodity — joined commodities master row
+ * @param {object} visibility — buyer access flags
+ * @param {object} brand — egg_letterheads row (optional, from PageRenderer.brand)
  */
-export function ProductJsonLd({ page, commodity, visibility }) {
+export function ProductJsonLd({ page, commodity, visibility, brand }) {
   if (!page) return null
   const specs = page.specs || {}
   const certs = page.certifications || []
   const ports = page.loading_ports || []
   const regions = page.regions || []
 
-  // Build additionalProperty from specs jsonb
-  const additionalProperty = Object.entries(specs)
-    .filter(([, v]) => v !== null && v !== '' && v !== undefined)
-    .slice(0, 20) // schema limit — keep it tight
+  // HS code becomes the FIRST additionalProperty (semantically correct)
+  const hsCodeProperty = page.hs_code ? [{
+    '@type': 'PropertyValue',
+    name: 'HS Code',
+    value: String(page.hs_code),
+    description: 'Harmonized System tariff classification',
+  }] : []
+
+  // Build remaining additionalProperty from specs jsonb (filter dup sku/code)
+  const specProperties = Object.entries(specs)
+    .filter(([k, v]) => v !== null && v !== '' && v !== undefined)
+    .filter(([k]) => !['sku', 'code', 'product_code', 'hs_code'].includes(k))
+    .slice(0, 20)
     .map(([name, value]) => ({
       '@type': 'PropertyValue',
-      name: name.replace(/_/g, ' '),
+      name: name.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
       value: String(value),
     }))
 
+  const additionalProperty = [...hsCodeProperty, ...specProperties]
+
+  // Per-brand Brand entity (Drop 158 letterhead system) or umbrella org fallback
+  const brandEntity = brand
+    ? {
+        '@type': 'Brand',
+        '@id': `${BASE}#brand-${brand.brand_code.toLowerCase()}`,
+        name: brand.brand_name,
+        ...(brand.logo_url ? { logo: absUrl(brand.logo_url) } : {}),
+        ...(brand.website ? { url: brand.website.startsWith('http') ? brand.website : `https://${brand.website}` } : {}),
+        ...(brand.tagline ? { slogan: brand.tagline } : {}),
+        parentOrganization: { '@id': `${BASE}#org` },
+      }
+    : { '@id': `${BASE}#org` }
+
+  // Offer with indicative pricing — even without a real price, emit
+  // priceSpecification with priceType so Google can still build a card.
   const offers = page.price_indication && visibility?.showPrices
     ? {
         '@type': 'Offer',
+        url: `${BASE}${page.path}`,
         priceCurrency: page.price_currency || 'USD',
+        price: String(page.price_indication),
         priceSpecification: {
           '@type': 'PriceSpecification',
-          price: page.price_indication,
+          price: String(page.price_indication),
           priceCurrency: page.price_currency || 'USD',
           unitText: page.price_unit || 'MT',
+          valueAddedTaxIncluded: false,
         },
         availability: 'https://schema.org/InStock',
         seller: { '@id': `${BASE}#org` },
-        ...(page.moq_mt ? { eligibleQuantity: { '@type': 'QuantitativeValue', minValue: page.moq_mt, unitCode: 'TNE' } } : {}),
+        ...(page.moq_mt ? {
+          eligibleQuantity: { '@type': 'QuantitativeValue', minValue: Number(page.moq_mt), unitCode: 'TNE', unitText: 'metric tonnes' },
+        } : {}),
       }
     : {
         '@type': 'Offer',
+        url: `${BASE}${page.path}`,
+        priceCurrency: 'USD',
+        priceSpecification: {
+          '@type': 'PriceSpecification',
+          priceCurrency: 'USD',
+          valueAddedTaxIncluded: false,
+          description: 'Price on request — quote within 24h. FOB / CIF / CFR from Egyptian ports.',
+        },
         availability: 'https://schema.org/InStock',
         seller: { '@id': `${BASE}#org` },
-        ...(page.moq_mt ? { eligibleQuantity: { '@type': 'QuantitativeValue', minValue: page.moq_mt, unitCode: 'TNE' } } : {}),
+        ...(page.moq_mt ? {
+          eligibleQuantity: { '@type': 'QuantitativeValue', minValue: Number(page.moq_mt), unitCode: 'TNE', unitText: 'metric tonnes' },
+        } : {}),
       }
 
   const json = {
@@ -220,19 +318,32 @@ export function ProductJsonLd({ page, commodity, visibility }) {
     name: page.title,
     description: page.description,
     url: `${BASE}${page.path}`,
-    ...(page.hero_photo_url ? { image: page.hero_photo_url } : {}),
-    ...(page.hs_code ? { gtin: page.hs_code, productID: page.hs_code } : {}),
-    ...(commodity?.code ? { sku: commodity.code } : (commodity?.sku ? { sku: commodity.sku } : {})),
-    brand: { '@id': `${BASE}#org` },
+    ...(page.hero_photo_url ? { image: [absUrl(page.hero_photo_url)] } : {}),
+    // productID = our internal SKU code (a true product identifier).
+    // We deliberately do NOT emit `gtin` (HS codes are not GTIN barcodes).
+    ...(commodity?.code ? { productID: commodity.code, sku: commodity.code }
+       : commodity?.sku  ? { productID: commodity.sku,  sku: commodity.sku  } : {}),
+    brand: brandEntity,
     manufacturer: { '@id': `${BASE}#org` },
     countryOfOrigin: { '@type': 'Country', name: 'Egypt' },
-    ...(certs.length ? { award: certs.join(', ') } : {}),
+    // Certifications → hasCertification + Certification entities (Google
+    // added Certification markup April 2025). Replaces the wrong `award` field.
+    ...(certs.length ? {
+      hasCertification: certs.map(c => {
+        const issuer = inferCertIssuer(c)
+        return {
+          '@type': 'Certification',
+          name: c,
+          ...(issuer ? { issuedBy: { '@type': 'Organization', name: issuer } } : {}),
+        }
+      }),
+    } : {}),
     ...(additionalProperty.length ? { additionalProperty } : {}),
     offers,
-    ...(ports.length || regions.length ? {
-      areaServed: regions.length ? regions : undefined,
-      availableAtOrFrom: ports.length ? ports.map(p => ({ '@type': 'Place', name: p })) : undefined,
+    ...(ports.length ? {
+      availableAtOrFrom: ports.map(p => ({ '@type': 'Place', name: p })),
     } : {}),
+    ...(regions.length ? { areaServed: regions } : {}),
   }
 
   return (

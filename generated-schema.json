@@ -1,0 +1,325 @@
+{
+  "_meta": {
+    "generated": "2026-05-03",
+    "site": "egypt-globe-sites (Next.js 16, www.egyptglobe.com)",
+    "purpose": "Drop-in JSON-LD templates fixing the issues raised in SCHEMA-REPORT.md",
+    "instructions": "Each template below is a standalone JSON-LD payload. Wrap with <script type=\"application/ld+json\">{...}</script>. The placeholders [LIKE_THIS] are interpolation points — substitute from the relevant DB row or page context."
+  },
+
+  "1_product_FIXED": {
+    "_description": "Replacement for ProductJsonLd output — fixes Issues 2 (image), 3 (gtin), 4 (cert), 5 (brand), 8 (offer), 10 (dup sku), 11 (place enrichment)",
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": "https://egyptglobe.com/products/salt/salt/egg-salt-001#product",
+    "name": "Industrial Rock Salt — Bulk Egyptian",
+    "description": "Industrial-grade Egyptian rock salt mined from Siwa Oasis and the Qattara Depression. Minimum 97% NaCl, natural undried moisture 1.0-1.5%. FOB / CIF / CFR from 7 Egyptian ports with full L/C-bank document set.",
+    "url": "https://egyptglobe.com/products/salt/salt/egg-salt-001",
+    "image": [
+      "https://egyptglobe.com/heroes/products-salt-salt-egg-salt-001.png"
+    ],
+    "productID": "SALT-IND-01",
+    "sku": "SALT-IND-01",
+    "category": "Industrial Rock Salt",
+    "countryOfOrigin": { "@type": "Country", "name": "Egypt" },
+    "brand": {
+      "@type": "Brand",
+      "@id": "https://egyptglobe.com#brand-pelot_salt",
+      "name": "Pelot Salt",
+      "logo": "[LOGO_URL_FROM_egg_letterheads.logo_url]",
+      "url": "https://www.pelotsalt.com",
+      "parentOrganization": { "@id": "https://egyptglobe.com#org" }
+    },
+    "manufacturer": { "@id": "https://egyptglobe.com#org" },
+    "hasCertification": [
+      {
+        "@type": "Certification",
+        "name": "ISO 9001:2015",
+        "issuedBy": { "@type": "Organization", "name": "International Organization for Standardization" }
+      },
+      {
+        "@type": "Certification",
+        "name": "SGS Inspection",
+        "issuedBy": { "@type": "Organization", "name": "SGS SA" }
+      },
+      {
+        "@type": "Certification",
+        "name": "GOEIC Approved",
+        "issuedBy": { "@type": "Organization", "name": "General Organization for Export & Import Control of Egypt" }
+      }
+    ],
+    "additionalProperty": [
+      { "@type": "PropertyValue", "name": "HS Code",          "value": "2501.00", "description": "Harmonized System tariff classification" },
+      { "@type": "PropertyValue", "name": "Source Type",      "value": "Rock Salt" },
+      { "@type": "PropertyValue", "name": "Processing",       "value": "Natural (undried mined)" },
+      { "@type": "PropertyValue", "name": "NaCl Minimum",     "value": "98%" },
+      { "@type": "PropertyValue", "name": "Moisture Maximum", "value": "1.5%" },
+      { "@type": "PropertyValue", "name": "Origin Region",    "value": "Siwa Oasis / Qattara Depression" },
+      { "@type": "PropertyValue", "name": "Lead Time",        "value": "2-4 weeks", "description": "Order confirmation to vessel sailing" }
+    ],
+    "offers": {
+      "@type": "Offer",
+      "url": "https://egyptglobe.com/products/salt/salt/egg-salt-001",
+      "priceCurrency": "USD",
+      "priceSpecification": {
+        "@type": "PriceSpecification",
+        "priceCurrency": "USD",
+        "valueAddedTaxIncluded": false,
+        "priceType": "https://schema.org/SuggestedRetailPrice",
+        "minPrice": "55",
+        "maxPrice": "120",
+        "unitText": "MT",
+        "description": "FOB indicative range. Actual price quoted within 24h based on volume, packing, destination, incoterm."
+      },
+      "availability": "https://schema.org/InStock",
+      "availabilityStarts": "2026-01-01",
+      "seller": { "@id": "https://egyptglobe.com#org" },
+      "eligibleQuantity": {
+        "@type": "QuantitativeValue",
+        "minValue": 260,
+        "unitCode": "TNE",
+        "unitText": "metric tonnes"
+      },
+      "businessFunction": "https://purl.org/goodrelations/v1#Sell",
+      "deliveryLeadTime": {
+        "@type": "QuantitativeValue",
+        "minValue": 2,
+        "maxValue": 4,
+        "unitCode": "WEE",
+        "unitText": "weeks"
+      }
+    },
+    "areaServed": [
+      "GCC", "MENA", "East Africa", "West Africa", "South Asia", "Far East", "Europe", "Mediterranean", "Americas"
+    ],
+    "availableAtOrFrom": [
+      {
+        "@type": "Place",
+        "name": "Port of Damietta",
+        "address": { "@type": "PostalAddress", "addressCountry": "EG" },
+        "identifier": { "@type": "PropertyValue", "propertyID": "UN/LOCODE", "value": "EGDAM" }
+      },
+      {
+        "@type": "Place",
+        "name": "Port of Alexandria",
+        "address": { "@type": "PostalAddress", "addressCountry": "EG" },
+        "identifier": { "@type": "PropertyValue", "propertyID": "UN/LOCODE", "value": "EGALY" }
+      },
+      {
+        "@type": "Place",
+        "name": "Port of Ain Sokhna",
+        "address": { "@type": "PostalAddress", "addressCountry": "EG" },
+        "identifier": { "@type": "PropertyValue", "propertyID": "UN/LOCODE", "value": "EGSOK" }
+      }
+    ]
+  },
+
+  "2_collection_page_division_landing": {
+    "_description": "For /products/salt, /products/construction, /products/chemicals, etc. — emit on division landings + applications hub. Issue 6.",
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": "https://egyptglobe.com/products/salt#collection",
+    "name": "Egyptian Salt Catalogue — 100 SKUs",
+    "description": "Egyptian sea salt + rock salt. Food grade, industrial, pharmaceutical, deicing, agricultural, cosmetic, pool, aquaculture grades. FOB Damietta / Alexandria / Port Said with full L/C-bank docs.",
+    "url": "https://egyptglobe.com/products/salt",
+    "isPartOf": { "@id": "https://egyptglobe.com#website" },
+    "publisher": { "@id": "https://egyptglobe.com#org" },
+    "inLanguage": "en",
+    "mainEntity": {
+      "@type": "ItemList",
+      "numberOfItems": 100,
+      "itemListOrder": "https://schema.org/ItemListOrderAscending",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "Product",
+            "name": "Food Grade Sea Salt — Fine",
+            "url": "https://egyptglobe.com/products/salt/salt/ps-food-01",
+            "sku": "PS-FOOD-01",
+            "image": "https://egyptglobe.com/heroes/products-salt-salt-ps-food-01.png"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "Product",
+            "name": "Industrial Rock Salt — Bulk Egyptian",
+            "url": "https://egyptglobe.com/products/salt/salt/egg-salt-001",
+            "sku": "SALT-IND-01"
+          }
+        }
+      ]
+    },
+    "about": {
+      "@type": "Thing",
+      "name": "Egyptian salt — sea & rock — for export"
+    }
+  },
+
+  "3_service_template": {
+    "_description": "For /services/logistics, /services/packing, /services/inspection, etc. Issue 7.",
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": "https://egyptglobe.com/services/packing#service",
+    "name": "Industrial Packing & Containerisation",
+    "serviceType": "Cargo packing and containerisation for bulk commodity exports",
+    "description": "50 kg PP woven bags, 1 MT FIBC jumbo bags, palletised, big-bag-in-jumbo (PE in FIBC), bulk vessel — with buyer-spec marking, OEM print, and L/C-compliant packing list.",
+    "url": "https://egyptglobe.com/services/packing",
+    "provider": { "@id": "https://egyptglobe.com#org" },
+    "areaServed": [
+      { "@type": "Country", "name": "Egypt" },
+      { "@type": "Place", "name": "All seven Egyptian ports" }
+    ],
+    "audience": {
+      "@type": "BusinessAudience",
+      "audienceType": "Importers, traders, distributors, and end-users of bulk commodities"
+    },
+    "offers": {
+      "@type": "Offer",
+      "availability": "https://schema.org/InStock",
+      "priceCurrency": "USD",
+      "priceSpecification": {
+        "@type": "PriceSpecification",
+        "description": "Per-shipment pricing — quote within 24h"
+      }
+    },
+    "hoursAvailable": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday"], "opens": "09:00", "closes": "17:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "09:00", "closes": "13:00" }
+    ]
+  },
+
+  "4_tech_article_for_TDS": {
+    "_description": "For /tds/[...path] — Technical Data Sheet pages. Use TechArticle (a kind of Article).",
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "@id": "https://egyptglobe.com/tds/products/salt/salt/egg-salt-001#tds",
+    "headline": "Technical Data Sheet — Industrial Rock Salt — Bulk Egyptian",
+    "description": "Full chemical and physical specification for Industrial Rock Salt: NaCl ≥97%, moisture ≤1.5%, particle size ranges, packing options, certifications, lead time, MOQ.",
+    "url": "https://egyptglobe.com/tds/products/salt/salt/egg-salt-001",
+    "datePublished": "2026-04-29",
+    "dateModified": "2026-05-03",
+    "image": "https://egyptglobe.com/heroes/products-salt-salt-egg-salt-001.png",
+    "author": { "@id": "https://egyptglobe.com#org" },
+    "publisher": { "@id": "https://egyptglobe.com#org" },
+    "isPartOf": { "@id": "https://egyptglobe.com#website" },
+    "about": { "@id": "https://egyptglobe.com/products/salt/salt/egg-salt-001#product" },
+    "dependencies": "ISO 9001:2015, SGS, GOEIC certifications",
+    "proficiencyLevel": "Expert"
+  },
+
+  "5_per_brand_Brand_entity_pelotsalt": {
+    "_description": "Standalone Brand entity for Pelot Salt — sourced from egg_letterheads row. Reference via @id from Product schema (Issue 5). Add one per brand to the global @graph in OrganizationJsonLd.",
+    "@context": "https://schema.org",
+    "@type": "Brand",
+    "@id": "https://egyptglobe.com#brand-pelot_salt",
+    "name": "Pelot Salt",
+    "alternateName": "Pelot",
+    "description": "Egyptian salt export brand of Egypt Globe Group. Sea salt and rock salt across food, industrial, pharmaceutical, deicing, agricultural and cosmetic grades.",
+    "logo": "[FROM_egg_letterheads.logo_url]",
+    "url": "https://www.pelotsalt.com",
+    "parentOrganization": { "@id": "https://egyptglobe.com#org" },
+    "slogan": "Egyptian salt, FOB from Damietta + Alexandria",
+    "sameAs": [
+      "https://www.pelotsalt.com",
+      "https://eg.linkedin.com/company/egypt-globe-group"
+    ]
+  },
+
+  "6_organization_FIXED_with_per_brand_subOrganization": {
+    "_description": "Enhanced OrganizationJsonLd output — adds the 8 brand letterheads as subOrganization references. Replaces current @graph block in components/StructuredData.jsx OrganizationJsonLd().",
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://egyptglobe.com#org",
+        "name": "Egypt Globe Group",
+        "legalName": "Egypt Globe Group, LLC",
+        "url": "https://egyptglobe.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://egyptglobe.com/og-image.png",
+          "width": 1200,
+          "height": 630
+        },
+        "description": "Egyptian B2B export trading conglomerate. Salt, cement, fertilizers, chemicals, construction materials, agro & food, industrial minerals, metals. FOB / CIF from 7 Egyptian ports to 60+ countries. Quote in 24h.",
+        "foundingDate": "2014",
+        "naics": "424910",
+        "areaServed": [
+          { "@type": "Place", "name": "Africa" },
+          { "@type": "Place", "name": "Asia" },
+          { "@type": "Place", "name": "Europe" },
+          { "@type": "Place", "name": "Middle East" },
+          { "@type": "Place", "name": "Americas" }
+        ],
+        "knowsAbout": [
+          "Sea salt export from Egypt",
+          "Rock salt export from Egypt",
+          "Egyptian cement export",
+          "Egyptian fertilizers export",
+          "Bulk commodity logistics",
+          "L/C-compliant trade documentation",
+          "FOB / CIF / CFR Egyptian port shipments"
+        ],
+        "subOrganization": [
+          { "@id": "https://egyptglobe.com#brand-pelot_salt" },
+          { "@id": "https://egyptglobe.com#brand-egg_cement" },
+          { "@id": "https://egyptglobe.com#brand-egg_chemicals" },
+          { "@id": "https://egyptglobe.com#brand-egg_fertilizers" },
+          { "@id": "https://egyptglobe.com#brand-egg_agro" },
+          { "@id": "https://egyptglobe.com#brand-egg_minerals" },
+          { "@id": "https://egyptglobe.com#brand-egg_metals" }
+        ],
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "telephone": "+201007729844",
+            "contactType": "sales",
+            "email": "export@egyptglobe.com",
+            "areaServed": ["Africa","Asia","Europe","Middle East","Americas"],
+            "availableLanguage": ["English","Arabic"]
+          }
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "EG",
+          "addressLocality": "Cairo",
+          "streetAddress": "30 Sibawayh Al-Masry Street, off Tayaran, Nasr City"
+        },
+        "identifier": [
+          { "@type": "PropertyValue", "propertyID": "Egyptian Commercial Registry", "value": "73418" },
+          { "@type": "PropertyValue", "propertyID": "Tax Card",                       "value": "655-527-427" },
+          { "@type": "PropertyValue", "propertyID": "Export License",                 "value": "600010794" }
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://egyptglobe.com#website",
+        "url": "https://egyptglobe.com",
+        "name": "Egypt Globe Group",
+        "publisher": { "@id": "https://egyptglobe.com#org" },
+        "inLanguage": "en",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://egyptglobe.com/products?q={query}",
+          "query-input": "required name=query"
+        }
+      }
+    ]
+  },
+
+  "_recommended_REMOVALS": {
+    "_description": "Schemas currently emitted that should be REMOVED — see Issue 1 in SCHEMA-REPORT.md",
+    "FAQPage": {
+      "issue": "FAQ rich results restricted to government + healthcare since Aug 2023. Will not earn rich results on B2B trading site, may flag as structured data spam.",
+      "where_emitted": [
+        "Every SKU page (Drop 125 added FAQ for packing/MOQ/lead-time/certs)",
+        "/applications hub",
+        "/contact page"
+      ],
+      "fix": "Remove all FAQJsonLd calls in PageRenderer.jsx. Keep the visible FAQAccordion component for UX/content — just don't emit the JSON-LD."
+    }
+  }
+}

@@ -1,23 +1,26 @@
 /**
  * FAQAccordion — Drop 127 conversion-rate optimisation.
  *
- * Renders a clean expandable Q&A accordion on any page that has FAQs +
- * emits the `FAQPage` JSON-LD block (Drop 125's FAQJsonLd) so Google
- * shows "People Also Ask" rich SERP cards — a meaningful CTR boost in
- * B2B search results.
+ * Renders a clean expandable Q&A accordion on any page that has FAQs.
  *
  * Server-rendered with HTML <details> elements so it works without JS,
  * doesn't ship a client bundle, and is fully accessible. Tailwind +
  * Pelot-style design. Grouped under a heading so it integrates as a
  * normal section in PageRenderer / ProductDetailBlock.
+ *
+ * Drop 161 — REMOVED inline FAQJsonLd emission. Google restricted
+ * FAQ rich results to government + healthcare authority sites in
+ * August 2023. As a B2B trading site we get zero rich-result benefit
+ * AND risk a "structured data spam" flag from emitting boilerplate
+ * FAQ schema across hundreds of SKU pages. The visual accordion stays
+ * (good UX + content depth + helps long-tail SEO via natural language)
+ * but the JSON-LD block is gone.
  */
-import { FAQJsonLd } from './StructuredData'
 
 export default function FAQAccordion({ faqs, title = 'Frequently asked questions', subtitle = null, dense = false }) {
   if (!faqs?.length) return null
   return (
     <section className={`max-w-4xl mx-auto px-5 sm:px-6 lg:px-8 ${dense ? 'py-8' : 'py-14 lg:py-20'}`}>
-      <FAQJsonLd qas={faqs} />
 
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-3">

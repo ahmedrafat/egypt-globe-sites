@@ -215,7 +215,7 @@ export default async function PageRenderer({ page }) {
       {/* Drop 122 + 125 — structured data ────────────────────────── */}
       <BreadcrumbJsonLd crumbs={crumbs} />
       {isSkuPage ? (
-        <ProductJsonLd page={page} commodity={commodity} visibility={visibility} />
+        <ProductJsonLd page={page} commodity={commodity} visibility={visibility} brand={brand} />
       ) : (
         <WebPageJsonLd
           page={page}
