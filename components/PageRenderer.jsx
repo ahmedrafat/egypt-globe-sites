@@ -21,6 +21,7 @@ import {
   getCommodityById,
   getQualitySpecsForCommodity,
   getCommodityCoas,
+  getBrandForCommodity,
   getPagesForApplication,
   getPackingOptions,
   getApplicationDivisionMatrix,
@@ -109,6 +110,10 @@ export default async function PageRenderer({ page }) {
   // Drop 146 — fetch all active CoAs per market region for the new
   // Certificates tab in ProductTabs.
   const coas = page.commodity_id ? await getCommodityCoas(page.commodity_id) : []
+  // Drop 158 — resolve the brand letterhead for this commodity (Pelot Salt /
+  // EGG Cement / EGG Chemicals / etc.) so the CoA print uses the right
+  // logo / colours / contact / signatures / footer disclaimer.
+  const brand = commodity ? await getBrandForCommodity(commodity) : null
   // Drop 141 — pull comprehensive packing matrix from globe_packing_options
   // scoped to this product's category (cement/salt/fertilizers/etc.). The
   // PackingMatrix component shows all formats inc. PE bags / OEM / bag-in-jumbo
@@ -353,6 +358,7 @@ export default async function PageRenderer({ page }) {
           qualitySpecs={qualitySpecs}
           packingOptions={packingOptions}
           coas={coas}
+          brand={brand}
           visibility={visibility}
         />
       ) : page.path === '/trade-tools/hs-codes' ? (

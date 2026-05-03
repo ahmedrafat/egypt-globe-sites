@@ -100,7 +100,7 @@ function daysUntil(d) {
   return diff
 }
 
-export default function CoaCenter({ coas = [], commodityName, requestPath }) {
+export default function CoaCenter({ coas = [], commodityName, requestPath, brand = null, commodity = null }) {
   // Group by region, sort regions in a sensible order
   const grouped = useMemo(() => {
     const map = {}
@@ -245,8 +245,10 @@ export default function CoaCenter({ coas = [], commodityName, requestPath }) {
                       commodityHsCode: coa.commodity_hs_code,
                       commodityOrigin: coa.commodity_origin,
                       commodityGrade: coa.commodity_grade,
+                      brand,  // Drop 158 — per-brand letterhead
                     })}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold bg-[#1d5fa1] hover:bg-[#14467a] text-white px-3 py-2 rounded-lg shadow-sm transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-white px-3 py-2 rounded-lg shadow-sm transition-colors hover:opacity-90"
+                    style={{ background: brand?.primary_color || '#1d5fa1' }}
                     title="Open print dialog — choose Save as PDF or send to printer"
                   >
                     🖨 Print / PDF

@@ -59,7 +59,7 @@ const TABS = [
   { id: 'quote',        label: 'Get a quote',  icon: '📨' },
 ]
 
-export default function ProductTabs({ page, commodity, applications: matchedApps, qualitySpecs, packingOptions, coas, visibility }) {
+export default function ProductTabs({ page, commodity, applications: matchedApps, qualitySpecs, packingOptions, coas, brand, visibility }) {
   const [active, setActive] = useState('overview')
   const [transitSelection, setTransitSelection] = useState({})
 
@@ -153,7 +153,7 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
 
           {/* Drop 146 — Certificates of Analysis (per-market region) */}
           <div className={active === 'certificates' ? 'animate-fade-in-up' : 'hidden'}>
-            <CoaCenter coas={coas || []} commodityName={page.title} requestPath={page.path} />
+            <CoaCenter coas={coas || []} commodityName={page.title} requestPath={page.path} brand={brand} commodity={commodity} />
           </div>
 
           {/* Applications */}
