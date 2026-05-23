@@ -34,6 +34,7 @@ const CATEGORY_RANK: Record<string, { priority: number; changeFrequency: Metadat
   services:     { priority: 0.8, changeFrequency: 'monthly' },
   applications: { priority: 0.75, changeFrequency: 'monthly' },
   case_studies: { priority: 0.75, changeFrequency: 'monthly' },
+  markets:      { priority: 0.85, changeFrequency: 'monthly' },
   blog:         { priority: 0.7, changeFrequency: 'weekly'  },
   partners:     { priority: 0.6, changeFrequency: 'monthly' },
   rfq:          { priority: 0.6, changeFrequency: 'monthly' },
