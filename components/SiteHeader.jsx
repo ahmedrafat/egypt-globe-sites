@@ -24,7 +24,7 @@ export default async function SiteHeader({ settings }) {
   ])
 
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur-md shadow-sm">
+    <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur-md shadow-sm">
 
       {/* ── Top info strip ───────────────────────────────────────── */}
       <div className="hidden md:block bg-[#1d5fa1]">

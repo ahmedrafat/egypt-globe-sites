@@ -25,7 +25,7 @@ export async function generateMetadata() {
   const brandName = isUmbrella ? settings.name : meta.siteName
   const canonicalBase = `https://${meta.host}`
   const description = isUmbrella
-    ? 'Egyptian B2B export trading conglomerate. Salt, cement, fertilizers, chemicals, construction materials, agro & food, industrial minerals. FOB / CIF from 7 Egyptian ports to 60+ countries. Quote in 24h.'
+    ? 'Egyptian salt, cement, fertilizers, chemicals, construction materials & industrial minerals exported to 60+ countries. FOB / CIF / CFR from 7 Egyptian seaports. ISO 22000 · EN 197-1 · GOEIC certified. Quote in 24h.'
     : (meta.brandCode === 'SINAI_SALT' ? 'Egyptian sea salt from North Sinai (Bardawil + El-Arish coast). Bulk wholesale FOB Damietta + Port Said East. Sea salt specialist brand of Egypt Globe Group.'
       : meta.brandCode === 'EG_SALT'    ? 'Bulk Egyptian industrial salt — chlor-alkali, deicing, water treatment, oilfield. 50+ SKUs. Min 260 MT FOB Damietta. EG Salt — bulk industrial brand of Egypt Globe Group.'
       : meta.brandCode === 'GLOBE_SALT' ? 'Wholesale Egyptian salt to 60+ countries. 100 SKUs across food, deicing, industrial, pharma, chlor-alkali. FOB / CIF / CFR from 7 Egyptian ports. Globe Salt — wholesale export brand of Egypt Globe Group.'
@@ -40,12 +40,15 @@ export async function generateMetadata() {
       template: `%s ${meta.titleSuffix}`,
     },
     description,
-    keywords: isUmbrella
-      ? ['Egypt Globe Group', 'Egyptian exporter', 'B2B trade', 'cement Egypt', 'salt Egypt', 'fertilizers Egypt', 'industrial minerals', 'Damietta export', 'Cairo trading house']
-      : (meta.brandCode === 'SINAI_SALT' ? ['Sinai Salt', 'Egyptian sea salt', 'Bardawil sea salt', 'North Sinai sea salt', 'sea salt suppliers Egypt', 'bulk Mediterranean sea salt', 'Egyptian solar salt', 'Sinai Salt brand']
-        : meta.brandCode === 'EG_SALT'    ? ['EG Salt', 'bulk Egyptian salt', 'industrial salt suppliers Egypt', 'chlor-alkali salt', 'deicing salt suppliers', 'bulk rock salt for sale', 'wholesale industrial salt']
-        : meta.brandCode === 'GLOBE_SALT' ? ['Globe Salt', 'wholesale Egyptian salt', 'salt exporters Egypt', 'salt suppliers Egypt', 'bulk salt wholesale', 'Egyptian salt 60 countries', 'FOB Damietta salt']
-        : ['Egyptian salt', 'salt FOB Damietta', 'wholesale salt']),
+    // Drop 95: per-brand target-keyword surface for "bulk salt / rock salt
+    // egypt / sea salt in bulk / sinai salt / siwa salt" queries. Next 16
+    // Metadata.keywords accepts an array; we pass the strongest commercial
+    // terms for the active brand (umbrella vs sub-brand).
+    keywords:
+      meta.brandCode === 'SINAI_SALT' ? ['sinai salt', 'sea salt in bulk', 'bulk sea salt egypt', 'north sinai sea salt', 'bardawil sea salt', 'el-arish salt', 'FOB damietta sea salt', 'FOB port said east salt', 'egyptian sea salt exporter']
+      : meta.brandCode === 'EG_SALT' ? ['bulk salt', 'bulk rock salt', 'industrial salt egypt', 'chlor-alkali salt', 'deicing salt EN 16811-1', 'ASTM D632 rock salt', 'BS 3247 highway salt', 'GOST 13830 salt', 'water-treatment salt', 'oilfield salt', 'leather tanning salt', 'textile dyeing salt', 'siwa rock salt', 'qattara rock salt', 'bulk egyptian salt']
+      : meta.brandCode === 'GLOBE_SALT' ? ['wholesale egyptian salt', 'salt exporter egypt', 'bulk salt wholesale', 'sea salt in bulk', 'bulk rock salt', 'food grade salt egypt', 'pharmaceutical salt USP BP', 'pool salt wholesale', 'sinai salt', 'siwa salt', 'qattara rock salt', 'FOB 7 egyptian ports']
+      : ['bulk salt', 'rock salt egypt', 'bulk rock salt', 'sea salt in bulk', 'sinai salt', 'siwa salt', 'qattara rock salt', 'bulk egyptian salt', 'egyptian salt exporter', 'cement egypt', 'fertilizer egypt', 'industrial minerals egypt', 'construction materials egypt', 'B2B trading conglomerate egypt', 'FOB 7 egyptian ports'],
     icons: settings.faviconUrl ? {
       icon: [{ url: settings.faviconUrl }],
       apple: [{ url: settings.faviconUrl }],

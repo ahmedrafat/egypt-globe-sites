@@ -167,6 +167,67 @@ export function WebPageJsonLd({ page, type = 'WebPage' }) {
   )
 }
 
+/**
+ * ItemList — for category/hub pages listing multiple products or articles.
+ * Helps Google build sitelink carousels and collection rich results.
+ */
+export function ItemListJsonLd({ items, name, url }) {
+  if (!items?.length) return null
+  const json = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name,
+    url: `${BASE}${url}`,
+    numberOfItems: items.length,
+    itemListElement: items.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.title,
+      url: `${BASE}${item.path}`,
+      ...(item.description ? { description: item.description } : {}),
+    })),
+  }
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }}
+    />
+  )
+}
+
+/**
+ * Service — for the /rfq and /services pages. Declares what the business
+ * offers and links it to the Organization entity.
+ */
+export function ServiceJsonLd({ name, description, url }) {
+  const json = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    '@id': `${BASE}${url || '/rfq'}#service`,
+    name: name || 'B2B Commodity Export Quote',
+    description: description || 'Request a FOB / CIF / CFR price quote for Egyptian salt, cement, fertilizers, chemicals, minerals, or agro commodities. Response within 24 hours.',
+    provider: { '@id': `${BASE}#org` },
+    areaServed: { '@type': 'AdministrativeArea', name: 'Worldwide' },
+    serviceType: 'B2B Commodity Export',
+    availableChannel: {
+      '@type': 'ServiceChannel',
+      serviceUrl: `${BASE}${url || '/rfq'}`,
+      servicePhone: '+201007729844',
+    },
+    offers: {
+      '@type': 'Offer',
+      description: 'FOB, CIF, CFR from 7 Egyptian seaports. Minimum order varies by commodity.',
+      seller: { '@id': `${BASE}#org` },
+    },
+  }
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }}
+    />
+  )
+}
+
 // Drop 161 — Certification issuer inference for the new hasCertification
 // markup (Google added Certification type April 2025). Maps known cert
 // abbreviations to their issuing organisation so the JSON-LD links cleanly.

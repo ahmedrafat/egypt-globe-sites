@@ -13,10 +13,8 @@
 import type { MetadataRoute } from 'next'
 import { getAllPages, getCustomerLogos, getCaseStudies } from '../lib/corporatePages'
 
-// Drop 139c — render on demand. Sitemap pulls every published row from
-// Supabase; with Supabase slow at build, this hung the build worker
-// past 60s/page. CDN can cache the response heavily at runtime.
-export const dynamic = 'force-dynamic'
+// ISR only — CDN caches the sitemap and re-generates hourly at runtime.
+// Removing force-dynamic lets the revalidate=3600 below actually apply.
 
 const BASE = 'https://egyptglobe.com'
 

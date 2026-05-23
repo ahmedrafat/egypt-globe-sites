@@ -1,255 +1,268 @@
 'use client'
 
-/**
- * MobileMenu — slide-in drawer navigation for screens < lg.
- *
- * Drop 140 — flat-list redesign. Previous version (Drop 139) put
- * Products / Services / About behind collapsed accordions, so the user
- * opening the drawer only saw the Quote/Call/Email quick-row at the
- * top + the Phone/Email block at the footer with three accordion stubs
- * in between. People reported "I only see phone and email." Fix: every
- * menu item is now visible without taps. Sectioned by category with
- * sticky-feeling headers, scrollable. Quote/Call/Email move to the
- * footer where they're sticky and reachable from any scroll position.
- */
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 export default function MobileMenu({ productDivisions, serviceDivisions, aboutPages, settings, visibility }) {
   const [open, setOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState(null) // 'products' | 'services' | null
 
+  // Lock body scroll when open
   useEffect(() => {
-    if (!open) { document.body.style.overflow = ''; return }
-    document.body.style.overflow = 'hidden'
-    const onKey = e => { if (e.key === 'Escape') setOpen(false) }
-    window.addEventListener('keydown', onKey)
-    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = '' }
+    if (open) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+      setActiveSection(null)
+    }
+    return () => { document.body.style.overflow = '' }
   }, [open])
 
-  function close() { setOpen(false) }
+  // Close on Escape
+  useEffect(() => {
+    const onKey = e => { if (e.key === 'Escape') setOpen(false) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
+  const close = () => setOpen(false)
+  const toggle = section => setActiveSection(s => s === section ? null : section)
+
+  const s = settings || {}
 
   return (
     <>
-      {/* Hamburger — 44×44 for Apple HIG-compliant tap target.
-         Drop 144 — explicit type="button" + touch-manipulation for iOS Safari +
-         z-50 so it's never under a sticky element. Defensive event handling
-         prevents bubbling that any parent listener might intercept. */}
-      <button type="button" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setOpen(true) }}
-        aria-label="Open navigation menu"
+      {/* ── Hamburger ─────────────────────────────────────────────── */}
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        aria-label="Open menu"
         aria-expanded={open}
+        className="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg text-slate-700 hover:bg-slate-100 active:bg-slate-200 transition-colors"
         style={{ touchAction: 'manipulation' }}
-        className="lg:hidden relative z-50 flex items-center justify-center w-11 h-11 rounded-xl text-slate-700 hover:bg-slate-100 active:bg-slate-200 cursor-pointer transition-colors -mr-1">
-        <svg className="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16"/>
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
 
-      {/* Backdrop — z-50 (under drawer at z-60). Pointer-events-none when
-         closed so it never blocks a click on whatever's behind it. */}
-      <div onClick={close} aria-hidden="true"
-        className={`lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-300 ${open ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} />
+      {/* ── Full-screen overlay ───────────────────────────────────── */}
+      {open && (
+        <div
+          className="lg:hidden fixed inset-0 z-50 flex flex-col bg-white"
+          role="dialog"
+          aria-label="Navigation menu"
+          aria-modal="true"
+        >
+          {/* Header bar */}
+          <div className="flex items-center justify-between px-5 h-14 border-b border-slate-100 flex-shrink-0">
+            <Link href="/" onClick={close} className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-lg bg-[#1d5fa1] flex items-center justify-center">
+                <span className="text-white font-black text-[10px] leading-none">EG</span>
+              </div>
+              <span className="font-bold text-sm text-slate-900">Egypt Globe Group</span>
+            </Link>
+            <button
+              type="button"
+              onClick={close}
+              aria-label="Close menu"
+              className="flex items-center justify-center w-9 h-9 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
 
-      {/* Drawer — z-60 (above backdrop + sticky header at z-40) */}
-      <aside role="dialog" aria-label="Mobile navigation" aria-modal="true"
-        className={`lg:hidden fixed inset-y-0 right-0 z-[60] w-full max-w-[360px] bg-white shadow-2xl flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${open ? 'translate-x-0' : 'translate-x-full pointer-events-none'}`}
-        style={{ paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'env(safe-area-inset-bottom)' }}>
+          {/* Scrollable body */}
+          <div className="flex-1 overflow-y-auto">
 
-        {/* Drawer header — compact 56px so body has more room */}
-        <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-br from-[#1d5fa1] via-[#185289] to-[#14467a] text-white flex-shrink-0 relative overflow-hidden">
-          <div aria-hidden="true" className="absolute -top-12 -right-12 w-32 h-32 rounded-full opacity-20"
-            style={{ background: 'radial-gradient(circle, #FF6321 0%, transparent 70%)' }} />
+            {/* ── Products ─────────────────────────────────────── */}
+            <div className="border-b border-slate-100">
+              {/* Row: link to /products + separate chevron toggle */}
+              <div className="flex items-center border-b border-slate-50">
+                <Link
+                  href="/products"
+                  onClick={close}
+                  className="flex-1 px-5 py-4 font-semibold text-slate-900 text-[15px]"
+                >
+                  Products
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => toggle('products')}
+                  aria-label="Toggle product divisions"
+                  className="flex items-center gap-1.5 px-4 py-4 text-xs text-[#1d5fa1] font-semibold"
+                >
+                  <span>{activeSection === 'products' ? 'Less' : 'Divisions'}</span>
+                  <svg
+                    className={`w-3.5 h-3.5 transition-transform duration-200 ${activeSection === 'products' ? 'rotate-180' : ''}`}
+                    fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+              </div>
 
-          <Link href="/" onClick={close} className="relative flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-white text-[#1d5fa1] border border-white/30 flex items-center justify-center group-active:scale-95 transition-transform">
-              <span className="font-black text-xs leading-none">EG</span>
+              {activeSection === 'products' && (
+                <div className="pb-2 bg-slate-50/50">
+                  {productDivisions.map(div => (
+                    <Link
+                      key={div.id}
+                      href={div.path}
+                      onClick={close}
+                      className="flex items-center gap-3 px-5 py-3 hover:bg-slate-100 transition-colors"
+                    >
+                      <div
+                        className="w-9 h-9 rounded-lg flex items-center justify-center text-base flex-shrink-0"
+                        style={{ background: `${div.color}18` }}
+                      >
+                        {div.icon}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="font-semibold text-[14px] text-slate-900">{div.label}</div>
+                        <div className="text-[11px] text-slate-500 truncate">{div.blurb}</div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
-            <div>
-              <div className="font-extrabold text-sm leading-tight">Egypt Globe Group</div>
-              <div className="text-[10px] text-blue-200 leading-tight">B2B Export · 60+ markets</div>
+
+            {/* ── Services ─────────────────────────────────────── */}
+            <div className="border-b border-slate-100">
+              <div className="flex items-center border-b border-slate-50">
+                <Link
+                  href="/services"
+                  onClick={close}
+                  className="flex-1 px-5 py-4 font-semibold text-slate-900 text-[15px]"
+                >
+                  Services
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => toggle('services')}
+                  aria-label="Toggle service divisions"
+                  className="flex items-center gap-1.5 px-4 py-4 text-xs text-[#1d5fa1] font-semibold"
+                >
+                  <span>{activeSection === 'services' ? 'Less' : 'More'}</span>
+                  <svg
+                    className={`w-3.5 h-3.5 transition-transform duration-200 ${activeSection === 'services' ? 'rotate-180' : ''}`}
+                    fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+              </div>
+
+              {activeSection === 'services' && (
+                <div className="pb-2 bg-slate-50/50">
+                  {serviceDivisions.map(svc => (
+                    <Link
+                      key={svc.id}
+                      href={svc.path}
+                      onClick={close}
+                      className="flex items-center gap-3 px-5 py-3 hover:bg-slate-100 transition-colors"
+                    >
+                      <div
+                        className="w-9 h-9 rounded-lg flex items-center justify-center text-base flex-shrink-0"
+                        style={{ background: `${svc.color}18` }}
+                      >
+                        {svc.icon}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="font-semibold text-[14px] text-slate-900">{svc.label}</div>
+                        <div className="text-[11px] text-slate-500 truncate">{svc.blurb}</div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
-          </Link>
-          <button type="button" onClick={close} aria-label="Close menu"
-            style={{ touchAction: 'manipulation' }}
-            className="relative w-11 h-11 flex items-center justify-center rounded-lg hover:bg-white/15 active:bg-white/25 cursor-pointer transition-colors flex-shrink-0">
-            <svg className="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-          </button>
-        </div>
 
-        {/* Drawer body — flat scrollable list, all menu items visible */}
-        <nav className="flex-1 overflow-y-auto">
+            {/* ── Flat nav links ───────────────────────────────── */}
+            <div className="py-1">
+              {[
+                { href: '/about',           label: 'About' },
+                { href: '/applications',    label: 'Applications' },
+                { href: '/global-presence', label: 'Global Presence' },
+                { href: '/blog',            label: 'News & Blog' },
+                { href: '/contact',         label: 'Contact' },
+                { href: '/coa',             label: 'CoA Center' },
+              ].map(({ href, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  onClick={close}
+                  className="flex items-center justify-between px-5 py-3.5 text-[15px] font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors border-b border-slate-100"
+                >
+                  {label}
+                  <svg className="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              ))}
+            </div>
 
-          {/* PRODUCTS section — all 7 divisions visible */}
-          <Section label="Products" linkHref="/products" linkLabel="All →" />
-          <div>
-            {productDivisions.map(d => (
-              <Link key={d.id} href={d.path} onClick={close} className={itemCls}>
-                <span className="w-9 h-9 rounded-xl flex items-center justify-center text-lg flex-shrink-0"
-                  style={{ background: `${d.color}1A`, color: d.color }}>
-                  {d.icon}
-                </span>
-                <span className="flex-1 min-w-0">
-                  <span className="font-semibold text-slate-900 block truncate">{d.label}</span>
-                  {d.blurb && <span className="text-[11px] text-slate-500 block truncate">{d.blurb}</span>}
-                </span>
-                <Chevron />
-              </Link>
-            ))}
+            {/* ── Account ──────────────────────────────────────── */}
+            <div className="px-5 py-4 border-t border-slate-100">
+              {visibility?.authenticated ? (
+                <Link href="/buyer" onClick={close} className="flex items-center gap-3 py-2">
+                  <span className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm font-bold flex-shrink-0">
+                    {(visibility.contactName || visibility.email || '?').charAt(0).toUpperCase()}
+                  </span>
+                  <div>
+                    <div className="font-semibold text-[14px] text-slate-900">My catalogue</div>
+                    <div className="text-[11px] text-slate-500">{visibility.email}</div>
+                  </div>
+                </Link>
+              ) : (
+                <Link href="/login" onClick={close} className="flex items-center gap-2 text-[14px] text-slate-600 hover:text-slate-900 transition-colors">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                  Sign in to buyer portal
+                </Link>
+              )}
+            </div>
           </div>
 
-          {/* SERVICES section */}
-          <Section label="Services" linkHref="/services" linkLabel="All →" />
-          <div>
-            {serviceDivisions.map(s => (
-              <Link key={s.id} href={s.path} onClick={close} className={itemCls}>
-                <span className="w-9 h-9 rounded-xl flex items-center justify-center text-lg flex-shrink-0"
-                  style={{ background: `${s.color}1A`, color: s.color }}>
-                  {s.icon}
-                </span>
-                <span className="flex-1 min-w-0">
-                  <span className="font-semibold text-slate-900 block truncate">{s.label}</span>
-                  {s.blurb && <span className="text-[11px] text-slate-500 block truncate">{s.blurb}</span>}
-                </span>
-                <Chevron />
-              </Link>
-            ))}
-          </div>
-
-          {/* COMPANY section — about + global + applications + blog + contact */}
-          <Section label="Company" />
-          <div>
-            <Link href="/about" onClick={close} className={itemCls}>
-              <span aria-hidden className="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-lg flex-shrink-0">🏢</span>
-              <span className="flex-1 font-semibold text-slate-900">About</span>
-              <Chevron />
+          {/* ── Sticky footer CTA ────────────────────────────────────── */}
+          <div className="flex-shrink-0 border-t border-slate-200 p-4 bg-white">
+            <Link
+              href="/rfq"
+              onClick={close}
+              className="flex items-center justify-center gap-2 w-full bg-[#FF6321] hover:bg-[#e0541b] text-white font-bold text-[15px] h-12 rounded-xl transition-colors mb-3"
+            >
+              Get a Quote in 24 hours
             </Link>
-            {aboutPages?.slice(0, 4).map(p => (
-              <Link key={p.id} href={p.path} onClick={close} className={subItemCls}>
-                <span className="w-2 h-2 rounded-full bg-slate-300 ml-3 flex-shrink-0" aria-hidden />
-                <span className="flex-1 text-slate-600 text-sm">{p.title}</span>
-              </Link>
-            ))}
-            <Link href="/applications" onClick={close} className={itemCls}>
-              <span aria-hidden className="w-9 h-9 rounded-xl bg-violet-100 text-violet-700 flex items-center justify-center text-lg flex-shrink-0">🏭</span>
-              <span className="flex-1 font-semibold text-slate-900">Applications</span>
-              <Chevron />
-            </Link>
-            <Link href="/global-presence" onClick={close} className={itemCls}>
-              <span aria-hidden className="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center text-lg flex-shrink-0">🌍</span>
-              <span className="flex-1 font-semibold text-slate-900">Global Presence</span>
-              <Chevron />
-            </Link>
-            <Link href="/case-studies" onClick={close} className={itemCls}>
-              <span aria-hidden className="w-9 h-9 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center text-lg flex-shrink-0">📖</span>
-              <span className="flex-1 font-semibold text-slate-900">Case Studies</span>
-              <Chevron />
-            </Link>
-            <Link href="/coa" onClick={close} className={itemCls}>
-              <span aria-hidden className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-lg flex-shrink-0">🧪</span>
-              <span className="flex-1 font-semibold text-slate-900">CoA Center</span>
-              <Chevron />
-            </Link>
-            <Link href="/blog" onClick={close} className={itemCls}>
-              <span aria-hidden className="w-9 h-9 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-lg flex-shrink-0">📝</span>
-              <span className="flex-1 font-semibold text-slate-900">News &amp; Blog</span>
-              <Chevron />
-            </Link>
-            <Link href="/contact" onClick={close} className={itemCls}>
-              <span aria-hidden className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-lg flex-shrink-0">📞</span>
-              <span className="flex-1 font-semibold text-slate-900">Contact</span>
-              <Chevron />
-            </Link>
-          </div>
-
-          {/* ACCOUNT section */}
-          <Section label="Account" />
-          <div className="pb-4">
-            {visibility?.authenticated ? (
-              <Link href="/buyer" onClick={close} className={itemCls + ' bg-emerald-50/60'}>
-                <span className="w-9 h-9 rounded-full bg-emerald-200 text-emerald-800 flex items-center justify-center text-sm font-bold flex-shrink-0">
-                  {(visibility.contactName || visibility.email || '?').charAt(0).toUpperCase()}
-                </span>
-                <span className="flex-1 min-w-0">
-                  <span className="font-semibold text-slate-900 block">My buyer catalogue</span>
-                  <span className="text-[11px] text-slate-500 block truncate">{visibility.email}</span>
-                </span>
-                <Chevron />
-              </Link>
-            ) : (
-              <Link href="/login" onClick={close} className={itemCls + ' bg-blue-50/60'}>
-                <span aria-hidden className="w-9 h-9 rounded-xl bg-blue-200 text-blue-800 flex items-center justify-center text-lg flex-shrink-0">🔒</span>
-                <span className="flex-1 min-w-0">
-                  <span className="font-semibold text-slate-900 block">Sign in</span>
-                  <span className="text-[11px] text-slate-500 block">See your prices &amp; RFQ history</span>
-                </span>
-                <Chevron />
-              </Link>
-            )}
-          </div>
-        </nav>
-
-        {/* Drawer footer — sticky conversion CTAs */}
-        <div className="border-t border-slate-200 p-3 bg-gradient-to-b from-slate-50 to-white flex-shrink-0">
-          {/* Quote — primary CTA, full width */}
-          <Link href="/rfq" onClick={close}
-            className="flex items-center justify-center gap-2 w-full bg-[#FF6321] hover:bg-[#e0541b] active:bg-[#c84512] text-white font-bold h-12 rounded-xl shadow-md shadow-orange-500/25 transition-colors mb-2">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-            </svg>
-            Get a Quote in 24 hours
-          </Link>
-          {/* Call + Email — secondary, side-by-side */}
-          <div className="grid grid-cols-2 gap-2">
-            {settings?.phoneE164 && (
-              <a href={`tel:${settings.phoneE164}`}
-                className="flex items-center justify-center gap-1.5 h-11 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 active:bg-slate-100 text-slate-900 font-semibold text-sm transition-colors">
-                <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                </svg>
-                Call
-              </a>
-            )}
-            {settings?.email && (
-              <a href={`mailto:${settings.email}`}
-                className="flex items-center justify-center gap-1.5 h-11 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 active:bg-slate-100 text-slate-900 font-semibold text-sm transition-colors">
-                <svg className="w-4 h-4 text-[#1d5fa1]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                </svg>
-                Email
-              </a>
-            )}
+            <div className="grid grid-cols-2 gap-2">
+              {s.phoneE164 && (
+                <a
+                  href={`tel:${s.phoneE164}`}
+                  className="flex items-center justify-center gap-1.5 h-10 rounded-lg border border-slate-200 text-slate-700 font-medium text-sm hover:bg-slate-50 transition-colors"
+                >
+                  <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                  Call
+                </a>
+              )}
+              {s.email && (
+                <a
+                  href={`mailto:${s.email}`}
+                  className="flex items-center justify-center gap-1.5 h-10 rounded-lg border border-slate-200 text-slate-700 font-medium text-sm hover:bg-slate-50 transition-colors"
+                >
+                  <svg className="w-4 h-4 text-[#1d5fa1]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                  Email
+                </a>
+              )}
+            </div>
           </div>
         </div>
-      </aside>
+      )}
     </>
   )
 }
-
-// Section header — small uppercase label with optional "All →" right-side link
-function Section({ label, linkHref, linkLabel }) {
-  return (
-    <div className="flex items-center justify-between px-4 pt-4 pb-1.5 bg-white">
-      <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
-        {label}
-      </h3>
-      {linkHref && (
-        <Link href={linkHref} className="text-[11px] font-bold text-[#1d5fa1] hover:underline">
-          {linkLabel}
-        </Link>
-      )}
-    </div>
-  )
-}
-
-// Tiny chevron at the end of every list item — gives "tap me" affordance
-function Chevron() {
-  return (
-    <svg className="w-4 h-4 text-slate-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7"/>
-    </svg>
-  )
-}
-
-const itemCls = 'flex items-center gap-3 px-4 py-3 hover:bg-slate-50 active:bg-slate-100 transition-colors min-h-[60px]'
-const subItemCls = 'flex items-center gap-3 px-4 py-2 hover:bg-slate-50 active:bg-slate-100 transition-colors min-h-[40px]'

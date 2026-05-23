@@ -154,7 +154,7 @@ export default async function ServicesHub() {
       )}
 
       {/* Provider portal banner */}
-      <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16">
+      <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 overflow-hidden">
         <div className="rounded-3xl bg-gradient-to-br from-slate-900 via-[#0f1f3a] to-[#1d5fa1] p-8 sm:p-12 relative overflow-hidden shadow-xl">
           <div aria-hidden="true" className="absolute -top-12 -right-12 text-[260px] opacity-10 select-none">⚓</div>
           <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
@@ -194,7 +194,7 @@ export default async function ServicesHub() {
       </section>
 
       {/* Bottom CTA */}
-      <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20">
+      <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 overflow-hidden">
         <div className="rounded-3xl bg-gradient-to-br from-teal-700 via-cyan-800 to-blue-900 p-10 sm:p-14 text-center relative overflow-hidden shadow-2xl shadow-blue-900/20 animate-scale-in">
           <div aria-hidden="true" className="absolute -top-12 -right-12 text-[280px] opacity-10 select-none">🚢</div>
           <h2 className="relative text-3xl sm:text-4xl font-extrabold text-white mb-3 tracking-tight">

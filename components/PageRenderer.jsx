@@ -251,7 +251,7 @@ export default async function PageRenderer({ page }) {
 
         {/* Decorative patterns */}
         <div aria-hidden="true" className="absolute inset-0 bg-grid-pattern opacity-[0.07] pointer-events-none" />
-        <div aria-hidden="true" className="absolute inset-0 opacity-10 pointer-events-none">
+        <div aria-hidden="true" className="absolute inset-0 opacity-10 pointer-events-none overflow-hidden">
           <div className="absolute right-0 top-0 w-[600px] h-[600px] rounded-full"
             style={{ background: 'radial-gradient(circle, white 0%, transparent 70%)' }} />
         </div>

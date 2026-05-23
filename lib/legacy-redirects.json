@@ -575,11 +575,6 @@
     "permanent": true
   },
   {
-    "source": "/partners",
-    "destination": "/",
-    "permanent": true
-  },
-  {
     "source": "/potato-exports",
     "destination": "/products/agro/fresh-produce",
     "permanent": true

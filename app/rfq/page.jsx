@@ -12,13 +12,14 @@ import {
   getMasterDestPorts,
 } from '../../lib/corporatePages'
 import RFQForm from '../../components/rfq/RFQForm'
+import { ServiceJsonLd } from '../../components/StructuredData'
 
 export const revalidate = 60
 
 export const metadata = {
-  title: 'Request a Quote',
+  title: 'Request a Quote — Egyptian Salt, Cement & Fertilizers',
   description:
-    'Submit a B2B RFQ to Egypt Globe Group — we respond within 24 hours with priced FOB / CIF / CFR options from any of 7 Egyptian ports.',
+    'Submit a B2B RFQ for Egyptian salt, cement, fertilizers, chemicals, or minerals. Egypt Globe Group responds within 24 hours with FOB / CIF / CFR pricing from 7 Egyptian seaports.',
 }
 
 export default async function RFQPage({ searchParams }) {
@@ -42,6 +43,11 @@ export default async function RFQPage({ searchParams }) {
 
   return (
     <article>
+      <ServiceJsonLd
+        name="B2B Commodity Export Quote — Egypt Globe Group"
+        description="Request a FOB / CIF / CFR price quote for Egyptian salt, cement, fertilizers, chemicals, industrial minerals, or agro commodities. Egypt Globe Group responds within 24 hours with pricing from any of 7 Egyptian seaports."
+        url="/rfq"
+      />
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-br from-[#f8fafc] via-white to-[#eef4fb]">
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none">

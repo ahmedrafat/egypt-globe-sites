@@ -159,7 +159,7 @@ export default async function BlogIndex() {
       )}
 
       {/* Bottom CTA */}
-      <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20">
+      <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 overflow-hidden">
         <div className="rounded-3xl bg-gradient-to-br from-rose-700 via-orange-700 to-[#0f1f3a] p-10 sm:p-12 text-center relative overflow-hidden shadow-2xl shadow-rose-900/20">
           <div aria-hidden="true" className="absolute -top-12 -right-12 text-[260px] opacity-10 select-none">📝</div>
           <h2 className="relative text-2xl sm:text-3xl font-extrabold text-white mb-3 tracking-tight">
