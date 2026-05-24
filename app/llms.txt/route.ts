@@ -38,6 +38,7 @@ export async function GET() {
     services:     'Supply-chain services — logistics, port operations, packing, documentation',
     applications: 'Applications by industry — food / chem / pharma / oil & gas / de-icing',
     case_studies: 'Real customer references and shipment case studies',
+    markets:      'Market intelligence — commodity market overviews, HS codes, pricing benchmarks, producer directories',
     blog:         'Industry insights and editorial',
     partners:     'Partner organisations',
     rfq:          'Request for quote',
@@ -61,10 +62,11 @@ We supply commodities to manufacturers, water utilities, oil & gas operators, fe
   body += `- [HS-code glossary](${BASE}/trade-tools/hs-codes): canonical HS codes for Egyptian exports\n`
   body += `- [Request a quote](${BASE}/rfq): 24-hour response RFQ form\n`
   body += `- [About / company](${BASE}/about): history, mission, locations, quality, careers\n`
-  body += `- [Case studies](${BASE}/case-studies): real shipments + delivered numbers\n\n`
+  body += `- [Case studies](${BASE}/case-studies): real shipments + delivered numbers\n`
+  body += `- [Market intelligence](${BASE}/markets): commodity market overviews — cement HS 2523.29, caustic soda, palm oil, vegetable oil, industrial salt, mining companies, gypsum, NPK fertilizer\n\n`
 
   // Category sections
-  for (const cat of ['salt', 'cement', 'construction', 'fertilizers', 'chemicals', 'agro', 'minerals', 'metals', 'services', 'applications', 'about', 'case_studies', 'blog']) {
+  for (const cat of ['salt', 'cement', 'construction', 'fertilizers', 'chemicals', 'agro', 'minerals', 'metals', 'services', 'applications', 'markets', 'about', 'case_studies', 'blog']) {
     const list = byCategory[cat]
     if (!list || list.length === 0) continue
     const title = sectionTitles[cat] || cat

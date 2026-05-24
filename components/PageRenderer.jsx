@@ -224,6 +224,8 @@ export default async function PageRenderer({ page }) {
             page.path === '/contact'           ? 'ContactPage' :
             page.path?.startsWith('/about')    ? 'AboutPage'  :
             page.path?.startsWith('/blog/')    ? 'Article'     :
+            page.path?.startsWith('/markets/') ? 'Article'     :
+            page.path === '/markets'           ? 'CollectionPage' :
             isProductsHub || isDivisionLanding || isSubcategoryLanding ? 'CollectionPage' :
             'WebPage'
           }

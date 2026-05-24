@@ -41,7 +41,7 @@ export async function generateMetadata({ params }) {
     description: page.description || undefined,
     alternates: { canonical: `https://egyptglobe.com${page.path}` },
     openGraph: {
-      type: page.path?.startsWith('/blog/') ? 'article' : 'website',
+      type: (page.path?.startsWith('/blog/') || page.path?.startsWith('/markets/')) ? 'article' : 'website',
       title: page.title,
       description: page.description || undefined,
       url: `https://egyptglobe.com${page.path}`,
