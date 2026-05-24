@@ -189,6 +189,7 @@ export default async function SiteHeader({ settings }) {
             {/* Direct links */}
             {[
               { href: '/applications', label: 'Applications' },
+              { href: '/markets', label: 'Markets' },
               { href: '/global-presence', label: 'Global' },
               { href: '/blog', label: 'News' },
               { href: '/contact', label: 'Contact' },

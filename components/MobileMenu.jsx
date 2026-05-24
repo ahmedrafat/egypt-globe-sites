@@ -185,6 +185,7 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
               {[
                 { href: '/about',           label: 'About' },
                 { href: '/applications',    label: 'Applications' },
+                { href: '/markets',         label: 'Market Intelligence' },
                 { href: '/global-presence', label: 'Global Presence' },
                 { href: '/blog',            label: 'News & Blog' },
                 { href: '/contact',         label: 'Contact' },

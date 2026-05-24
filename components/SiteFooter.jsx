@@ -116,9 +116,13 @@ export default function SiteFooter({ settings }) {
                 ['/coa', '🧪 CoA Center'],
                 ['/about/careers', 'Careers'],
                 ['/case-studies', 'Case Studies'],
+                ['/markets', 'Market Intelligence'],
                 ['/blog', 'News & Blog'],
                 ['/global-presence', 'Global Presence'],
                 ['/partners', 'Partners'],
+                ['/trade-tools/hs-codes', 'HS Code Library'],
+                ['/trade-tools/incoterms-2020', 'Incoterms 2020'],
+                ['/trade-tools/vessel-sizes', 'Vessel Sizes'],
               ].map(([href, label]) => (
                 <li key={href}>
                   <Link href={href} className="text-slate-400 hover:text-white transition-colors">
