@@ -130,6 +130,7 @@
     { "source": "/egypt-globe-group-|-global-presence",          "destination": "/global-presence", "permanent": true },
     { "source": "/egypt-globe-group-2525257c-global-presence",   "destination": "/global-presence", "permanent": true },
 
+    { "source": "/", "has": [{ "type": "host", "value": "www.egyptglobe.com" }], "destination": "https://egyptglobe.com/", "permanent": true },
     { "source": "/:path*", "has": [{ "type": "host", "value": "www.egyptglobe.com" }], "destination": "https://egyptglobe.com/:path*", "permanent": true },
 
     { "source": "/ag-fr-:slug",     "destination": "/products/agro/fresh-produce", "permanent": true },
