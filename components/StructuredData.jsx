@@ -68,8 +68,11 @@ export function OrganizationJsonLd({ settings }) {
         inLanguage: 'en',
         potentialAction: {
           '@type': 'SearchAction',
-          target: `${BASE}/products?q={query}`,
-          'query-input': 'required name=query',
+          target: {
+            '@type': 'EntryPoint',
+            urlTemplate: `${BASE}/search?q={search_term_string}`,
+          },
+          'query-input': 'required name=search_term_string',
         },
       },
     ],
