@@ -181,6 +181,12 @@
     { "source": "/agro/:rest*",           "destination": "/products/agro", "permanent": true },
 
     { "source": "/products/edible-oils",         "destination": "/products/agro/edible-oils", "permanent": true },
-    { "source": "/products/edible-oils/:rest*",  "destination": "/products/agro/edible-oils", "permanent": true }
+    { "source": "/products/edible-oils/:rest*",  "destination": "/products/agro/edible-oils", "permanent": true },
+
+    { "source": "/standards/ss-en-16811",                              "destination": "/standards/ss-en-16811-1", "permanent": true },
+    { "source": "/trade-tools/import-guides/saudi-arabia-2026",        "destination": "/trade-tools/import-guides/saudi-arabia", "permanent": true },
+    { "source": "/trade-tools/import-guides/india-2026",               "destination": "/trade-tools/import-guides/india", "permanent": true },
+    { "source": "/trade-tools/import-guides/china-2026",               "destination": "/trade-tools/import-guides/china", "permanent": true },
+    { "source": "/trade-tools/import-guides/italy-2026",               "destination": "/trade-tools/import-guides/italy", "permanent": true }
   ]
 }
