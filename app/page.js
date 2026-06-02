@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { getCaseStudies, getSiteSettings, getPageByPath, PRODUCT_DIVISIONS } from '../lib/corporatePages'
 import { getCurrentBrand, brandMeta } from '../lib/brand'
 import MarkdownBody from '../components/MarkdownBody'
+import HeroSlider from '../components/HeroSlider'
 
 export const dynamic = 'force-dynamic'
 
@@ -106,48 +107,33 @@ export default async function HomePage() {
     getPageByPath('/').catch(() => null),
   ])
 
-  const heroPhoto = cmsHome?.hero_photo_url || null
-  const heroTitle = cmsHome?.title?.trim()
-  const heroDescription = cmsHome?.description?.trim()
+  // Slider photos = hero_photo_url first (if set), then gallery_urls.
+  // Empty array means no slider section renders — homepage stays original.
+  const sliderPhotos = [
+    cmsHome?.hero_photo_url,
+    ...(Array.isArray(cmsHome?.gallery_urls) ? cmsHome.gallery_urls : []),
+  ].filter(Boolean)
   const heroBody = cmsHome?.body_markdown?.trim()
-  const heroGallery = Array.isArray(cmsHome?.gallery_urls)
-    ? cmsHome.gallery_urls.filter(Boolean)
-    : []
-  const hasHeroPhoto = Boolean(heroPhoto)
 
   return (
     <main className="bg-white text-slate-900 min-h-screen">
 
-      {/* ── 1. Hero ───────────────────────────────────────────────────── */}
-      <section className={`relative min-h-[80vh] flex flex-col justify-between px-6 sm:px-10 lg:px-16 pt-20 pb-14 border-b border-slate-200 overflow-hidden ${hasHeroPhoto ? 'text-white' : 'text-slate-900'}`}>
-        {/* CMS hero photo background — only renders when uploaded via /websites */}
-        {hasHeroPhoto && (
-          <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={heroPhoto}
-              alt={heroTitle || 'Egypt Globe Group'}
-              className="absolute inset-0 w-full h-full object-cover -z-10"
-            />
-            {/* Dark gradient so the white text remains legible */}
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-900/85 via-slate-900/70 to-slate-900/40 -z-10" />
-          </>
-        )}
-
+      {/* ── 1. Hero (original clean design — text-only) ───────────────── */}
+      <section className="min-h-[80vh] flex flex-col justify-between px-6 sm:px-10 lg:px-16 pt-20 pb-14 border-b border-slate-200 overflow-hidden">
         {/* Top — identity mark */}
-        <p className={`text-[11px] font-mono uppercase tracking-[0.2em] ${hasHeroPhoto ? 'text-white/70' : 'text-slate-400'}`}>
+        <p className="text-[11px] font-mono uppercase tracking-[0.2em] text-slate-400">
           Egypt Globe Group · Est.&nbsp;2014
         </p>
 
-        {/* Middle — headline block (CMS overrides if set) */}
+        {/* Middle — headline block */}
         <div className="max-w-4xl">
-          <h1 className={`text-[clamp(2.6rem,6.5vw,5.5rem)] font-bold leading-[1.04] tracking-tight mb-6 ${hasHeroPhoto ? 'text-white' : 'text-slate-900'}`}>
-            {heroTitle ? heroTitle : <>Egypt&rsquo;s industrial<br />export operator.</>}
+          <h1 className="text-[clamp(2.6rem,6.5vw,5.5rem)] font-bold leading-[1.04] tracking-tight mb-6 text-slate-900">
+            Egypt&rsquo;s industrial<br />export operator.
           </h1>
-          <p className={`text-lg sm:text-xl max-w-xl leading-relaxed mb-10 ${hasHeroPhoto ? 'text-white/90' : 'text-slate-500'}`}>
-            {heroDescription || (
-              'We source, ship, and develop. Salt, cement, fertilizers, chemicals, minerals, agro commodities, and metals — from Egyptian capacity to markets in 60+ countries.'
-            )}
+          <p className="text-lg sm:text-xl text-slate-500 max-w-xl leading-relaxed mb-10">
+            We source, ship, and develop. Salt, cement, fertilizers, chemicals,
+            minerals, agro commodities, and metals — from Egyptian capacity to
+            markets in 60+ countries.
           </p>
           <div className="flex items-center gap-8">
             <Link href="/rfq"
@@ -155,55 +141,30 @@ export default async function HomePage() {
               Request a quote&nbsp;→
             </Link>
             <Link href="/products"
-              className={`text-sm transition-colors border-b pb-0.5 ${
-                hasHeroPhoto
-                  ? 'text-white/80 hover:text-white border-white/40 hover:border-white/80'
-                  : 'text-slate-500 hover:text-slate-900 border-slate-300 hover:border-slate-600'
-              }`}>
+              className="text-sm text-slate-500 hover:text-slate-900 transition-colors border-b border-slate-300 hover:border-slate-600 pb-0.5">
               Our operations
             </Link>
           </div>
         </div>
 
         {/* Bottom — certifications line */}
-        <div className={`flex flex-wrap gap-x-2 gap-y-1 text-[11px] font-mono tracking-wider ${hasHeroPhoto ? 'text-white/60' : 'text-slate-400'}`}>
+        <div className="flex flex-wrap gap-x-2 gap-y-1 text-[11px] font-mono text-slate-400 tracking-wider">
           {['ISO 22000', 'EN 197-1', 'HACCP', 'USP/BP', 'GOEIC', 'SGS / Intertek'].map((c, i, a) => (
             <span key={c} className="whitespace-nowrap">{c}{i < a.length - 1 ? ' ·' : ''}</span>
           ))}
         </div>
       </section>
 
-      {/* ── 1b. CMS body markdown — only renders when set in /websites ─ */}
+      {/* ── 1b. CMS-driven hero slider — only when photos uploaded ────── */}
+      <HeroSlider photos={sliderPhotos} label="Egypt Globe Group" />
+
+      {/* ── 1c. CMS body markdown — only when set in /websites ────────── */}
       {heroBody && (
         <section className="border-b border-slate-200 bg-white">
           <div className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-16 py-16">
             <article className="prose prose-slate max-w-none">
               <MarkdownBody content={heroBody} />
             </article>
-          </div>
-        </section>
-      )}
-
-      {/* ── 1c. CMS gallery — only renders when photos are uploaded ──── */}
-      {heroGallery.length > 0 && (
-        <section className="border-b border-slate-200 bg-slate-50">
-          <div className="px-6 sm:px-10 lg:px-16 pt-10 pb-2">
-            <p className="text-[11px] font-mono uppercase tracking-[0.2em] text-slate-400">
-              Gallery
-            </p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 px-1 pb-1">
-            {heroGallery.map((url, i) => (
-              <div key={i} className="relative aspect-[4/3] overflow-hidden bg-slate-200">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={url}
-                  alt={`Gallery image ${i + 1}`}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                />
-              </div>
-            ))}
           </div>
         </section>
       )}
