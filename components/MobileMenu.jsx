@@ -180,16 +180,17 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
               )}
             </div>
 
-            {/* ── Resources accordion — Markets · Trade · Standards · Ports ── */}
-            <details className="border-t border-slate-100 group">
-              <summary className="flex items-center justify-between px-5 py-3.5 text-[15px] font-bold text-slate-700 hover:bg-slate-50 cursor-pointer select-none">
-                <span className="flex items-center gap-2">📚 Knowledge Base</span>
-                <svg className="w-4 h-4 text-slate-400 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-              </summary>
-              <div className="px-3 pb-3 bg-slate-50/50">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-cyan-700 px-2 pt-3 pb-1">📊 Market Intelligence</p>
+            {/* ── Resources — Markets · Trade · Standards · Ports (always expanded so it's discoverable) ── */}
+            <div className="border-t-4 border-orange-500 bg-gradient-to-b from-orange-50/30 to-transparent">
+              <div className="px-5 pt-4 pb-2 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-base">📚</span>
+                  <span className="text-[15px] font-bold text-slate-900">Knowledge Base</span>
+                </div>
+                <span className="text-[10px] font-bold uppercase tracking-wider bg-orange-500 text-white px-2 py-0.5 rounded-full">48 pages</span>
+              </div>
+              <div className="px-3 pb-3">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-cyan-700 px-2 pt-2 pb-1">📊 Market Intelligence</p>
                 {[
                   ['/markets', 'All market briefs'],
                   ['/markets/cement-clinker-hs-2523', 'Cement & clinker (HS 2523)'],
@@ -241,7 +242,7 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
                   <Link href="/search" onClick={close} className="block text-sm font-bold text-[#1d5fa1] hover:underline py-2">🔍 Search the whole site →</Link>
                 </div>
               </div>
-            </details>
+            </div>
 
             {/* ── Flat nav links ───────────────────────────────── */}
             <div className="py-1">
