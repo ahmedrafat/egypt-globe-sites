@@ -227,7 +227,7 @@ export default async function TDSPage({ params }) {
             <p className="text-sm text-slate-700 leading-relaxed">
               Every shipment ships with an Egyptian Chamber of Commerce-stamped Certificate
               of Origin and a per-batch Certificate of Analysis. Pre-shipment inspection
-              (SGS / Intertek / Bureau Veritas / Cotecna) available on request. Full
+              (TÜV Austria / SGS / Intertek / Bureau Veritas / Cotecna) available on request. Full
               L/C-bank document set delivered: Proforma + Commercial Invoice + Packing List
               + Bill of Lading (3/3 originals) + Phytosanitary where applicable.
             </p>

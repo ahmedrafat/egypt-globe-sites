@@ -324,7 +324,7 @@ function QualityReferenceTable({ specs }) {
       </div>
       <p className="px-4 py-3 text-[11px] text-slate-500 bg-slate-50/40 border-t border-slate-100">
         ● Required = mandatory per shipment. ○ Optional = on-request.
-        Independent third-party verification (SGS / Intertek / Bureau Veritas) available — typically 0.3-0.5% of FOB value.
+        Independent third-party verification (TÜV Austria / SGS / Intertek / Bureau Veritas) available — typically 0.3-0.5% of FOB value.
       </p>
     </div>
   )

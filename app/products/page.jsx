@@ -34,7 +34,7 @@ const PORTS = [
 
 const CERTS = [
   'ISO 22000', 'EN 197-1', 'HACCP', 'USP / BP',
-  'GOEIC', 'SGS / Intertek', 'ASTM D632', 'EN 16811-1',
+  'GOEIC', 'TÜV Austria', 'SGS / Intertek', 'ASTM D632', 'EN 16811-1',
 ]
 
 export default function ProductsHub() {

@@ -12,7 +12,7 @@ export const dynamic = 'force-dynamic'
 
 export const metadata = {
   title: 'Certificate of Analysis Center',
-  description: 'Independent SGS / Intertek / Bureau Veritas certificates of analysis for every Egypt Globe Group commodity, organised by destination market region (Europe, GCC, East Africa, Far East, South Asia, Mediterranean, Americas).',
+  description: 'Independent TÜV Austria / SGS / Intertek / Bureau Veritas certificates of analysis for every Egypt Globe Group commodity, organised by destination market region (Europe, GCC, East Africa, Far East, South Asia, Mediterranean, Americas).',
   alternates: { canonical: 'https://egyptglobe.com/coa' },
 }
 
@@ -80,7 +80,7 @@ export default async function CoaCenter() {
 
           <div className="flex items-center gap-2 mb-4 flex-wrap">
             <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 text-white border border-white/20 backdrop-blur-sm">
-              🏅 Independent SGS / Intertek / Bureau Veritas
+              🏅 Independent TÜV Austria / SGS / Intertek / Bureau Veritas
             </span>
             <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 text-white border border-white/20 backdrop-blur-sm">
               {totalCoas} active CoAs
@@ -98,7 +98,7 @@ export default async function CoaCenter() {
           </h1>
           <p className="text-base sm:text-lg leading-relaxed max-w-3xl text-emerald-100">
             Every Egypt Globe Group commodity ships with an independent third-party
-            CoA from SGS Egypt, Intertek Cairo or Bureau Veritas Egypt. Region-specific
+            CoA from TÜV Austria Egypt, SGS Egypt, Intertek Cairo or Bureau Veritas Egypt. Region-specific
             certificates attest compliance with each destination market's standard
             (EN 197-1 / ASTM C150 / GB/T / KEBS / SASO / FCO etc.).
           </p>
@@ -200,7 +200,7 @@ export default async function CoaCenter() {
             Need a CoA for your specific shipment?
           </h2>
           <p className="text-emerald-100 mb-6 max-w-2xl mx-auto">
-            Per-shipment Certificate of Analysis issued from independent SGS / Intertek / Bureau Veritas labs,
+            Per-shipment Certificate of Analysis issued from independent TÜV Austria / SGS / Intertek / Bureau Veritas labs,
             attesting compliance with your destination market's standard. Available within 24h of dispatch.
           </p>
           <Link href="/rfq?type=coa"

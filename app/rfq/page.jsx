@@ -91,7 +91,7 @@ export default async function RFQPage({ searchParams }) {
                   ['Within 1 hour', 'Your RFQ is logged + assigned to a commodity owner.'],
                   ['Within 24 hours', 'You receive a priced offer (FOB / CIF / CFR) by email.'],
                   ['On acceptance', 'We open a proforma invoice + L/C bank-set process.'],
-                  ['Pre-shipment', 'PSI inspection (SGS / Intertek / BV) on request.'],
+                  ['Pre-shipment', 'PSI inspection (TÜV Austria / SGS / Intertek / BV) on request.'],
                   ['On loading', 'Full L/C document set + Bill of Lading delivered.'],
                 ].map(([when, what], i) => (
                   <li key={i} className="flex gap-3">

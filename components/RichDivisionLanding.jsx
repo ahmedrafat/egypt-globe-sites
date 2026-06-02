@@ -218,7 +218,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
             {[
               { ico: '🇪🇬', t: 'Egyptian-origin verified',  b: 'Direct producer relationships across Egypt — short, traceable supply chain with EUR1 + Certificate of Origin paperwork.' },
               { ico: '🚢', t: '7-port loading flexibility', b: 'Damietta · Port Said East · Alexandria · El-Dekheila · Ain Sokhna · Safaga · Al-Arish — closest-to-source routing.' },
-              { ico: '🧪', t: 'Per-shipment QC',            b: 'Independent SGS / Intertek / Bureau Veritas inspection on request. Per-batch CoA on every consignment.' },
+              { ico: '🧪', t: 'Per-shipment QC',            b: 'Independent TÜV Austria / SGS / Intertek / Bureau Veritas inspection on request. Per-batch CoA on every consignment.' },
               { ico: '⚡', t: '24-hour quote SLA',           b: 'Submit RFQ today, priced FOB / CIF / CFR offer by tomorrow. Standardised L/C-bank document set on order.' },
             ].map(c => (
               <div key={c.t} className="card-lift bg-white border border-slate-200 rounded-2xl p-6">

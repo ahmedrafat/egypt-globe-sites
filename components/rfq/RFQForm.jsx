@@ -552,7 +552,7 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
             <Input value={form.timeline} onChange={v => update('timeline', v)} placeholder="e.g. ASAP / Q2 2026 / by 15 May" />
           </Field>
           <Field label="Specific certifications">
-            <Input value={form.certs_needed} onChange={v => update('certs_needed', v)} placeholder="ISO 22000 / SGS / EUR1 / Halal" />
+            <Input value={form.certs_needed} onChange={v => update('certs_needed', v)} placeholder="ISO 22000 / TÜV Austria / SGS / EUR1 / Halal" />
           </Field>
         </Grid>
       </FormSection>

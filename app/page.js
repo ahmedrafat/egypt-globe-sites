@@ -158,7 +158,7 @@ export default async function HomePage() {
 
         {/* Bottom — certifications line */}
         <div className={`relative z-10 flex flex-wrap gap-x-2 gap-y-1 text-[11px] font-mono tracking-wider ${hasPhotos ? 'text-white/60' : 'text-slate-400'}`}>
-          {['ISO 22000', 'EN 197-1', 'HACCP', 'USP/BP', 'GOEIC', 'SGS / Intertek'].map((c, i, a) => (
+          {['ISO 22000', 'EN 197-1', 'HACCP', 'USP/BP', 'GOEIC', 'TÜV Austria', 'SGS', 'Intertek'].map((c, i, a) => (
             <span key={c} className="whitespace-nowrap">{c}{i < a.length - 1 ? ' ·' : ''}</span>
           ))}
         </div>
