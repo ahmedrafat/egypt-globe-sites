@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { getCaseStudies, getSiteSettings, getPageByPath, PRODUCT_DIVISIONS } from '../lib/corporatePages'
 import { getCurrentBrand, brandMeta } from '../lib/brand'
 import MarkdownBody from '../components/MarkdownBody'
-import HeroSlider from '../components/HeroSlider'
+import HeroBgSlider from '../components/HeroBgSlider'
 
 export const dynamic = 'force-dynamic'
 
@@ -108,29 +108,34 @@ export default async function HomePage() {
   ])
 
   // Slider photos = hero_photo_url first (if set), then gallery_urls.
-  // Empty array means no slider section renders — homepage stays original.
+  // When this array has 1+ photos, they become the background of the hero
+  // section (sliding). When empty, the hero shows the plain white background.
   const sliderPhotos = [
     cmsHome?.hero_photo_url,
     ...(Array.isArray(cmsHome?.gallery_urls) ? cmsHome.gallery_urls : []),
   ].filter(Boolean)
+  const hasPhotos = sliderPhotos.length > 0
   const heroBody = cmsHome?.body_markdown?.trim()
 
   return (
     <main className="bg-white text-slate-900 min-h-screen">
 
-      {/* ── 1. Hero (original clean design — text-only) ───────────────── */}
-      <section className="min-h-[80vh] flex flex-col justify-between px-6 sm:px-10 lg:px-16 pt-20 pb-14 border-b border-slate-200 overflow-hidden">
+      {/* ── 1. Hero — text + buttons on top of optional photo slider ─── */}
+      <section className={`relative min-h-[80vh] flex flex-col justify-between px-6 sm:px-10 lg:px-16 pt-20 pb-14 border-b border-slate-200 overflow-hidden ${hasPhotos ? 'text-white' : 'text-slate-900'}`}>
+        {/* CMS-driven background slider — only renders when photos uploaded */}
+        <HeroBgSlider photos={sliderPhotos} />
+
         {/* Top — identity mark */}
-        <p className="text-[11px] font-mono uppercase tracking-[0.2em] text-slate-400">
+        <p className={`relative z-10 text-[11px] font-mono uppercase tracking-[0.2em] ${hasPhotos ? 'text-white/70' : 'text-slate-400'}`}>
           Egypt Globe Group · Est.&nbsp;2014
         </p>
 
         {/* Middle — headline block */}
-        <div className="max-w-4xl">
-          <h1 className="text-[clamp(2.6rem,6.5vw,5.5rem)] font-bold leading-[1.04] tracking-tight mb-6 text-slate-900">
+        <div className="relative z-10 max-w-4xl">
+          <h1 className={`text-[clamp(2.6rem,6.5vw,5.5rem)] font-bold leading-[1.04] tracking-tight mb-6 ${hasPhotos ? 'text-white' : 'text-slate-900'}`}>
             Egypt&rsquo;s industrial<br />export operator.
           </h1>
-          <p className="text-lg sm:text-xl text-slate-500 max-w-xl leading-relaxed mb-10">
+          <p className={`text-lg sm:text-xl max-w-xl leading-relaxed mb-10 ${hasPhotos ? 'text-white/90' : 'text-slate-500'}`}>
             We source, ship, and develop. Salt, cement, fertilizers, chemicals,
             minerals, agro commodities, and metals — from Egyptian capacity to
             markets in 60+ countries.
@@ -141,24 +146,25 @@ export default async function HomePage() {
               Request a quote&nbsp;→
             </Link>
             <Link href="/products"
-              className="text-sm text-slate-500 hover:text-slate-900 transition-colors border-b border-slate-300 hover:border-slate-600 pb-0.5">
+              className={`text-sm transition-colors border-b pb-0.5 ${
+                hasPhotos
+                  ? 'text-white/85 hover:text-white border-white/40 hover:border-white/80'
+                  : 'text-slate-500 hover:text-slate-900 border-slate-300 hover:border-slate-600'
+              }`}>
               Our operations
             </Link>
           </div>
         </div>
 
         {/* Bottom — certifications line */}
-        <div className="flex flex-wrap gap-x-2 gap-y-1 text-[11px] font-mono text-slate-400 tracking-wider">
+        <div className={`relative z-10 flex flex-wrap gap-x-2 gap-y-1 text-[11px] font-mono tracking-wider ${hasPhotos ? 'text-white/60' : 'text-slate-400'}`}>
           {['ISO 22000', 'EN 197-1', 'HACCP', 'USP/BP', 'GOEIC', 'SGS / Intertek'].map((c, i, a) => (
             <span key={c} className="whitespace-nowrap">{c}{i < a.length - 1 ? ' ·' : ''}</span>
           ))}
         </div>
       </section>
 
-      {/* ── 1b. CMS-driven hero slider — only when photos uploaded ────── */}
-      <HeroSlider photos={sliderPhotos} label="Egypt Globe Group" />
-
-      {/* ── 1c. CMS body markdown — only when set in /websites ────────── */}
+      {/* ── 1b. CMS body markdown — only when set in /websites ────────── */}
       {heroBody && (
         <section className="border-b border-slate-200 bg-white">
           <div className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-16 py-16">
