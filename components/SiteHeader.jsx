@@ -160,6 +160,112 @@ export default async function SiteHeader({ settings }) {
               </div>
             </div>
 
+            {/* Resources mega-menu — Markets · Trade Tools · Standards · Ports */}
+            <div className="relative group">
+              <button className="flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-[#1d5fa1] hover:bg-blue-50/70 transition-colors">
+                Resources
+                <svg className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7"/>
+                </svg>
+              </button>
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[920px] max-w-[calc(100vw-2rem)] bg-white border border-slate-200 rounded-2xl shadow-2xl shadow-slate-900/10
+                opacity-0 invisible group-hover:opacity-100 group-hover:visible
+                transition-all duration-200 translate-y-1 group-hover:-translate-x-1/2 group-hover:translate-y-0 overflow-hidden">
+                {/* Mega-menu header */}
+                <div className="px-6 pt-4 pb-3 border-b border-slate-100 flex items-center justify-between">
+                  <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400">Knowledge Base — 48 reference pages</span>
+                  <Link href="/markets" className="text-xs font-bold text-[#1d5fa1] hover:underline">
+                    Markets hub →
+                  </Link>
+                </div>
+
+                <div className="grid grid-cols-4 gap-0 divide-x divide-slate-100">
+                  {/* Markets column */}
+                  <div className="p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-base">📊</span>
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-cyan-700">Market Intelligence</span>
+                    </div>
+                    <Link href="/markets/cement-clinker-hs-2523" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Cement & clinker (HS 2523)</Link>
+                    <Link href="/markets/industrial-salt-egypt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Industrial salt</Link>
+                    <Link href="/markets/egypt-gypsum-plaster" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Gypsum & plaster</Link>
+                    <Link href="/markets/egypt-npk-fertilizer" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">NPK fertilizer market</Link>
+                    <Link href="/markets/egypt-caustic-soda" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Caustic soda (NaOH)</Link>
+                    <Link href="/markets/egypt-palm-oil" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Palm oil</Link>
+                    <Link href="/markets/mining-companies-egypt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Mining in Egypt</Link>
+                    <Link href="/markets" className="block text-[11px] font-bold text-cyan-700 hover:underline pt-2">All market briefs →</Link>
+                  </div>
+
+                  {/* Trade Tools column */}
+                  <div className="p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-base">🧰</span>
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-orange-700">Trade Tools</span>
+                    </div>
+                    <Link href="/trade-tools/hs-codes" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">HS Code library</Link>
+                    <Link href="/trade-tools/incoterms-2020" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Incoterms 2020</Link>
+                    <Link href="/trade-tools/vessel-sizes" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Vessel size guide</Link>
+                    <Link href="/trade-tools/import-guides" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight font-semibold pt-2">Country import guides — 15 markets</Link>
+                    <Link href="/trade-tools/import-guides/germany" className="block text-[11px] text-slate-500 hover:text-[#1d5fa1] py-0.5 leading-tight pl-3">→ Germany</Link>
+                    <Link href="/trade-tools/import-guides/uk" className="block text-[11px] text-slate-500 hover:text-[#1d5fa1] py-0.5 leading-tight pl-3">→ UK</Link>
+                    <Link href="/trade-tools/import-guides/usa" className="block text-[11px] text-slate-500 hover:text-[#1d5fa1] py-0.5 leading-tight pl-3">→ USA</Link>
+                    <Link href="/trade-tools/import-guides/saudi-arabia" className="block text-[11px] text-slate-500 hover:text-[#1d5fa1] py-0.5 leading-tight pl-3">→ Saudi Arabia</Link>
+                    <Link href="/trade-tools/import-guides/india" className="block text-[11px] text-slate-500 hover:text-[#1d5fa1] py-0.5 leading-tight pl-3">→ India</Link>
+                  </div>
+
+                  {/* Standards column */}
+                  <div className="p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-base">📋</span>
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700">Standards</span>
+                    </div>
+                    <Link href="/standards/en-197-1" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">EN 197-1 — EU cement</Link>
+                    <Link href="/standards/astm-c150" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">ASTM C150 — US cement</Link>
+                    <Link href="/standards/en-16811-1" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">EN 16811-1 — EU de-icing salt</Link>
+                    <Link href="/standards/astm-d632" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">ASTM D632 — US salt</Link>
+                    <Link href="/standards/aashto-m-143" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">AASHTO M-143 — US highway</Link>
+                    <Link href="/standards/bs-3247" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">BS 3247:2011 — UK salt</Link>
+                    <Link href="/standards/gost-13830" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">GOST 13830 — CIS salt</Link>
+                    <Link href="/standards/ss-en-16811-1" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">SS-EN 16811-1 Nordic</Link>
+                    <Link href="/standards/iso-9001-salt-suppliers" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">ISO 9001 — quality</Link>
+                  </div>
+
+                  {/* Ports column */}
+                  <div className="p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-base">⚓</span>
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-blue-700">Egyptian Ports</span>
+                    </div>
+                    <Link href="/ports/damietta-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Damietta — main hub</Link>
+                    <Link href="/ports/alexandria-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Alexandria</Link>
+                    <Link href="/ports/el-dekheila-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">El Dekheila — 17m draft</Link>
+                    <Link href="/ports/ain-sokhna-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Ain Sokhna — Red Sea</Link>
+                    <Link href="/ports/port-said-east-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Port Said East — 18.5m</Link>
+                    <Link href="/ports/al-arish-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Al-Arish — N. Sinai sea salt</Link>
+                    <Link href="/services/loading-ports" className="block text-[11px] font-bold text-blue-700 hover:underline pt-2">All 7 loading ports →</Link>
+                    <div className="mt-4 pt-3 border-t border-slate-100">
+                      <Link href="/blog" className="block text-xs font-semibold text-slate-700 hover:text-[#1d5fa1] py-1">📝 News & insights</Link>
+                      <Link href="/case-studies" className="block text-xs font-semibold text-slate-700 hover:text-[#1d5fa1] py-1">📖 Case studies</Link>
+                      <Link href="/coa" className="block text-xs font-semibold text-slate-700 hover:text-[#1d5fa1] py-1">🧪 CoA centre</Link>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Mega-menu footer */}
+                <div className="px-6 py-2.5 bg-slate-50 border-t border-slate-100 flex items-center gap-3 text-[11px] text-slate-500">
+                  <span>13 market briefs</span>
+                  <span className="text-slate-300">·</span>
+                  <span>19 trade tools</span>
+                  <span className="text-slate-300">·</span>
+                  <span>9 standards</span>
+                  <span className="text-slate-300">·</span>
+                  <span>7 ports</span>
+                  <span className="text-slate-300 ml-auto">·</span>
+                  <Link href="/search" className="text-[#1d5fa1] hover:underline font-semibold">🔍 Search the site →</Link>
+                </div>
+              </div>
+            </div>
+
             {/* About dropdown */}
             {grouped.about?.length > 0 && (
               <div className="relative group">
@@ -169,7 +275,7 @@ export default async function SiteHeader({ settings }) {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7"/>
                   </svg>
                 </button>
-                <div className="absolute top-full left-0 mt-2 w-72 bg-white border border-slate-200 rounded-2xl shadow-2xl shadow-slate-900/10
+                <div className="absolute top-full right-0 mt-2 w-72 bg-white border border-slate-200 rounded-2xl shadow-2xl shadow-slate-900/10
                   opacity-0 invisible group-hover:opacity-100 group-hover:visible
                   transition-all duration-200 translate-y-1 group-hover:translate-y-0 overflow-hidden py-1.5">
                   <Link href="/about" className="block px-4 py-2.5 text-sm font-bold text-slate-900 hover:bg-slate-50 hover:text-[#1d5fa1] transition-colors">
@@ -182,23 +288,26 @@ export default async function SiteHeader({ settings }) {
                       {p.title}
                     </Link>
                   ))}
+                  <div className="mx-4 my-1 border-t border-slate-100" />
+                  <Link href="/global-presence" className="block px-4 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-[#1d5fa1] transition-colors">
+                    Global presence — 60+ markets
+                  </Link>
+                  <Link href="/contact" className="block px-4 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-[#1d5fa1] transition-colors">
+                    Contact us
+                  </Link>
                 </div>
               </div>
             )}
 
-            {/* Direct links */}
-            {[
-              { href: '/applications', label: 'Applications' },
-              { href: '/markets', label: 'Markets' },
-              { href: '/global-presence', label: 'Global' },
-              { href: '/blog', label: 'News' },
-              { href: '/contact', label: 'Contact' },
-            ].map(({ href, label }) => (
-              <Link key={href} href={href}
-                className="px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-[#1d5fa1] hover:bg-blue-50/70 transition-colors">
-                {label}
-              </Link>
-            ))}
+            {/* Direct links — kept lean */}
+            <Link href="/applications"
+              className="px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-[#1d5fa1] hover:bg-blue-50/70 transition-colors">
+              Applications
+            </Link>
+            <Link href="/contact"
+              className="px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-[#1d5fa1] hover:bg-blue-50/70 transition-colors">
+              Contact
+            </Link>
           </nav>
 
           {/* Right-side actions */}

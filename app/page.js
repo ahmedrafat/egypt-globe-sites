@@ -121,28 +121,28 @@ export default async function HomePage() {
     <main className="bg-white text-slate-900 min-h-screen">
 
       {/* ── 1. Hero — text + buttons on top of optional photo slider ─── */}
-      <section className={`relative min-h-[80vh] flex flex-col justify-between px-6 sm:px-10 lg:px-16 pt-20 pb-14 border-b border-slate-200 overflow-hidden ${hasPhotos ? 'text-white' : 'text-slate-900'}`}>
+      <section className={`relative min-h-[80vh] flex flex-col justify-between px-5 sm:px-10 lg:px-16 pt-16 sm:pt-20 pb-14 border-b border-slate-200 overflow-hidden ${hasPhotos ? 'text-white' : 'text-slate-900'}`}>
         {/* CMS-driven background slider — only renders when photos uploaded */}
         <HeroBgSlider photos={sliderPhotos} />
 
-        {/* Top — identity mark */}
-        <p className={`relative z-10 text-[11px] font-mono uppercase tracking-[0.2em] ${hasPhotos ? 'text-white/70' : 'text-slate-400'}`}>
-          Egypt Globe Group · Est.&nbsp;2014
+        {/* Top — identity mark with multinational anchor */}
+        <p className={`relative z-10 text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.18em] sm:tracking-[0.2em] ${hasPhotos ? 'text-white/75' : 'text-slate-400'}`}>
+          Egypt Globe Group · Est.&nbsp;2014 · Cairo&nbsp;·&nbsp;Damietta&nbsp;·&nbsp;60+ markets
         </p>
 
-        {/* Middle — headline block */}
-        <div className="relative z-10 max-w-4xl">
-          <h1 className={`text-[clamp(2.6rem,6.5vw,5.5rem)] font-bold leading-[1.04] tracking-tight mb-6 ${hasPhotos ? 'text-white' : 'text-slate-900'}`}>
+        {/* Middle — headline block, centred on mobile, left-aligned from sm+ */}
+        <div className="relative z-10 max-w-4xl text-center sm:text-left mx-auto sm:mx-0 w-full">
+          <h1 className={`text-[clamp(2.2rem,6.5vw,5.5rem)] font-bold leading-[1.06] sm:leading-[1.04] tracking-tight mb-5 sm:mb-6 ${hasPhotos ? 'text-white' : 'text-slate-900'}`}>
             Egypt&rsquo;s industrial<br />export operator.
           </h1>
-          <p className={`text-lg sm:text-xl max-w-xl leading-relaxed mb-10 ${hasPhotos ? 'text-white/90' : 'text-slate-500'}`}>
-            We source, ship, and develop. Salt, cement, fertilizers, chemicals,
-            minerals, agro commodities, and metals — from Egyptian capacity to
-            markets in 60+ countries.
+          <p className={`text-base sm:text-lg lg:text-xl max-w-xl leading-relaxed mb-8 sm:mb-10 mx-auto sm:mx-0 ${hasPhotos ? 'text-white/90' : 'text-slate-500'}`}>
+            A multinational B2B commodity trading group sourcing, shipping
+            and developing Egyptian salt, cement, fertilizers, chemicals,
+            minerals, agro and metals — for industrial buyers across 60+ destination markets.
           </p>
-          <div className="flex items-center gap-8">
+          <div className="flex flex-wrap justify-center sm:justify-start items-center gap-4 sm:gap-8">
             <Link href="/rfq"
-              className="inline-flex items-center gap-2 text-sm font-bold text-white bg-[#FF6321] hover:bg-[#e0541b] px-6 py-3 transition-colors">
+              className="inline-flex items-center gap-2 text-sm font-bold text-white bg-[#FF6321] hover:bg-[#e0541b] px-5 sm:px-6 py-3 transition-colors">
               Request a quote&nbsp;→
             </Link>
             <Link href="/products"
@@ -156,8 +156,8 @@ export default async function HomePage() {
           </div>
         </div>
 
-        {/* Bottom — certifications line */}
-        <div className={`relative z-10 flex flex-wrap gap-x-2 gap-y-1 text-[11px] font-mono tracking-wider ${hasPhotos ? 'text-white/60' : 'text-slate-400'}`}>
+        {/* Bottom — certifications line, centred on mobile */}
+        <div className={`relative z-10 flex flex-wrap justify-center sm:justify-start gap-x-2 gap-y-1 text-[10px] sm:text-[11px] font-mono tracking-wider ${hasPhotos ? 'text-white/60' : 'text-slate-400'}`}>
           {['ISO 22000', 'EN 197-1', 'HACCP', 'USP/BP', 'GOEIC', 'TÜV Austria', 'SGS', 'Intertek'].map((c, i, a) => (
             <span key={c} className="whitespace-nowrap">{c}{i < a.length - 1 ? ' ·' : ''}</span>
           ))}

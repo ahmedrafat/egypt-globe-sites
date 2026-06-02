@@ -180,16 +180,79 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
               )}
             </div>
 
+            {/* ── Resources accordion — Markets · Trade · Standards · Ports ── */}
+            <details className="border-t border-slate-100 group">
+              <summary className="flex items-center justify-between px-5 py-3.5 text-[15px] font-bold text-slate-700 hover:bg-slate-50 cursor-pointer select-none">
+                <span className="flex items-center gap-2">📚 Knowledge Base</span>
+                <svg className="w-4 h-4 text-slate-400 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </summary>
+              <div className="px-3 pb-3 bg-slate-50/50">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-cyan-700 px-2 pt-3 pb-1">📊 Market Intelligence</p>
+                {[
+                  ['/markets', 'All market briefs'],
+                  ['/markets/cement-clinker-hs-2523', 'Cement & clinker (HS 2523)'],
+                  ['/markets/industrial-salt-egypt', 'Industrial salt'],
+                  ['/markets/egypt-gypsum-plaster', 'Gypsum & plaster'],
+                  ['/markets/egypt-npk-fertilizer', 'NPK fertilizer market'],
+                  ['/markets/mining-companies-egypt', 'Mining in Egypt'],
+                ].map(([h, l]) => (
+                  <Link key={h} href={h} onClick={close} className="block text-sm text-slate-700 hover:text-[#1d5fa1] py-1.5 px-2">{l}</Link>
+                ))}
+
+                <p className="text-[10px] font-bold uppercase tracking-wider text-orange-700 px-2 pt-3 pb-1">🧰 Trade Tools</p>
+                {[
+                  ['/trade-tools/hs-codes', 'HS code library'],
+                  ['/trade-tools/incoterms-2020', 'Incoterms 2020'],
+                  ['/trade-tools/vessel-sizes', 'Vessel size guide'],
+                  ['/trade-tools/import-guides', 'Country import guides (15)'],
+                ].map(([h, l]) => (
+                  <Link key={h} href={h} onClick={close} className="block text-sm text-slate-700 hover:text-[#1d5fa1] py-1.5 px-2">{l}</Link>
+                ))}
+
+                <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 px-2 pt-3 pb-1">📋 Standards</p>
+                {[
+                  ['/standards/en-197-1', 'EN 197-1 — EU cement'],
+                  ['/standards/astm-c150', 'ASTM C150 — US cement'],
+                  ['/standards/en-16811-1', 'EN 16811-1 — EU de-icing'],
+                  ['/standards/astm-d632', 'ASTM D632 — US salt'],
+                  ['/standards/aashto-m-143', 'AASHTO M-143'],
+                  ['/standards/bs-3247', 'BS 3247:2011 — UK'],
+                  ['/standards/gost-13830', 'GOST 13830 — CIS'],
+                ].map(([h, l]) => (
+                  <Link key={h} href={h} onClick={close} className="block text-sm text-slate-700 hover:text-[#1d5fa1] py-1.5 px-2">{l}</Link>
+                ))}
+
+                <p className="text-[10px] font-bold uppercase tracking-wider text-blue-700 px-2 pt-3 pb-1">⚓ Egyptian Ports</p>
+                {[
+                  ['/ports/damietta-salt', 'Damietta'],
+                  ['/ports/alexandria-salt', 'Alexandria'],
+                  ['/ports/el-dekheila-salt', 'El Dekheila'],
+                  ['/ports/ain-sokhna-salt', 'Ain Sokhna'],
+                  ['/ports/port-said-east-salt', 'Port Said East'],
+                  ['/ports/al-arish-salt', 'Al-Arish'],
+                  ['/services/loading-ports', 'All 7 loading ports →'],
+                ].map(([h, l]) => (
+                  <Link key={h} href={h} onClick={close} className="block text-sm text-slate-700 hover:text-[#1d5fa1] py-1.5 px-2">{l}</Link>
+                ))}
+
+                <div className="mt-3 px-2">
+                  <Link href="/search" onClick={close} className="block text-sm font-bold text-[#1d5fa1] hover:underline py-2">🔍 Search the whole site →</Link>
+                </div>
+              </div>
+            </details>
+
             {/* ── Flat nav links ───────────────────────────────── */}
             <div className="py-1">
               {[
                 { href: '/about',           label: 'About' },
-                { href: '/applications',    label: 'Applications' },
-                { href: '/markets',         label: 'Market Intelligence' },
-                { href: '/global-presence', label: 'Global Presence' },
-                { href: '/blog',            label: 'News & Blog' },
+                { href: '/applications',    label: 'Applications by industry' },
+                { href: '/global-presence', label: 'Global presence — 60+ markets' },
+                { href: '/case-studies',    label: 'Case studies' },
+                { href: '/blog',            label: 'News & insights' },
+                { href: '/coa',             label: 'CoA centre' },
                 { href: '/contact',         label: 'Contact' },
-                { href: '/coa',             label: 'CoA Center' },
               ].map(({ href, label }) => (
                 <Link
                   key={href}
