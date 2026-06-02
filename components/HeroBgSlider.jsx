@@ -32,9 +32,11 @@ export default function HeroBgSlider({ photos = [], interval = 6000 }) {
 
   return (
     <>
-      {/* Slides stacked behind the hero content. Each one fades in / out. */}
+      {/* Slides stacked behind the hero content. Each one fades in / out.
+       *  z-0 (not -z-10) so we stay within the section's stacking context
+       *  and don't get clipped behind the <main> element's bg-white. */}
       <div
-        className="absolute inset-0 -z-10"
+        className="absolute inset-0 z-0 pointer-events-none"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
@@ -42,7 +44,7 @@ export default function HeroBgSlider({ photos = [], interval = 6000 }) {
           <div
             key={i}
             aria-hidden={i !== index}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${i === index ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${i === index ? 'opacity-100' : 'opacity-0'}`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
