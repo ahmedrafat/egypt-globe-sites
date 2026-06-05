@@ -120,7 +120,15 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
     timeline: '',
     message: '',
     requested_specs: '',
+    // Drop 173 — honeypot trap. Real users never see/fill this; bots do.
+    // Hidden via CSS + tabIndex -1 + autocomplete=off. If set on submit
+    // we silently reject without writing to market_rfqs.
+    website: '',
   })
+  // Drop 173 — track form-render time so submissions faster than 3s
+  // (impossible for a human reading the headings + filling 6+ fields)
+  // are flagged as bot traffic and rejected.
+  const formRenderedAt = useMemo(() => Date.now(), [])
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState(null)
@@ -190,9 +198,43 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
 
   const visibleSpecs = showAllSpecs ? specEntries : specEntries.slice(0, 4)
 
+  // Drop 173 — anti-spam validators applied client-side before insert.
+  // Same patterns are also enforced in the admin auto-flagger.
+  const SPAM_EMAIL_PATTERNS = [
+    /noreply/i, /no-reply/i, /donotreply/i,
+    /@email\.apple\.com/i, /@h6\.hilton\.com/i, /@luka-kp\.si/i,
+    /@booking\.com$/i, /@alibaba\.com$/i,
+    /linkedin\.com/i, /announcements?-/i,
+    /^test@/i, /@test\./i, /@example\./i, /@mailinator\./i, /@tempmail\./i,
+  ]
+  const SPAM_COMPANY_PATTERNS = [
+    /^test$/i, /^aa+$/i, /^[a-z]{1,2}$/i, /^xxx+$/i, /^asdf/i,
+  ]
+  function detectSpam(payload) {
+    const email = (payload.buyer_email || '').toLowerCase().trim()
+    const company = (payload.buyer_company || '').trim()
+    if (SPAM_EMAIL_PATTERNS.some(p => p.test(email))) return 'noreply/automated email pattern'
+    if (SPAM_COMPANY_PATTERNS.some(p => p.test(company))) return 'placeholder/test company name'
+    if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) return 'malformed email'
+    if (company.length < 2) return 'company name too short'
+    return null
+  }
+
   async function onSubmit(e) {
     e.preventDefault()
     setError(null)
+
+    // Drop 173 — honeypot + timing checks. Silently consume so bots
+    // think they succeeded but don't write to market_rfqs.
+    if (form.website) {
+      setSubmitted(true); setRefCode('EGG-RFQ-NOOP')
+      return
+    }
+    if (Date.now() - formRenderedAt < 3000) {
+      setSubmitted(true); setRefCode('EGG-RFQ-NOOP')
+      return
+    }
+
     setSubmitting(true)
 
     // Drop 129 — if the buyer is signed in (egyptglobe.com /buyer flow),
@@ -241,6 +283,15 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
         : (form.requested_specs ? { buyer_notes: form.requested_specs } : {}),
     }
 
+    // Drop 173 — auto-flag spam at insert time so the trade desk's
+    // /buyer/rfqs and admin RFQ inbox don't get polluted. status='rejected'
+    // is reversible if the operator confirms it's actually legitimate.
+    const spamReason = detectSpam(payload)
+    if (spamReason) {
+      payload.status = 'rejected'
+      payload.notes = `Auto-flagged on submission: ${spamReason}`
+    }
+
     const { error: insertError } = await supabase.from('market_rfqs').insert(payload)
     setSubmitting(false)
 
@@ -278,6 +329,24 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
 
   return (
     <form onSubmit={onSubmit} className="space-y-6">
+
+      {/* Drop 173 — honeypot. Invisible to humans (off-screen + tabindex -1 +
+       *  autocomplete=off + aria-hidden). Real users skip it; bots fill it
+       *  blindly. If non-empty on submit → submission is silently dropped.
+       *  Do NOT remove or restyle this without consulting trade-desk first. */}
+      <div aria-hidden="true" style={{position:'absolute', left:'-9999px', width:'1px', height:'1px', overflow:'hidden'}}>
+        <label htmlFor="website-url-field" tabIndex={-1}>Website (leave blank)</label>
+        <input
+          id="website-url-field"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={form.website}
+          onChange={e => update('website', e.target.value)}
+        />
+      </div>
+
       {error && (
         <div className="rounded-xl bg-red-50 border border-red-200 text-red-800 px-4 py-3 text-sm">
           ⚠ {error}
