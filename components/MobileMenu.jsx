@@ -227,13 +227,15 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
 
                 <p className="text-[10px] font-bold uppercase tracking-wider text-blue-700 px-2 pt-3 pb-1">⚓ Egyptian Ports</p>
                 {[
-                  ['/ports/damietta-salt', 'Damietta'],
-                  ['/ports/alexandria-salt', 'Alexandria'],
-                  ['/ports/el-dekheila-salt', 'El Dekheila'],
-                  ['/ports/ain-sokhna-salt', 'Ain Sokhna'],
-                  ['/ports/port-said-east-salt', 'Port Said East'],
-                  ['/ports/al-arish-salt', 'Al-Arish'],
-                  ['/services/loading-ports', 'All 7 loading ports →'],
+                  ['/ports/damietta-salt', 'Damietta — 17m'],
+                  ['/ports/alexandria-salt', 'Alexandria — 14m'],
+                  ['/ports/el-dekheila-salt', 'El Dekheila — 20m'],
+                  ['/ports/ain-sokhna-salt', 'Ain Sokhna — 17m'],
+                  ['/ports/port-said-east-salt', 'Port Said East — 22m'],
+                  ['/ports/al-arish-salt', 'Al-Arish — upgraded 14m, 50k DWT'],
+                  ['/ports/adabiya-salt', 'Adabiya — Suez Gulf bulk'],
+                  ['/ports/safaga-salt', 'Safaga — phosphate'],
+                  ['/services/loading-ports', 'All Egyptian loading ports →'],
                 ].map(([h, l]) => (
                   <Link key={h} href={h} onClick={close} className="block text-sm text-slate-700 hover:text-[#1d5fa1] py-1.5 px-2">{l}</Link>
                 ))}

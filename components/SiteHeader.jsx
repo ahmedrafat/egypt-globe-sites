@@ -236,13 +236,15 @@ export default async function SiteHeader({ settings }) {
                       <span className="text-base">⚓</span>
                       <span className="text-[11px] font-bold uppercase tracking-wider text-blue-700">Egyptian Ports</span>
                     </div>
-                    <Link href="/ports/damietta-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Damietta — main hub</Link>
-                    <Link href="/ports/alexandria-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Alexandria</Link>
-                    <Link href="/ports/el-dekheila-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">El Dekheila — 17m draft</Link>
-                    <Link href="/ports/ain-sokhna-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Ain Sokhna — Red Sea</Link>
-                    <Link href="/ports/port-said-east-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Port Said East — 18.5m</Link>
-                    <Link href="/ports/al-arish-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Al-Arish — N. Sinai sea salt</Link>
-                    <Link href="/services/loading-ports" className="block text-[11px] font-bold text-blue-700 hover:underline pt-2">All 7 loading ports →</Link>
+                    <Link href="/ports/damietta-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Damietta — main hub, 17m</Link>
+                    <Link href="/ports/alexandria-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Alexandria — 14m</Link>
+                    <Link href="/ports/el-dekheila-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">El Dekheila — 20m Capesize</Link>
+                    <Link href="/ports/ain-sokhna-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Ain Sokhna — Red Sea 17m</Link>
+                    <Link href="/ports/port-said-east-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Port Said East — 22m ULCV</Link>
+                    <Link href="/ports/al-arish-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Al-Arish — upgraded 14m, 50k DWT</Link>
+                    <Link href="/ports/adabiya-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Adabiya — Suez Gulf bulk</Link>
+                    <Link href="/ports/safaga-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Safaga — Red Sea phosphate</Link>
+                    <Link href="/services/loading-ports" className="block text-[11px] font-bold text-blue-700 hover:underline pt-2">All Egyptian loading ports →</Link>
                     <div className="mt-4 pt-3 border-t border-slate-100">
                       <Link href="/blog" className="block text-xs font-semibold text-slate-700 hover:text-[#1d5fa1] py-1">📝 News & insights</Link>
                       <Link href="/case-studies" className="block text-xs font-semibold text-slate-700 hover:text-[#1d5fa1] py-1">📖 Case studies</Link>
@@ -259,7 +261,7 @@ export default async function SiteHeader({ settings }) {
                   <span className="text-slate-300">·</span>
                   <span>9 standards</span>
                   <span className="text-slate-300">·</span>
-                  <span>7 ports</span>
+                  <span>8 ports</span>
                   <span className="text-slate-300 ml-auto">·</span>
                   <Link href="/search" className="text-[#1d5fa1] hover:underline font-semibold">🔍 Search the site →</Link>
                 </div>
