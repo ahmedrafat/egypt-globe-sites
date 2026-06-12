@@ -142,7 +142,7 @@ export default async function HomePage() {
           </p>
           <div className="flex flex-wrap justify-center sm:justify-start items-center gap-4 sm:gap-8">
             <Link href="/rfq"
-              className="inline-flex items-center gap-2 text-sm font-bold text-white bg-[#FF6321] hover:bg-[#e0541b] px-5 sm:px-6 py-3 transition-colors">
+              className="inline-flex items-center gap-2 text-sm font-bold text-white bg-[#FF6321] hover:bg-[#e0541b] px-5 sm:px-6 py-3 transition-colors rounded-lg">
               Request a quote&nbsp;→
             </Link>
             <Link href="/products"
@@ -157,7 +157,7 @@ export default async function HomePage() {
         </div>
 
         {/* Bottom — certifications line, centred on mobile */}
-        <div className={`relative z-10 flex flex-wrap justify-center sm:justify-start gap-x-2 gap-y-1 text-[10px] sm:text-[11px] font-mono tracking-wider ${hasPhotos ? 'text-white/60' : 'text-slate-400'}`}>
+        <div className={`relative z-10 flex flex-wrap justify-center sm:justify-start gap-x-2 gap-y-1 text-[10px] sm:text-[11px] font-mono tracking-wider ${hasPhotos ? 'text-white/80' : 'text-slate-400'}`}>
           {['ISO 22000', 'EN 197-1', 'HACCP', 'USP/BP', 'GOEIC', 'TÜV Austria', 'SGS', 'Intertek'].map((c, i, a) => (
             <span key={c} className="whitespace-nowrap">{c}{i < a.length - 1 ? ' ·' : ''}</span>
           ))}
