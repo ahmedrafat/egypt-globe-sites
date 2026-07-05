@@ -62,6 +62,8 @@ export default function InlineQuoteCard({ page, prefill = {} }) {
       source: 'egyptglobe-website-inline',
       buyer_email: email.trim(),
       email:       email.trim(),
+      buyer_name:  company.trim() || email.trim(),
+      contact:     company.trim() || email.trim(),
       buyer_company: company.trim() || null,
       company:       company.trim() || null,
       buyer_user_id: buyerUserId,
