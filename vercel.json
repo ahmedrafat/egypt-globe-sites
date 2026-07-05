@@ -1,192 +1,806 @@
 {
+  "regions": [
+    "fra1"
+  ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains; preload" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains; preload"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
       ]
     }
   ],
   "redirects": [
-    { "source": "/products/salt/de-icing-salt/:rest*",        "destination": "/products/salt", "permanent": true },
-    { "source": "/products/salt/industrial-salt",             "destination": "/products/salt", "permanent": true },
-    { "source": "/products/salt/sea-salt",                    "destination": "/products/salt", "permanent": true },
-    { "source": "/products/salt/tablet-salt/:rest*",          "destination": "/products/salt", "permanent": true },
-    { "source": "/products/salt/vacuum-tablet/:rest*",        "destination": "/products/salt", "permanent": true },
-    { "source": "/salt/pharmaceutical-salt",                  "destination": "/products/salt", "permanent": true },
-    { "source": "/salt/:rest*",                               "destination": "/products/salt", "permanent": true },
-    { "source": "/sl-:rest*",                                 "destination": "/products/salt", "permanent": true },
-
-    { "source": "/products/construction/cement-clinker",         "destination": "/products/construction/cement-and-clinker", "permanent": true },
-    { "source": "/products/construction/cement-clinker/:rest*",  "destination": "/products/construction/cement-and-clinker", "permanent": true },
-    { "source": "/products/construction/gypsum-plaster",         "destination": "/products/construction/gypsum",             "permanent": true },
-
-    { "source": "/products/fertilizers/phosphates",        "destination": "/products/fertilizers/phosphate", "permanent": true },
-    { "source": "/products/fertilizers/phosphates/:rest*", "destination": "/products/fertilizers/phosphate", "permanent": true },
-    { "source": "/products/fertilizers/potassium",         "destination": "/products/fertilizers/potash", "permanent": true },
-    { "source": "/products/fertilizers/potassium/:rest*",  "destination": "/products/fertilizers/potash", "permanent": true },
-
-    { "source": "/products/chemicals/acids",                "destination": "/products/chemicals/solvents-and-acids", "permanent": true },
-    { "source": "/products/chemicals/acids/:rest*",         "destination": "/products/chemicals/solvents-and-acids", "permanent": true },
-    { "source": "/products/chemicals/alkalis-salts",        "destination": "/products/chemicals/industrial-chemicals", "permanent": true },
-    { "source": "/products/chemicals/alkalis-salts/:rest*", "destination": "/products/chemicals/industrial-chemicals", "permanent": true },
-
-    { "source": "/products/edible-oils",                    "destination": "/products/agro/edible-oils", "permanent": true },
-    { "source": "/products/edible-oils/:rest*",             "destination": "/products/agro/edible-oils", "permanent": true },
-
-    { "source": "/products/minerals/gypsum-and-plaster",    "destination": "/products/construction/gypsum", "permanent": true },
-
-    { "source": "/2ezs/:path*",            "destination": "/", "permanent": true },
-    { "source": "/files/:path*",           "destination": "/rfq", "permanent": true },
-    { "source": "/lms/:path*",             "destination": "/", "permanent": true },
-    { "source": "/pages/:path*",           "destination": "/", "permanent": true },
-    { "source": "/job_application/:path*", "destination": "/about/careers", "permanent": true },
-    { "source": "/by-application/:path*",  "destination": "/applications", "permanent": true },
-    { "source": "/corporate/:path*",       "destination": "/global-presence", "permanent": true },
-
-    { "source": "/legal/privacy-policy",   "destination": "/cookies-policy", "permanent": true },
-    { "source": "/legal/cookies-policy",   "destination": "/cookies-policy", "permanent": true },
-    { "source": "/legal/compliance",       "destination": "/about/quality-compliance", "permanent": true },
-    { "source": "/legal/:path*",           "destination": "/about/quality-compliance", "permanent": true },
-    { "source": "/legal",                  "destination": "/about/quality-compliance", "permanent": true },
-    { "source": "/privacy",                "destination": "/cookies-policy", "permanent": true },
-
-    { "source": "/products/clinker",                 "destination": "/products/construction/cement-and-clinker", "permanent": true },
-    { "source": "/products/rock-salt",               "destination": "/products/salt", "permanent": true },
-    { "source": "/products/sinai-sea-salt",          "destination": "/products/salt", "permanent": true },
-    { "source": "/products/siwa-rock-salt",          "destination": "/products/salt", "permanent": true },
-    { "source": "/products/crude-salt",              "destination": "/products/salt", "permanent": true },
-    { "source": "/products/food-salt",               "destination": "/products/salt/food-grade", "permanent": true },
-    { "source": "/products/pool-salt",               "destination": "/products/salt/pool-grade", "permanent": true },
-    { "source": "/products/double-washed-sea-salt",  "destination": "/products/salt", "permanent": true },
-    { "source": "/products/washed-salt",             "destination": "/products/salt", "permanent": true },
-    { "source": "/products/salt-products",           "destination": "/products/salt", "permanent": true },
-    { "source": "/products/salt/tablet",             "destination": "/products/salt", "permanent": true },
-    { "source": "/products/salt/vacuum-tablet-salt", "destination": "/products/salt", "permanent": true },
-    { "source": "/products/urea",                    "destination": "/products/fertilizers/nitrogen", "permanent": true },
-
-    { "source": "/products/fertilizers/nitrogen/uan-32-solution",        "destination": "/products/fertilizers/nitrogen", "permanent": true },
-    { "source": "/products/fertilizers/calcium-ammonium-nitrate-27",     "destination": "/products/fertilizers/nitrogen", "permanent": true },
-    { "source": "/products/fertilizers/uan/:path*",                      "destination": "/products/fertilizers/nitrogen", "permanent": true },
-    { "source": "/products/fertilizers/urea-46/:path*",                  "destination": "/products/fertilizers/nitrogen", "permanent": true },
-    { "source": "/products/fertilizers/urea-46",                         "destination": "/products/fertilizers/nitrogen", "permanent": true },
-    { "source": "/products/fertilizers/ammonium-sulfate-21-0-0-24s",     "destination": "/products/fertilizers/nitrogen", "permanent": true },
-    { "source": "/products/fertilizers/ammonium",                        "destination": "/products/fertilizers/nitrogen", "permanent": true },
-    { "source": "/products/fertilizers/npk/:path*",                      "destination": "/products/fertilizers/fertilizers", "permanent": true },
-    { "source": "/products/fertilizers/potash/mop-kcl-60",               "destination": "/products/fertilizers/potash", "permanent": true },
-    { "source": "/products/fertilizers/secondary-micronutrients",        "destination": "/products/fertilizers", "permanent": true },
-    { "source": "/products/fertilizers/micronutrients",                  "destination": "/products/fertilizers", "permanent": true },
-    { "source": "/products/fertilizers/logistics-packaging",             "destination": "/products/fertilizers", "permanent": true },
-
-    { "source": "/products/construction/bitumen/:path*",            "destination": "/products/construction", "permanent": true },
-    { "source": "/products/construction/aggregates/sand-washed",    "destination": "/products/construction/aggregates", "permanent": true },
-    { "source": "/products/construction/limestone-dolomite/:path*", "destination": "/products/construction/limestone", "permanent": true },
-    { "source": "/products/construction/gypsum-plaster/:path*",     "destination": "/products/construction/gypsum", "permanent": true },
-    { "source": "/products/construction/logistics-packaging",       "destination": "/products/construction", "permanent": true },
-    { "source": "/products/gypsum/:path*",                          "destination": "/products/construction/gypsum", "permanent": true },
-
-    { "source": "/products/chemicals/oxidizers/:path*",        "destination": "/products/chemicals/industrial-chemicals", "permanent": true },
-    { "source": "/products/chemicals/ammonia/:path*",          "destination": "/products/chemicals/industrial-chemicals", "permanent": true },
-    { "source": "/products/chemicals/logistics-packaging",     "destination": "/products/chemicals", "permanent": true },
-
-    { "source": "/products/oils/:path*",  "destination": "/products/agro/edible-oils", "permanent": true },
-    { "source": "/products/food/:path*",  "destination": "/products/agro", "permanent": true },
-
-    { "source": "/chemicals-caustic-soda-liquid", "destination": "/products/chemicals/industrial-chemicals", "permanent": true },
-    { "source": "/salt-food",                     "destination": "/products/salt/food-grade", "permanent": true },
-    { "source": "/salt-pool-salt",                "destination": "/products/salt/pool-grade", "permanent": true },
-    { "source": "/salt-sea",                      "destination": "/products/salt", "permanent": true },
-    { "source": "/fertilizers-can",               "destination": "/products/fertilizers/nitrogen", "permanent": true },
-    { "source": "/pelot",                         "destination": "/partners/pelot/globe", "permanent": true },
-
-    { "source": "/careers",          "destination": "/about/careers", "permanent": true },
-    { "source": "/about/leadership", "destination": "/about", "permanent": true },
-    { "source": "/about/our-history","destination": "/about/history", "permanent": true },
-    { "source": "/csr",              "destination": "/about/quality-compliance", "permanent": true },
-    { "source": "/investment",       "destination": "/investors", "permanent": true },
-    { "source": "/standards",        "destination": "/standards/en-16811-1", "permanent": true },
-    { "source": "/trade-tools",      "destination": "/trade-tools/hs-codes", "permanent": true },
-    { "source": "/industries",       "destination": "/applications", "permanent": true },
-
-    { "source": "/ports",                       "destination": "/services/loading-ports", "permanent": true },
-    { "source": "/ports/port-said-east-salt1",  "destination": "/ports/port-said-east-salt", "permanent": true },
-    { "source": "/ports/port-said-east-salt2",  "destination": "/ports/port-said-east-salt", "permanent": true },
-    { "source": "/ports/port-said-east-salt3",  "destination": "/ports/port-said-east-salt", "permanent": true },
-    { "source": "/ports/damietta-salt0",        "destination": "/ports/damietta-salt", "permanent": true },
-
-    { "source": "/wholesale",          "destination": "/products/salt", "permanent": true },
-    { "source": "/wholesale/sea-salt1","destination": "/wholesale/sea-salt", "permanent": true },
-
-    { "source": "/applications/agriculture",            "destination": "/applications/agricultural", "permanent": true },
-    { "source": "/applications/water-treatment-salt0",  "destination": "/applications/water-treatment-salt", "permanent": true },
-
-    { "source": "/blog/bulk-egyptian-salt-price-2026-fob-guide1",   "destination": "/blog/bulk-egyptian-salt-price-2026-fob-guide", "permanent": true },
-    { "source": "/blog/bulk-egyptian-sea-salt-buyers-guide-20263",  "destination": "/blog/bulk-egyptian-sea-salt-buyers-guide-2026", "permanent": true },
-
-    { "source": "/egypt-globe-group-|-global-presence",          "destination": "/global-presence", "permanent": true },
-    { "source": "/egypt-globe-group-2525257c-global-presence",   "destination": "/global-presence", "permanent": true },
-
-    { "source": "/", "has": [{ "type": "host", "value": "www.egyptglobe.com" }], "destination": "https://egyptglobe.com/", "permanent": true },
-    { "source": "/:path*", "has": [{ "type": "host", "value": "www.egyptglobe.com" }], "destination": "https://egyptglobe.com/:path*", "permanent": true },
-
-    { "source": "/ag-fr-:slug",     "destination": "/products/agro/fresh-produce", "permanent": true },
-    { "source": "/ag-fz-:slug",     "destination": "/products/agro/fresh-produce", "permanent": true },
-    { "source": "/ag-proc-:slug",   "destination": "/products/agro/processed-foods", "permanent": true },
-    { "source": "/ag-:slug",        "destination": "/products/agro", "permanent": true },
-    { "source": "/nat-:slug",       "destination": "/products/agro", "permanent": true },
-    { "source": "/fert-npk-:slug",  "destination": "/products/fertilizers/npk-blends", "permanent": true },
-    { "source": "/fert-urea-:slug", "destination": "/products/fertilizers/nitrogen", "permanent": true },
-    { "source": "/fert-dap-:slug",  "destination": "/products/fertilizers/phosphate", "permanent": true },
-    { "source": "/fert-tsp-:slug",  "destination": "/products/fertilizers/phosphate", "permanent": true },
-    { "source": "/fert-:slug",      "destination": "/products/fertilizers", "permanent": true },
-    { "source": "/sl-:slug",        "destination": "/products/salt", "permanent": true },
-    { "source": "/cem-:slug",       "destination": "/products/construction/cement-and-clinker", "permanent": true },
-    { "source": "/gyp-:slug",       "destination": "/products/construction/gypsum", "permanent": true },
-    { "source": "/lime-:slug",      "destination": "/products/construction/limestone", "permanent": true },
-    { "source": "/steel-:slug",     "destination": "/products/metals/steel-products", "permanent": true },
-    { "source": "/cu-:slug",        "destination": "/products/metals/copper", "permanent": true },
-    { "source": "/al-:slug",        "destination": "/products/metals", "permanent": true },
-
-    { "source": "/food",                  "destination": "/products/agro", "permanent": true },
-    { "source": "/food/:rest*",           "destination": "/products/agro", "permanent": true },
-    { "source": "/orange-exports",        "destination": "/products/agro/fresh-produce", "permanent": true },
-    { "source": "/customer-success-stories",      "destination": "/case-studies", "permanent": true },
-    { "source": "/customer-success-stories/:rest*","destination": "/case-studies", "permanent": true },
-    { "source": "/industry-insights",     "destination": "/news-and-insights", "permanent": true },
-    { "source": "/industry-insights/:rest*","destination": "/news-and-insights", "permanent": true },
-    { "source": "/international-trade-and-amp-sourcing",  "destination": "/services", "permanent": true },
-    { "source": "/international-trade-:rest*",  "destination": "/services", "permanent": true },
-    { "source": "/logistics-and-export",  "destination": "/services/logistics", "permanent": true },
-    { "source": "/logistics-and-export/:rest*",  "destination": "/services/logistics", "permanent": true },
-    { "source": "/agro-products",         "destination": "/products/agro", "permanent": true },
-    { "source": "/agro-products/:rest*",  "destination": "/products/agro", "permanent": true },
-    { "source": "/all-products",          "destination": "/products", "permanent": true },
-    { "source": "/all-products/:rest*",   "destination": "/products", "permanent": true },
-    { "source": "/fertilizers",           "destination": "/products/fertilizers", "permanent": true },
-    { "source": "/fertilizers/:rest*",    "destination": "/products/fertilizers", "permanent": true },
-    { "source": "/cement",                "destination": "/products/construction/cement-and-clinker", "permanent": true },
-    { "source": "/cement/:rest*",         "destination": "/products/construction/cement-and-clinker", "permanent": true },
-    { "source": "/clinker",               "destination": "/markets/cement-clinker-hs-2523", "permanent": true },
-    { "source": "/minerals",              "destination": "/products/minerals", "permanent": true },
-    { "source": "/minerals/:rest*",       "destination": "/products/minerals", "permanent": true },
-    { "source": "/chemicals",             "destination": "/products/chemicals", "permanent": true },
-    { "source": "/chemicals/:rest*",      "destination": "/products/chemicals", "permanent": true },
-    { "source": "/metals",                "destination": "/products/metals", "permanent": true },
-    { "source": "/metals/:rest*",         "destination": "/products/metals", "permanent": true },
-    { "source": "/agro",                  "destination": "/products/agro", "permanent": true },
-    { "source": "/agro/:rest*",           "destination": "/products/agro", "permanent": true },
-
-    { "source": "/products/edible-oils",         "destination": "/products/agro/edible-oils", "permanent": true },
-    { "source": "/products/edible-oils/:rest*",  "destination": "/products/agro/edible-oils", "permanent": true },
-
-    { "source": "/standards/ss-en-16811",                              "destination": "/standards/ss-en-16811-1", "permanent": true },
-    { "source": "/trade-tools/import-guides/saudi-arabia-2026",        "destination": "/trade-tools/import-guides/saudi-arabia", "permanent": true },
-    { "source": "/trade-tools/import-guides/india-2026",               "destination": "/trade-tools/import-guides/india", "permanent": true },
-    { "source": "/trade-tools/import-guides/china-2026",               "destination": "/trade-tools/import-guides/china", "permanent": true },
-    { "source": "/trade-tools/import-guides/italy-2026",               "destination": "/trade-tools/import-guides/italy", "permanent": true }
+    {
+      "source": "/products/salt/de-icing-salt/:rest*",
+      "destination": "/products/salt",
+      "permanent": true
+    },
+    {
+      "source": "/products/salt/industrial-salt",
+      "destination": "/products/salt",
+      "permanent": true
+    },
+    {
+      "source": "/products/salt/sea-salt",
+      "destination": "/products/salt",
+      "permanent": true
+    },
+    {
+      "source": "/products/salt/tablet-salt/:rest*",
+      "destination": "/products/salt",
+      "permanent": true
+    },
+    {
+      "source": "/products/salt/vacuum-tablet/:rest*",
+      "destination": "/products/salt",
+      "permanent": true
+    },
+    {
+      "source": "/salt/pharmaceutical-salt",
+      "destination": "/products/salt",
+      "permanent": true
+    },
+    {
+      "source": "/salt/:rest*",
+      "destination": "/products/salt",
+      "permanent": true
+    },
+    {
+      "source": "/sl-:rest*",
+      "destination": "/products/salt",
+      "permanent": true
+    },
+    {
+      "source": "/products/construction/cement-clinker",
+      "destination": "/products/construction/cement-and-clinker",
+      "permanent": true
+    },
+    {
+      "source": "/products/construction/cement-clinker/:rest*",
+      "destination": "/products/construction/cement-and-clinker",
+      "permanent": true
+    },
+    {
+      "source": "/products/construction/gypsum-plaster",
+      "destination": "/products/construction/gypsum",
+      "permanent": true
+    },
+    {
+      "source": "/products/fertilizers/phosphates",
+      "destination": "/products/fertilizers/phosphate",
+      "permanent": true
+    },
+    {
+      "source": "/products/fertilizers/phosphates/:rest*",
+      "destination": "/products/fertilizers/phosphate",
+      "permanent": true
+    },
+    {
+      "source": "/products/fertilizers/potassium",
+      "destination": "/products/fertilizers/potash",
+      "permanent": true
+    },
+    {
+      "source": "/products/fertilizers/potassium/:rest*",
+      "destination": "/products/fertilizers/potash",
+      "permanent": true
+    },
+    {
+      "source": "/products/chemicals/acids",
+      "destination": "/products/chemicals/solvents-and-acids",
+      "permanent": true
+    },
+    {
+      "source": "/products/chemicals/acids/:rest*",
+      "destination": "/products/chemicals/solvents-and-acids",
+      "permanent": true
+    },
+    {
+      "source": "/products/chemicals/alkalis-salts",
+      "destination": "/products/chemicals/industrial-chemicals",
+      "permanent": true
+    },
+    {
+      "source": "/products/chemicals/alkalis-salts/:rest*",
+      "destination": "/products/chemicals/industrial-chemicals",
+      "permanent": true
+    },
+    {
+      "source": "/products/edible-oils",
+      "destination": "/products/agro/edible-oils",
+      "permanent": true
+    },
+    {
+      "source": "/products/edible-oils/:rest*",
+      "destination": "/products/agro/edible-oils",
+      "permanent": true
+    },
+    {
+      "source": "/products/minerals/gypsum-and-plaster",
+      "destination": "/products/construction/gypsum",
+      "permanent": true
+    },
+    {
+      "source": "/2ezs/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/files/:path*",
+      "destination": "/rfq",
+      "permanent": true
+    },
+    {
+      "source": "/lms/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/pages/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/job_application/:path*",
+      "destination": "/about/careers",
+      "permanent": true
+    },
+    {
+      "source": "/by-application/:path*",
+      "destination": "/applications",
+      "permanent": true
+    },
+    {
+      "source": "/corporate/:path*",
+      "destination": "/global-presence",
+      "permanent": true
+    },
+    {
+      "source": "/legal/privacy-policy",
+      "destination": "/cookies-policy",
+      "permanent": true
+    },
+    {
+      "source": "/legal/cookies-policy",
+      "destination": "/cookies-policy",
+      "permanent": true
+    },
+    {
+      "source": "/legal/compliance",
+      "destination": "/about/quality-compliance",
+      "permanent": true
+    },
+    {
+      "source": "/legal/:path*",
+      "destination": "/about/quality-compliance",
+      "permanent": true
+    },
+    {
+      "source": "/legal",
+      "destination": "/about/quality-compliance",
+      "permanent": true
+    },
+    {
+      "source": "/privacy",
+      "destination": "/cookies-policy",
+      "permanent": true
+    },
+    {
+      "source": "/products/clinker",
+      "destination": "/products/construction/cement-and-clinker",
+      "permanent": true
+    },
+    {
+      "source": "/products/rock-salt",
+      "destination": "/products/salt",
+      "permanent": true
+    },
+    {
+      "source": "/products/sinai-sea-salt",
+      "destination": "/products/salt",
+      "permanent": true
+    },
+    {
+      "source": "/products/siwa-rock-salt",
+      "destination": "/products/salt",
+      "permanent": true
+    },
+    {
+      "source": "/products/crude-salt",
+      "destination": "/products/salt",
+      "permanent": true
+    },
+    {
+      "source": "/products/food-salt",
+      "destination": "/products/salt/food-grade",
+      "permanent": true
+    },
+    {
+      "source": "/products/pool-salt",
+      "destination": "/products/salt/pool-grade",
+      "permanent": true
+    },
+    {
+      "source": "/products/double-washed-sea-salt",
+      "destination": "/products/salt",
+      "permanent": true
+    },
+    {
+      "source": "/products/washed-salt",
+      "destination": "/products/salt",
+      "permanent": true
+    },
+    {
+      "source": "/products/salt-products",
+      "destination": "/products/salt",
+      "permanent": true
+    },
+    {
+      "source": "/products/salt/tablet",
+      "destination": "/products/salt",
+      "permanent": true
+    },
+    {
+      "source": "/products/salt/vacuum-tablet-salt",
+      "destination": "/products/salt",
+      "permanent": true
+    },
+    {
+      "source": "/products/urea",
+      "destination": "/products/fertilizers/nitrogen",
+      "permanent": true
+    },
+    {
+      "source": "/products/fertilizers/nitrogen/uan-32-solution",
+      "destination": "/products/fertilizers/nitrogen",
+      "permanent": true
+    },
+    {
+      "source": "/products/fertilizers/calcium-ammonium-nitrate-27",
+      "destination": "/products/fertilizers/nitrogen",
+      "permanent": true
+    },
+    {
+      "source": "/products/fertilizers/uan/:path*",
+      "destination": "/products/fertilizers/nitrogen",
+      "permanent": true
+    },
+    {
+      "source": "/products/fertilizers/urea-46/:path*",
+      "destination": "/products/fertilizers/nitrogen",
+      "permanent": true
+    },
+    {
+      "source": "/products/fertilizers/urea-46",
+      "destination": "/products/fertilizers/nitrogen",
+      "permanent": true
+    },
+    {
+      "source": "/products/fertilizers/ammonium-sulfate-21-0-0-24s",
+      "destination": "/products/fertilizers/nitrogen",
+      "permanent": true
+    },
+    {
+      "source": "/products/fertilizers/ammonium",
+      "destination": "/products/fertilizers/nitrogen",
+      "permanent": true
+    },
+    {
+      "source": "/products/fertilizers/npk/:path*",
+      "destination": "/products/fertilizers/fertilizers",
+      "permanent": true
+    },
+    {
+      "source": "/products/fertilizers/potash/mop-kcl-60",
+      "destination": "/products/fertilizers/potash",
+      "permanent": true
+    },
+    {
+      "source": "/products/fertilizers/secondary-micronutrients",
+      "destination": "/products/fertilizers",
+      "permanent": true
+    },
+    {
+      "source": "/products/fertilizers/micronutrients",
+      "destination": "/products/fertilizers",
+      "permanent": true
+    },
+    {
+      "source": "/products/fertilizers/logistics-packaging",
+      "destination": "/products/fertilizers",
+      "permanent": true
+    },
+    {
+      "source": "/products/construction/bitumen/:path*",
+      "destination": "/products/construction",
+      "permanent": true
+    },
+    {
+      "source": "/products/construction/aggregates/sand-washed",
+      "destination": "/products/construction/aggregates",
+      "permanent": true
+    },
+    {
+      "source": "/products/construction/limestone-dolomite/:path*",
+      "destination": "/products/construction/limestone",
+      "permanent": true
+    },
+    {
+      "source": "/products/construction/gypsum-plaster/:path*",
+      "destination": "/products/construction/gypsum",
+      "permanent": true
+    },
+    {
+      "source": "/products/construction/logistics-packaging",
+      "destination": "/products/construction",
+      "permanent": true
+    },
+    {
+      "source": "/products/gypsum/:path*",
+      "destination": "/products/construction/gypsum",
+      "permanent": true
+    },
+    {
+      "source": "/products/chemicals/oxidizers/:path*",
+      "destination": "/products/chemicals/industrial-chemicals",
+      "permanent": true
+    },
+    {
+      "source": "/products/chemicals/ammonia/:path*",
+      "destination": "/products/chemicals/industrial-chemicals",
+      "permanent": true
+    },
+    {
+      "source": "/products/chemicals/logistics-packaging",
+      "destination": "/products/chemicals",
+      "permanent": true
+    },
+    {
+      "source": "/products/oils/:path*",
+      "destination": "/products/agro/edible-oils",
+      "permanent": true
+    },
+    {
+      "source": "/products/food/:path*",
+      "destination": "/products/agro",
+      "permanent": true
+    },
+    {
+      "source": "/chemicals-caustic-soda-liquid",
+      "destination": "/products/chemicals/industrial-chemicals",
+      "permanent": true
+    },
+    {
+      "source": "/salt-food",
+      "destination": "/products/salt/food-grade",
+      "permanent": true
+    },
+    {
+      "source": "/salt-pool-salt",
+      "destination": "/products/salt/pool-grade",
+      "permanent": true
+    },
+    {
+      "source": "/salt-sea",
+      "destination": "/products/salt",
+      "permanent": true
+    },
+    {
+      "source": "/fertilizers-can",
+      "destination": "/products/fertilizers/nitrogen",
+      "permanent": true
+    },
+    {
+      "source": "/pelot",
+      "destination": "/partners/pelot/globe",
+      "permanent": true
+    },
+    {
+      "source": "/careers",
+      "destination": "/about/careers",
+      "permanent": true
+    },
+    {
+      "source": "/about/leadership",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/about/our-history",
+      "destination": "/about/history",
+      "permanent": true
+    },
+    {
+      "source": "/csr",
+      "destination": "/about/quality-compliance",
+      "permanent": true
+    },
+    {
+      "source": "/investment",
+      "destination": "/investors",
+      "permanent": true
+    },
+    {
+      "source": "/standards",
+      "destination": "/standards/en-16811-1",
+      "permanent": true
+    },
+    {
+      "source": "/trade-tools",
+      "destination": "/trade-tools/hs-codes",
+      "permanent": true
+    },
+    {
+      "source": "/industries",
+      "destination": "/applications",
+      "permanent": true
+    },
+    {
+      "source": "/ports",
+      "destination": "/services/loading-ports",
+      "permanent": true
+    },
+    {
+      "source": "/ports/port-said-east-salt1",
+      "destination": "/ports/port-said-east-salt",
+      "permanent": true
+    },
+    {
+      "source": "/ports/port-said-east-salt2",
+      "destination": "/ports/port-said-east-salt",
+      "permanent": true
+    },
+    {
+      "source": "/ports/port-said-east-salt3",
+      "destination": "/ports/port-said-east-salt",
+      "permanent": true
+    },
+    {
+      "source": "/ports/damietta-salt0",
+      "destination": "/ports/damietta-salt",
+      "permanent": true
+    },
+    {
+      "source": "/wholesale",
+      "destination": "/products/salt",
+      "permanent": true
+    },
+    {
+      "source": "/wholesale/sea-salt1",
+      "destination": "/wholesale/sea-salt",
+      "permanent": true
+    },
+    {
+      "source": "/applications/agriculture",
+      "destination": "/applications/agricultural",
+      "permanent": true
+    },
+    {
+      "source": "/applications/water-treatment-salt0",
+      "destination": "/applications/water-treatment-salt",
+      "permanent": true
+    },
+    {
+      "source": "/blog/bulk-egyptian-salt-price-2026-fob-guide1",
+      "destination": "/blog/bulk-egyptian-salt-price-2026-fob-guide",
+      "permanent": true
+    },
+    {
+      "source": "/blog/bulk-egyptian-sea-salt-buyers-guide-20263",
+      "destination": "/blog/bulk-egyptian-sea-salt-buyers-guide-2026",
+      "permanent": true
+    },
+    {
+      "source": "/egypt-globe-group-|-global-presence",
+      "destination": "/global-presence",
+      "permanent": true
+    },
+    {
+      "source": "/egypt-globe-group-2525257c-global-presence",
+      "destination": "/global-presence",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.egyptglobe.com"
+        }
+      ],
+      "destination": "https://egyptglobe.com/",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.egyptglobe.com"
+        }
+      ],
+      "destination": "https://egyptglobe.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/ag-fr-:slug",
+      "destination": "/products/agro/fresh-produce",
+      "permanent": true
+    },
+    {
+      "source": "/ag-fz-:slug",
+      "destination": "/products/agro/fresh-produce",
+      "permanent": true
+    },
+    {
+      "source": "/ag-proc-:slug",
+      "destination": "/products/agro/processed-foods",
+      "permanent": true
+    },
+    {
+      "source": "/ag-:slug",
+      "destination": "/products/agro",
+      "permanent": true
+    },
+    {
+      "source": "/nat-:slug",
+      "destination": "/products/agro",
+      "permanent": true
+    },
+    {
+      "source": "/fert-npk-:slug",
+      "destination": "/products/fertilizers/npk-blends",
+      "permanent": true
+    },
+    {
+      "source": "/fert-urea-:slug",
+      "destination": "/products/fertilizers/nitrogen",
+      "permanent": true
+    },
+    {
+      "source": "/fert-dap-:slug",
+      "destination": "/products/fertilizers/phosphate",
+      "permanent": true
+    },
+    {
+      "source": "/fert-tsp-:slug",
+      "destination": "/products/fertilizers/phosphate",
+      "permanent": true
+    },
+    {
+      "source": "/fert-:slug",
+      "destination": "/products/fertilizers",
+      "permanent": true
+    },
+    {
+      "source": "/sl-:slug",
+      "destination": "/products/salt",
+      "permanent": true
+    },
+    {
+      "source": "/cem-:slug",
+      "destination": "/products/construction/cement-and-clinker",
+      "permanent": true
+    },
+    {
+      "source": "/gyp-:slug",
+      "destination": "/products/construction/gypsum",
+      "permanent": true
+    },
+    {
+      "source": "/lime-:slug",
+      "destination": "/products/construction/limestone",
+      "permanent": true
+    },
+    {
+      "source": "/steel-:slug",
+      "destination": "/products/metals/steel-products",
+      "permanent": true
+    },
+    {
+      "source": "/cu-:slug",
+      "destination": "/products/metals/copper",
+      "permanent": true
+    },
+    {
+      "source": "/al-:slug",
+      "destination": "/products/metals",
+      "permanent": true
+    },
+    {
+      "source": "/food",
+      "destination": "/products/agro",
+      "permanent": true
+    },
+    {
+      "source": "/food/:rest*",
+      "destination": "/products/agro",
+      "permanent": true
+    },
+    {
+      "source": "/orange-exports",
+      "destination": "/products/agro/fresh-produce",
+      "permanent": true
+    },
+    {
+      "source": "/customer-success-stories",
+      "destination": "/case-studies",
+      "permanent": true
+    },
+    {
+      "source": "/customer-success-stories/:rest*",
+      "destination": "/case-studies",
+      "permanent": true
+    },
+    {
+      "source": "/industry-insights",
+      "destination": "/news-and-insights",
+      "permanent": true
+    },
+    {
+      "source": "/industry-insights/:rest*",
+      "destination": "/news-and-insights",
+      "permanent": true
+    },
+    {
+      "source": "/international-trade-and-amp-sourcing",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
+      "source": "/international-trade-:rest*",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
+      "source": "/logistics-and-export",
+      "destination": "/services/logistics",
+      "permanent": true
+    },
+    {
+      "source": "/logistics-and-export/:rest*",
+      "destination": "/services/logistics",
+      "permanent": true
+    },
+    {
+      "source": "/agro-products",
+      "destination": "/products/agro",
+      "permanent": true
+    },
+    {
+      "source": "/agro-products/:rest*",
+      "destination": "/products/agro",
+      "permanent": true
+    },
+    {
+      "source": "/all-products",
+      "destination": "/products",
+      "permanent": true
+    },
+    {
+      "source": "/all-products/:rest*",
+      "destination": "/products",
+      "permanent": true
+    },
+    {
+      "source": "/fertilizers",
+      "destination": "/products/fertilizers",
+      "permanent": true
+    },
+    {
+      "source": "/fertilizers/:rest*",
+      "destination": "/products/fertilizers",
+      "permanent": true
+    },
+    {
+      "source": "/cement",
+      "destination": "/products/construction/cement-and-clinker",
+      "permanent": true
+    },
+    {
+      "source": "/cement/:rest*",
+      "destination": "/products/construction/cement-and-clinker",
+      "permanent": true
+    },
+    {
+      "source": "/clinker",
+      "destination": "/markets/cement-clinker-hs-2523",
+      "permanent": true
+    },
+    {
+      "source": "/minerals",
+      "destination": "/products/minerals",
+      "permanent": true
+    },
+    {
+      "source": "/minerals/:rest*",
+      "destination": "/products/minerals",
+      "permanent": true
+    },
+    {
+      "source": "/chemicals",
+      "destination": "/products/chemicals",
+      "permanent": true
+    },
+    {
+      "source": "/chemicals/:rest*",
+      "destination": "/products/chemicals",
+      "permanent": true
+    },
+    {
+      "source": "/metals",
+      "destination": "/products/metals",
+      "permanent": true
+    },
+    {
+      "source": "/metals/:rest*",
+      "destination": "/products/metals",
+      "permanent": true
+    },
+    {
+      "source": "/agro",
+      "destination": "/products/agro",
+      "permanent": true
+    },
+    {
+      "source": "/agro/:rest*",
+      "destination": "/products/agro",
+      "permanent": true
+    },
+    {
+      "source": "/products/edible-oils",
+      "destination": "/products/agro/edible-oils",
+      "permanent": true
+    },
+    {
+      "source": "/products/edible-oils/:rest*",
+      "destination": "/products/agro/edible-oils",
+      "permanent": true
+    },
+    {
+      "source": "/standards/ss-en-16811",
+      "destination": "/standards/ss-en-16811-1",
+      "permanent": true
+    },
+    {
+      "source": "/trade-tools/import-guides/saudi-arabia-2026",
+      "destination": "/trade-tools/import-guides/saudi-arabia",
+      "permanent": true
+    },
+    {
+      "source": "/trade-tools/import-guides/india-2026",
+      "destination": "/trade-tools/import-guides/india",
+      "permanent": true
+    },
+    {
+      "source": "/trade-tools/import-guides/china-2026",
+      "destination": "/trade-tools/import-guides/china",
+      "permanent": true
+    },
+    {
+      "source": "/trade-tools/import-guides/italy-2026",
+      "destination": "/trade-tools/import-guides/italy",
+      "permanent": true
+    }
   ]
 }
