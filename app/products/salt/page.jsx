@@ -17,8 +17,8 @@ import {
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
-  title: 'Salt — Sea & Rock from Egypt',
-  description: 'Egyptian sea salt and rock salt — 27 SKUs across 8 grades from food and pharma to de-icing and chlor-alkali. NaCl ≥ 97%. FOB / CIF from 7 Egyptian ports.',
+  title: 'Egyptian Salt Exporter — Sea, Rock, Food & De-icing',
+  description: 'Egyptian salt exporter — sea salt (North Sinai & Red Sea) and rock salt (Siwa & Qattara, ≥97% NaCl). Food, pharma, industrial, chlor-alkali, water-treatment and de-icing grades — 27 SKUs, 8 grades. Bulk FOB from 7 ports, CoA per shipment. Quote in 24h.',
 }
 
 const APPS_BY_ID = Object.fromEntries(APPLICATIONS.map(a => [a.id, a]))
