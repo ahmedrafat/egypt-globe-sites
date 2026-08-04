@@ -35,7 +35,7 @@ import RichSubcategoryLanding from './RichSubcategoryLanding'
 import RichApplicationLanding from './RichApplicationLanding'
 import PackingMatrix from './PackingMatrix'
 import SkuRelatedLinks from './SkuRelatedLinks'
-import { BreadcrumbJsonLd, ProductJsonLd, WebPageJsonLd } from './StructuredData'
+import { BreadcrumbJsonLd, ProductJsonLd, WebPageJsonLd, FAQJsonLd } from './StructuredData'
 import FAQAccordion from './FAQAccordion'
 import StickyRfqBar from './StickyRfqBar'
 import { faqsForPage } from '../lib/faqs'
@@ -659,6 +659,7 @@ export default async function PageRenderer({ page }) {
         const faqs = faqsForPage(page, commodity)
         return faqs.length > 0 ? (
           <div className="bg-slate-50/40 border-t border-slate-200">
+            <FAQJsonLd qas={faqs.map(f => ({ question: f.question, answer: f.answer }))} />
             <FAQAccordion
               faqs={faqs}
               title={isSkuPage ? `Frequently asked about ${page.title}` : 'Frequently asked questions'}
