@@ -22,6 +22,25 @@ export function OrganizationJsonLd({ settings }) {
     s.instagram_url,
   ].filter(Boolean)
 
+  // Owned brand network — declaring the group's operating brands as
+  // subOrganizations tells Google that egyptglobe.com is the parent
+  // entity of these (independently-ranking) brand sites, so their
+  // topical authority consolidates to the umbrella. Each brand site
+  // reciprocally declares parentOrganization / sameAs back to us.
+  const BRAND_SITES = [
+    { name: 'Pelot Salt', url: 'https://www.pelotsalt.com', desc: 'Egyptian sea & rock salt exporter' },
+    { name: 'EG Salt',    url: 'https://egsalt.com',        desc: 'Bulk industrial & de-icing salt' },
+    { name: 'Globe Salt', url: 'https://globesalt.com',     desc: 'Wholesale bulk salt export' },
+    { name: 'Sinai Salt', url: 'https://sinaisalt.com',     desc: 'North Sinai sea salt' },
+    { name: 'Salt Siwa',  url: 'https://saltsiwa.com',      desc: 'Siwa & Qattara rock salt' },
+    { name: 'Egypt Globe Cement', url: 'https://cement-site.vercel.app', desc: 'Egyptian cement & clinker export' },
+  ]
+  const subOrganization = BRAND_SITES.map(b => ({
+    '@type': 'Organization', name: b.name, url: b.url, description: b.desc,
+    parentOrganization: { '@id': `${BASE}#org` },
+  }))
+  const brandSameAs = [...sameAs, ...BRAND_SITES.map(b => b.url)]
+
   const json = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -41,7 +60,8 @@ export function OrganizationJsonLd({ settings }) {
           'Egyptian B2B export trading conglomerate. Salt, cement, fertilizers, chemicals, construction materials, agro & food, industrial minerals, metals. FOB / CIF from 7 Egyptian ports to 60+ countries. Quote in 24h.',
         foundingDate: s.founding_date || '2014',
         ...(s.tax_card ? { taxID: s.tax_card } : {}),
-        ...(sameAs.length ? { sameAs } : {}),
+        ...(brandSameAs.length ? { sameAs: brandSameAs } : {}),
+        subOrganization,
         contactPoint: [
           {
             '@type': 'ContactPoint',
