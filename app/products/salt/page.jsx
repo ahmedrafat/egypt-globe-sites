@@ -17,9 +17,20 @@ import {
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
-  title: 'Egyptian Salt Exporter — Sea, Rock, Food & De-icing',
-  description: 'Egyptian salt exporter — sea salt (North Sinai & Red Sea) and rock salt (Siwa & Qattara, ≥97% NaCl). Food, pharma, industrial, chlor-alkali, water-treatment and de-icing grades — 27 SKUs, 8 grades. Bulk FOB from 7 ports, CoA per shipment. Quote in 24h.',
+  title: 'Bulk Salt Supplier Egypt — Rock, Sea, De-icing & Industrial NaCl',
+  description: 'Bulk Egyptian salt exporter — rock salt (Siwa & Qattara, ≥97% NaCl) and sea salt (North Sinai & Red Sea). De-icing, industrial, chlor-alkali, food, pharma & water-treatment grades — 27 SKUs, 8 grades. FOB / CIF from 7 Egyptian ports, CoA per shipment. Quote in 24h.',
 }
+
+const GRADES = [
+  { label: 'Bulk De-icing / Road Salt', href: '/products/salt/de-icing-grade', icon: '❄️' },
+  { label: 'Industrial / Chlor-Alkali', href: '/products/salt/industrial-grade', icon: '🏭' },
+  { label: 'Food Grade Salt', href: '/products/salt/food-grade', icon: '🍽️' },
+  { label: 'Pharmaceutical Salt', href: '/products/salt/pharmaceutical-grade', icon: '💊' },
+  { label: 'Water Treatment & Pool', href: '/products/salt/pool-grade', icon: '💧' },
+  { label: 'Cosmetic & Spa Salt', href: '/products/salt/cosmetic-grade', icon: '🧴' },
+  { label: 'Aquaculture Salt', href: '/products/salt/aquaculture-grade', icon: '🐟' },
+  { label: 'Agricultural Salt', href: '/products/salt/agricultural-grade', icon: '🌾' },
+]
 
 const APPS_BY_ID = Object.fromEntries(APPLICATIONS.map(a => [a.id, a]))
 
@@ -76,7 +87,7 @@ export default async function SaltMainPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-end">
             <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-4 leading-[1.05] drop-shadow-sm">
-                Egyptian salt — sea & rock,<br />delivered worldwide.
+                Bulk Egyptian salt — sea & rock,<br />delivered worldwide.
               </h1>
               <p className="text-base sm:text-lg leading-relaxed max-w-3xl text-white/80">
                 {all.length} SKUs across 8 grades — from food and pharmaceutical to
@@ -267,6 +278,31 @@ export default async function SaltMainPage() {
           </div>
         </section>
       )}
+
+      {/* Bulk salt by grade — internal links to the 8 grade hubs ── */}
+      <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14">
+        <div className="text-center mb-8 animate-fade-in-up">
+          <div className="inline-block bg-blue-50 text-[#1d5fa1] text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
+            Bulk salt by grade
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            Every grade of Egyptian bulk salt
+          </h2>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 stagger-children">
+          {GRADES.map(g => (
+            <Link key={g.href} href={g.href}
+              className="card-lift group rounded-2xl border border-slate-200 bg-white px-4 py-4 flex items-center gap-3">
+              <span className="text-2xl">{g.icon}</span>
+              <span className="font-bold text-sm text-slate-900 group-hover:text-[#1d5fa1] transition-colors">{g.label}</span>
+            </Link>
+          ))}
+        </div>
+        <p className="text-center text-sm text-slate-500 mt-6">
+          For grades, standards and lane economics see the full{' '}
+          <Link href="/markets/industrial-salt-egypt" className="text-[#1d5fa1] font-semibold hover:underline">industrial salt supplier guide</Link>.
+        </p>
+      </section>
 
       {/* Sea salt catalogue ──────────────────────────────────── */}
       {sea.length > 0 && (
