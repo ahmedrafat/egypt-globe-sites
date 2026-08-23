@@ -15,7 +15,7 @@ import {
   getPagesByCategory,
 } from '../lib/corporatePages'
 import { getBuyerVisibility } from '../lib/supabaseServer'
-import Icon from './ui/Icon'
+import Icon, { DIVISION_ICON, SERVICE_ICON } from './ui/Icon'
 
 export default async function SiteHeader({ settings }) {
   const s = settings || COMPANY_INFO_DEFAULT
@@ -94,8 +94,8 @@ export default async function SiteHeader({ settings }) {
                     <Link key={div.id} href={div.path}
                       className="flex items-start gap-3 p-3 rounded-xl hover:bg-[#f9fafb] transition-colors group/item">
                       <div className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-xl"
-                        style={{ background: `${div.color}18` }}>
-                        {div.icon}
+                        style={{ background: `${div.color}18`, color: div.color }}>
+                        <Icon name={DIVISION_ICON[div.id] || 'box'} className="w-5 h-5" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="font-semibold text-sm text-[#14161a] group-hover/item:text-[#0b8f84] transition-colors">
@@ -140,8 +140,8 @@ export default async function SiteHeader({ settings }) {
                     <Link key={svc.id} href={svc.path}
                       className="flex items-start gap-3 p-3 rounded-xl hover:bg-[#f9fafb] transition-colors group/item">
                       <div className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-xl"
-                        style={{ background: `${svc.color}18` }}>
-                        {svc.icon}
+                        style={{ background: `${svc.color}18`, color: svc.color }}>
+                        <Icon name={SERVICE_ICON[svc.id] || 'ship'} className="w-5 h-5" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="font-semibold text-sm text-[#14161a] group-hover/item:text-[#0b8f84] transition-colors">

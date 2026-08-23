@@ -11,6 +11,7 @@
 import Link from 'next/link'
 import { searchPages } from '../../lib/corporatePages'
 import { CATEGORY_META } from '../../lib/corporatePages'
+import Icon, { CATEGORY_ICON } from '../../components/ui/Icon'
 
 export const dynamic = 'force-dynamic'
 
@@ -99,7 +100,7 @@ export default async function SearchPage({ searchParams }) {
                   <Link href={r.path} className="block">
                     <div className="flex items-center gap-2 mb-2">
                       <span className={`inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-semibold rounded-full border ${meta.tone}`}>
-                        <span>{meta.icon}</span>
+                        <Icon name={CATEGORY_ICON[r.category] || 'grid'} className="w-3 h-3" />
                         {meta.label}
                       </span>
                       <span className="text-xs text-[#8a93a3]">{r.path}</span>

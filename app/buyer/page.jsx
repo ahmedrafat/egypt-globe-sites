@@ -11,6 +11,7 @@ import {
   getPagesInCategory,
 } from '../../lib/corporatePages'
 import SignOutButton from '../../components/auth/SignOutButton'
+import Icon, { DIVISION_ICON } from '../../components/ui/Icon'
 
 // Drop 139c — buyer dashboard reads cookies → must be dynamic anyway.
 // Force-dynamic so the build worker doesn't try to pre-render it.
@@ -136,7 +137,7 @@ export default async function BuyerDashboard() {
               <Link key={d.id} href={d.path}
                 className="egg-card group p-5">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-3"
-                  style={{ background: `${d.color}1f`, boxShadow: `inset 0 0 0 1px ${d.color}66` }}>{d.icon}</div>
+                  style={{ background: `${d.color}1f`, boxShadow: `inset 0 0 0 1px ${d.color}66`, color: d.color }}><Icon name={DIVISION_ICON[d.id] || 'box'} className="w-5 h-5" /></div>
                 <h3 className="font-semibold text-[#14161a] group-hover:text-[#0b8f84] transition-colors">
                   {d.label}
                 </h3>

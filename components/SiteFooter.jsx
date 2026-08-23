@@ -12,7 +12,7 @@
 import Link from 'next/link'
 import Logo from './Logo'
 import { PRODUCT_DIVISIONS, SERVICE_DIVISIONS, COMPANY_INFO_DEFAULT, LOGISTICS_PORTAL_URL } from '../lib/corporatePages'
-import Icon from './ui/Icon'
+import Icon, { DIVISION_ICON, SERVICE_ICON } from './ui/Icon'
 
 export default function SiteFooter({ settings }) {
   const s = settings || COMPANY_INFO_DEFAULT
@@ -58,9 +58,7 @@ export default function SiteFooter({ settings }) {
               {PRODUCT_DIVISIONS.map(div => (
                 <li key={div.id}>
                   <Link href={div.path} className="text-[#3f4650] hover:text-[#14161a] transition-colors flex items-center gap-2 group">
-                    <span aria-hidden="true" className="group-hover:scale-110 transition-transform inline-block">
-                      {div.icon}
-                    </span>
+                    <Icon name={DIVISION_ICON[div.id] || 'box'} className="w-3.5 h-3.5 text-[#7a8290] group-hover:text-[#14161a] transition-colors" />
                     {div.label}
                   </Link>
                 </li>
@@ -83,9 +81,7 @@ export default function SiteFooter({ settings }) {
               {SERVICE_DIVISIONS.map(svc => (
                 <li key={svc.id}>
                   <Link href={svc.path} className="text-[#3f4650] hover:text-[#14161a] transition-colors flex items-center gap-2 group">
-                    <span aria-hidden="true" className="group-hover:scale-110 transition-transform inline-block">
-                      {svc.icon}
-                    </span>
+                    <Icon name={SERVICE_ICON[svc.id] || 'ship'} className="w-3.5 h-3.5 text-[#7a8290] group-hover:text-[#14161a] transition-colors" />
                     {svc.label}
                   </Link>
                 </li>
