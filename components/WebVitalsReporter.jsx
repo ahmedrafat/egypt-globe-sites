@@ -42,6 +42,11 @@ function detectDevice() {
 export default function WebVitalsReporter() {
   useEffect(() => {
     if (typeof window === 'undefined') return
+    // Dev sessions must never pollute field data: page_path stores only the
+    // pathname, so a localhost load of /products/salt is indistinguishable
+    // from a production one — and local dev TTFB (2-8 s against the remote
+    // DB) skewed the Aug-24 field analysis badly enough to invert it.
+    if (/^(localhost|127\.|0\.0\.0\.0|.*\.local)$/.test(window.location.hostname)) return
     const session_id = getSessionId()
     const device = detectDevice()
     const rfq_visitor = window.location.pathname.startsWith('/rfq')
