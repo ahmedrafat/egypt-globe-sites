@@ -218,7 +218,7 @@ export async function generateMetadata() {
 export default async function RootLayout({ children }) {
   const settings = await getSiteSettings()
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} h-full`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-white text-slate-900 antialiased">
         {/* Drop 125 — accessibility skip link (visible only on keyboard focus) */}
         <a href="#main-content"
