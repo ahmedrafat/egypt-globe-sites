@@ -84,8 +84,26 @@ function slugify(title) {
     .replace(/^-|-$/g, '') || 'tab'
 }
 
+/** Normalised comparison key for "is this heading just the page title?" */
+function titleKey(t) {
+  return (t || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()
+}
+
+/**
+ * Strip a leading `# Heading` when it merely restates the page title.
+ * The hero already renders the title as the page H1, so 41 published
+ * pages were showing their headline twice (audit, Aug 2026).
+ */
+function dropDuplicateLeadHeading(md, title) {
+  if (!md || !title) return md
+  const m = md.match(/^\s*#\s+(.+?)\s*(?:\n|$)/)
+  if (!m) return md
+  return titleKey(m[1]) === titleKey(title) ? md.slice(m[0].length).replace(/^\s*\n/, '') : md
+}
+
 export default function MarkdownDocument({ body, title, leadingWidget = null }) {
-  const { intro, sections } = useMemo(() => splitMarkdown(body), [body])
+  const clean = useMemo(() => dropDuplicateLeadHeading(body, title), [body, title])
+  const { intro, sections } = useMemo(() => splitMarkdown(clean), [clean])
 
   const parts = useMemo(() => {
     const out = []
@@ -101,7 +119,7 @@ export default function MarkdownDocument({ body, title, leadingWidget = null }) 
     return (
       <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10">
         {leadingWidget && <div className="mb-8">{leadingWidget}</div>}
-        {body && <div className="max-w-3xl"><RichPageBody content={body} /></div>}
+        {clean && <div className="max-w-3xl"><RichPageBody content={clean} /></div>}
       </section>
     )
   }

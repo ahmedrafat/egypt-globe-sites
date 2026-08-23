@@ -264,12 +264,15 @@ export function parseMarkdown(content) {
       continue
     }
     if (line.startsWith('# ')) {
+      // Rendered as <h2>, not <h1>: the page already carries its H1 in the
+      // hero, and a body-level H1 duplicated it — 41 published pages were
+      // shipping two H1s with identical text (audit, Aug 2026).
       flushAll()
       const text = line.slice(2)
       const id = uniqueId(slugify(text))
       countWords(text)
-      headings.push({ id, level: 1, text: text.replace(/[*`]/g, '') })
-      blocks.push(`<h1 id="${id}" class="egg-display text-3xl sm:text-4xl lg:text-5xl mt-10 mb-5 text-[#14161a] tracking-tight scroll-mt-28">${renderInline(text)}</h1>`)
+      headings.push({ id, level: 2, text: text.replace(/[*`]/g, '') })
+      blocks.push(`<h2 id="${id}" class="egg-display text-3xl sm:text-4xl lg:text-5xl mt-10 mb-5 text-[#14161a] tracking-tight scroll-mt-28">${renderInline(text)}</h2>`)
       continue
     }
 
