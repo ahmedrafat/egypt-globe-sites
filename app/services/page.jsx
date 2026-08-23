@@ -13,6 +13,7 @@ import {
   getPageByPath,
 } from '../../lib/corporatePages'
 import RichPageBody from '../../components/RichPageBody'
+import QualityStrip from '../../components/QualityStrip'
 import Icon, { SERVICE_ICON } from '../../components/ui/Icon'
 
 export const revalidate = 60
@@ -65,9 +66,10 @@ export default async function ServicesHub() {
                 </span>
               </h1>
               <p className="text-base sm:text-lg leading-relaxed max-w-3xl text-[#3f4650]">
-                Sourcing the right product is half the job. The other half — vessel, port,
-                packing, paperwork, last-mile — is what keeps shipments moving on schedule.
-                Egypt Globe Group operates an in-house service desk covering all 7 layers.
+                Supply-chain risk in bulk export is rarely the commodity — it is the handover between
+                contractors. Egypt Globe Group removes the handovers: resident stevedoring, vessel-agency,
+                port-QC, packing, inspection and documentation teams at all seven Egyptian ports, one
+                accountable desk, documented Notice of Readiness and Statement of Facts on every vessel.
               </p>
             </div>
             <div className="flex flex-wrap gap-2 lg:justify-end animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
@@ -88,7 +90,7 @@ export default async function ServicesHub() {
               { big: String(SERVICE_DIVISIONS.length), label: 'In-house services' },
               { big: '7',   label: 'Loading ports' },
               { big: '60+', label: 'Destination markets' },
-              { big: '24h', label: 'Quote SLA' },
+              { big: '100%', label: 'Lots CoA-verified before B/L' },
             ].map(s => (
               <div key={s.label} className="bg-white/90 backdrop-blur px-5 py-5">
                 <div className="egg-display text-3xl sm:text-4xl tracking-tight" style={{ color: TONE }}>{s.big}</div>
@@ -98,6 +100,9 @@ export default async function ServicesHub() {
           </div>
         </div>
       </section>
+
+      {/* Quality at the Core */}
+      <QualityStrip division="Supply-chain services" />
 
       {/* Service cards grid */}
       <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 egg-reveal">
@@ -109,9 +114,9 @@ export default async function ServicesHub() {
             Pick a service or pair multiple in one quote.
           </h2>
           <p className="text-[#3f4650]">
-            Most buyers combine logistics + packing + inspection + documentation
-            on a single shipment. Get one quote, one accountable team, one set of
-            paperwork.
+            Most buyers combine logistics, packing, inspection and documentation on a single
+            shipment. One quote, one accountable team, one L/C-compliant set of paperwork — and
+            the same per-lot QA gate at the port regardless of which services you pair.
           </p>
         </div>
 
@@ -123,7 +128,7 @@ export default async function ServicesHub() {
               <div className="aspect-[16/9] overflow-hidden relative"
                 style={{ background: `linear-gradient(135deg, ${svc.color}1F 0%, ${svc.color}08 60%, white 100%)` }}>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-7xl opacity-30 group-hover:opacity-50 group-hover:scale-110 transition-all duration-500"><Icon name={SERVICE_ICON[svc.id] || 'ship'} className="w-6 h-6" /></span>
+                  <span className="text-[#14161a]/20 group-hover:text-[#14161a]/35 group-hover:scale-110 transition-all duration-500"><Icon name={SERVICE_ICON[svc.id] || 'ship'} className="w-8 h-8" strokeWidth={1.25} /></span>
                 </div>
               </div>
               <div className="p-6">

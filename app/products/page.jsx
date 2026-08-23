@@ -6,13 +6,15 @@
 import Link from 'next/link'
 import { PRODUCT_DIVISIONS } from '../../lib/corporatePages'
 import Icon, { DIVISION_ICON } from '../../components/ui/Icon'
+import QualityStrip from '../../components/QualityStrip'
+import QaChainTable, { DataTable } from '../../components/QaChainTable'
 
 export const revalidate = 3600
 
 export const metadata = {
   title: 'Products — Egyptian Commodity Exporter',
   description:
-    'Salt, fertilizers, construction materials, chemicals, industrial minerals, agro & food, metals — 7 commodity divisions exported FOB / CIF / CFR from 7 Egyptian seaports to 60+ markets.',
+    'Salt, fertilizers, construction materials, chemicals, industrial minerals, agro & food, metals — 7 commodity divisions, every lot laboratory-verified before B/L, exported FOB / CIF / CFR from 7 Egyptian seaports to 60+ markets with TÜV Austria / SGS / Intertek / BV inspection.',
 }
 
 const INCOTERMS = [
@@ -32,6 +34,16 @@ const PORTS = [
   { name: 'Ain Sokhna',     code: 'EGSOK', note: 'Minerals & fertilizers' },
   { name: 'Al-Arish',       code: 'EGEAR', note: 'Sinai sea salt' },
   { name: 'Suez',           code: 'EGPSD', note: 'Red Sea lane entry' },
+]
+
+const QA_MATRIX = [
+  [<Link key="s" href="/products/salt" className="egg-link">Salt</Link>, 'Siwa rock ≥ 97 % NaCl · Sinai sea raw / washed / double-washed · de-icing, industrial, food, pharma', 'EN 16811-1 · ASTM D632 · BS 3247 · GOST 13830 · Codex STAN 150 · USP / BP / EP', 'CoA: NaCl, Ca, Mg, SO₄, insolubles, moisture, sieve', 'TÜV Austria · SGS · Intertek · BV'],
+  [<Link key="c" href="/products/construction" className="egg-link">Construction</Link>, 'CEM I 42.5N / 52.5N · CEM II · SRC · white cement · clinker · gypsum · limestone', 'EN 197-1 · ASTM C150 · EN 13279-1 · EN 12620', 'Mill Test Certificate: Blaine, SO₃, MgO, LOI, C₃A, 2 / 28-day strength', 'TÜV Austria · SGS · BV'],
+  [<Link key="f" href="/products/fertilizers" className="egg-link">Fertilizers</Link>, 'Granular / prilled urea 46 % N · DAP 18-46-0 · MAP · NPK · MOP · SOP · sulphur', 'ISO 8633 sampling · EU 2019/1009 · IFA documentation', 'CoA: N / P₂O₅ / K₂O, biuret, moisture, granulometry', 'SGS · Intertek · BV'],
+  [<Link key="ch" href="/products/chemicals" className="egg-link">Chemicals</Link>, 'Caustic soda · soda ash · sulphuric acid · methanol · PVC · water-treatment chemicals', 'REACH · CLP SDS · product standards (ASTM / ISO)', 'CoA: assay, impurity profile; SDS; UN packaging', 'SGS · Intertek · BV'],
+  [<Link key="m" href="/products/minerals" className="egg-link">Industrial Minerals</Link>, 'Silica sand · kaolin · barite · feldspar · talc · bentonite · iron ore · magnetite', 'ISO 3082 / ISO 12743 sampling · API 13A (barite)', 'CoA: assay (SiO₂, Fe₂O₃, Al₂O₃, BaSO₄, Fe), moisture, sizing, LOI', 'SGS · BV · Intertek'],
+  [<Link key="mt" href="/products/metals" className="egg-link">Metals &amp; Alloys</Link>, 'Rebar B500B / ASTM A615 · HRC / CRC · billets · aluminium · copper · ferro-alloys', 'EN 10204 3.1 · EN 10025 · ASTM A615 / A36', 'Mill certificate: chemistry, yield, tensile, elongation; heat-number traceability', 'SGS · BV · TÜV Austria'],
+  [<Link key="a" href="/products/agro" className="egg-link">Agro &amp; Food</Link>, 'Citrus · onions · potatoes · garlic · dates · sugar · edible oils · grains · pulses', 'GlobalG.A.P. · EU 2019/2072 · Codex · ISO 22000', 'CoA + phytosanitary certificate: sizing, Brix / dry matter, MRL, pulp temperature log', 'SGS · Intertek · CAPQ'],
 ]
 
 const CERTS = [
@@ -60,12 +72,14 @@ export default function ProductsHub() {
           </p>
           <h1 className="egg-display text-[clamp(2.2rem,5.5vw,4.4rem)] leading-[1.02] mb-5 text-[#14161a]">
             Egyptian commodities,<br />
-            <span className="italic text-[#0b8f84]">shipped on your terms.</span>
+            <span className="italic text-[#0b8f84]">certified before they ship.</span>
           </h1>
           <p className="text-base sm:text-lg text-[#3f4650] leading-relaxed mb-8">
-            Salt, cement, fertilizers, chemicals, industrial minerals, agro & food,
-            and metals — sourced from Egyptian capacity and shipped FOB / CIF / CFR
-            from 7 Egyptian seaports. Every shipment with a Certificate of Analysis.
+            Salt, cement &amp; clinker, fertilizers, chemicals, industrial minerals, agro &amp; food
+            and metals — sourced from Egyptian capacity under one QA system and shipped FOB / CIF /
+            CFR from 7 Egyptian seaports. Every lot is tested at the port laboratory and released
+            on a Certificate of Analysis or Mill Test Certificate before the Bill of Lading; a lot
+            outside specification is rejected at the port, never renegotiated.
           </p>
           <div className="flex flex-wrap items-center gap-4">
             <Link href="/rfq"
@@ -110,6 +124,24 @@ export default function ProductsHub() {
               </div>
             </Link>
           ))}
+        </div>
+      </section>
+
+      {/* ── Quality at the Core ──────────────────────────────────── */}
+      <QualityStrip />
+
+      {/* ── Division QA matrix ───────────────────────────────────── */}
+      <section className="border-b border-[#14161a]/10 egg-reveal">
+        <div className="px-5 sm:px-8 lg:px-14 py-10 space-y-6">
+          <p className="egg-eyebrow text-[#0b8f84]">Verification by division</p>
+          <DataTable
+            title="What is tested, to which standard, and what evidence ships with the cargo"
+            icon="shield"
+            head={['Division', 'Flagship grades', 'Governing standards', 'Per-lot evidence', 'Independent inspection']}
+            rows={QA_MATRIX}
+            note="Independent pre-shipment inspection is available on every consignment and mandatory for L/C-financed shipments and destination conformity programmes (SASO / SABER, KEBS PVoC, SONCAP, BIS, GACC). Typical cost 0.3–0.5 % of FOB value."
+          />
+          <QaChainTable />
         </div>
       </section>
 
@@ -182,12 +214,12 @@ export default function ProductsHub() {
         <div className="relative max-w-2xl">
           <p className="egg-eyebrow text-[#d9501a] mb-8">Get a price</p>
           <h2 className="egg-display text-3xl sm:text-4xl lg:text-5xl mb-4 text-[#14161a]">
-            Know your commodity. Need a price?
+            Know your specification. Need a certified price?
           </h2>
           <p className="text-[#3f4650] text-base mb-10 leading-relaxed">
-            Submit an RFQ with your commodity, quantity, destination port and preferred
-            Incoterm. We respond within 24 hours with a priced offer, Certificate of
-            Analysis, and L/C documentation.
+            Submit an RFQ with your commodity, specification, quantity, destination port and preferred
+            Incoterm. We respond within 24 hours with a priced offer, a sample Certificate of Analysis,
+            the applicable inspection protocol and the L/C document set.
           </p>
           <div className="flex flex-col sm:flex-row gap-5 items-start">
             <Link href="/rfq"

@@ -93,10 +93,10 @@ export default async function RFQPage({ searchParams }) {
               <ol className="space-y-3 text-sm">
                 {[
                   ['Within 1 hour', 'Your RFQ is logged + assigned to a commodity owner.'],
-                  ['Within 24 hours', 'You receive a priced offer (FOB / CIF / CFR) by email.'],
+                  ['Within 24 hours', 'You receive a priced FOB / CIF / CFR offer, a sample Certificate of Analysis and the inspection protocol by email.'],
                   ['On acceptance', 'We open a proforma invoice + L/C bank-set process.'],
                   ['Pre-shipment', 'PSI inspection (TÜV Austria / SGS / Intertek / BV) on request.'],
-                  ['On loading', 'Full L/C document set + Bill of Lading delivered.'],
+                  ['On loading', 'Port-laboratory CoA issued before the B/L; full L/C document set delivered. Out-of-spec lots never load.'],
                 ].map(([when, what], i) => (
                   <li key={i} className="flex gap-3">
                     <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#0b8f84] text-white text-xs font-bold flex items-center justify-center mt-0.5">
