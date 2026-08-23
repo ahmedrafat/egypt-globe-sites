@@ -801,6 +801,16 @@
       "source": "/trade-tools/import-guides/italy-2026",
       "destination": "/trade-tools/import-guides/italy",
       "permanent": true
+    },
+    {
+      "source": "/products/cement",
+      "destination": "/products/construction/cement-and-clinker",
+      "permanent": true
+    },
+    {
+      "source": "/products/cement/:rest+",
+      "destination": "/products/construction/cement-and-clinker",
+      "permanent": true
     }
   ]
 }

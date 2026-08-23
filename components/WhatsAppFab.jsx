@@ -31,7 +31,7 @@ export default function WhatsAppFab({ url, label = 'Chat on WhatsApp' }) {
         </svg>
       </span>
       {/* Tooltip — desktop only (touch screens can't hover) */}
-      <span className="hidden md:block absolute right-full top-1/2 -translate-y-1/2 mr-3 px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg">
+      <span className="hidden md:block absolute right-full top-1/2 -translate-y-1/2 mr-3 px-3 py-1.5 bg-[#14161a] text-white text-xs font-semibold rounded-lg ring-1 ring-white/10 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg">
         {label}
       </span>
     </a>
