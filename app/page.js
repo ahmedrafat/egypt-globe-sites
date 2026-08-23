@@ -237,7 +237,24 @@ const QA_CHAIN = [
   ['5', 'Destination acceptance',   'CoA cross-referenced with the buyer’s arrival laboratory; retained samples arbitrate disputes', 'Buyer lab · on discharge'],
 ]
 
-const STEP_LABELS = ['Siwa', 'Sinai', 'Ports', 'QA chain', 'Quote']
+/* Global export map — Egyptian hub and the destination clusters it serves.
+   Coordinates are laid out on the 900x480 arc canvas cropped by the viewBox
+   in PanelGlobal. Recovered from the scrollytelling landing (cfc84d7); the
+   Quality-at-the-Core rewrite (be002aa) had dropped the whole scene. */
+const HUB = { x: 527, y: 160 }
+const DESTINATIONS = [
+  { x: 461, y: 104, market: 'North Europe',  use: 'chlor-alkali · PVC',   appId: 'industrial_chemistry' },
+  { x: 468, y: 66,  market: 'UK & Nordics',  use: 'road management',      appId: 'deicing' },
+  { x: 265, y: 133, market: 'North America', use: 'de-icing · ASTM D632', appId: 'deicing' },
+  { x: 342, y: 301, market: 'South America', use: 'water treatment',      appId: 'water_treatment' },
+  { x: 565, y: 176, market: 'Gulf',          use: 'desalination · water', appId: 'water_treatment' },
+  { x: 655, y: 214, market: 'India',         use: 'chlor-alkali plants',  appId: 'industrial_chemistry' },
+  { x: 549, y: 251, market: 'East Africa',   use: 'industrial · food',    appId: 'food_processing' },
+  { x: 459, y: 223, market: 'West Africa',   use: 'water treatment',      appId: 'water_treatment' },
+  { x: 752, y: 157, market: 'Far East',      use: 'industrial chemistry', appId: 'industrial_chemistry' },
+]
+
+const STEP_LABELS = ['Siwa', 'Sinai', 'Ports', 'Export', 'QA chain', 'Quote']
 
 const byId = (list, id) => list.find(x => x.id === id)
 const svc = id => byId(SERVICE_DIVISIONS, id)
@@ -418,6 +435,7 @@ export default async function HomePage() {
               <PanelSiwa />
               <PanelSinai />
               <PanelLogistics />
+              <PanelGlobal />
               <PanelQaChain />
               <PanelDesk email={email} phone={phone} phoneE164={phoneE164} />
 
@@ -547,8 +565,41 @@ export default async function HomePage() {
               ]} />
             </article>
 
-            {/* STEP 4 — QA chain to destination */}
+            {/* STEP 4 — global export map */}
             <article data-step="3" className="egg-step">
+              <Eyebrow n="04" tone={C.oceanText}>Export · 60+ destination markets</Eyebrow>
+              <h2 data-rise className={`${display.className} egg-h2`}>
+                One corridor out of Egypt, <span className="italic text-[#0369a1]">into every industry that buys it</span>.
+              </h2>
+              <p data-rise className="egg-p">
+                What leaves an Egyptian berth is not a commodity in the abstract — it is feedstock for a
+                named plant. Sea and rock salt move to{' '}
+                <Link href={app('industrial_chemistry').path} className="egg-inline">{app('industrial_chemistry').label}</Link>{' '}
+                buyers running chlor-alkali and PVC lines in North Europe, India and the Far East; to{' '}
+                <Link href={app('water_treatment').path} className="egg-inline">{app('water_treatment').label}</Link>{' '}
+                operators across the Gulf, West Africa and South America; and to{' '}
+                <Link href={app('deicing').path} className="egg-inline">{app('deicing').label}</Link>{' '}
+                fleets in the UK, the Nordics and North America tendering against EN 16811-1 and ASTM D632.
+                Cement, fertilizers and industrial minerals follow the same lanes and the same document set.
+                Select any destination on the map to see the specification that market tenders against.
+              </p>
+              <div data-rise className="egg-nodes">
+                {['industrial_chemistry', 'water_treatment', 'deicing', 'food_processing'].map(id => {
+                  const a = app(id)
+                  return a ? <Node key={id} href={a.path} tone={C.ocean}>{a.label}</Node> : null
+                })}
+                <Node href="/applications" tone={C.ocean}>All applications →</Node>
+                <Node href="/global-presence" tone={C.ocean}>Global presence →</Node>
+              </div>
+              <Facts data-rise items={[
+                ['60+', 'destination markets served'],
+                ['FOB / CIF / CFR', 'from 7 Egyptian ports'],
+                ['24 h', 'quote turnaround, any lane'],
+              ]} />
+            </article>
+
+            {/* STEP 5 — QA chain to destination */}
+            <article data-step="4" className="egg-step">
               <Eyebrow n="04" tone={C.oceanText}>Export · uncompromising QA verification to the destination port</Eyebrow>
               <h2 data-rise className={`${display.className} egg-h2`}>
                 Five verification gates between the mine face <span className="italic text-[#0369a1]">and the buyer&rsquo;s arrival lab</span>.
@@ -587,7 +638,7 @@ export default async function HomePage() {
             </article>
 
             {/* STEP 5 — Request a quote */}
-            <article data-step="4" id="quote" className="egg-step scroll-mt-24">
+            <article data-step="5" id="quote" className="egg-step scroll-mt-24">
               <Eyebrow n="05" tone={C.orangeText}>Request a quote · your verified, long-term supply-chain ally</Eyebrow>
               <h2 data-rise className={`${display.className} egg-h2`}>
                 Tell us the tonnage and the specification. <span className="italic text-[#d9501a]">We price it, and certify it, by tomorrow.</span>
@@ -898,9 +949,89 @@ function PanelLogistics() {
   )
 }
 
+/* Global export map — restored Aug 2026.
+   Interactive: every destination cluster is a link to the application
+   landing it buys for. Uses <g data-href> rather than SVG <a> — the init
+   script delegates click/Enter — because Cloudflare's email-decode script
+   walks document anchors and throws on an SVGAnimatedString href (the bug
+   fixed in 79c31e1). Arcs carry data-draw and nodes data-pop so GSAP
+   animates them in exactly like the other scenes. */
+function PanelGlobal() {
+  return (
+    <div data-scene="3" className="egg-scene">
+      <div className="absolute inset-0 egg-grid-light opacity-40" aria-hidden="true" />
+      <svg
+        className="absolute inset-0 w-full h-full p-4 sm:p-6 text-[#14161a]"
+        viewBox="120 30 740 310" preserveAspectRatio="xMidYMid meet" role="img"
+        aria-label="Export arcs from the Egyptian hub to chemical, water-treatment, food and road-management buyers in Europe, the Americas, the Gulf, India, Africa and the Far East"
+      >
+        {/* graticule — the same hairline weight as the Egypt map */}
+        {Array.from({ length: 9 }).map((_, i) => (
+          <line key={`v${i}`} x1={i * 112.5} y1="0" x2={i * 112.5} y2="480" stroke="currentColor" strokeOpacity="0.08" />
+        ))}
+        {Array.from({ length: 5 }).map((_, i) => (
+          <line key={`h${i}`} x1="0" y1={i * 120} x2="900" y2={i * 120} stroke="currentColor" strokeOpacity="0.08" />
+        ))}
+        <ellipse cx="450" cy="240" rx="440" ry="225" fill="none" stroke="currentColor" strokeOpacity="0.18" strokeDasharray="3 9" />
+
+        {/* great-circle-ish arcs out of the hub */}
+        {DESTINATIONS.map((d, i) => {
+          const cx = (HUB.x + d.x) / 2
+          const cy = Math.min(HUB.y, d.y) - 55 - Math.abs(HUB.x - d.x) * 0.12
+          return (
+            <path key={i} data-draw d={`M${HUB.x} ${HUB.y} Q ${cx} ${cy} ${d.x} ${d.y}`}
+              fill="none" stroke="currentColor" strokeOpacity="0.55" strokeWidth="1.1" strokeLinecap="round" />
+          )
+        })}
+
+        {/* Egyptian hub */}
+        <g data-pop>
+          <circle cx={HUB.x} cy={HUB.y} r="15" fill="none" stroke="#ff6321" strokeOpacity="0.35" strokeWidth="0.9" />
+          <circle cx={HUB.x} cy={HUB.y} r="5.5" fill="#ff6321" />
+          <circle cx={HUB.x} cy={HUB.y} r="2" fill="#ffffff" />
+          <text x={HUB.x - 14} y={HUB.y + 28} textAnchor="end" className="egg-maptext" fill="#d9501a">EGYPT · SUEZ CORRIDOR</text>
+        </g>
+
+        {/* destination clusters — each navigates to its application landing */}
+        {DESTINATIONS.map((d, i) => {
+          const a = app(d.appId)
+          // Label runs left of the node when the node sits left of the hub, and
+          // also near the right edge of the cropped viewBox (x 120→860) so a long
+          // use-case string like "industrial chemistry" can't clip off-canvas.
+          const left = d.x < HUB.x - 40 || d.x > 690
+          return (
+            <g key={i} data-href={a?.path || '/applications'} data-pop role="link" tabIndex={0}
+              className="egg-port" aria-label={`${d.market} — ${d.use}`}>
+              <circle cx={d.x} cy={d.y} r="9" fill="none" stroke="currentColor" strokeOpacity="0.35" strokeWidth="0.8" />
+              <circle cx={d.x} cy={d.y} r="3.5" fill="currentColor" />
+              <text x={d.x + (left ? -12 : 12)} y={d.y - 4} textAnchor={left ? 'end' : 'start'} className="egg-maptext egg-maptext--port">{d.market}</text>
+              <text x={d.x + (left ? -12 : 12)} y={d.y + 11} textAnchor={left ? 'end' : 'start'} className="egg-maptext">{d.use}</text>
+            </g>
+          )
+        })}
+      </svg>
+
+      <div className="absolute left-3 right-3 bottom-3 sm:left-5 sm:right-auto sm:bottom-5 z-20 max-w-[92%] rounded-xl sm:rounded-2xl bg-white/92 backdrop-blur ring-1 ring-[#14161a]/10 shadow-[0_12px_30px_-18px_rgba(20,22,26,.45)] px-3.5 py-2.5 sm:px-4 sm:py-3">
+        <p className="text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.24em]" style={{ color: C.oceanText }}>Global export · 60+ destination markets · FOB / CIF / CFR</p>
+        <p className="text-sm sm:text-base text-[#14161a] mt-0.5 leading-tight">Chemical · water treatment · road management</p>
+        <div className="hidden sm:flex flex-wrap gap-1.5 mt-2">
+          {['industrial_chemistry', 'water_treatment', 'deicing', 'food_processing'].map(id => {
+            const a = app(id)
+            return a ? (
+              <Link key={id} href={a.path} className="text-[10px] font-mono uppercase tracking-[0.12em] px-2 py-1 rounded-md ring-1 ring-[#14161a]/15 text-[#3f4650] hover:text-[#14161a] hover:ring-[#14161a]/40 bg-white transition-colors">
+                {a.label}
+              </Link>
+            ) : null
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function PanelQaChain() {
   return (
-    <DataPanel index={3} kicker="QA verification chain · extraction to destination port" title="Five gates, every consignment, every division" tone={C.oceanText} icon="shield"
+    <DataPanel index={4} kicker="QA verification chain · extraction to destination port" title="Five gates, every consignment, every division" tone={C.oceanText} icon="shield"
       chips={[[app('industrial_chemistry').label, app('industrial_chemistry').path], [app('water_treatment').label, app('water_treatment').path], [app('deicing').label, app('deicing').path], ['Inspection & QC', svc('inspection').path]]}>
       <table className="egg-table w-full text-left">
         <caption className="sr-only">QA verification chain</caption>
@@ -940,7 +1071,7 @@ function PanelDesk({ email, phone, phoneE164 }) {
     ['Then',     'Documents & loading',     'L/C-bank set · EUR.1 / COO · SGS / TÜV / Intertek / BV at berth'],
   ]
   return (
-    <div data-scene="4" className="egg-scene">
+    <div data-scene="5" className="egg-scene">
       <div className="absolute inset-0 egg-grid-light opacity-40" aria-hidden="true" />
       <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-8">
         <div className="w-full max-w-md rounded-2xl ring-1 ring-[#14161a]/10 bg-white p-4 sm:p-6 shadow-[0_20px_50px_-30px_rgba(20,22,26,.4)]">
