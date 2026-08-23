@@ -984,8 +984,15 @@ function PanelGlobal() {
           )
         })}
 
-        {/* Egyptian hub */}
+        {/* Egyptian hub — the soft glow pulses, as it did on the original scene */}
+        <defs>
+          <radialGradient id="egg-hub-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#ff6321" stopOpacity="0.55" />
+            <stop offset="100%" stopColor="#ff6321" stopOpacity="0" />
+          </radialGradient>
+        </defs>
         <g data-pop>
+          <circle cx={HUB.x} cy={HUB.y} r="30" fill="url(#egg-hub-glow)" className="egg-pulse" />
           <circle cx={HUB.x} cy={HUB.y} r="15" fill="none" stroke="#ff6321" strokeOpacity="0.35" strokeWidth="0.9" />
           <circle cx={HUB.x} cy={HUB.y} r="5.5" fill="#ff6321" />
           <circle cx={HUB.x} cy={HUB.y} r="2" fill="#ffffff" />
@@ -1243,9 +1250,13 @@ const SCOPED_CSS = `
 .egg-form.is-done [data-rfq-fields],.egg-form.is-done [data-rfq-actions]{display:none}
 .egg-form.is-done [data-rfq-success]{display:block}
 
+.egg-pulse{transform-box:fill-box;transform-origin:center;animation:eggPulse 2.4s ease-out infinite}
+@keyframes eggPulse{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.6);opacity:0}}
+.egg-scene:not(.is-active) .egg-pulse{animation-play-state:paused}
+
 @media (prefers-reduced-motion:reduce){
   .egg-rise{animation:none;opacity:1;transform:none}
-  .egg-marquee,.egg-bounce,.egg-compass{animation:none!important}
+  .egg-marquee,.egg-bounce,.egg-compass,.egg-pulse{animation:none!important}
 }
 `
 
