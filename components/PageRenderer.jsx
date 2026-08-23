@@ -84,49 +84,54 @@ export default async function PageRenderer({ page }) {
                             && PRODUCT_DIVISIONS.some(d => page.path.startsWith(d.path + '/'))
                             && !page.commodity_id
 
-  const directChildren = !isProductsHub && !isServicesHub && !isApplicationsHub && !isApplicationLanding && !isDivisionLanding && !isSubcategoryLanding
-    ? await getDirectChildren(page.path)
-    : []
-  const divisionPages = isDivisionLanding
-    ? await getPagesInCategory(division.id, { excludePath: page.path })
-    : []
-  const divisionSubcats = isDivisionLanding
-    ? await getDivisionSubcategories(page.path)
-    : []
+  // These reads are independent of one another and were previously awaited
+  // one after another — up to a dozen sequential Supabase round-trips per
+  // render, which showed up as a p75 TTFB of 1,111 ms in field data (79 %
+  // of LCP). They now run concurrently; only `brand` genuinely depends on
+  // `commodity`, so it stays in a second wave. Semantics are unchanged:
+  // each entry keeps its original condition and its original fallback.
+  const isPackingService = page.path === '/services/packing'
+
+  const [
+    directChildren,
+    divisionPages,
+    divisionSubcats,
+    subcategoryProducts,
+    applicationProducts,
+    related,
+    commodity,
+    qualitySpecs,
+    coas,
+    packingOptions,
+    visibility,
+  ] = await Promise.all([
+    !isProductsHub && !isServicesHub && !isApplicationsHub && !isApplicationLanding && !isDivisionLanding && !isSubcategoryLanding
+      ? getDirectChildren(page.path) : [],
+    isDivisionLanding ? getPagesInCategory(division.id, { excludePath: page.path }) : [],
+    isDivisionLanding ? getDivisionSubcategories(page.path) : [],
+    isSubcategoryLanding ? getDirectChildren(page.path) : [],
+    isApplicationLanding ? getPagesForApplication(applicationId) : [],
+    getRelatedPages(page, 4),
+    // Drop 137b — quality_specs reference (one row per QC parameter).
+    // Drop 146 — all active CoAs per market region for the Certificates section.
+    page.commodity_id ? getCommodityById(page.commodity_id) : null,
+    page.commodity_id ? getQualitySpecsForCommodity(page.commodity_id) : [],
+    page.commodity_id ? getCommodityCoas(page.commodity_id) : [],
+    // Drop 141/143 — comprehensive packing matrix scoped to this category,
+    // also on the dedicated /services/packing page.
+    (page.commodity_id || isPackingService)
+      ? getPackingOptions(isPackingService ? null : page.category) : [],
+    getBuyerVisibility(),
+  ])
+
   // SKU pages = division pages with commodity_id (excluding sub-cat landings)
   const divisionSkus = (divisionPages || []).filter(p =>
     p.path.split('/').filter(Boolean).length >= 4
   )
-  const subcategoryProducts = isSubcategoryLanding
-    ? await getDirectChildren(page.path)
-    : []
-  const applicationProducts = isApplicationLanding
-    ? await getPagesForApplication(applicationId)
-    : []
-  const related = await getRelatedPages(page, 4)
 
-  const commodity = page.commodity_id ? await getCommodityById(page.commodity_id) : null
-  // Drop 137b — fetch quality_specs reference for the commodity (one row
-  // per QC parameter with target / test method / standard / cert body).
-  const qualitySpecs = page.commodity_id ? await getQualitySpecsForCommodity(page.commodity_id) : []
-  // Drop 146 — fetch all active CoAs per market region for the new
-  // Certificates tab in ProductTabs.
-  const coas = page.commodity_id ? await getCommodityCoas(page.commodity_id) : []
-  // Drop 158 — resolve the brand letterhead for this commodity (Pelot Salt /
-  // EGG Cement / EGG Chemicals / etc.) so the CoA print uses the right
-  // logo / colours / contact / signatures / footer disclaimer.
+  // Drop 158 — brand letterhead for this commodity (Pelot Salt / EGG Cement
+  // / …) so the CoA print uses the right logo, colours and signatures.
   const brand = commodity ? await getBrandForCommodity(commodity) : null
-  // Drop 141 — pull comprehensive packing matrix from globe_packing_options
-  // scoped to this product's category (cement/salt/fertilizers/etc.). The
-  // PackingMatrix component shows all formats inc. PE bags / OEM / bag-in-jumbo
-  // even when the product's own packing_options array is sparse.
-  // Drop 143 — also fetch packing options on the dedicated /services/packing
-  // page so the editorial body sits above the comprehensive PackingMatrix.
-  const isPackingService = page.path === '/services/packing'
-  const packingOptions = (page.commodity_id || isPackingService)
-    ? await getPackingOptions(isPackingService ? null : page.category)
-    : []
-  const visibility = await getBuyerVisibility()
 
   // Approved buyers with scoped access who navigate to a SKU outside
   // their scope see a soft access-denied panel instead of the page
