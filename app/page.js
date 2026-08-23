@@ -864,12 +864,15 @@ function PanelLogistics() {
           <text x="372" y="92" className="egg-maptext">CAIRO HQ</text>
         </g>
         {/* ports — each is a link */}
+        {/* port nodes — <g data-href> (not SVG <a>) so third-party scripts that
+            iterate document anchors never meet an SVGAnimatedString href;
+            the init script delegates click / Enter to a real navigation */}
         {PORTS.map(p => (
-          <a key={p.id} href={p.path} data-pop className="egg-port">
+          <g key={p.id} data-href={p.path} data-pop role="link" tabIndex={0} className="egg-port" aria-label={`${p.name} port`}>
             <circle cx={p.x} cy={p.y} r="5.5" fill="#ffffff" stroke="currentColor" strokeWidth="1.4" />
             <circle cx={p.x} cy={p.y} r="2" fill="currentColor" />
             <text x={p.x + p.lx} y={p.y + p.ly} textAnchor={p.anchor} className="egg-maptext egg-maptext--port">{p.name}</text>
-          </a>
+          </g>
         ))}
       </svg>
       <div className="absolute left-3 right-3 bottom-3 sm:left-5 sm:right-auto sm:bottom-5 z-20 max-w-[92%] rounded-xl sm:rounded-2xl bg-white/92 backdrop-blur ring-1 ring-[#14161a]/10 shadow-[0_12px_30px_-18px_rgba(20,22,26,.45)] px-3.5 py-2.5 sm:px-4 sm:py-3">
@@ -1065,7 +1068,7 @@ const SCOPED_CSS = `
 .egg-table th,.egg-table td{white-space:normal}
 .egg-maptext{font-family:var(--font-geist-mono),ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:.14em;fill:currentColor;fill-opacity:.75;paint-order:stroke fill;stroke:rgba(255,255,255,.9);stroke-width:3px;stroke-linejoin:round}
 .egg-maptext--port{font-size:11.5px;letter-spacing:.04em;font-weight:600;fill-opacity:1}
-.egg-port{cursor:pointer}.egg-port:hover text{fill:#ff6321;fill-opacity:1}.egg-port:hover circle{stroke:#ff6321}
+.egg-port{cursor:pointer;outline:none}.egg-port:focus-visible circle{stroke:#ff6321}.egg-port:hover text{fill:#ff6321;fill-opacity:1}.egg-port:hover circle{stroke:#ff6321}
 
 /* progress rail */
 .egg-dot{display:inline-block;width:7px;height:7px;border-radius:999px;background:rgba(20,22,26,.18);transition:all .35s cubic-bezier(.2,.7,.2,1)}
@@ -1301,6 +1304,17 @@ const INIT_SCRIPT = String.raw`
     root.__eggCtx = ctx;
     show(0);
     setupForm(root);
+
+    // Delegated navigation for SVG map nodes marked data-href (see PanelLogistics).
+    root.addEventListener('click', function (e) {
+      var g = e.target && e.target.closest ? e.target.closest('[data-href]') : null;
+      if (g) { e.preventDefault(); window.location.assign(g.getAttribute('data-href')); }
+    });
+    root.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var g = e.target && e.target.closest ? e.target.closest('[data-href]') : null;
+      if (g) { e.preventDefault(); window.location.assign(g.getAttribute('data-href')); }
+    });
 
     // Re-sync the visual panel to whichever step the viewport is in (same
     // 62% line as the triggers). ScrollTrigger.refresh() corrects positions
