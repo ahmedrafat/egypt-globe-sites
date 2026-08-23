@@ -120,6 +120,8 @@ export default function SiteFooter({ settings }) {
                 ['/blog', 'News & Blog'],
                 ['/global-presence', 'Global Presence'],
                 ['/partners', 'Partners'],
+                ['/investors', 'Investors'],
+                ['/faq', 'FAQ'],
                 ['/trade-tools/hs-codes', 'HS Code Library'],
                 ['/trade-tools/incoterms-2020', 'Incoterms 2020'],
                 ['/trade-tools/vessel-sizes', 'Vessel Sizes'],
@@ -197,6 +199,7 @@ export default function SiteFooter({ settings }) {
             <Link href="/contact" className="hover:text-[#14161a] transition-colors">Contact</Link>
             <Link href="/rfq" className="hover:text-[#14161a] transition-colors">RFQ</Link>
             <Link href="/about/quality-compliance" className="hover:text-[#14161a] transition-colors">Quality</Link>
+            <Link href="/cookies-policy" className="hover:text-[#14161a] transition-colors">Cookies</Link>
             {s.linkedin && (
               <a href={s.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-[#14161a] transition-colors">
                 LinkedIn
