@@ -5,6 +5,7 @@
  * otherwise renders a "Sign in to see price" placeholder linking to /login.
  */
 import Link from 'next/link'
+import Icon from './ui/Icon'
 
 export default function PriceDisplay({ price, visibility, size = 'md', placeholder = null }) {
   if (!price) return null
@@ -22,7 +23,7 @@ export default function PriceDisplay({ price, visibility, size = 'md', placehold
     : 'inline-flex items-center gap-1 text-[11px] font-semibold text-slate-400 hover:text-[#1d5fa1] transition-colors'
   return (
     <Link href="/login" className={cls}>
-      🔒 {placeholderText}
+      <Icon name="lock" className="w-3.5 h-3.5" /> {placeholderText}
     </Link>
   )
 }

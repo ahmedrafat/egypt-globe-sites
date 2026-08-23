@@ -16,6 +16,7 @@ import Link from 'next/link'
 import { APPLICATIONS } from '../lib/corporatePages'
 import PriceDisplay from './PriceDisplay'
 import PackingMatrix from './PackingMatrix'
+import Icon, { APPLICATION_ICON } from './ui/Icon'
 
 const SPEC_LABELS = {
   // Salt
@@ -134,7 +135,7 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
             <div className="egg-card overflow-hidden hover:transform-none">
               <div className="px-6 py-4 border-b border-[#14161a]/10 bg-[#f9fafb] flex items-center justify-between">
                 <h2 className="font-semibold text-lg text-[#14161a] flex items-center gap-2">
-                  <span className="text-xl">🧪</span> Product Specifications
+                  <span className="text-xl"><Icon name="beaker" className="w-3.5 h-3.5" /></span> Product Specifications
                 </h2>
                 <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-[#7a8290]">{specEntries.length} parameters</span>
               </div>
@@ -175,7 +176,7 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
               {page.datasheet_url && (
                 <a href={page.datasheet_url} target="_blank" rel="noopener noreferrer"
                   className="block px-6 py-3 bg-[#f2fbfa] border-t border-[#0fb5a5]/30 text-sm font-semibold text-[#0b8f84] hover:bg-[#e6f8f6] transition-colors">
-                  📄 Download Technical Data Sheet (PDF) →
+                  <Icon name="doc" className="w-3.5 h-3.5" /> Download Technical Data Sheet (PDF) →
                 </a>
               )}
             </div>
@@ -185,15 +186,13 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
           {apps.length > 0 && (
             <div className="egg-card p-6 hover:transform-none">
               <h2 className="font-semibold text-lg text-[#14161a] mb-4 flex items-center gap-2">
-                <span className="text-xl">🏭</span> Applications
+                <span className="text-xl"><Icon name="factory" className="w-3.5 h-3.5" /></span> Applications
               </h2>
               <div className="grid sm:grid-cols-2 gap-3">
                 {apps.map(app => (
                   <Link key={app.id} href={app.path}
                     className="flex items-center gap-3 p-3 rounded-xl ring-1 ring-[#14161a]/10 hover:ring-[#7c3aed]/50 hover:bg-[#f9fafb] transition-all group">
-                    <div className="w-11 h-11 rounded-xl flex items-center justify-center text-2xl bg-[#f3f0ff] ring-1 ring-[#7c3aed]/25">
-                      {app.icon}
-                    </div>
+                    <div className="w-11 h-11 rounded-xl flex items-center justify-center ring-1 ring-[#14161a]/15 text-[#14161a]"><Icon name={APPLICATION_ICON[app.id] || 'factory'} className="w-5 h-5" /></div>
                     <div className="flex-1 min-w-0">
                       <div className="font-semibold text-[#14161a] text-sm group-hover:text-[#0b8f84] transition-colors">{app.label}</div>
                       <div className="text-xs text-[#7a8290]">View matching products →</div>
@@ -222,7 +221,7 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
                 {loadingPorts.length > 0 && (
                   <div>
                     <h3 className="font-semibold text-[#14161a] text-sm mb-2 flex items-center gap-1.5">
-                      <span className="text-lg">⚓</span> Loads from
+                      <span className="text-lg"><Icon name="anchor" className="w-3.5 h-3.5" /></span> Loads from
                     </h3>
                     <div className="flex flex-wrap gap-1.5">
                       {loadingPorts.map(p => (
@@ -244,7 +243,7 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
                 {regions.length > 0 && (
                   <div>
                     <h3 className="font-semibold text-[#14161a] text-sm mb-2 flex items-center gap-1.5">
-                      <span className="text-lg">🌍</span> Ships to
+                      <span className="text-lg"><Icon name="globe" className="w-3.5 h-3.5" /></span> Ships to
                     </h3>
                     <div className="flex flex-wrap gap-1.5">
                       {regions.map(r => (
@@ -280,16 +279,16 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
               </p>
               <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
                 className="egg-btn-primary w-full">
-                📋 Get Quote
+                Get Quote
               </Link>
               <div className="grid grid-cols-2 gap-2 mt-2">
                 <Link href={`/tds${page.path}`} target="_blank"
                   className="egg-btn-ghost text-xs py-2.5 px-2">
-                  📄 Download TDS
+                  <Icon name="doc" className="w-3.5 h-3.5" /> Download TDS
                 </Link>
                 <Link href={`/rfq?product=${encodeURIComponent(page.path)}&type=coa`}
                   className="egg-btn-ghost text-xs py-2.5 px-2">
-                  🧪 Request COA
+                  <Icon name="beaker" className="w-3.5 h-3.5" /> Request COA
                 </Link>
               </div>
               <p className="text-[#7a8290] text-xs text-center mt-3">24-hour response · No spam</p>
@@ -303,7 +302,7 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
                 ? { background: 'linear-gradient(160deg, #fbf3e3 0%, #f6e7c8 100%)', '--tw-ring-color': 'rgba(184,134,43,.35)' }
                 : { background: 'linear-gradient(160deg, #e6fbf8 0%, #c9f3ee 100%)', '--tw-ring-color': 'rgba(15,181,165,.4)' }}>
               <div className="flex items-center gap-2 mb-3">
-                <span className="text-xl">{isRock ? '⛏️' : '🌊'}</span>
+                <Icon name={isRock ? 'pickaxe' : 'wave'} className="w-5 h-5" />
                 <h3 className="font-semibold text-base text-[#14161a]">{isRock ? 'Rock Salt Origin' : 'Sea Salt Origin'}</h3>
               </div>
               <p className="text-xs leading-relaxed text-[#3f4650]">
@@ -323,7 +322,7 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
           {certifications.length > 0 && (
             <div className="egg-card p-5 hover:transform-none">
               <h3 className="font-semibold text-[#14161a] text-sm mb-3 flex items-center gap-1.5">
-                <span className="text-base">🏅</span> Certifications & Standards
+                <span className="text-base"><Icon name="shield" className="w-3.5 h-3.5" /></span> Certifications & Standards
               </h3>
               <ul className="space-y-2">
                 {certifications.map(c => (

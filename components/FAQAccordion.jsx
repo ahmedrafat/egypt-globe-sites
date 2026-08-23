@@ -25,8 +25,7 @@ export default function FAQAccordion({ faqs, title = 'Frequently asked questions
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-3">
           <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-[#f9fafb] ring-1 ring-[#14161a]/10 text-xl shadow-sm">
-            ❓
-          </span>
+                      </span>
           <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a]">{title}</h2>
         </div>
         {subtitle && (

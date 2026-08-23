@@ -13,6 +13,7 @@
  * "Is this worth it?" gut-check before they commit to a quote.
  */
 import { useState, useMemo, useEffect } from 'react'
+import Icon from '../ui/Icon'
 
 // Commodity → HS code → MFN duty rate per country (representative — verify
 // per current Customs Tariff schedule). PAFTA / COMESA / ECOWAS preferential
@@ -154,7 +155,7 @@ export default function TariffCalculator({ countryId = 'kenya' }) {
     <div className="rounded-3xl ring-1 ring-[#14161a]/10 bg-white overflow-hidden">
       <div className="px-6 py-4 border-b border-[#14161a]/10 bg-[#f9fafb]">
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white ring-1 ring-[#14161a]/10 text-xl">💰</span>
+          <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white ring-1 ring-[#14161a]/10 text-[#14161a]"><Icon name="coins" className="w-4 h-4" /></span>
           <h3 className="egg-display text-2xl text-[#14161a]">{country.label} import cost calculator</h3>
         </div>
         <p className="text-xs text-[#7a8290] mt-1">Pick commodity + CIF value → indicative duty + VAT + levies. Final rates confirmed by your customs broker.</p>

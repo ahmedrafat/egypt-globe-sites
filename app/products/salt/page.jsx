@@ -15,6 +15,7 @@ import {
   getSaltApplicationsServed,
   APPLICATIONS,
 } from '../../../lib/corporatePages'
+import Icon, { APPLICATION_ICON } from '../../../components/ui/Icon'
 
 // Drop 139c — render on demand (multi-query salt catalogue page)
 export const dynamic = 'force-dynamic'
@@ -25,14 +26,14 @@ export const metadata = {
 }
 
 const GRADES = [
-  { label: 'Bulk De-icing / Road Salt', href: '/products/salt/de-icing-grade', icon: '❄️' },
-  { label: 'Industrial / Chlor-Alkali', href: '/products/salt/industrial-grade', icon: '🏭' },
-  { label: 'Food Grade Salt', href: '/products/salt/food-grade', icon: '🍽️' },
-  { label: 'Pharmaceutical Salt', href: '/products/salt/pharmaceutical-grade', icon: '💊' },
-  { label: 'Water Treatment & Pool', href: '/products/salt/pool-grade', icon: '💧' },
-  { label: 'Cosmetic & Spa Salt', href: '/products/salt/cosmetic-grade', icon: '🧴' },
-  { label: 'Aquaculture Salt', href: '/products/salt/aquaculture-grade', icon: '🐟' },
-  { label: 'Agricultural Salt', href: '/products/salt/agricultural-grade', icon: '🌾' },
+  { label: 'Bulk De-icing / Road Salt', href: '/products/salt/de-icing-grade', icon: 'snow' },
+  { label: 'Industrial / Chlor-Alkali', href: '/products/salt/industrial-grade', icon: 'factory' },
+  { label: 'Food Grade Salt', href: '/products/salt/food-grade', icon: 'leaf' },
+  { label: 'Pharmaceutical Salt', href: '/products/salt/pharmaceutical-grade', icon: 'pill' },
+  { label: 'Water Treatment & Pool', href: '/products/salt/pool-grade', icon: 'drop' },
+  { label: 'Cosmetic & Spa Salt', href: '/products/salt/cosmetic-grade', icon: 'sparkle' },
+  { label: 'Aquaculture Salt', href: '/products/salt/aquaculture-grade', icon: 'wave' },
+  { label: 'Agricultural Salt', href: '/products/salt/agricultural-grade', icon: 'wheat' },
 ]
 
 const APPS_BY_ID = Object.fromEntries(APPLICATIONS.map(a => [a.id, a]))
@@ -65,7 +66,6 @@ export default async function SaltMainPage() {
         <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: `radial-gradient(55% 55% at 88% 0%, ${TEAL}2b, transparent 60%), radial-gradient(40% 45% at 0% 100%, ${GOLD}22, transparent 60%)` }} />
-        <div aria-hidden="true" className="absolute -right-10 -top-16 text-[260px] leading-none opacity-[0.06] select-none pointer-events-none">🧂</div>
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-24">
           <nav className="flex items-center gap-2 text-xs text-[#7a8290] mb-5 flex-wrap animate-fade-in">
             <Link href="/" className="hover:text-[#14161a] transition-colors">Home</Link>
@@ -77,10 +77,10 @@ export default async function SaltMainPage() {
 
           <div className="flex items-center gap-2 mb-4 flex-wrap animate-fade-in-up">
             <span className="egg-chip text-xs" style={{ color: TEAL_TEXT, boxShadow: `inset 0 0 0 1px ${TEAL}80` }}>
-              🌊 Sea Salt
+              <Icon name="wave" className="w-3.5 h-3.5" /> Sea Salt
             </span>
             <span className="egg-chip text-xs" style={{ color: GOLD_TEXT, boxShadow: `inset 0 0 0 1px ${GOLD}73` }}>
-              ⛏️ Rock Salt
+              <Icon name="pickaxe" className="w-3.5 h-3.5" /> Rock Salt
             </span>
             <span className="egg-chip text-xs">
               NaCl ≥ 97%
@@ -105,7 +105,7 @@ export default async function SaltMainPage() {
             <div className="flex flex-wrap gap-2 lg:justify-end animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
               <Link href="/rfq?product=%2Fproducts%2Fsalt"
                 className="egg-btn-primary">
-                📋 Get Quote
+                Get Quote
               </Link>
               <Link href="/applications"
                 className="egg-btn-ghost">
@@ -145,9 +145,8 @@ export default async function SaltMainPage() {
           {/* Sea salt card */}
           <div className="egg-card rounded-3xl overflow-hidden animate-fade-in-up">
             <div className="relative overflow-hidden p-7" style={{ background: 'linear-gradient(160deg, #e6fbf8 0%, #c9f3ee 100%)' }}>
-              <div aria-hidden="true" className="absolute -right-8 -top-10 text-[180px] leading-none opacity-[0.08] select-none pointer-events-none">🌊</div>
               <div className="relative flex items-center gap-3 mb-3">
-                <span className="text-4xl">🌊</span>
+                <span className="inline-flex w-11 h-11 items-center justify-center rounded-xl bg-white/70 ring-1 ring-[#0fb5a5]/40 text-[#0b8f84]"><Icon name="wave" className="w-5 h-5" /></span>
                 <div>
                   <div className="egg-eyebrow text-[#0b8f84]">Source 1</div>
                   <h3 className="egg-display text-3xl text-[#14161a]">Sea Salt</h3>
@@ -178,7 +177,7 @@ export default async function SaltMainPage() {
               <div className="flex flex-wrap gap-2 mb-5">
                 {['Al-Arish', 'Port Said East', 'Damietta', 'Ain Sokhna'].map(p => (
                   <span key={p} className="egg-chip text-xs" style={{ color: TEAL_TEXT, boxShadow: `inset 0 0 0 1px ${TEAL}73` }}>
-                    ⚓ {p}
+                    {p}
                   </span>
                 ))}
               </div>
@@ -200,9 +199,8 @@ export default async function SaltMainPage() {
           {/* Rock salt card */}
           <div className="egg-card rounded-3xl overflow-hidden animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             <div className="relative overflow-hidden p-7" style={{ background: 'linear-gradient(160deg, #fbf3e3 0%, #f3e3c0 100%)' }}>
-              <div aria-hidden="true" className="absolute -right-8 -top-10 text-[180px] leading-none opacity-[0.08] select-none pointer-events-none">⛏️</div>
               <div className="relative flex items-center gap-3 mb-3">
-                <span className="text-4xl">⛏️</span>
+                <span className="inline-flex w-11 h-11 items-center justify-center rounded-xl bg-white/70 ring-1 ring-[#b8862b]/40 text-[#8a6d3b]"><Icon name="pickaxe" className="w-5 h-5" /></span>
                 <div>
                   <div className="egg-eyebrow text-[#8a6d3b]">Source 2</div>
                   <h3 className="egg-display text-3xl text-[#14161a]">Rock Salt</h3>
@@ -233,7 +231,7 @@ export default async function SaltMainPage() {
               <div className="flex flex-wrap gap-2 mb-5">
                 {['El Dekheila', 'Alexandria', 'Damietta', 'Ain Sokhna'].map(p => (
                   <span key={p} className="egg-chip text-xs" style={{ color: GOLD_TEXT, boxShadow: `inset 0 0 0 1px ${GOLD}73` }}>
-                    ⚓ {p}
+                    {p}
                   </span>
                 ))}
               </div>
@@ -274,9 +272,7 @@ export default async function SaltMainPage() {
               {apps.map(a => (
                 <Link key={a.id} href={a.path}
                   className="egg-card group p-5 text-center">
-                  <div className="w-14 h-14 mx-auto rounded-xl flex items-center justify-center text-3xl mb-3 bg-[#f3f0ff] ring-1 ring-[#7c3aed]/25">
-                    {a.icon}
-                  </div>
+                  <div className="w-12 h-12 mx-auto rounded-xl flex items-center justify-center mb-3 ring-1 ring-[#14161a]/15 text-[#14161a]"><Icon name={APPLICATION_ICON[a.id] || 'factory'} className="w-5 h-5" /></div>
                   <h3 className="font-semibold text-[#14161a] group-hover:text-[#0b8f84] transition-colors text-sm">
                     {a.label}
                   </h3>
@@ -301,7 +297,7 @@ export default async function SaltMainPage() {
           {GRADES.map(g => (
             <Link key={g.href} href={g.href}
               className="egg-card group px-4 py-4 flex items-center gap-3">
-              <span className="text-2xl">{g.icon}</span>
+              <span className="inline-flex w-9 h-9 items-center justify-center rounded-lg ring-1 ring-[#14161a]/15 text-[#14161a]"><Icon name={g.icon} className="w-4 h-4" /></span>
               <span className="font-semibold text-sm text-[#14161a] group-hover:text-[#0b8f84] transition-colors">{g.label}</span>
             </Link>
           ))}
@@ -318,7 +314,7 @@ export default async function SaltMainPage() {
           <div className="flex items-end justify-between gap-4 mb-8 flex-wrap animate-fade-in-up">
             <div>
               <div className="egg-eyebrow text-[#0b8f84] mb-2">
-                🌊 Sea Salt
+                Sea Salt
               </div>
               <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a]">
                 {sea.length} sea-salt SKUs
@@ -341,7 +337,7 @@ export default async function SaltMainPage() {
             <div className="flex items-end justify-between gap-4 mb-8 flex-wrap animate-fade-in-up">
               <div>
                 <div className="egg-eyebrow text-[#8a6d3b] mb-2">
-                  ⛏️ Rock Salt
+                  Rock Salt
                 </div>
                 <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a]">
                   {rock.length} rock-salt SKUs
@@ -364,7 +360,6 @@ export default async function SaltMainPage() {
           <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-60 pointer-events-none" />
           <div aria-hidden="true" className="absolute -bottom-20 -right-20 w-72 h-72 rounded-full opacity-40 pointer-events-none"
             style={{ background: `radial-gradient(circle, ${TEAL} 0%, transparent 70%)` }} />
-          <div aria-hidden="true" className="absolute -top-12 -right-12 text-[280px] opacity-[0.06] select-none pointer-events-none">🧂</div>
           <h2 className="egg-display relative text-3xl sm:text-4xl text-[#14161a] mb-3">
             Need a custom salt blend?
           </h2>
@@ -374,7 +369,7 @@ export default async function SaltMainPage() {
           </p>
           <Link href="/rfq?product=%2Fproducts%2Fsalt"
             className="egg-btn-primary relative px-8 py-4">
-            📋 Request a Quote
+            Request a Quote
           </Link>
         </div>
       </section>
@@ -395,9 +390,7 @@ function SaltCard({ p, type }) {
           <img src={p.hero_photo_url} alt={p.title}
             className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-5xl opacity-30">
-            {isSea ? '🌊' : '⛏️'}
-          </div>
+          <div className="w-full h-full flex items-center justify-center text-[#14161a]/20"><Icon name={isSea ? 'wave' : 'pickaxe'} className="w-10 h-10" strokeWidth={1.25} /></div>
         )}
       </div>
       <div className="p-4">

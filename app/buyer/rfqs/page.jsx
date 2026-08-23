@@ -12,6 +12,7 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { getBuyerVisibility, createSupabaseServerClient } from '../../../lib/supabaseServer'
+import Icon from '../../../components/ui/Icon'
 
 // Drop 139c — auth-cookie-dependent, must be dynamic.
 export const dynamic = 'force-dynamic'
@@ -118,13 +119,13 @@ export default async function BuyerRfqs() {
 
         {error && (
           <div className="rounded-xl bg-red-50 border border-red-200 text-red-800 px-4 py-3 text-sm mb-4">
-            ⚠ {error.message}
+            {error.message}
           </div>
         )}
 
         {list.length === 0 ? (
           <div className="egg-panel p-10 sm:p-12 text-center">
-            <div className="text-5xl mb-3">📋</div>
+            <div className="text-5xl mb-3"></div>
             <h2 className="egg-display text-3xl text-[#14161a] mb-2">No RFQs yet</h2>
             <p className="text-[#3f4650] mb-6 max-w-md mx-auto">
               When you submit a quotation request through the catalogue or the
@@ -133,7 +134,7 @@ export default async function BuyerRfqs() {
             </p>
             <Link href="/rfq"
               className="egg-btn-primary">
-              📋 Submit your first RFQ
+              Submit your first RFQ
             </Link>
           </div>
         ) : (
@@ -153,12 +154,12 @@ export default async function BuyerRfqs() {
                       </div>
                       <h3 className="font-semibold text-[#14161a] text-lg">{r.commodity_name || 'Quote request'}</h3>
                       <div className="text-xs text-[#7a8290] mt-1 flex flex-wrap gap-x-4 gap-y-1">
-                        {r.quantity && <span>📦 {Number(r.quantity).toLocaleString()} {r.unit || 'MT'}</span>}
-                        {r.incoterm && <span>📜 {r.incoterm}</span>}
+                        {r.quantity && <span>{Number(r.quantity).toLocaleString()} {r.unit || 'MT'}</span>}
+                        {r.incoterm && <span>{r.incoterm}</span>}
                         {(r.dest_port || r.country || r.dest_country) && (
-                          <span>📍 {r.dest_port || r.country || r.dest_country}</span>
+                          <span>{r.dest_port || r.country || r.dest_country}</span>
                         )}
-                        <span>📅 Submitted {fmtDate(r.created_at)} ({fmtAge(r.created_at)})</span>
+                        <span>Submitted {fmtDate(r.created_at)} ({fmtAge(r.created_at)})</span>
                       </div>
                       {r.quoted_price && (
                         <div className="mt-2 inline-flex items-center gap-2 bg-[#f3f0ff] border border-[#7c3aed]/30 text-[#4c1d95] text-xs font-bold px-3 py-1.5 rounded-lg">
@@ -170,7 +171,7 @@ export default async function BuyerRfqs() {
                     <div className="shrink-0">
                       <a href={`mailto:export@egyptglobe.com?subject=RFQ%20${encodeURIComponent(r.ref_code || r.id)}%20-%20${encodeURIComponent(r.commodity_name || '')}`}
                         className="egg-btn-ghost text-xs py-1.5 px-3">
-                        ✉ Follow up
+                        <Icon name="mail" className="w-3.5 h-3.5" /> Follow up
                       </a>
                     </div>
                   </div>
@@ -183,7 +184,7 @@ export default async function BuyerRfqs() {
         <div className="mt-10 text-center">
           <Link href="/rfq"
             className="egg-btn-primary">
-            📋 Submit a new RFQ
+            Submit a new RFQ
           </Link>
         </div>
       </section>

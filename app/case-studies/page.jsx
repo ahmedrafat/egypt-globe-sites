@@ -5,6 +5,7 @@
 import Link from 'next/link'
 import { getCaseStudies, getPageByPath } from '../../lib/corporatePages'
 import RichPageBody from '../../components/RichPageBody'
+import Icon from '../../components/ui/Icon'
 
 // Drop 139c — render on demand instead of pre-building. The build worker has
 // a 60s/page hard limit; if Supabase is slow during build, this page hung 3
@@ -33,8 +34,6 @@ export default async function CaseStudiesIndex() {
         <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: 'radial-gradient(55% 55% at 88% 0%, rgba(15,181,165,.2), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.08), transparent 60%)' }} />
-        <div aria-hidden="true" className="absolute -right-10 -top-16 text-[240px] leading-none opacity-[0.06] select-none pointer-events-none">📖</div>
-
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20">
           <nav className="flex items-center gap-2 text-xs text-[#7a8290] mb-5 flex-wrap animate-fade-in">
             <Link href="/" className="hover:text-[#14161a] transition-colors">Home</Link>
@@ -44,7 +43,7 @@ export default async function CaseStudiesIndex() {
 
           <div className="flex items-center gap-2 mb-4 flex-wrap animate-fade-in-up">
             <span className="egg-chip text-xs" style={{ color: TONE, boxShadow: 'inset 0 0 0 1px rgba(15,181,165,.5)' }}>
-              📖 Real shipments
+              <Icon name="book" className="w-3.5 h-3.5" /> Real shipments
             </span>
             <span className="egg-chip text-xs">
               {posts.length} {posts.length === 1 ? 'study' : 'studies'}
@@ -72,7 +71,7 @@ export default async function CaseStudiesIndex() {
       {posts.length === 0 ? (
         <section className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-20 text-center">
           <div className="egg-panel p-10 text-[#7a8290]">
-            <div className="text-5xl mb-3">📖</div>
+            <Icon name="book" className="w-10 h-10 mx-auto mb-3 text-[#14161a]/40" strokeWidth={1.25} />
             <p>Case studies publish here as we receive customer permission to share details.
               {' '}<Link href="/contact" className="egg-link">Get in touch</Link>{' '}
               for references aligned with your sourcing requirement.</p>
@@ -95,7 +94,7 @@ export default async function CaseStudiesIndex() {
                         className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
-                        <span className="text-9xl opacity-30">📖</span>
+                        <Icon name="book" className="w-16 h-16 text-[#14161a]/20" strokeWidth={1} />
                       </div>
                     )}
                     <div className="absolute top-4 left-4 egg-chip bg-white/95 backdrop-blur text-xs uppercase tracking-wider shadow-sm" style={{ color: TONE }}>
@@ -134,7 +133,7 @@ export default async function CaseStudiesIndex() {
                           className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                          <span className="text-7xl opacity-30">📖</span>
+                          <Icon name="book" className="w-12 h-12 text-[#14161a]/20" strokeWidth={1} />
                         </div>
                       )}
                     </div>
@@ -171,7 +170,6 @@ export default async function CaseStudiesIndex() {
           <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-60 pointer-events-none" />
           <div aria-hidden="true" className="absolute -bottom-20 -right-20 w-72 h-72 rounded-full opacity-40 pointer-events-none"
             style={{ background: 'radial-gradient(circle, #0fb5a5 0%, transparent 70%)' }} />
-          <div aria-hidden="true" className="absolute -top-12 -right-12 text-[260px] opacity-[0.06] select-none pointer-events-none">📖</div>
           <h2 className="egg-display relative text-3xl sm:text-4xl text-[#14161a] mb-3">
             Want a reference aligned with your sourcing requirement?
           </h2>
@@ -180,7 +178,7 @@ export default async function CaseStudiesIndex() {
           </p>
           <a href="mailto:export@egyptglobe.com?subject=Case%20study%20reference%20request"
             className="egg-btn-primary relative">
-            ✉ Request references
+            <Icon name="mail" className="w-3.5 h-3.5" /> Request references
           </a>
         </div>
       </section>

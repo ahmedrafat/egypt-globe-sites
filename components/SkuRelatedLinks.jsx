@@ -16,6 +16,7 @@
  */
 
 import Link from 'next/link'
+import Icon from './ui/Icon'
 
 // Match SKU name to application landing
 function appLanding(name) {
@@ -113,7 +114,7 @@ export default function SkuRelatedLinks({ page, commodity }) {
               href={l.path}
               className="group flex items-center gap-2 rounded-xl bg-white border border-[#14161a]/10 hover:border-[#0fb5a5] hover:shadow-sm transition-all px-4 py-3"
             >
-              <span className="text-xl flex-shrink-0">{LINK_ICONS[i] || '🔗'}</span>
+              <span className="flex-shrink-0 inline-flex w-8 h-8 items-center justify-center rounded-lg ring-1 ring-[#14161a]/15 text-[#14161a]"><Icon name={LINK_ICONS[i] || 'arrow'} className="w-4 h-4" /></span>
               <div className="flex-1 min-w-0">
                 <div className="text-xs font-semibold text-[#7a8290] uppercase tracking-wider mb-0.5">
                   {LINK_LABELS[i] || 'Related'}
@@ -132,4 +133,4 @@ export default function SkuRelatedLinks({ page, commodity }) {
 }
 
 const LINK_LABELS = ['Application', 'Wholesale Hub', 'Standard', 'Loading Port', "Buyer's Guide"]
-const LINK_ICONS  = ['🎯',          '🏷',           '📋',       '⚓',           '📖']
+const LINK_ICONS  = ['target', 'doc', 'shield', 'anchor', 'book']

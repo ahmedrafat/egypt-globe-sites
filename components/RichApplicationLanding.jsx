@@ -15,6 +15,7 @@
 import Link from 'next/link'
 import RichPageBody from './RichPageBody'
 import { APPLICATIONS, PRODUCT_DIVISIONS, CATEGORY_META } from '../lib/corporatePages'
+import Icon, { DIVISION_ICON, APPLICATION_ICON } from './ui/Icon'
 
 // Industry accent — violet, the applications colour across the site
 const TONE = '#7c3aed'
@@ -34,8 +35,6 @@ export default function RichApplicationLanding({ page, application, products, si
         <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: `radial-gradient(55% 55% at 88% 0%, ${TONE}22, transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.09), transparent 60%)` }} />
-        <div aria-hidden="true" className="absolute -right-10 -top-16 text-[240px] leading-none opacity-[0.06] select-none pointer-events-none">{application?.icon}</div>
-
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20">
           <nav className="flex items-center gap-2 text-xs text-[#7a8290] mb-5 flex-wrap animate-fade-in">
             <Link href="/" className="hover:text-[#14161a] transition-colors">Home</Link>
@@ -47,7 +46,7 @@ export default function RichApplicationLanding({ page, application, products, si
 
           <div className="flex items-center gap-2 mb-4 flex-wrap animate-fade-in-up">
             <span className="egg-chip text-xs" style={{ color: TONE, boxShadow: `inset 0 0 0 1px ${TONE}66` }}>
-              🏭 Application
+              <Icon name={APPLICATION_ICON[application?.id] || 'factory'} className="w-3.5 h-3.5" /> Application
             </span>
             <span className="egg-chip text-xs">
               {(products || []).length} matching SKU{(products || []).length === 1 ? '' : 's'}
@@ -62,7 +61,6 @@ export default function RichApplicationLanding({ page, application, products, si
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-end">
             <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
               <h1 className="egg-display text-4xl sm:text-5xl lg:text-6xl text-[#14161a] mb-4 leading-[1.02]">
-                <span className="text-3xl sm:text-4xl lg:text-5xl mr-2">{application?.icon}</span>
                 {page.title}
               </h1>
               {page.description && (
@@ -74,7 +72,7 @@ export default function RichApplicationLanding({ page, application, products, si
             <div className="flex flex-wrap gap-2 lg:justify-end animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
               <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
                 className="egg-btn-primary">
-                📋 Get Quote
+                Get Quote
               </Link>
               <Link href="/applications"
                 className="egg-btn-ghost">
@@ -151,9 +149,8 @@ export default function RichApplicationLanding({ page, application, products, si
                   <div key={d.id}>
                     {/* Division header */}
                     <div className="flex items-center gap-3 mb-4 pb-3 border-b border-[#14161a]/10">
-                      <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
-                        style={{ background: `${d.color}1f`, boxShadow: `inset 0 0 0 1px ${d.color}66` }}>
-                        {d.icon}
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ring-1 ring-[#14161a]/15 text-[#14161a]">
+                        <Icon name={DIVISION_ICON[d.id] || 'box'} className="w-5 h-5" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="font-semibold text-[#14161a] text-lg">
@@ -176,7 +173,7 @@ export default function RichApplicationLanding({ page, application, products, si
                                 className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
                             ) : (
                               <div className="w-full h-full flex items-center justify-center text-5xl opacity-40">
-                                {d.icon}
+                                <Icon name={DIVISION_ICON[d.id] || 'box'} className="w-5 h-5" />
                               </div>
                             )}
                           </div>
@@ -230,7 +227,7 @@ export default function RichApplicationLanding({ page, application, products, si
         <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 egg-reveal">
           <div className="egg-panel p-6 sm:p-8">
             <div className="flex items-start gap-3 mb-4">
-              <div className="text-2xl">🏅</div>
+              <span className="inline-flex w-9 h-9 items-center justify-center rounded-lg bg-white ring-1 ring-[#14161a]/15 text-[#14161a]"><Icon name="shield" className="w-[18px] h-[18px]" /></span>
               <div>
                 <h3 className="font-semibold text-[#14161a] text-lg">Standards & Certifications Covered</h3>
                 <p className="text-sm text-[#7a8290] mt-0.5">SKUs in this application carry paperwork ready for the standards below.</p>
@@ -257,9 +254,7 @@ export default function RichApplicationLanding({ page, application, products, si
             {siblingApps.map(a => (
               <Link key={a.id} href={a.path}
                 className="egg-card group p-5 text-center">
-                <div className="w-14 h-14 mx-auto rounded-xl flex items-center justify-center text-3xl mb-3 bg-[#f3f0ff] ring-1 ring-[#7c3aed]/25">
-                  {a.icon}
-                </div>
+                <div className="w-12 h-12 mx-auto rounded-xl flex items-center justify-center mb-3 ring-1 ring-[#14161a]/15 text-[#14161a]"><Icon name={APPLICATION_ICON[a.id] || 'factory'} className="w-5 h-5" /></div>
                 <h3 className="font-semibold text-[#14161a] group-hover:text-[#0b8f84] transition-colors text-sm">
                   {a.label}
                 </h3>
@@ -275,7 +270,6 @@ export default function RichApplicationLanding({ page, application, products, si
           <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-60 pointer-events-none" />
           <div aria-hidden="true" className="absolute -bottom-20 -right-20 w-72 h-72 rounded-full opacity-35 pointer-events-none"
             style={{ background: `radial-gradient(circle, ${TONE} 0%, transparent 70%)` }} />
-          <div aria-hidden="true" className="absolute -top-12 -right-12 text-[280px] opacity-[0.06] select-none pointer-events-none">{application?.icon}</div>
           <h2 className="egg-display relative text-3xl sm:text-4xl text-[#14161a] mb-3">
             Have a {page.title.toLowerCase()} requirement?
           </h2>
@@ -285,7 +279,7 @@ export default function RichApplicationLanding({ page, application, products, si
           </p>
           <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
             className="egg-btn-primary relative px-8 py-4">
-            📋 Request a Quote
+            Request a Quote
           </Link>
         </div>
       </section>

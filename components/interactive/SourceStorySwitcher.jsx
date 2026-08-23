@@ -17,11 +17,12 @@
  * turquoise tint (tokens + utilities in app/globals.css).
  */
 import { useState } from 'react'
+import Icon from '../ui/Icon'
 
 const SOURCES = {
   rock: {
     label: 'Rock Salt',
-    icon: '⛏️',
+    icon: 'pickaxe',
     badge: 'Mined',
     panelBg: 'linear-gradient(160deg, #fbf3e3 0%, #f3e3c0 100%)',
     accent: '#8a6d3b',
@@ -40,7 +41,7 @@ const SOURCES = {
   },
   sea: {
     label: 'Sea Salt',
-    icon: '🌊',
+    icon: 'wave',
     badge: 'Solar-evaporated',
     panelBg: 'linear-gradient(160deg, #e6fbf8 0%, #c9f3ee 100%)',
     accent: '#0b8f84',
@@ -86,7 +87,7 @@ export default function SourceStorySwitcher({ pageSourceType }) {
               }`}
             >
               <div className="flex items-center gap-2">
-                <span className="text-2xl">{s.icon}</span>
+                <Icon name={s.icon} className="w-5 h-5" />
                 <div className="min-w-0">
                   <div className={`text-[10px] font-mono uppercase tracking-[0.16em] ${isActive ? 'text-white/60' : 'text-[#7a8290]'}`}>
                     {s.badge}
@@ -107,7 +108,6 @@ export default function SourceStorySwitcher({ pageSourceType }) {
       </div>
 
       <div className="relative overflow-hidden text-[#14161a] p-6 sm:p-8" style={{ background: src.panelBg }}>
-        <div aria-hidden="true" className="absolute -right-8 -top-10 text-[180px] leading-none opacity-[0.08] select-none pointer-events-none">{src.icon}</div>
         <div className="relative grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
           <Stat label="Source location" value={src.location} accent={src.accent} />
           <Stat label="Purity floor" value={src.purity} accent={src.accent} />

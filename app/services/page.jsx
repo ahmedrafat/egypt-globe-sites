@@ -13,6 +13,7 @@ import {
   getPageByPath,
 } from '../../lib/corporatePages'
 import RichPageBody from '../../components/RichPageBody'
+import Icon, { SERVICE_ICON } from '../../components/ui/Icon'
 
 export const revalidate = 60
 
@@ -33,8 +34,6 @@ export default async function ServicesHub() {
         <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: `radial-gradient(55% 55% at 88% 0%, ${TONE}26, transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.09), transparent 60%)` }} />
-        <div aria-hidden="true" className="absolute -right-10 -top-16 text-[260px] leading-none opacity-[0.06] select-none pointer-events-none">🚢</div>
-
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-24">
           <nav className="flex items-center gap-2 text-xs text-[#7a8290] mb-5 flex-wrap animate-fade-in">
             <Link href="/" className="hover:text-[#14161a] transition-colors">Home</Link>
@@ -44,7 +43,7 @@ export default async function ServicesHub() {
 
           <div className="flex items-center gap-2 mb-4 flex-wrap animate-fade-in-up">
             <span className="egg-chip text-xs" style={{ color: TONE, boxShadow: `inset 0 0 0 1px ${TONE}66` }}>
-              🚢 {SERVICE_DIVISIONS.length} services
+              <Icon name="ship" className="w-3.5 h-3.5" /> {SERVICE_DIVISIONS.length} services
             </span>
             <span className="egg-chip text-xs">
               7 loading ports
@@ -74,11 +73,11 @@ export default async function ServicesHub() {
             <div className="flex flex-wrap gap-2 lg:justify-end animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
               <Link href="/rfq"
                 className="egg-btn-primary">
-                📋 Get Quote
+                Get Quote
               </Link>
               <a href={LOGISTICS_PORTAL_URL} target="_blank" rel="noopener noreferrer"
                 className="egg-btn-ghost">
-                ⚓ Provider portal ↗
+                <Icon name="anchor" className="w-3.5 h-3.5" /> Provider portal ↗
               </a>
             </div>
           </div>
@@ -124,13 +123,13 @@ export default async function ServicesHub() {
               <div className="aspect-[16/9] overflow-hidden relative"
                 style={{ background: `linear-gradient(135deg, ${svc.color}1F 0%, ${svc.color}08 60%, white 100%)` }}>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-7xl opacity-30 group-hover:opacity-50 group-hover:scale-110 transition-all duration-500">{svc.icon}</span>
+                  <span className="text-7xl opacity-30 group-hover:opacity-50 group-hover:scale-110 transition-all duration-500"><Icon name={SERVICE_ICON[svc.id] || 'ship'} className="w-6 h-6" /></span>
                 </div>
               </div>
               <div className="p-6">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl mb-3 -mt-12 ml-1 bg-white shadow-md ring-1 ring-[#14161a]/10"
                   style={{ color: svc.color }}>
-                  {svc.icon}
+                  <Icon name={SERVICE_ICON[svc.id] || 'ship'} className="w-6 h-6" />
                 </div>
                 <h3 className="text-lg font-semibold text-[#14161a] group-hover:text-[#0b8f84] transition-colors mb-2">
                   {svc.label}
@@ -160,7 +159,6 @@ export default async function ServicesHub() {
           <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-60 pointer-events-none" />
           <div aria-hidden="true" className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full opacity-30 pointer-events-none"
             style={{ background: 'radial-gradient(circle, #0284c7 0%, transparent 70%)' }} />
-          <div aria-hidden="true" className="absolute -top-12 -right-12 text-[260px] opacity-[0.06] select-none pointer-events-none">⚓</div>
           <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <div>
               <div className="egg-eyebrow text-[#0369a1] mb-4">
@@ -176,18 +174,18 @@ export default async function ServicesHub() {
               </p>
               <a href={LOGISTICS_PORTAL_URL} target="_blank" rel="noopener noreferrer"
                 className="egg-btn-primary">
-                ⚓ Open Logistics Portal ↗
+                <Icon name="anchor" className="w-3.5 h-3.5" /> Open Logistics Portal ↗
               </a>
             </div>
             <div className="grid grid-cols-2 gap-3 text-sm">
               {[
-                { ico: '⚡', t: 'Instant rate submission', b: 'Web form, no spreadsheet email chains' },
-                { ico: '📊', t: 'Visible to all buyers',   b: 'Your rates surface across our buyer network' },
-                { ico: '🔐', t: 'Provider-private view',   b: 'You see only your own rate cards' },
-                { ico: '📅', t: 'Validity windows',        b: 'Set effective + expiry per lane' },
+                { ico: 'bolt', t: 'Instant rate submission', b: 'Web form, no spreadsheet email chains' },
+                { ico: 'chart', t: 'Visible to all buyers',   b: 'Your rates surface across our buyer network' },
+                { ico: 'lock', t: 'Provider-private view',   b: 'You see only your own rate cards' },
+                { ico: 'calendar', t: 'Validity windows',        b: 'Set effective + expiry per lane' },
               ].map(c => (
                 <div key={c.t} className="egg-card p-4 hover:transform-none">
-                  <div className="text-2xl mb-1">{c.ico}</div>
+                  <span className="inline-flex w-8 h-8 items-center justify-center rounded-lg ring-1 ring-[#14161a]/15 text-[#14161a] mb-2"><Icon name={c.ico} className="w-4 h-4" /></span>
                   <div className="font-semibold text-[#14161a] text-sm">{c.t}</div>
                   <div className="text-xs text-[#7a8290] leading-snug mt-1">{c.b}</div>
                 </div>
@@ -203,7 +201,6 @@ export default async function ServicesHub() {
           <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-60 pointer-events-none" />
           <div aria-hidden="true" className="absolute -bottom-20 -right-20 w-72 h-72 rounded-full opacity-40 pointer-events-none"
             style={{ background: `radial-gradient(circle, ${TONE} 0%, transparent 70%)` }} />
-          <div aria-hidden="true" className="absolute -top-12 -right-12 text-[280px] opacity-[0.06] select-none pointer-events-none">🚢</div>
           <h2 className="egg-display relative text-3xl sm:text-4xl text-[#14161a] mb-3">
             Need product + service combined?
           </h2>
@@ -213,7 +210,7 @@ export default async function ServicesHub() {
           </p>
           <Link href="/rfq"
             className="egg-btn-primary relative px-8 py-4">
-            📋 Request a Quote
+            Request a Quote
           </Link>
         </div>
       </section>

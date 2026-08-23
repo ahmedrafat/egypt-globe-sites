@@ -20,6 +20,7 @@
  */
 import { useState, useEffect } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
+import Icon from '../ui/Icon'
 
 export default function InlineQuoteCard({ page, prefill = {} }) {
   const [email, setEmail]     = useState('')
@@ -92,7 +93,7 @@ export default function InlineQuoteCard({ page, prefill = {} }) {
   if (refCode) {
     return (
       <div className="rounded-3xl ring-1 ring-[#0fb5a5]/40 bg-[#e6fbf8] p-7 text-center">
-        <div className="text-5xl mb-3">✅</div>
+        <div className="text-5xl mb-3"><Icon name="check" className="w-10 h-10 mx-auto text-emerald-600" strokeWidth={2.2} /></div>
         <h3 className="egg-display text-3xl text-[#14161a] mb-2">Quote request received</h3>
         <p className="text-[#3f4650] mb-1">
           Ref <span className="font-mono font-bold text-[#0b8f84]">{refCode}</span>
@@ -112,7 +113,7 @@ export default function InlineQuoteCard({ page, prefill = {} }) {
     <div className="rounded-3xl ring-1 ring-[#ff6321]/25 bg-[#fff8f3] overflow-hidden">
       <div className="px-6 py-4 border-b border-[#ff6321]/15 bg-white/60">
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-[#FF6321] text-white text-lg shadow-sm">📋</span>
+          <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-[#FF6321] text-white shadow-sm"><Icon name="doc" className="w-4 h-4" /></span>
           <h3 className="egg-display text-2xl text-[#14161a]">Get a quote in 24 hours</h3>
         </div>
         <p className="text-xs text-[#7a8290] mt-1">Pre-filled with <strong className="text-[#3f4650]">{page.title}</strong>. Add quantity + email and we'll do the rest.</p>
@@ -155,11 +156,11 @@ export default function InlineQuoteCard({ page, prefill = {} }) {
           </Field>
         </div>
 
-        {error && <div className="text-xs text-red-700 bg-red-50 border border-red-200 rounded-lg p-2.5">⚠ {error}</div>}
+        {error && <div className="text-xs text-red-700 bg-red-50 border border-red-200 rounded-lg p-2.5">{error}</div>}
 
         <button type="submit" disabled={submitting}
           className="egg-btn-primary w-full py-3.5 disabled:opacity-60 disabled:cursor-not-allowed">
-          {submitting ? '⏳ Sending…' : '📋 Get my quote in 24 hours'}
+          {submitting ? '⏳ Sending…' : 'Get my quote in 24 hours'}
         </button>
         <p className="text-[11px] text-[#7a8290] text-center leading-relaxed">
           Your details go to our Cairo export desk only. No marketing email. Need a richer RFQ form? <a href={`/rfq?product=${encodeURIComponent(page.path)}`} className="text-[#0b8f84] font-semibold hover:underline">Use the full form →</a>

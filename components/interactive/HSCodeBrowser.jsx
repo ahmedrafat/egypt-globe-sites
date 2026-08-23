@@ -12,6 +12,7 @@
  * /trade-tools/hs-codes glossary, transcribed into structured data here.
  */
 import { useState, useMemo } from 'react'
+import Icon from '../ui/Icon'
 
 const CODES = [
   // Salt
@@ -89,14 +90,14 @@ const CODES = [
 ]
 
 const DIVISIONS = [
-  { id: 'all',          label: 'All divisions', icon: '📦' },
-  { id: 'salt',         label: 'Salt',          icon: '🧂' },
-  { id: 'fertilizers',  label: 'Fertilizers',   icon: '🌾' },
-  { id: 'chemicals',    label: 'Chemicals',     icon: '⚗️' },
-  { id: 'construction', label: 'Construction',  icon: '🏗' },
-  { id: 'metals',       label: 'Metals',        icon: '🔩' },
-  { id: 'minerals',     label: 'Minerals',      icon: '⛰' },
-  { id: 'agro',         label: 'Agro',          icon: '🍅' },
+  { id: 'all',          label: 'All divisions', icon: 'box' },
+  { id: 'salt',         label: 'Salt',          icon: 'cube' },
+  { id: 'fertilizers',  label: 'Fertilizers',   icon: 'wheat' },
+  { id: 'chemicals',    label: 'Chemicals',     icon: 'beaker' },
+  { id: 'construction', label: 'Construction',  icon: 'building' },
+  { id: 'metals',       label: 'Metals',        icon: 'gear' },
+  { id: 'minerals',     label: 'Minerals',      icon: 'layers' },
+  { id: 'agro',         label: 'Agro',          icon: 'leaf' },
 ]
 
 export default function HSCodeBrowser() {
@@ -139,7 +140,7 @@ export default function HSCodeBrowser() {
     <div className="rounded-3xl ring-1 ring-[#14161a]/10 bg-white overflow-hidden">
       <div className="px-6 py-4 border-b border-[#14161a]/10 bg-[#f9fafb]">
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white ring-1 ring-[#14161a]/10 text-xl">🔍</span>
+          <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white ring-1 ring-[#14161a]/10 text-[#14161a]"><Icon name="search" className="w-4 h-4" /></span>
           <h3 className="egg-display text-2xl text-[#14161a]">Egyptian-export HS code finder</h3>
         </div>
         <p className="text-xs text-[#7a8290] mt-1">Search by code, description, or chapter. Click any row to copy the 6-digit code.</p>
@@ -164,7 +165,7 @@ export default function HSCodeBrowser() {
                   : 'bg-white border-[#14161a]/12 text-[#3f4650] hover:border-[#0fb5a5]'
               }`}
             >
-              <span>{d.icon}</span> {d.label}
+              <Icon name={d.icon} className="w-3.5 h-3.5" /> {d.label}
             </button>
           ))}
         </div>

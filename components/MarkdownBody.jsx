@@ -1,3 +1,5 @@
+
+import Icon, { iconSvg, keywordIconName } from './ui/Icon'
 /**
  * MarkdownBody — clean business prose with smart visual blocks.
  *
@@ -26,62 +28,7 @@ function slugify(s) {
  * keywords. Used for H2 section icons + feature-card icons. Order
  * matters: more-specific patterns first.
  */
-const ICON_RULES = [
-  // Egyptian ports & loading
-  [/\b(port|loading|damietta|alexandria|sokhna|safaga|al.?arish|el.?dekheila|bardawil)\b/i, '⚓'],
-  // Salt-source specifics
-  [/\bsea salt|sea.salt|solar.evaporated\b/i, '🌊'],
-  [/\brock salt|siwa|qattara|mining|mine\b/i, '⛏️'],
-  // Quality / certs / standards
-  [/\b(quality|qc|certif|standard|inspection|sgs|intertek|iso \d|en \d|astm|gmp|nsf|usp|reach)\b/i, '🏅'],
-  // Documentation / paperwork
-  [/\b(document|paperwork|invoice|bill of lading|coa|certificate of analysis|l\/c|letter of credit)\b/i, '📋'],
-  // Logistics / shipping / fleet
-  [/\b(logistics|freight|shipping|vessel|container|truck|rail|multimodal|stevedor)\b/i, '🚢'],
-  // Packing
-  [/\b(pack|bag|fibc|jumbo|pallet|container)\b/i, '📦'],
-  // People / team / careers
-  [/\b(team|career|hire|hr|people|staff)\b/i, '👥'],
-  // Office / location / address
-  [/\b(office|location|address|cairo|hq|headquarter|operations)\b/i, '🏢'],
-  // Contact / email / phone
-  [/\b(contact|email|phone|reach|get in touch)\b/i, '📞'],
-  // Mission / vision / values
-  [/\b(mission|vision|values?|principles?)\b/i, '🎯'],
-  // Markets / global / regions / countries
-  [/\b(market|global|destination|region|country|countries|export|presence|worldwide)\b/i, '🌍'],
-  // Industries / use cases / applications
-  [/\b(application|industr|use case|sector|use)\b/i, '🏭'],
-  // Time / lead time / SLA
-  [/\b(lead time|response|sla|24h|24 hour|turnaround|hour|day|week|month)\b/i, '⏱'],
-  // Money / price / pricing
-  [/\b(price|pricing|cost|fob|cif|cfr|currency|usd|eur|finance|trade finance|payment)\b/i, '💰'],
-  // History / years / since / founded
-  [/\b(history|founded|since|origin|story|journey)\b/i, '📜'],
-  // News / blog / insights
-  [/\b(news|blog|article|insight|press|media|update)\b/i, '📝'],
-  // Compliance / law / registry
-  [/\b(complian|registry|license|tax|legal|regulator)\b/i, '⚖️'],
-  // Agriculture / food
-  [/\b(agro|agricultur|food|crop|grain|harvest)\b/i, '🌾'],
-  // Chemicals
-  [/\b(chemical|acid|alkali|polymer|chlor)\b/i, '⚗️'],
-  // Construction
-  [/\b(construct|cement|concrete|aggregat|granit|marble)\b/i, '🏗'],
-  // Metals
-  [/\b(metal|aluminum|aluminium|copper|steel|zinc|lead|ferro)\b/i, '⚙️'],
-  // Fertilizer
-  [/\b(fertili|urea|nitrogen|phosphate|potash|npk|mop|tsp|dap)\b/i, '🌾'],
-  // Salt (generic)
-  [/\bsalt\b/i, '🧂'],
-  // Default
-  [/.*/, '✦'],
-]
-function keywordIcon(text) {
-  const t = String(text || '')
-  for (const [re, ico] of ICON_RULES) if (re.test(t)) return ico
-  return '✦'
-}
+function keywordIcon(text, cls = 'w-5 h-5') { return iconSvg(keywordIconName(text), cls) }
 
 function renderInline(text) {
   let out = escapeHtml(text)
@@ -112,7 +59,7 @@ function renderFeatureCardGrid(items) {
     const ico = keywordIcon(it.title + ' ' + it.body)
     html += `<div class="rounded-2xl ring-1 ring-[#14161a]/10 bg-white p-5 hover:ring-[#0fb5a5]/50 hover:shadow-sm transition-all">
       <div class="flex items-start gap-3">
-        <div class="flex-shrink-0 w-11 h-11 rounded-xl bg-[#f2fbfa] flex items-center justify-center text-2xl">${ico}</div>
+        <div class="flex-shrink-0 w-10 h-10 rounded-xl ring-1 ring-[#14161a]/15 text-[#14161a] flex items-center justify-center">${ico}</div>
         <div class="flex-1 min-w-0">
           <div class="font-bold text-[#14161a] text-[0.95rem] leading-tight">${escapeHtml(it.title)}</div>
           ${it.body ? `<div class="text-sm text-[#3f4650] mt-1.5 leading-relaxed">${renderInline(it.body)}</div>` : ''}
@@ -298,7 +245,7 @@ export function parseMarkdown(content) {
       countWords(text)
       headings.push({ id, level: 3, text: text.replace(/[*`]/g, '') })
       blocks.push(`<h3 id="${id}" class="egg-display font-medium text-xl sm:text-2xl mt-9 mb-3 text-[#14161a] tracking-tight scroll-mt-28 flex items-center gap-2.5">
-        <span aria-hidden="true" class="text-xl opacity-80">${ico}</span>
+        <span aria-hidden="true" class="inline-flex items-center justify-center w-7 h-7 rounded-md ring-1 ring-[#14161a]/12 text-[#0b8f84]">${ico}</span>
         <span>${renderInline(text)}</span>
       </h3>`)
       continue
@@ -311,7 +258,7 @@ export function parseMarkdown(content) {
       countWords(text)
       headings.push({ id, level: 2, text: text.replace(/[*`]/g, '') })
       blocks.push(`<h2 id="${id}" class="egg-display font-medium text-2xl sm:text-3xl lg:text-[2rem] mt-12 mb-5 text-[#14161a] tracking-tight scroll-mt-28 flex items-center gap-3">
-        <span aria-hidden="true" class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[#f9fafb] ring-1 ring-[#14161a]/10 text-2xl shadow-sm">${ico}</span>
+        <span aria-hidden="true" class="inline-flex items-center justify-center w-9 h-9 rounded-lg ring-1 ring-[#14161a]/12 text-[#0b8f84] bg-white">${ico}</span>
         <span class="flex-1">${renderInline(text)}</span>
       </h2>`)
       continue

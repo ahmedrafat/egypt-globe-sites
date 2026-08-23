@@ -17,31 +17,32 @@
  */
 import { useState, useEffect, useMemo } from 'react'
 import RichPageBody from '../RichPageBody'
+import Icon from '../ui/Icon'
 
 // Best-guess emoji per common section title — purely decorative
 const TITLE_ICONS = [
-  { re: /overview|about|introduction/i,                         icon: '📖' },
-  { re: /spec|standard|quality|certif|grade/i,                  icon: '🧪' },
-  { re: /pack|packaging|format|bag/i,                           icon: '📦' },
-  { re: /load|port|ship|transit|logistics|incoterm/i,           icon: '🚢' },
-  { re: /document|paperwork|l\/c|letter of credit|customs/i,    icon: '📋' },
-  { re: /quote|order|rfq|enquiry|contact/i,                     icon: '📨' },
-  { re: /tariff|duty|tax|customs framework/i,                   icon: '💰' },
-  { re: /port routing|gateway/i,                                icon: '⚓' },
-  { re: /commod|product/i,                                       icon: '🏗' },
+  { re: /overview|about|introduction/i,                         icon: 'book' },
+  { re: /spec|standard|quality|certif|grade/i,                  icon: 'beaker' },
+  { re: /pack|packaging|format|bag/i,                           icon: 'box' },
+  { re: /load|port|ship|transit|logistics|incoterm/i,           icon: 'ship' },
+  { re: /document|paperwork|l\/c|letter of credit|customs/i,    icon: 'doc' },
+  { re: /quote|order|rfq|enquiry|contact/i,                     icon: 'mail' },
+  { re: /tariff|duty|tax|customs framework/i,                   icon: 'coins' },
+  { re: /port routing|gateway/i,                                icon: 'anchor' },
+  { re: /commod|product/i,                                       icon: 'building' },
   { re: /lead time|delivery/i,                                  icon: '⏱' },
-  { re: /preferential|free.trade|comesa|pafta|ecowas/i,         icon: '🤝' },
-  { re: /application|industry|use/i,                            icon: '🏭' },
-  { re: /history|timeline|founded/i,                            icon: '📅' },
-  { re: /location|office|footprint|map/i,                       icon: '📍' },
-  { re: /career|join|team|hire/i,                               icon: '👥' },
-  { re: /sustain|esg|environ|impact/i,                          icon: '🌱' },
-  { re: /faq|question|answer/i,                                 icon: '❓' },
+  { re: /preferential|free.trade|comesa|pafta|ecowas/i,         icon: 'handshake' },
+  { re: /application|industry|use/i,                            icon: 'factory' },
+  { re: /history|timeline|founded/i,                            icon: 'calendar' },
+  { re: /location|office|footprint|map/i,                       icon: 'pin' },
+  { re: /career|join|team|hire/i,                               icon: 'users' },
+  { re: /sustain|esg|environ|impact/i,                          icon: 'leaf' },
+  { re: /faq|question|answer/i,                                 icon: 'question' },
 ]
 function pickIcon(title) {
   const t = title || ''
   for (const r of TITLE_ICONS) if (r.re.test(t)) return r.icon
-  return '•'
+  return 'dot'
 }
 
 function splitMarkdown(md) {
@@ -85,7 +86,7 @@ export default function MarkdownTabs({ body, title, leadingWidget = null }) {
   // Build the final tab list — Overview first (intro), then one per H2.
   const tabs = useMemo(() => {
     const out = []
-    if (intro) out.push({ id: 'overview', label: 'Overview', icon: '📖', content: intro })
+    if (intro) out.push({ id: 'overview', label: 'Overview', icon: 'book', content: intro })
     for (const s of sections) {
       out.push({ id: slugify(s.title), label: s.title, icon: s.icon, content: s.content })
     }
@@ -148,7 +149,7 @@ export default function MarkdownTabs({ body, title, leadingWidget = null }) {
                 }`}
                 title={t.label}
               >
-                <span aria-hidden="true">{t.icon}</span>
+                <Icon name={t.icon} className="w-3.5 h-3.5" />
                 <span className="truncate">{t.label}</span>
               </button>
             ))}
@@ -183,7 +184,7 @@ export default function MarkdownTabs({ body, title, leadingWidget = null }) {
                         : 'text-[#3f4650] hover:bg-[#f9fafb] hover:text-[#14161a]'
                     }`}
                   >
-                    <span aria-hidden="true">{t.icon}</span>
+                    <Icon name={t.icon} className="w-3.5 h-3.5" />
                     <span className="truncate">{t.label}</span>
                   </button>
                 </li>
@@ -192,7 +193,7 @@ export default function MarkdownTabs({ body, title, leadingWidget = null }) {
             <div className="mt-3 pt-3 border-t border-[#14161a]/10">
               <a href="/rfq"
                 className="egg-btn-primary w-full text-xs py-2.5">
-                📋 Quote in 24 hours
+                Quote in 24 hours
               </a>
             </div>
           </div>

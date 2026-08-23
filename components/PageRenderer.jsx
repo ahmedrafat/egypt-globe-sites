@@ -40,6 +40,7 @@ import FAQAccordion from './FAQAccordion'
 import StickyRfqBar from './StickyRfqBar'
 import { faqsForPage } from '../lib/faqs'
 import { getBuyerVisibility, filterPagesByVisibility, isPageVisible } from '../lib/supabaseServer'
+import Icon, { DIVISION_ICON, APPLICATION_ICON, SERVICE_ICON, CATEGORY_ICON } from './ui/Icon'
 
 /**
  * Build a list of {name, path} crumbs from a page's path.
@@ -276,16 +277,16 @@ export default async function PageRenderer({ page }) {
           {/* Chip rail — tighter on mobile, hide HS chip on <sm */}
           <div className="flex items-center gap-1.5 sm:gap-2 mb-4 flex-wrap animate-fade-in-up">
             <span className="egg-chip text-[11px] sm:text-xs" style={{ color: heroTone, boxShadow: `inset 0 0 0 1px ${heroTone}55` }}>
-              <span aria-hidden="true">{cat.icon}</span> {cat.label}
+              <Icon name={CATEGORY_ICON[page.category] || 'grid'} className="w-3.5 h-3.5" /> {cat.label}
             </span>
             {isRockSalt && (
               <span className="egg-chip text-[11px] sm:text-xs" style={{ color: '#8a6d3b', boxShadow: 'inset 0 0 0 1px rgba(184,134,43,.45)' }}>
-                ⛏️ Rock Salt
+                Rock Salt
               </span>
             )}
             {isSeaSalt && (
               <span className="egg-chip text-[11px] sm:text-xs" style={{ color: '#0b8f84', boxShadow: 'inset 0 0 0 1px rgba(15,181,165,.5)' }}>
-                🌊 Sea Salt
+                Sea Salt
               </span>
             )}
             {page.specs?.nacl_min && (
@@ -323,16 +324,16 @@ export default async function PageRenderer({ page }) {
               <div className="flex flex-wrap items-center gap-2 lg:justify-end animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
                 <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
                   className="egg-btn-primary w-full sm:w-auto">
-                  📋 Get Quote
+                  Get Quote
                 </Link>
                 <div className="flex gap-2 w-full sm:w-auto">
                   <Link href={`/tds${page.path}`} target="_blank"
                     className="egg-btn-ghost flex-1 sm:flex-initial">
-                    📄 TDS
+                    TDS
                   </Link>
                   <Link href={`/rfq?product=${encodeURIComponent(page.path)}&type=coa`}
                     className="egg-btn-ghost flex-1 sm:flex-initial">
-                    🧪 COA
+                    COA
                   </Link>
                 </div>
               </div>
@@ -395,7 +396,7 @@ export default async function PageRenderer({ page }) {
         <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 border-t border-[#14161a]/10 egg-reveal">
           <div className="mb-8">
             <span className="egg-eyebrow text-[#0b8f84]">
-              <span aria-hidden="true">📦</span> Product catalogue
+              <span aria-hidden="true"></span> Product catalogue
             </span>
             <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-2 mt-4">Browse our 6 product divisions</h2>
             <p className="text-[#7a8290]">Each division ships from Egyptian ports under FOB / CIF / CFR Incoterms with per-shipment certificate of analysis.</p>
@@ -404,12 +405,10 @@ export default async function PageRenderer({ page }) {
             {PRODUCT_DIVISIONS.map(div => (
               <Link key={div.id} href={div.path}
                 className="egg-card relative p-6 group overflow-hidden">
-                <div className="absolute -right-6 -top-6 text-7xl opacity-[0.06] group-hover:opacity-[0.12] transition-opacity"
-                  aria-hidden="true">{div.icon}</div>
                 <div className="relative">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4"
                     style={{ background: `${div.color}1f`, boxShadow: `inset 0 0 0 1px ${div.color}66` }}>
-                    {div.icon}
+                    <Icon name={DIVISION_ICON[div.id] || 'box'} className="w-6 h-6" />
                   </div>
                   <h3 className="text-lg font-semibold text-[#14161a] transition-colors">
                     {div.label}
@@ -451,7 +450,7 @@ export default async function PageRenderer({ page }) {
                       <img src={p.hero_photo_url} alt={p.title}
                         className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-5xl opacity-30 bg-gradient-to-br from-[#f2fbfa] to-[#f9fafb]">🧂</div>
+                      <div className="w-full h-full flex items-center justify-center text-[#14161a]/20 bg-gradient-to-br from-[#f2fbfa] to-[#f9fafb]"><Icon name="cube" className="w-10 h-10" strokeWidth={1.25} /></div>
                     )}
                   </div>
                   <div className="p-4">
@@ -496,10 +495,7 @@ export default async function PageRenderer({ page }) {
                     <img src={p.hero_photo_url} alt={p.title}
                       className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-5xl opacity-30"
-                      style={{ background: `linear-gradient(135deg, ${cat.color}14, #f9fafb)` }}>
-                      {cat.icon}
-                    </div>
+                    <div className="w-full h-full flex items-center justify-center text-[#14161a]/20" style={{ background: `linear-gradient(135deg, ${cat.color}14, #f9fafb)` }}><Icon name={CATEGORY_ICON[page.category] || 'grid'} className="w-10 h-10" strokeWidth={1.25} /></div>
                   )}
                 </div>
                 <div className="p-4">
@@ -526,7 +522,7 @@ export default async function PageRenderer({ page }) {
         <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 border-t border-[#14161a]/10 egg-reveal">
           <div className="mb-8">
             <span className="egg-eyebrow text-[#0b8f84]">
-              <span aria-hidden="true">🚢</span> Supply-chain services
+              <span aria-hidden="true"></span> Supply-chain services
             </span>
             <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-2 mt-4">Our supply-chain services</h2>
             <p className="text-[#7a8290]">Logistics, port operations, added value, packing, inspection and trade documentation — all in-house.</p>
@@ -535,12 +531,10 @@ export default async function PageRenderer({ page }) {
             {SERVICE_DIVISIONS.map(svc => (
               <Link key={svc.id} href={svc.path}
                 className="egg-card relative p-6 group overflow-hidden">
-                <div className="absolute -right-6 -top-6 text-7xl opacity-[0.06] group-hover:opacity-[0.12] transition-opacity"
-                  aria-hidden="true">{svc.icon}</div>
                 <div className="relative">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4"
                     style={{ background: `${svc.color}1f`, boxShadow: `inset 0 0 0 1px ${svc.color}66` }}>
-                    {svc.icon}
+                    <Icon name={SERVICE_ICON[svc.id] || 'ship'} className="w-6 h-6" />
                   </div>
                   <h3 className="text-lg font-semibold text-[#14161a] transition-colors">
                     {svc.label}
@@ -569,8 +563,6 @@ export default async function PageRenderer({ page }) {
               return (
                 <Link key={p.id} href={p.path}
                   className="egg-card group p-6 overflow-hidden relative">
-                  <div className="absolute -right-4 -top-4 text-6xl opacity-[0.06] group-hover:opacity-[0.12] transition-opacity"
-                    aria-hidden="true">{childCat.icon}</div>
                   <h3 className="text-base font-semibold text-[#14161a] group-hover:text-[#0b8f84] transition-colors">
                     {p.title}
                   </h3>
@@ -618,7 +610,7 @@ export default async function PageRenderer({ page }) {
             </div>
             <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
               className="egg-btn-primary relative">
-              📋 Request Quote
+              Request Quote
             </Link>
           </div>
         </section>
@@ -638,7 +630,7 @@ export default async function PageRenderer({ page }) {
                     <img src={p.hero_photo_url} alt={p.title}
                       className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-3xl opacity-30">{cat.icon}</div>
+                    <div className="w-full h-full flex items-center justify-center text-[#14161a]/20"><Icon name={CATEGORY_ICON[p.category] || 'grid'} className="w-8 h-8" strokeWidth={1.25} /></div>
                   )}
                 </div>
                 <div className="p-3">
@@ -727,7 +719,7 @@ async function ApplicationsHubByDivision() {
       <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16 border-t border-[#14161a]/10 egg-reveal">
         <div className="mb-10 max-w-3xl">
           <span className="egg-eyebrow text-[#7c3aed]">
-            <span aria-hidden="true">🏭</span> Industries we serve
+            <span aria-hidden="true"></span> Industries we serve
           </span>
           <h2 className="egg-display text-3xl sm:text-4xl lg:text-5xl text-[#14161a] mt-4 mb-3">
             {totalApps} industries — grouped by the division that supplies them.
@@ -745,7 +737,7 @@ async function ApplicationsHubByDivision() {
           {divisionsWithApps.map(d => (
             <a key={d.id} href={`#${d.id}`}
               className="egg-chip text-xs hover:text-[#14161a] transition-all hover:shadow-[inset_0_0_0_1.5px_rgba(20,22,26,.35)]">
-              <span aria-hidden="true">{d.icon}</span>
+              <Icon name={DIVISION_ICON[d.id] || 'box'} className="w-3.5 h-3.5" />
               {d.label}
               <span className="ml-1 text-[10px] font-bold tabular-nums text-[#8a93a3]">{grouped[d.id].length}</span>
             </a>
@@ -768,7 +760,7 @@ async function ApplicationsHubByDivision() {
               <div className="flex items-start gap-4 mb-6">
                 <div className="flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center text-3xl"
                   style={{ background: `${d.color}1f`, boxShadow: `inset 0 0 0 1px ${d.color}66` }}>
-                  {d.icon}
+                  <Icon name={DIVISION_ICON[d.id] || 'box'} className="w-6 h-6" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
@@ -799,7 +791,7 @@ async function ApplicationsHubByDivision() {
                     <div className="flex items-start gap-3">
                       <div className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center text-xl"
                         style={{ background: `${d.color}1f`, boxShadow: `inset 0 0 0 1px ${d.color}66` }}>
-                        {a.icon}
+                        <Icon name={APPLICATION_ICON[a.id] || 'factory'} className="w-5 h-5" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start gap-1.5 mb-1">
@@ -842,7 +834,7 @@ async function ApplicationsHubByDivision() {
                                 return (
                                   <span key={otherId} className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-[#f3f4f6]"
                                     style={{ color: other.color }}>
-                                    <span>{other.icon}</span>{other.label}
+                                    <Icon name={DIVISION_ICON[other.id] || APPLICATION_ICON[other.id] || 'box'} className="w-3 h-3" />{other.label}
                                     {otherCount > 0 && <span className="text-[#8a93a3]">·{otherCount}</span>}
                                   </span>
                                 )
@@ -876,7 +868,7 @@ async function ApplicationsHubByDivision() {
             it to the right division within 24 hours.
           </p>
           <Link href="/rfq" className="egg-btn-primary relative">
-            📋 Request a Quote
+            Request a Quote
           </Link>
         </div>
       </section>
@@ -893,7 +885,7 @@ function AccessRestricted({ page, visibility }) {
       <section className="relative bg-white min-h-[60vh] flex items-center overflow-hidden">
         <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-60 pointer-events-none" />
         <div className="relative max-w-2xl mx-auto px-5 sm:px-6 lg:px-8 py-20 text-center">
-          <div className="text-5xl mb-4">🔒</div>
+          <div className="text-5xl mb-4"><Icon name="lock" className="w-3.5 h-3.5" /></div>
           <h1 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-3">{page.title}</h1>
           <p className="text-[#3f4650] mb-8 leading-relaxed">
             This product is outside the catalogue scope assigned to your buyer
@@ -903,7 +895,7 @@ function AccessRestricted({ page, visibility }) {
           <div className="flex flex-wrap justify-center gap-3">
             <a href="mailto:export@egyptglobe.com?subject=Catalogue%20access%20request"
               className="egg-btn-primary">
-              ✉ Request access
+              <Icon name="mail" className="w-3.5 h-3.5" /> Request access
             </a>
             <Link href="/buyer"
               className="egg-btn-ghost">

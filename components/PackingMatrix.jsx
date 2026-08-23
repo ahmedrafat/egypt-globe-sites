@@ -23,20 +23,21 @@
  * packing_options array overlaps the master row name.
  */
 import Link from 'next/link'
+import Icon from './ui/Icon'
 
 const CATEGORY_META = {
-  'Loose Bulk':   { icon: '⛴️', tone: 'bg-cyan-50    text-cyan-700    border-cyan-100',    label: 'Loose Bulk' },
-  'Bag':          { icon: '🛍️', tone: 'bg-amber-50   text-[#8a6d3b]   border-amber-100',   label: 'Bagged' },
-  'Jumbo Bag':    { icon: '🧰', tone: 'bg-violet-50  text-violet-700  border-violet-100',  label: 'FIBC Jumbo Bags' },
-  'Bag in Jumbo': { icon: '📦', tone: 'bg-emerald-50 text-emerald-700 border-emerald-100', label: 'Bag-in-Jumbo (bulk vessel)' },
-  'OEM':          { icon: '🎨', tone: 'bg-rose-50    text-rose-700    border-rose-100',    label: 'OEM / Custom' },
+  'Loose Bulk':   { icon: 'ship', tone: 'bg-cyan-50    text-cyan-700    border-cyan-100',    label: 'Loose Bulk' },
+  'Bag':          { icon: 'box', tone: 'bg-amber-50   text-[#8a6d3b]   border-amber-100',   label: 'Bagged' },
+  'Jumbo Bag':    { icon: 'tools', tone: 'bg-violet-50  text-violet-700  border-violet-100',  label: 'FIBC Jumbo Bags' },
+  'Bag in Jumbo': { icon: 'box', tone: 'bg-emerald-50 text-emerald-700 border-emerald-100', label: 'Bag-in-Jumbo (bulk vessel)' },
+  'OEM':          { icon: 'sparkle', tone: 'bg-rose-50    text-rose-700    border-rose-100',    label: 'OEM / Custom' },
 }
 
 const CATEGORY_ORDER = ['Loose Bulk', 'Bag', 'Jumbo Bag', 'Bag in Jumbo', 'OEM']
 
 function vesselModeChip(mode) {
-  if (mode === 'Bulk') return { label: '⛴️ Bulk vessel', cls: 'bg-cyan-100 text-cyan-800 border-cyan-200' }
-  if (mode === 'Container') return { label: '📦 Container', cls: 'bg-blue-100 text-blue-800 border-blue-200' }
+  if (mode === 'Bulk') return { label: 'Bulk vessel', cls: 'bg-cyan-100 text-cyan-800 border-cyan-200' }
+  if (mode === 'Container') return { label: 'Container', cls: 'bg-blue-100 text-blue-800 border-blue-200' }
   return { label: mode, cls: 'bg-[#f3f4f6] text-[#3f4650] border-[#14161a]/10' }
 }
 
@@ -63,7 +64,7 @@ export default function PackingMatrix({ packingOptions = [], productPackingOptio
       {/* Header */}
       <div className="px-5 sm:px-6 py-4 border-b border-[#14161a]/10 bg-[#f9fafb]">
         <h2 className="font-bold text-lg text-[#14161a] flex items-center gap-2">
-          <span className="text-xl" aria-hidden>📦</span>
+          <Icon name="box" className="w-5 h-5 text-[#0b8f84]" />
           Packing &amp; Containerisation
         </h2>
         <p className="text-xs text-[#7a8290] mt-1">
@@ -75,13 +76,13 @@ export default function PackingMatrix({ packingOptions = [], productPackingOptio
       {/* Sections */}
       <div className="divide-y divide-[#14161a]/10">
         {CATEGORY_ORDER.filter(c => byCategory[c]?.length).map(category => {
-          const meta = CATEGORY_META[category] || { icon: '📦', tone: 'bg-[#f9fafb] text-[#3f4650] border-[#14161a]/10', label: category }
+          const meta = CATEGORY_META[category] || { icon: 'box', tone: 'bg-[#f9fafb] text-[#3f4650] border-[#14161a]/10', label: category }
           const items = byCategory[category]
           return (
             <div key={category} className="px-5 sm:px-6 py-4">
               <div className="flex items-center gap-2 mb-3">
                 <span className={`inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border ${meta.tone}`}>
-                  <span>{meta.icon}</span> {meta.label}
+                  <Icon name={meta.icon} className="w-3 h-3" /> {meta.label}
                 </span>
                 <span className="text-[11px] text-[#8a93a3] font-medium">{items.length} {items.length === 1 ? 'format' : 'formats'}</span>
               </div>
@@ -99,8 +100,7 @@ export default function PackingMatrix({ packingOptions = [], productPackingOptio
                       )}
                       <div className="flex items-start gap-2.5">
                         <span className={`w-9 h-9 rounded-lg flex items-center justify-center text-base flex-shrink-0 ${meta.tone.split(' ').slice(0, 2).join(' ')}`}>
-                          {meta.icon}
-                        </span>
+                          <Icon name={meta.icon} className="w-4 h-4" /></span>
                         <div className="flex-1 min-w-0">
                           <div className="font-bold text-sm text-[#14161a] leading-tight">
                             {p.packing_name}
@@ -122,7 +122,7 @@ export default function PackingMatrix({ packingOptions = [], productPackingOptio
                             ))}
                             {p.oem_available && (
                               <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-orange-100 text-orange-800 border border-[#ff6321]/25">
-                                🎨 OEM
+                                OEM
                               </span>
                             )}
                           </div>
@@ -166,12 +166,12 @@ function SimplePackingChips({ packing }) {
   return (
     <div className="bg-white border border-[#14161a]/10 rounded-2xl p-5 shadow-sm">
       <h3 className="font-bold text-lg text-[#14161a] mb-4 flex items-center gap-2">
-        <span className="text-xl" aria-hidden>📦</span> Available packing formats
+        <Icon name="box" className="w-5 h-5 text-[#0b8f84]" /> Available packing formats
       </h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
         {packing.map((p, i) => (
           <div key={i} className="flex items-center gap-2.5 rounded-xl border border-[#14161a]/10 bg-[#f9fafb] p-3">
-            <span className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-base flex-shrink-0">📦</span>
+            <span className="w-8 h-8 rounded-lg ring-1 ring-[#14161a]/15 flex items-center justify-center text-[#14161a] flex-shrink-0"><Icon name="box" className="w-4 h-4" /></span>
             <span className="text-sm font-semibold text-[#14161a]">{p}</span>
           </div>
         ))}

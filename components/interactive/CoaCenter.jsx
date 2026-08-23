@@ -14,31 +14,32 @@
  */
 import { useMemo, useState } from 'react'
 import { printCoa } from '../../lib/coaPrint'
+import Icon from '../ui/Icon'
 
 const REGION_META = {
-  'GLOBAL':         { icon: '🌍', label: 'Global / default',     tone: 'bg-[#f9fafb] text-[#3f4650] border-[#14161a]/10' },
-  'Europe':         { icon: '🇪🇺', label: 'Europe',                tone: 'bg-[#eef6fd] text-[#0369a1] border-[#0284c7]/35' },
-  'North Europe':   { icon: '❄️', label: 'North Europe',          tone: 'bg-cyan-50 text-cyan-800 border-cyan-200' },
-  'Mediterranean':  { icon: '🌊', label: 'Mediterranean',         tone: 'bg-sky-50 text-sky-800 border-sky-200' },
-  'GCC':            { icon: '🕌', label: 'GCC / Saudi',           tone: 'bg-[#e6fbf8] text-[#0b8f84] border-[#0fb5a5]/40' },
-  'MENA':           { icon: '🌅', label: 'MENA',                  tone: 'bg-amber-50 text-[#8a6d3b] border-amber-200' },
-  'North Africa':   { icon: '🏜', label: 'North Africa',          tone: 'bg-orange-50 text-orange-800 border-orange-200' },
-  'East Africa':    { icon: '🌍', label: 'East Africa',           tone: 'bg-amber-50 text-[#8a6d3b] border-amber-200' },
-  'West Africa':    { icon: '🌍', label: 'West Africa',           tone: 'bg-yellow-50 text-yellow-800 border-yellow-200' },
-  'Africa':         { icon: '🌍', label: 'Africa',                tone: 'bg-amber-50 text-[#8a6d3b] border-amber-200' },
-  'Red Sea & Gulf': { icon: '🛢', label: 'Red Sea & Gulf',        tone: 'bg-orange-50 text-orange-800 border-orange-200' },
-  'South Asia':     { icon: '🌏', label: 'South Asia',            tone: 'bg-rose-50 text-rose-800 border-rose-200' },
-  'Far East':       { icon: '🌏', label: 'Far East',              tone: 'bg-pink-50 text-pink-800 border-pink-200' },
-  'South-East Asia':{ icon: '🌏', label: 'South-East Asia',       tone: 'bg-fuchsia-50 text-fuchsia-800 border-fuchsia-200' },
-  'Asia':           { icon: '🌏', label: 'Asia',                  tone: 'bg-rose-50 text-rose-800 border-rose-200' },
-  'Americas':       { icon: '🌎', label: 'Americas',              tone: 'bg-violet-50 text-violet-800 border-violet-200' },
-  'North America':  { icon: '🌎', label: 'North America',         tone: 'bg-violet-50 text-violet-800 border-violet-200' },
-  'Latin America':  { icon: '🌎', label: 'Latin America',         tone: 'bg-purple-50 text-purple-800 border-purple-200' },
-  'CIS':            { icon: '❄️', label: 'CIS',                   tone: 'bg-[#f9fafb] text-[#3f4650] border-[#14161a]/10' },
+  'GLOBAL':         { icon: 'globe', label: 'Global / default',     tone: 'bg-[#f9fafb] text-[#3f4650] border-[#14161a]/10' },
+  'Europe':         { icon: 'dot', label: 'Europe',                tone: 'bg-[#eef6fd] text-[#0369a1] border-[#0284c7]/35' },
+  'North Europe':   { icon: 'snow', label: 'North Europe',          tone: 'bg-cyan-50 text-cyan-800 border-cyan-200' },
+  'Mediterranean':  { icon: 'wave', label: 'Mediterranean',         tone: 'bg-sky-50 text-sky-800 border-sky-200' },
+  'GCC':            { icon: 'building', label: 'GCC / Saudi',           tone: 'bg-[#e6fbf8] text-[#0b8f84] border-[#0fb5a5]/40' },
+  'MENA':           { icon: 'sun', label: 'MENA',                  tone: 'bg-amber-50 text-[#8a6d3b] border-amber-200' },
+  'North Africa':   { icon: 'layers', label: 'North Africa',          tone: 'bg-orange-50 text-orange-800 border-orange-200' },
+  'East Africa':    { icon: 'globe', label: 'East Africa',           tone: 'bg-amber-50 text-[#8a6d3b] border-amber-200' },
+  'West Africa':    { icon: 'globe', label: 'West Africa',           tone: 'bg-yellow-50 text-yellow-800 border-yellow-200' },
+  'Africa':         { icon: 'globe', label: 'Africa',                tone: 'bg-amber-50 text-[#8a6d3b] border-amber-200' },
+  'Red Sea & Gulf': { icon: 'factory', label: 'Red Sea & Gulf',        tone: 'bg-orange-50 text-orange-800 border-orange-200' },
+  'South Asia':     { icon: 'globe', label: 'South Asia',            tone: 'bg-rose-50 text-rose-800 border-rose-200' },
+  'Far East':       { icon: 'globe', label: 'Far East',              tone: 'bg-pink-50 text-pink-800 border-pink-200' },
+  'South-East Asia':{ icon: 'globe', label: 'South-East Asia',       tone: 'bg-fuchsia-50 text-fuchsia-800 border-fuchsia-200' },
+  'Asia':           { icon: 'globe', label: 'Asia',                  tone: 'bg-rose-50 text-rose-800 border-rose-200' },
+  'Americas':       { icon: 'globe', label: 'Americas',              tone: 'bg-violet-50 text-violet-800 border-violet-200' },
+  'North America':  { icon: 'globe', label: 'North America',         tone: 'bg-violet-50 text-violet-800 border-violet-200' },
+  'Latin America':  { icon: 'globe', label: 'Latin America',         tone: 'bg-purple-50 text-purple-800 border-purple-200' },
+  'CIS':            { icon: 'snow', label: 'CIS',                   tone: 'bg-[#f9fafb] text-[#3f4650] border-[#14161a]/10' },
 }
 
 function regionMeta(r) {
-  return REGION_META[r] || { icon: '📍', label: r || 'Unknown', tone: 'bg-[#f9fafb] text-[#3f4650] border-[#14161a]/10' }
+  return REGION_META[r] || { icon: 'pin', label: r || 'Unknown', tone: 'bg-[#f9fafb] text-[#3f4650] border-[#14161a]/10' }
 }
 
 // Pretty-print a parameter key like 'compressive_28d_mpa' → 'Compressive 28-day (MPa)'
@@ -124,7 +125,7 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
   if (coas.length === 0) {
     return (
       <div className="egg-panel p-6 sm:p-8 text-center">
-        <div className="text-4xl mb-3">🧪</div>
+        <Icon name="beaker" className="w-10 h-10 mx-auto mb-3 text-[#14161a]/40" strokeWidth={1.25} />
         <h3 className="font-bold text-lg text-[#14161a] mb-2">No Certificate of Analysis on file yet</h3>
         <p className="text-sm text-[#7a8290] mb-4 max-w-md mx-auto">
           Our internal Egypt Globe QC Lab issues a CoA with every shipment, and
@@ -135,7 +136,7 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
         {requestPath && (
           <a href={`/rfq?product=${encodeURIComponent(requestPath)}&type=coa`}
             className="egg-btn-primary text-sm py-2.5">
-            🧪 Request CoA
+            <Icon name="beaker" className="w-3.5 h-3.5" /> Request CoA
           </a>
         )}
       </div>
@@ -152,7 +153,7 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div>
             <h2 className="font-bold text-lg text-[#14161a] flex items-center gap-2">
-              <span className="text-xl" aria-hidden>🧪</span>
+              <Icon name="beaker" className="w-5 h-5 text-[#0b8f84]" />
               Certificates of Analysis
             </h2>
             <p className="text-xs text-[#7a8290] mt-1">
@@ -163,7 +164,7 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
           {requestPath && (
             <a href={`/rfq?product=${encodeURIComponent(requestPath)}&type=coa`}
               className="egg-btn-primary text-xs py-1.5 px-3 flex-shrink-0">
-              🧪 Request CoA
+              <Icon name="beaker" className="w-3.5 h-3.5" /> Request CoA
             </a>
           )}
         </div>
@@ -181,7 +182,7 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
                   isActive
                     ? 'bg-[#14161a] text-white border-[#14161a] shadow-sm'
                     : `${m.tone} hover:border-[#14161a]/40`}`}>
-                <span aria-hidden>{m.icon}</span>
+                <Icon name={m.icon} className="w-3.5 h-3.5" />
                 {m.label}
                 <span className={`text-[10px] font-bold px-1 rounded ${isActive ? 'bg-white/25' : 'bg-white text-[#7a8290]'}`}>
                   {grouped[r].length}
@@ -251,7 +252,7 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
                     style={{ background: brand?.primary_color || '#0b8f84' }}
                     title="Open print dialog — choose Save as PDF or send to printer"
                   >
-                    🖨 Print / PDF
+                    Print / PDF
                   </button>
                   {coa.pdf_url && (
                     <a
@@ -261,7 +262,7 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
                       className="inline-flex items-center gap-1.5 text-xs font-bold bg-white hover:bg-[#f9fafb] text-[#0b8f84] border border-[#14161a]/20 px-3 py-2 rounded-lg shadow-sm transition-colors"
                       title="Download the lab's original PDF (uploaded by QC)"
                     >
-                      📄 Original PDF
+                      Original PDF
                     </a>
                   )}
                 </div>
@@ -282,29 +283,29 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
                   <div className="flex flex-wrap gap-2 text-xs">
                     {(coa.packing_name || coa.packing_label) && (
                       <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white border border-[#14161a]/10 text-[#14161a]">
-                        📦 <span className="font-semibold">{coa.packing_name || coa.packing_label}</span>
+                        <span className="font-semibold">{coa.packing_name || coa.packing_label}</span>
                         {coa.packing_size_kg && <span className="text-[#7a8290]">· {Number(coa.packing_size_kg)} kg</span>}
                         {coa.packing_material && <span className="text-[#7a8290]">· {coa.packing_material}</span>}
                       </span>
                     )}
                     {coa.quantity_mt && (
                       <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white border border-[#14161a]/10 text-[#14161a]">
-                        ⚖️ <span className="font-semibold">{Number(coa.quantity_mt)} MT</span>
+                        <span className="font-semibold">{Number(coa.quantity_mt)} MT</span>
                       </span>
                     )}
                     {coa.container_count && (
                       <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white border border-[#14161a]/10 text-[#14161a]">
-                        🚛 <span className="font-semibold">{coa.container_count}× container</span>
+                        <span className="font-semibold">{coa.container_count}× container</span>
                       </span>
                     )}
                     {coa.vessel_name && (
                       <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white border border-[#14161a]/10 text-[#14161a]">
-                        🚢 <span className="font-semibold">{coa.vessel_name}</span>
+                        <span className="font-semibold">{coa.vessel_name}</span>
                       </span>
                     )}
                     {coa.pol_unlocode && coa.pod_unlocode && (
                       <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white border border-[#14161a]/10 text-[#14161a] font-mono">
-                        ⚓ {coa.pol_unlocode} → {coa.pod_unlocode}
+                        {coa.pol_unlocode} → {coa.pod_unlocode}
                       </span>
                     )}
                     {coa.bl_no && (

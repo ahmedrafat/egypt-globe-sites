@@ -5,6 +5,7 @@
  */
 import Link from 'next/link'
 import { PRODUCT_DIVISIONS } from '../../lib/corporatePages'
+import Icon, { DIVISION_ICON } from '../../components/ui/Icon'
 
 export const revalidate = 3600
 
@@ -98,7 +99,7 @@ export default function ProductsHub() {
               ].join(' ')}>
               <div className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center text-xl mt-0.5 transition-transform duration-300 group-hover:scale-110"
                 style={{ background: `${div.color}1f`, boxShadow: `inset 0 0 0 1px ${div.color}66` }}>
-                {div.icon}
+                <Icon name={DIVISION_ICON[div.id] || 'box'} className="w-6 h-6" />
               </div>
               <div className="min-w-0">
                 <div className="font-semibold text-[#14161a] group-hover:text-[#0b8f84] transition-colors text-[15px] mb-1">

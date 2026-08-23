@@ -15,6 +15,7 @@ import {
   getPagesByCategory,
 } from '../lib/corporatePages'
 import { getBuyerVisibility } from '../lib/supabaseServer'
+import Icon from './ui/Icon'
 
 export default async function SiteHeader({ settings }) {
   const s = settings || COMPANY_INFO_DEFAULT
@@ -36,11 +37,11 @@ export default async function SiteHeader({ settings }) {
             </span>
             <span className="hidden lg:inline text-blue-400/50">|</span>
             <a href={`tel:${s.phoneE164}`} className="flex items-center gap-1 hover:text-white transition-colors">
-              ☎ {s.phone}
+              <Icon name="phone" className="w-3.5 h-3.5" /> {s.phone}
             </a>
             <span className="text-blue-400/50">·</span>
             <a href={`mailto:${s.email}`} className="hover:text-white transition-colors">
-              ✉ {s.email}
+              <Icon name="mail" className="w-3.5 h-3.5" /> {s.email}
             </a>
           </div>
           <div className="flex items-center gap-3 text-blue-200">
@@ -107,7 +108,7 @@ export default async function SiteHeader({ settings }) {
                 </div>
                 {/* Mega-menu footer */}
                 <div className="px-5 py-2.5 bg-[#f9fafb] border-t border-[#14161a]/10 flex items-center gap-3 text-[11px] text-[#7a8290]">
-                  <span>🇪🇬 Egyptian-origin verified</span>
+                  <span><Icon name="dot" className="w-3.5 h-3.5" /><Icon name="dot" className="w-3.5 h-3.5" /> Egyptian-origin verified</span>
                   <span className="text-[#c9ced6]">·</span>
                   <span>7 seaports · FOB / CIF / CFR</span>
                   <span className="text-[#c9ced6]">·</span>
@@ -183,7 +184,7 @@ export default async function SiteHeader({ settings }) {
                   {/* Markets column */}
                   <div className="p-4">
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="text-base">📊</span>
+                      <span className="text-base"><Icon name="chart" className="w-3.5 h-3.5" /></span>
                       <span className="text-[11px] font-bold uppercase tracking-wider text-cyan-700">Market Intelligence</span>
                     </div>
                     <Link href="/markets/cement-clinker-hs-2523" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">Cement & clinker (HS 2523)</Link>
@@ -199,7 +200,7 @@ export default async function SiteHeader({ settings }) {
                   {/* Trade Tools column */}
                   <div className="p-4">
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="text-base">🧰</span>
+                      <span className="text-base"><Icon name="tools" className="w-3.5 h-3.5" /></span>
                       <span className="text-[11px] font-bold uppercase tracking-wider text-orange-700">Trade Tools</span>
                     </div>
                     <Link href="/trade-tools/hs-codes" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">HS Code library</Link>
@@ -216,7 +217,7 @@ export default async function SiteHeader({ settings }) {
                   {/* Standards column */}
                   <div className="p-4">
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="text-base">📋</span>
+                      <span className="text-base"></span>
                       <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700">Standards</span>
                     </div>
                     <Link href="/standards/en-197-1" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">EN 197-1 — EU cement</Link>
@@ -233,7 +234,7 @@ export default async function SiteHeader({ settings }) {
                   {/* Ports column */}
                   <div className="p-4">
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="text-base">⚓</span>
+                      <span className="text-base"><Icon name="anchor" className="w-3.5 h-3.5" /></span>
                       <span className="text-[11px] font-bold uppercase tracking-wider text-blue-700">Egyptian Ports</span>
                     </div>
                     <Link href="/ports/damietta-salt" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">Damietta — main hub, 17m</Link>
@@ -246,9 +247,9 @@ export default async function SiteHeader({ settings }) {
                     <Link href="/ports/safaga-salt" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">Safaga — Red Sea phosphate</Link>
                     <Link href="/services/loading-ports" className="block text-[11px] font-bold text-blue-700 hover:underline pt-2">All Egyptian loading ports →</Link>
                     <div className="mt-4 pt-3 border-t border-[#14161a]/10">
-                      <Link href="/blog" className="block text-xs font-semibold text-[#3f4650] hover:text-[#0b8f84] py-1">📝 News & insights</Link>
-                      <Link href="/case-studies" className="block text-xs font-semibold text-[#3f4650] hover:text-[#0b8f84] py-1">📖 Case studies</Link>
-                      <Link href="/coa" className="block text-xs font-semibold text-[#3f4650] hover:text-[#0b8f84] py-1">🧪 CoA centre</Link>
+                      <Link href="/blog" className="block text-xs font-semibold text-[#3f4650] hover:text-[#0b8f84] py-1"><Icon name="news" className="w-3.5 h-3.5" /> News & insights</Link>
+                      <Link href="/case-studies" className="block text-xs font-semibold text-[#3f4650] hover:text-[#0b8f84] py-1"><Icon name="book" className="w-3.5 h-3.5" /> Case studies</Link>
+                      <Link href="/coa" className="block text-xs font-semibold text-[#3f4650] hover:text-[#0b8f84] py-1"><Icon name="beaker" className="w-3.5 h-3.5" /> CoA centre</Link>
                     </div>
                   </div>
                 </div>
@@ -263,7 +264,7 @@ export default async function SiteHeader({ settings }) {
                   <span className="text-[#c9ced6]">·</span>
                   <span>8 ports</span>
                   <span className="text-[#c9ced6] ml-auto">·</span>
-                  <Link href="/search" className="text-[#0b8f84] hover:underline font-semibold">🔍 Search the site →</Link>
+                  <Link href="/search" className="text-[#0b8f84] hover:underline font-semibold"><Icon name="search" className="w-3.5 h-3.5" /> Search the site →</Link>
                 </div>
               </div>
             </div>

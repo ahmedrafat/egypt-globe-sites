@@ -15,6 +15,7 @@ import {
 } from '../../lib/corporatePages'
 import RFQForm from '../../components/rfq/RFQForm'
 import { ServiceJsonLd } from '../../components/StructuredData'
+import Icon from '../../components/ui/Icon'
 
 export const revalidate = 60
 
@@ -122,11 +123,11 @@ export default async function RFQPage({ searchParams }) {
                 </p>
                 <a href={`mailto:${company.email}?subject=RFQ%20-%20Egypt%20Globe%20Group`}
                   className="block bg-white ring-1 ring-[#14161a]/10 hover:ring-[#14161a]/35 transition-all rounded-lg px-4 py-3 text-sm font-mono font-semibold text-[#14161a]">
-                  ✉ {company.email}
+                  <Icon name="mail" className="w-3.5 h-3.5" /> {company.email}
                 </a>
                 <a href={`tel:${company.phoneE164}`}
                   className="block mt-2 bg-white ring-1 ring-[#14161a]/10 hover:ring-[#14161a]/35 transition-all rounded-lg px-4 py-3 text-sm font-mono font-semibold text-[#14161a]">
-                  ☎ {company.phone}
+                  <Icon name="phone" className="w-3.5 h-3.5" /> {company.phone}
                 </a>
               </div>
             </div>

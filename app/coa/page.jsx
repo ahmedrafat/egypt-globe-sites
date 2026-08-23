@@ -9,6 +9,7 @@
  */
 import Link from 'next/link'
 import { getCoaSummary } from '../../lib/corporatePages'
+import Icon from '../../components/ui/Icon'
 
 export const dynamic = 'force-dynamic'
 
@@ -19,20 +20,20 @@ export const metadata = {
 }
 
 const REGION_META = {
-  GLOBAL:           { icon: '🌍', label: 'Global / default',  color: '#64748b' },
-  Europe:           { icon: '🇪🇺', label: 'Europe',             color: '#1d4ed8' },
-  'North Europe':   { icon: '❄️', label: 'North Europe',       color: '#0891b2' },
-  Mediterranean:    { icon: '🌊', label: 'Mediterranean',      color: '#0284c7' },
-  GCC:              { icon: '🕌', label: 'GCC / Saudi',        color: '#059669' },
-  'East Africa':    { icon: '🌍', label: 'East Africa',        color: '#d97706' },
-  'West Africa':    { icon: '🌍', label: 'West Africa',        color: '#b45309' },
-  'South Asia':     { icon: '🌏', label: 'South Asia',         color: '#e11d48' },
-  'Far East':       { icon: '🌏', label: 'Far East',           color: '#db2777' },
-  Americas:         { icon: '🌎', label: 'Americas',           color: '#7c3aed' },
+  GLOBAL:           { icon: 'globe', label: 'Global / default',  color: '#64748b' },
+  Europe:           { icon: 'dot', label: 'Europe',             color: '#1d4ed8' },
+  'North Europe':   { icon: 'snow', label: 'North Europe',       color: '#0891b2' },
+  Mediterranean:    { icon: 'wave', label: 'Mediterranean',      color: '#0284c7' },
+  GCC:              { icon: 'building', label: 'GCC / Saudi',        color: '#059669' },
+  'East Africa':    { icon: 'globe', label: 'East Africa',        color: '#d97706' },
+  'West Africa':    { icon: 'globe', label: 'West Africa',        color: '#b45309' },
+  'South Asia':     { icon: 'globe', label: 'South Asia',         color: '#e11d48' },
+  'Far East':       { icon: 'globe', label: 'Far East',           color: '#db2777' },
+  Americas:         { icon: 'globe', label: 'Americas',           color: '#7c3aed' },
 }
 
 function regionMeta(r) {
-  return REGION_META[r] || { icon: '📍', label: r, color: '#475569' }
+  return REGION_META[r] || { icon: 'pin', label: r, color: '#475569' }
 }
 
 function fmtDate(d) {
@@ -70,8 +71,6 @@ export default async function CoaCenter() {
         <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: 'radial-gradient(55% 55% at 88% 0%, rgba(15,181,165,.2), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.09), transparent 60%)' }} />
-        <div aria-hidden="true" className="absolute -right-10 -top-16 text-[240px] leading-none opacity-[0.06] select-none pointer-events-none">🏅</div>
-
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16">
           <nav className="flex items-center gap-2 text-xs text-[#7a8290] mb-5 flex-wrap">
             <Link href="/" className="hover:text-[#14161a] transition-colors">Home</Link>
@@ -81,7 +80,7 @@ export default async function CoaCenter() {
 
           <div className="flex items-center gap-2 mb-4 flex-wrap">
             <span className="egg-chip text-xs" style={{ color: TONE, boxShadow: 'inset 0 0 0 1px rgba(15,181,165,.5)' }}>
-              🏅 Independent TÜV Austria / SGS / Intertek / Bureau Veritas
+              <Icon name="shield" className="w-3.5 h-3.5" /> Independent TÜV Austria / SGS / Intertek / Bureau Veritas
             </span>
             <span className="egg-chip text-xs">
               {totalCoas} active CoAs
@@ -115,7 +114,7 @@ export default async function CoaCenter() {
               return (
                 <a key={r} href={`#${r.replace(/\s+/g, '-')}`}
                   className="egg-chip text-xs hover:text-[#14161a] transition-all hover:shadow-[inset_0_0_0_1.5px_rgba(20,22,26,.35)] whitespace-nowrap">
-                  <span aria-hidden>{meta.icon}</span>
+                  <Icon name={meta.icon} className="w-3.5 h-3.5" />
                   {meta.label}
                   <span className="ml-1 text-[10px] font-bold tabular-nums text-[#8a93a3]">{byRegion[r].length}</span>
                 </a>
@@ -136,10 +135,7 @@ export default async function CoaCenter() {
             <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10">
               {/* Section header */}
               <div className="flex items-start gap-3 mb-6">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0"
-                  style={{ background: `${meta.color}1f`, boxShadow: `inset 0 0 0 1px ${meta.color}66` }}>
-                  {meta.icon}
-                </div>
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ring-1 ring-[#14161a]/15 text-[#14161a]"><Icon name={meta.icon} className="w-5 h-5" /></div>
                 <div className="flex-1 min-w-0">
                   <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a]">
                     {meta.label}
@@ -161,8 +157,7 @@ export default async function CoaCenter() {
                       <div className="flex items-start gap-2.5">
                         <span className="w-9 h-9 rounded-lg flex items-center justify-center text-base flex-shrink-0"
                           style={{ background: `${meta.color}1f`, boxShadow: `inset 0 0 0 1px ${meta.color}66` }}>
-                          🧪
-                        </span>
+                                                  </span>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-1.5 flex-wrap mb-1">
                             <span className="font-mono text-[10px] font-bold text-[#3f4650] bg-[#f3f4f6] px-1.5 py-0.5 rounded">{c.ref_code}</span>
@@ -208,7 +203,7 @@ export default async function CoaCenter() {
           </p>
           <Link href="/rfq?type=coa"
             className="egg-btn-primary relative">
-            🧪 Request CoA
+            <Icon name="beaker" className="w-3.5 h-3.5" /> Request CoA
           </Link>
         </div>
       </section>

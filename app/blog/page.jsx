@@ -5,6 +5,7 @@
 import Link from 'next/link'
 import { getPagesByCategory, getPageByPath } from '../../lib/corporatePages'
 import RichPageBody from '../../components/RichPageBody'
+import Icon from '../../components/ui/Icon'
 
 // Drop 139c — render on demand. See app/case-studies/page.jsx note.
 export const dynamic = 'force-dynamic'
@@ -30,8 +31,6 @@ export default async function BlogIndex() {
         <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: 'radial-gradient(55% 55% at 88% 0%, rgba(255,99,33,.16), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(184,134,43,.14), transparent 60%)' }} />
-        <div aria-hidden="true" className="absolute -right-10 -top-16 text-[240px] leading-none opacity-[0.06] select-none pointer-events-none">📝</div>
-
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20">
           <nav className="flex items-center gap-2 text-xs text-[#7a8290] mb-5 flex-wrap animate-fade-in">
             <Link href="/" className="hover:text-[#14161a] transition-colors">Home</Link>
@@ -41,7 +40,7 @@ export default async function BlogIndex() {
 
           <div className="flex items-center gap-2 mb-4 flex-wrap animate-fade-in-up">
             <span className="egg-chip text-xs" style={{ color: TONE, boxShadow: 'inset 0 0 0 1px rgba(255,99,33,.45)' }}>
-              📝 Editorial
+              <Icon name="news" className="w-3.5 h-3.5" /> Editorial
             </span>
             <span className="egg-chip text-xs">
               {posts.length} {posts.length === 1 ? 'article' : 'articles'}
@@ -66,7 +65,7 @@ export default async function BlogIndex() {
       {posts.length === 0 ? (
         <section className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-20 text-center">
           <div className="egg-panel p-10 text-[#7a8290]">
-            <div className="text-5xl mb-3">📝</div>
+            <Icon name="news" className="w-10 h-10 mx-auto mb-3 text-[#14161a]/40" strokeWidth={1.25} />
             <p>New articles publish here. Check back soon — or
               {' '}<Link href="/contact" className="egg-link">subscribe via the contact form</Link>{' '}
               to get notified.</p>
@@ -89,7 +88,7 @@ export default async function BlogIndex() {
                         className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
-                        <span className="text-9xl opacity-30">📝</span>
+                        <Icon name="news" className="w-16 h-16 text-[#14161a]/20" strokeWidth={1} />
                       </div>
                     )}
                     <div className="absolute top-4 left-4 egg-chip bg-white/95 backdrop-blur text-xs uppercase tracking-wider shadow-sm" style={{ color: TONE }}>
@@ -128,7 +127,7 @@ export default async function BlogIndex() {
                           className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                          <span className="text-7xl opacity-30">📝</span>
+                          <Icon name="news" className="w-12 h-12 text-[#14161a]/20" strokeWidth={1} />
                         </div>
                       )}
                     </div>
@@ -166,7 +165,6 @@ export default async function BlogIndex() {
           <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-60 pointer-events-none" />
           <div aria-hidden="true" className="absolute -bottom-20 -right-20 w-72 h-72 rounded-full opacity-40 pointer-events-none"
             style={{ background: 'radial-gradient(circle, #FF6321 0%, transparent 70%)' }} />
-          <div aria-hidden="true" className="absolute -top-12 -right-12 text-[260px] opacity-[0.06] select-none pointer-events-none">📝</div>
           <h2 className="egg-display relative text-3xl sm:text-4xl text-[#14161a] mb-3">
             Want our market commentary in your inbox?
           </h2>
@@ -176,7 +174,7 @@ export default async function BlogIndex() {
           </p>
           <a href="mailto:insights@egyptglobe.com?subject=Subscribe%20to%20insights"
             className="egg-btn-primary relative">
-            ✉ Subscribe to insights
+            <Icon name="mail" className="w-3.5 h-3.5" /> Subscribe to insights
           </a>
         </div>
       </section>

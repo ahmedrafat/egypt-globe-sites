@@ -21,6 +21,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import Link from 'next/link'
+import Icon, { DIVISION_ICON, SERVICE_ICON } from './ui/Icon'
 
 // Resources content — same destinations as the desktop mega-menu.
 const RESOURCE_GROUPS = [
@@ -239,7 +240,7 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
                     className="flex items-center gap-3 mx-3 px-3 py-2.5 rounded-lg hover:bg-[#f9fafb] active:bg-[#f3f4f6] transition-colors">
                     <div className="w-8 h-8 rounded-lg flex items-center justify-center text-sm flex-shrink-0"
                       style={{ background: `${div.color}15` }}>
-                      {div.icon}
+                      <Icon name={DIVISION_ICON[div.id] || 'box'} className="w-4 h-4 text-[#14161a]" />
                     </div>
                     <div className="min-w-0">
                       <div className="font-medium text-[13.5px] text-[#14161a] leading-tight">{div.label}</div>
@@ -273,7 +274,7 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
                     className="flex items-center gap-3 mx-3 px-3 py-2.5 rounded-lg hover:bg-[#f9fafb] active:bg-[#f3f4f6] transition-colors">
                     <div className="w-8 h-8 rounded-lg flex items-center justify-center text-sm flex-shrink-0"
                       style={{ background: `${svc.color}15` }}>
-                      {svc.icon}
+                      <Icon name={SERVICE_ICON[svc.id] || 'ship'} className="w-4 h-4 text-[#14161a]" />
                     </div>
                     <div className="min-w-0">
                       <div className="font-medium text-[13.5px] text-[#14161a] leading-tight">{svc.label}</div>

@@ -12,6 +12,7 @@
 import Link from 'next/link'
 import Logo from './Logo'
 import { PRODUCT_DIVISIONS, SERVICE_DIVISIONS, COMPANY_INFO_DEFAULT, LOGISTICS_PORTAL_URL } from '../lib/corporatePages'
+import Icon from './ui/Icon'
 
 export default function SiteFooter({ settings }) {
   const s = settings || COMPANY_INFO_DEFAULT
@@ -97,7 +98,7 @@ export default function SiteFooter({ settings }) {
               <li className="pt-2 mt-1 border-t border-[#14161a]/10">
                 <a href={LOGISTICS_PORTAL_URL} target="_blank" rel="noopener noreferrer"
                   className="text-[#7a8290] hover:text-[#14161a] text-xs flex items-center gap-1.5 transition-colors">
-                  ⚓ Provider portal ↗
+                  <Icon name="anchor" className="w-3.5 h-3.5" /> Provider portal ↗
                 </a>
                 <span className="text-[10px] text-[#8a93a3] block mt-0.5">For freight carriers</span>
               </li>
@@ -116,7 +117,7 @@ export default function SiteFooter({ settings }) {
                 ['/about/mission-vision', 'Mission & Vision'],
                 ['/about/locations', 'Locations'],
                 ['/about/quality-compliance', 'Quality'],
-                ['/coa', '🧪 CoA Center'],
+                ['/coa', 'CoA Center'],
                 ['/about/careers', 'Careers'],
                 ['/case-studies', 'Case Studies'],
                 ['/markets', 'Market Intelligence'],
@@ -144,28 +145,28 @@ export default function SiteFooter({ settings }) {
             </h4>
             <ul className="space-y-3 text-sm">
               <li>
-                <div className="text-xs font-semibold text-[#14161a] mb-0.5">📍 Head Office — Cairo</div>
+                <div className="text-xs font-semibold text-[#14161a] mb-0.5"><Icon name="pin" className="w-3.5 h-3.5" /> Head Office — Cairo</div>
                 <p className="text-[#7a8290] text-xs leading-relaxed">{s.headOffice}</p>
               </li>
               <li>
-                <div className="text-xs font-semibold text-[#14161a] mb-0.5">⚓ Operations — Damietta</div>
+                <div className="text-xs font-semibold text-[#14161a] mb-0.5"><Icon name="anchor" className="w-3.5 h-3.5" /> Operations — Damietta</div>
                 <p className="text-[#7a8290] text-xs leading-relaxed">{s.operationsOffice}</p>
               </li>
               <li className="pt-1 border-t border-[#14161a]/10">
                 <a href={`tel:${s.phoneE164}`}
                   className="block text-[#14161a] hover:text-[#0b8f84] transition-colors font-medium text-sm">
-                  📞 {s.phone}
+                  <Icon name="phone" className="w-3.5 h-3.5" /> {s.phone}
                 </a>
                 <span className="block text-[#8a93a3] text-xs mt-0.5">Tel &amp; Fax: {s.telFax}</span>
                 <a href={`mailto:${s.email}`}
                   className="block text-[#14161a] hover:text-[#0b8f84] transition-colors mt-1 text-sm">
-                  ✉ {s.email}
+                  <Icon name="mail" className="w-3.5 h-3.5" /> {s.email}
                 </a>
               </li>
               <li className="pt-1">
                 <Link href="/rfq"
                   className="egg-btn-primary text-sm px-5 py-2.5">
-                  📋 Request a Quote
+                  Request a Quote
                 </Link>
               </li>
             </ul>

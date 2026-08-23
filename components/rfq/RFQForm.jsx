@@ -17,6 +17,7 @@
  */
 import { useState, useMemo, useEffect } from 'react'
 import { createClient } from '@supabase/supabase-js'
+import Icon from '../ui/Icon'
 
 const INCOTERMS = ['FOB', 'CIF', 'CFR', 'CPT', 'CIP', 'EXW', 'DAP', 'DDP', 'DPU', 'FCA', 'FAS']
 const UNITS = ['MT', 'kg', 'FCL 20ft', 'FCL 40ft', 'FCL 40HC', 'L', 'tonnes (1000 kg)', 'units']
@@ -137,13 +138,13 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
 
   // Sorted category list with icons for the first-step picker
   const CATEGORY_META_LIST = [
-    { id: 'salt',         label: 'Salt',                icon: '🧂' },
-    { id: 'fertilizers',  label: 'Fertilizers',         icon: '🌾' },
-    { id: 'chemicals',    label: 'Chemicals',           icon: '⚗️' },
-    { id: 'construction', label: 'Construction',        icon: '🏗' },
-    { id: 'agro',         label: 'Agro & Food',         icon: '🍅' },
-    { id: 'minerals',     label: 'Industrial Minerals', icon: '⛰' },
-    { id: 'metals',       label: 'Metals & Alloys',     icon: '⚙️' },
+    { id: 'salt',         label: 'Salt',                icon: 'cube' },
+    { id: 'fertilizers',  label: 'Fertilizers',         icon: 'wheat' },
+    { id: 'chemicals',    label: 'Chemicals',           icon: 'beaker' },
+    { id: 'construction', label: 'Construction',        icon: 'building' },
+    { id: 'agro',         label: 'Agro & Food',         icon: 'leaf' },
+    { id: 'minerals',     label: 'Industrial Minerals', icon: 'layers' },
+    { id: 'metals',       label: 'Metals & Alloys',     icon: 'gear' },
   ]
   // Only show categories that actually have products
   const availableCategories = useMemo(
@@ -307,7 +308,7 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
   if (submitted) {
     return (
       <div className="rounded-3xl bg-[#e6fbf8] ring-1 ring-[#0fb5a5]/40 p-10 text-center animate-scale-in">
-        <div className="text-6xl mb-4">✅</div>
+        <div className="text-6xl mb-4"><Icon name="check" className="w-10 h-10 mx-auto text-emerald-600" strokeWidth={2.2} /></div>
         <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-3">
           {isCoa ? 'CoA request received — thank you.' : 'RFQ received — thank you.'}
         </h2>
@@ -349,7 +350,7 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
 
       {error && (
         <div className="rounded-xl bg-red-50 border border-red-200 text-red-800 px-4 py-3 text-sm">
-          ⚠ {error}
+          {error}
         </div>
       )}
 
@@ -389,7 +390,7 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
                       ? 'bg-[#14161a] text-white border-[#14161a] shadow-md shadow-[#14161a]/20'
                       : 'bg-white text-[#3f4650] border-[#14161a]/15 hover:border-[#0fb5a5] hover:bg-[#f2fbfa]'}`}>
                     <div className="flex items-center gap-2">
-                      <span className="text-xl">{c.icon}</span>
+                      <Icon name={c.icon} className="w-5 h-5" />
                       <div className="flex-1 min-w-0">
                         <div className="text-sm font-bold leading-tight truncate">{c.label}</div>
                         <div className={`text-[10px] ${isActive ? 'text-white/70' : 'text-[#7a8290]'}`}>
@@ -442,7 +443,7 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <div className="font-bold text-[#0b8f84] flex items-center gap-2">
-                    🧪 Auto-filled from catalogue: <span className="text-[#14161a]">{selected.title}</span>
+                    Auto-filled from catalogue: <span className="text-[#14161a]">{selected.title}</span>
                   </div>
                   <div className="text-xs text-[#3f4650] flex flex-wrap gap-x-4 gap-y-1 mt-1">
                     {selected.hs_code && <span><strong>HS:</strong> <span className="font-mono">{selected.hs_code}</span></span>}
@@ -596,16 +597,16 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
           <Field label="Loading mode" full>
             <div className="grid grid-cols-3 gap-2">
               {[
-                { id: 'bulk',      icon: '⛴️', label: 'Bulk vessel', sub: 'Direct hold or FIBC stow' },
-                { id: 'container', icon: '📦', label: 'Container',   sub: '20ft / 40ft / HC' },
-                { id: 'either',    icon: '🔁', label: 'Either',       sub: 'Quote both options' },
+                { id: 'bulk',      icon: 'ship', label: 'Bulk vessel', sub: 'Direct hold or FIBC stow' },
+                { id: 'container', icon: 'box', label: 'Container',   sub: '20ft / 40ft / HC' },
+                { id: 'either',    icon: 'arrow', label: 'Either',       sub: 'Quote both options' },
               ].map(m => (
                 <button key={m.id} type="button" onClick={() => update('vessel_mode', m.id)}
                   className={`flex flex-col items-start gap-1 p-3 rounded-xl border-2 text-left transition-all ${form.vessel_mode === m.id
                     ? 'border-[#0fb5a5] bg-[#f2fbfa] shadow-sm'
                     : 'border-[#14161a]/12 bg-white hover:border-[#14161a]/30'}`}>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-base">{m.icon}</span>
+                    <Icon name={m.icon} className="w-4 h-4 text-[#14161a]" />
                     <span className="font-bold text-sm text-[#14161a]">{m.label}</span>
                   </div>
                   <span className="text-[10px] text-[#7a8290] leading-tight">{m.sub}</span>
@@ -644,7 +645,7 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
         <button type="submit" disabled={submitting}
           className={`flex-1 inline-flex items-center justify-center gap-2 ${isCoa ? 'bg-[#0b8f84] hover:bg-[#14161a] shadow-[0_10px_30px_-10px_rgba(15,181,165,.55)]' : 'bg-[#ff6321] hover:bg-[#14161a] shadow-[0_10px_30px_-10px_rgba(255,99,33,.55)]'} disabled:bg-[#c9ced6] disabled:cursor-not-allowed text-white font-semibold px-7 py-4 rounded-full transition-all hover:scale-[1.02] disabled:transform-none`}>
-          {submitting ? '⏳ Submitting…' : (isCoa ? '🧪 Request CoA' : '📋 Submit RFQ')}
+          {submitting ? '⏳ Submitting…' : (isCoa ? 'Request CoA' : 'Submit RFQ')}
         </button>
         <p className="text-xs text-[#7a8290] text-center sm:text-left max-w-xs">
           By submitting, you agree we may contact you about your RFQ. We do not send marketing email.

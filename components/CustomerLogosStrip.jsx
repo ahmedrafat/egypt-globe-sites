@@ -3,6 +3,7 @@
  * (or anonymized labels when no logo image is uploaded). Server component.
  */
 import { getCustomerLogos } from '../lib/corporatePages'
+import Icon from './ui/Icon'
 
 export default async function CustomerLogosStrip({ variant = 'home' }) {
   const logos = await getCustomerLogos()
@@ -27,7 +28,7 @@ export default async function CustomerLogosStrip({ variant = 'home' }) {
         {/* Section heading */}
         <div className="text-center mb-10 animate-fade-in-up">
           <span className="section-eyebrow bg-emerald-50 text-emerald-700 border border-emerald-100 mb-4">
-            <span aria-hidden="true">✦</span> Trusted by B2B buyers worldwide
+            Trusted by B2B buyers worldwide
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-4">
             Import partners across {logos.length}+ countries
@@ -101,15 +102,15 @@ function CompactCard({ logo }) {
 
 function iconForSector(sector) {
   const s = String(sector || '').toLowerCase()
-  if (s.includes('cement') || s.includes('construct')) return '🏗'
-  if (s.includes('chem')) return '⚗️'
-  if (s.includes('food') || s.includes('beverage')) return '🍴'
-  if (s.includes('pharma')) return '💊'
-  if (s.includes('fertilizer')) return '🌾'
-  if (s.includes('public')) return '🏛'
-  if (s.includes('multi')) return '🌐'
-  if (s.includes('mining')) return '⛏️'
-  if (s.includes('water')) return '💧'
-  if (s.includes('textile') || s.includes('leather')) return '🧵'
+  if (s.includes('cement') || s.includes('construct')) return '<Icon name="building" className="w-3.5 h-3.5" />'
+  if (s.includes('chem')) return '<Icon name="beaker" className="w-3.5 h-3.5" />'
+  if (s.includes('food') || s.includes('beverage')) return '<Icon name="leaf" className="w-3.5 h-3.5" />'
+  if (s.includes('pharma')) return '<Icon name="pill" className="w-3.5 h-3.5" />'
+  if (s.includes('fertilizer')) return '<Icon name="wheat" className="w-3.5 h-3.5" />'
+  if (s.includes('public')) return '<Icon name="building" className="w-3.5 h-3.5" />'
+  if (s.includes('multi')) return '<Icon name="globe" className="w-3.5 h-3.5" />'
+  if (s.includes('mining')) return '<Icon name="pickaxe" className="w-3.5 h-3.5" />'
+  if (s.includes('water')) return '<Icon name="drop" className="w-3.5 h-3.5" />'
+  if (s.includes('textile') || s.includes('leather')) return '<Icon name="scroll" className="w-3.5 h-3.5" />'
   return '✦'
 }

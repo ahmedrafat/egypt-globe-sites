@@ -110,7 +110,7 @@ export default async function BuyerDashboard() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
           <Link href="/buyer/rfqs"
             className="egg-card group p-5 flex items-center gap-4">
-            <div className="shrink-0 w-12 h-12 rounded-xl bg-[#0b8f84] text-white flex items-center justify-center text-2xl">📋</div>
+            <div className="shrink-0 w-12 h-12 rounded-xl bg-[#0b8f84] text-white flex items-center justify-center text-2xl"></div>
             <div className="flex-1 min-w-0">
               <div className="font-semibold text-[#14161a] group-hover:text-[#0b8f84]">Your RFQs</div>
               <div className="text-xs text-[#7a8290]">Track quotation requests + their status</div>

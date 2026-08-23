@@ -15,18 +15,19 @@
  * Light editorial edition — tokens + utilities (.egg-*) in app/globals.css.
  */
 import { useState, useMemo, useEffect } from 'react'
+import Icon from '../ui/Icon'
 
 // Loading-port routing matrix. Each entry is the indicative transit-day
 // range from POL → destination region cluster. "Suez" / "Gibraltar"
 // indicates the typical canal routing.
 const PORTS = [
-  { id: 'damietta',     label: 'Damietta',      icon: '⚓', source: 'mediterranean' },
-  { id: 'alexandria',   label: 'Alexandria',    icon: '⚓', source: 'mediterranean' },
-  { id: 'el-dekheila',  label: 'El Dekheila',   icon: '⚓', source: 'mediterranean' },
-  { id: 'port-said',    label: 'Port Said',     icon: '⚓', source: 'mediterranean' },
-  { id: 'ain-sokhna',   label: 'Ain Sokhna',    icon: '⚓', source: 'red-sea' },
-  { id: 'adabiya',      label: 'Adabiya',       icon: '⚓', source: 'red-sea' },
-  { id: 'al-arish',     label: 'Al-Arish',      icon: '⚓', source: 'mediterranean' },
+  { id: 'damietta',     label: 'Damietta',      icon: 'anchor', source: 'mediterranean' },
+  { id: 'alexandria',   label: 'Alexandria',    icon: 'anchor', source: 'mediterranean' },
+  { id: 'el-dekheila',  label: 'El Dekheila',   icon: 'anchor', source: 'mediterranean' },
+  { id: 'port-said',    label: 'Port Said',     icon: 'anchor', source: 'mediterranean' },
+  { id: 'ain-sokhna',   label: 'Ain Sokhna',    icon: 'anchor', source: 'red-sea' },
+  { id: 'adabiya',      label: 'Adabiya',       icon: 'anchor', source: 'red-sea' },
+  { id: 'al-arish',     label: 'Al-Arish',      icon: 'anchor', source: 'mediterranean' },
 ]
 
 const REGIONS = [
@@ -124,7 +125,7 @@ export default function TransitTimeCalculator({ defaultPorts = [], onSelect }) {
                     : 'bg-white border-[#14161a]/12 text-[#3f4650] hover:border-[#0fb5a5]'
                 }`}
               >
-                <span>{p.icon}</span>
+                <Icon name={p.icon} className="w-3.5 h-3.5" />
                 <span>{p.label}</span>
                 <span className={`ml-auto text-[10px] font-mono uppercase tracking-[0.12em] ${pol === p.id ? 'text-white/70' : 'text-[#7a8290]'}`}>
                   {p.source === 'red-sea' ? 'Red Sea' : 'Med'}
