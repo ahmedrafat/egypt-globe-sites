@@ -4,9 +4,9 @@
  *
  * Layout:
  *   1. Compact white hero, breadcrumb, chip rail, dual CTA, stats strip
- *   2. Sub-category body (body_markdown → RichPageBody: technical
+ *   2. SKU catalogue grid
+ *   3. Sub-category body (body_markdown → RichPageBody: technical
  *      narrative, specification tables, QA verification chain)
- *   3. SKU catalogue grid
  *   4. Applications served
  *   5. Certifications strip
  *   6. Related sub-categories
@@ -98,13 +98,6 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
         </div>
       </section>
 
-      {/* Sub-category body — technical narrative + specification tables */}
-      {page.body_markdown && (
-        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20 egg-reveal">
-          <RichPageBody content={page.body_markdown} title={page.title} />
-        </section>
-      )}
-
       {/* SKU catalogue */}
       {n > 0 && (
         <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 border-t border-[#14161a]/10 egg-reveal">
@@ -146,6 +139,15 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
               </Link>
             ))}
           </div>
+        </section>
+      )}
+
+      {/* Technical narrative — below the catalogue. Buyers landing on a grade
+          page came for the SKUs; on the salt and agro sub-categories the body
+          runs long enough that it pushed the grid to 62-71% of page height. */}
+      {page.body_markdown && (
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20 border-t border-[#14161a]/10 egg-reveal">
+          <RichPageBody content={page.body_markdown} title={page.title} />
         </section>
       )}
 
