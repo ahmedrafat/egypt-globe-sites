@@ -189,21 +189,21 @@ export default async function PageRenderer({ page }) {
   const isRockSalt = sourceType.includes('rock')
   const isSeaSalt = sourceType.includes('sea')
 
-  // Pick a hero gradient: rock salt → stone, sea salt / chemicals / general
-  // products → brand blue, services hub → teal-blue, applications hub → violet
-  const heroGradient = page.hero_photo_url ? null : (
-    isRockSalt
-      ? 'bg-gradient-to-br from-stone-700 via-stone-800 to-stone-900'
-      : isSeaSalt
-      ? 'bg-gradient-to-br from-cyan-700 via-blue-800 to-[#0f1f3a]'
-      : isApplicationLanding || isApplicationsHub
-      ? 'bg-gradient-to-br from-violet-700 via-purple-800 to-indigo-900'
-      : isServicesHub
-      ? 'bg-gradient-to-br from-teal-700 via-cyan-800 to-blue-900'
-      : isDivisionLanding && division
-      ? null  // use category color (set inline)
-      : 'bg-gradient-to-br from-[#1d5fa1] via-[#14467a] to-[#0f1f3a]'
-  )
+  // Light editorial hero — one accent tone per page type, rendered as a soft
+  // glow over white: rock salt → deep gold, sea salt → clear turquoise,
+  // applications → violet, services → teal, divisions → division colour,
+  // everything else → the category colour.
+  const heroTone = isRockSalt
+    ? '#b8862b'
+    : isSeaSalt
+    ? '#0fb5a5'
+    : isApplicationLanding || isApplicationsHub
+    ? '#7c3aed'
+    : isServicesHub
+    ? '#0d9488'
+    : isDivisionLanding && division
+    ? division.color
+    : (cat.color || '#0284c7')
 
   // Drop 122 — JSON-LD: BreadcrumbList always; Product when this is a SKU page
   const crumbs = buildCrumbs(page)
@@ -232,77 +232,74 @@ export default async function PageRenderer({ page }) {
         />
       )}
 
-      {/* Hero — immersive brand-coloured banner ──────────────────── */}
-      <section className={`relative overflow-hidden ${heroGradient || ''}`}
-        style={!heroGradient && !page.hero_photo_url && division ? {
-          background: `linear-gradient(135deg, ${division.color} 0%, ${division.color}cc 50%, #0f1f3a 100%)`
-        } : undefined}>
+      {/* Hero — light editorial banner (white, soft accent glow) ──── */}
+      <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10">
         {page.hero_photo_url && (
           <div className="absolute inset-0">
             {/* Drop 140 — hero photos are typically 1200×675 (16:9). Hero
                container is taller than 16:9 on mobile (portrait-ish), so
                object-cover crops top + bottom. Use object-top to favor the
                TOP of the photo (where product labels / branding sit) when
-               the crop is necessary. */}
+               the crop is necessary. Light edition: the photo sits as a
+               faint backdrop under a white scrim so the obsidian copy stays
+               perfectly legible. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={page.hero_photo_url} alt={page.title}
-              className="absolute inset-0 w-full h-full object-cover object-top" />
-            <div className="absolute inset-0 bg-gradient-to-br from-[#0f1f3a]/85 via-[#0f1f3a]/70 to-[#1d5fa1]/60" />
+              className="absolute inset-0 w-full h-full object-cover object-top opacity-[0.22] blur-2xl scale-110" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/70 to-white/95" />
           </div>
         )}
 
-        {/* Decorative patterns */}
-        <div aria-hidden="true" className="absolute inset-0 bg-grid-pattern opacity-[0.07] pointer-events-none" />
-        <div aria-hidden="true" className="absolute inset-0 opacity-10 pointer-events-none overflow-hidden">
-          <div className="absolute right-0 top-0 w-[600px] h-[600px] rounded-full"
-            style={{ background: 'radial-gradient(circle, white 0%, transparent 70%)' }} />
-        </div>
+        {/* Decorative patterns — fine light grid + accent glow */}
+        <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
+        <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
+          style={{ background: `radial-gradient(60% 55% at 88% 0%, ${heroTone}24, transparent 60%), radial-gradient(45% 40% at 0% 100%, ${heroTone}12, transparent 60%)` }} />
 
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-20">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-1.5 text-xs text-white/50 mb-5 flex-wrap animate-fade-in">
-            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+          <nav className="flex items-center gap-1.5 text-xs text-[#7a8290] mb-5 flex-wrap animate-fade-in">
+            <Link href="/" className="hover:text-[#14161a] transition-colors">Home</Link>
             <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7"/>
             </svg>
             {!isHomePath && page.category && (
               <>
-                <span className="text-white/70 hover:text-white transition-colors cursor-default">{cat.label}</span>
+                <span className="text-[#5b6472] cursor-default">{cat.label}</span>
                 <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7"/>
                 </svg>
               </>
             )}
-            <span className="text-white/90 font-medium truncate max-w-[300px]">{page.title}</span>
+            <span className="text-[#14161a] font-medium truncate max-w-[300px]">{page.title}</span>
           </nav>
 
           {/* Chip rail — tighter on mobile, hide HS chip on <sm */}
           <div className="flex items-center gap-1.5 sm:gap-2 mb-4 flex-wrap animate-fade-in-up">
-            <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-white/15 text-white backdrop-blur-sm border border-white/20">
+            <span className="egg-chip text-[11px] sm:text-xs" style={{ color: heroTone, boxShadow: `inset 0 0 0 1px ${heroTone}55` }}>
               <span aria-hidden="true">{cat.icon}</span> {cat.label}
             </span>
             {isRockSalt && (
-              <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-stone-600/40 text-stone-100 border border-stone-400/30">
+              <span className="egg-chip text-[11px] sm:text-xs" style={{ color: '#8a6d3b', boxShadow: 'inset 0 0 0 1px rgba(184,134,43,.45)' }}>
                 ⛏️ Rock Salt
               </span>
             )}
             {isSeaSalt && (
-              <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-cyan-500/30 text-cyan-50 border border-cyan-400/30">
+              <span className="egg-chip text-[11px] sm:text-xs" style={{ color: '#0b8f84', boxShadow: 'inset 0 0 0 1px rgba(15,181,165,.5)' }}>
                 🌊 Sea Salt
               </span>
             )}
             {page.specs?.nacl_min && (
-              <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-white/15 text-white border border-white/20">
+              <span className="egg-chip text-[11px] sm:text-xs">
                 NaCl {page.specs.nacl_min}
               </span>
             )}
             {page.specs?.grain_label && (
-              <span className="hidden sm:inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 text-white border border-white/20">
+              <span className="egg-chip hidden sm:inline-flex text-xs">
                 {page.specs.grain_label}
               </span>
             )}
             {page.hs_code && (
-              <span className="hidden sm:inline-flex items-center text-[11px] font-mono font-bold px-3 py-1.5 rounded-full bg-white/10 text-white/90 border border-white/15">
+              <span className="egg-chip hidden sm:inline-flex font-mono text-[11px] text-[#5b6472]">
                 HS {page.hs_code}
               </span>
             )}
@@ -310,11 +307,11 @@ export default async function PageRenderer({ page }) {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-end">
             <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
-              <h1 className="text-[28px] sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-3 sm:mb-4 leading-[1.1] sm:leading-[1.05] drop-shadow-sm">
+              <h1 className="egg-display text-[30px] sm:text-5xl lg:text-6xl text-[#14161a] mb-3 sm:mb-4 leading-[1.08] sm:leading-[1.02]">
                 {page.title}
               </h1>
               {page.description && (
-                <p className="text-sm sm:text-lg leading-relaxed max-w-3xl text-white/80">
+                <p className="text-sm sm:text-lg leading-relaxed max-w-3xl text-[#3f4650]">
                   {page.description}
                 </p>
               )}
@@ -325,16 +322,16 @@ export default async function PageRenderer({ page }) {
             {isProductDetail && (
               <div className="flex flex-wrap items-center gap-2 lg:justify-end animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
                 <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
-                  className="inline-flex items-center justify-center gap-2 bg-[#FF6321] hover:bg-[#e0541b] active:bg-[#c84512] text-white font-bold px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl shadow-lg shadow-orange-500/25 transition-all sm:hover:-translate-y-0.5 w-full sm:w-auto">
+                  className="egg-btn-primary w-full sm:w-auto">
                   📋 Get Quote
                 </Link>
                 <div className="flex gap-2 w-full sm:w-auto">
                   <Link href={`/tds${page.path}`} target="_blank"
-                    className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 active:bg-white/30 backdrop-blur text-white font-semibold border border-white/20 px-4 py-2.5 rounded-xl transition-colors text-sm">
+                    className="egg-btn-ghost flex-1 sm:flex-initial">
                     📄 TDS
                   </Link>
                   <Link href={`/rfq?product=${encodeURIComponent(page.path)}&type=coa`}
-                    className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 active:bg-white/30 backdrop-blur text-white font-semibold border border-white/20 px-4 py-2.5 rounded-xl transition-colors text-sm">
+                    className="egg-btn-ghost flex-1 sm:flex-initial">
                     🧪 COA
                   </Link>
                 </div>
@@ -395,30 +392,30 @@ export default async function PageRenderer({ page }) {
 
       {/* Products hub — always show every division */}
       {isProductsHub && (
-        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 border-t border-slate-100">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 border-t border-[#14161a]/10 egg-reveal">
           <div className="mb-8">
-            <span className="section-eyebrow bg-blue-50 text-[#1d5fa1] border border-blue-100 mb-4">
+            <span className="egg-eyebrow text-[#0b8f84]">
               <span aria-hidden="true">📦</span> Product catalogue
             </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2 mt-4 tracking-tight">Browse our 6 product divisions</h2>
-            <p className="text-slate-500">Each division ships from Egyptian ports under FOB / CIF / CFR Incoterms with per-shipment certificate of analysis.</p>
+            <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-2 mt-4">Browse our 6 product divisions</h2>
+            <p className="text-[#7a8290]">Each division ships from Egyptian ports under FOB / CIF / CFR Incoterms with per-shipment certificate of analysis.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
             {PRODUCT_DIVISIONS.map(div => (
               <Link key={div.id} href={div.path}
-                className="card-lift relative rounded-2xl border border-slate-200 bg-white p-6 group overflow-hidden">
+                className="egg-card relative p-6 group overflow-hidden">
                 <div className="absolute -right-6 -top-6 text-7xl opacity-[0.06] group-hover:opacity-[0.12] transition-opacity"
                   aria-hidden="true">{div.icon}</div>
                 <div className="relative">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4"
-                    style={{ background: `${div.color}1A`, color: div.color }}>
+                    style={{ background: `${div.color}1f`, boxShadow: `inset 0 0 0 1px ${div.color}66` }}>
                     {div.icon}
                   </div>
-                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-[#1d5fa1] transition-colors">
+                  <h3 className="text-lg font-semibold text-[#14161a] transition-colors">
                     {div.label}
                   </h3>
-                  <p className="text-sm text-slate-600 mt-1.5 leading-relaxed">{div.blurb}</p>
-                  <div className="mt-4 inline-flex items-center text-sm font-semibold text-[#1d5fa1] group-hover:gap-2 gap-1 transition-all">
+                  <p className="text-sm text-[#3f4650] mt-1.5 leading-relaxed">{div.blurb}</p>
+                  <div className="mt-4 inline-flex items-center text-sm font-semibold text-[#0b8f84] group-hover:gap-2 gap-1 transition-all">
                     Explore {div.label.toLowerCase()} <span>→</span>
                   </div>
                 </div>
@@ -436,44 +433,44 @@ export default async function PageRenderer({ page }) {
 
       {/* Application landing — show all matching salt products */}
       {isApplicationLanding && (
-        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 border-t border-slate-100">
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 border-t border-[#14161a]/10 egg-reveal">
+          <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-2">
             Salt for {application?.label || 'this industry'}
           </h2>
-          <p className="text-slate-600 mb-8">
+          <p className="text-[#3f4650] mb-8">
             {applicationProducts.length} {applicationProducts.length === 1 ? 'product' : 'products'} matching this application.
           </p>
           {applicationProducts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 stagger-children">
               {applicationProducts.map(p => (
                 <Link key={p.id} href={p.path}
-                  className="card-lift group rounded-xl border border-slate-200 bg-white overflow-hidden">
-                  <div className="aspect-[16/9] bg-slate-100 overflow-hidden">
+                  className="egg-card group overflow-hidden">
+                  <div className="aspect-[16/9] bg-[#f9fafb] overflow-hidden rounded-t-2xl">
                     {p.hero_photo_url ? (
                       /* eslint-disable-next-line @next/next/no-img-element */
                       <img src={p.hero_photo_url} alt={p.title}
                         className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-5xl opacity-30 bg-gradient-to-br from-violet-100 to-blue-100">🧂</div>
+                      <div className="w-full h-full flex items-center justify-center text-5xl opacity-30 bg-gradient-to-br from-[#f2fbfa] to-[#f9fafb]">🧂</div>
                     )}
                   </div>
                   <div className="p-4">
                     {p.hs_code && (
-                      <div className="text-[10px] font-mono uppercase font-bold text-slate-400 mb-1">HS {p.hs_code}</div>
+                      <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-[#8a93a3] mb-1">HS {p.hs_code}</div>
                     )}
-                    <h3 className="text-sm font-bold text-slate-900 line-clamp-2 group-hover:text-[#1d5fa1] transition-colors">
+                    <h3 className="text-sm font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#0b8f84] transition-colors">
                       {p.title}
                     </h3>
                     {p.certifications?.length > 0 && (
-                      <div className="text-xs text-slate-500 mt-1.5 line-clamp-1">{p.certifications.slice(0, 3).join(' · ')}</div>
+                      <div className="text-xs text-[#7a8290] mt-1.5 line-clamp-1">{p.certifications.slice(0, 3).join(' · ')}</div>
                     )}
                   </div>
                 </Link>
               ))}
             </div>
           ) : (
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-8 text-center text-slate-500">
-              No products tagged for this application yet. <Link href="/rfq" className="text-[#1d5fa1] font-semibold hover:underline">Request a quote →</Link>
+            <div className="egg-panel p-8 text-center text-[#7a8290]">
+              No products tagged for this application yet. <Link href="/rfq" className="egg-link">Request a quote →</Link>
             </div>
           )}
         </section>
@@ -482,40 +479,40 @@ export default async function PageRenderer({ page }) {
       {/* Sub-category landing — show all SKUs in that sub-category
           (e.g. /products/construction/cement-and-clinker → all cement SKUs) */}
       {isSubcategoryLanding && subcategoryProducts.length > 0 && (
-        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 border-t border-slate-100">
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 border-t border-[#14161a]/10 egg-reveal">
+          <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-2">
             {page.title} — full catalogue
           </h2>
-          <p className="text-slate-600 mb-8">
+          <p className="text-[#3f4650] mb-8">
             {subcategoryProducts.length} {subcategoryProducts.length === 1 ? 'SKU' : 'SKUs'} available for export.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 stagger-children">
             {subcategoryProducts.map(p => (
               <Link key={p.id} href={p.path}
-                className="card-lift group rounded-xl border border-slate-200 bg-white overflow-hidden">
-                <div className="aspect-[16/9] bg-slate-100 overflow-hidden">
+                className="egg-card group overflow-hidden">
+                <div className="aspect-[16/9] bg-[#f9fafb] overflow-hidden rounded-t-2xl">
                   {p.hero_photo_url ? (
                     /* eslint-disable-next-line @next/next/no-img-element */
                     <img src={p.hero_photo_url} alt={p.title}
                       className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-5xl opacity-30 bg-gradient-to-br from-blue-50 to-slate-50"
-                      style={{ background: `linear-gradient(135deg, ${cat.color}10, transparent)` }}>
+                    <div className="w-full h-full flex items-center justify-center text-5xl opacity-30"
+                      style={{ background: `linear-gradient(135deg, ${cat.color}14, #f9fafb)` }}>
                       {cat.icon}
                     </div>
                   )}
                 </div>
                 <div className="p-4">
                   {p.hs_code && (
-                    <div className="text-[10px] font-mono uppercase font-bold text-slate-400 mb-1">HS {p.hs_code}</div>
+                    <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-[#8a93a3] mb-1">HS {p.hs_code}</div>
                   )}
-                  <h3 className="text-sm font-bold text-slate-900 line-clamp-2 group-hover:text-[#1d5fa1] transition-colors">
+                  <h3 className="text-sm font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#0b8f84] transition-colors">
                     {p.title}
                   </h3>
                   {p.price_indication && visibility.showPrices ? (
-                    <p className="text-xs text-[#FF6321] font-semibold mt-1.5 line-clamp-1">{p.price_indication}</p>
+                    <p className="text-xs text-[#d9501a] font-semibold mt-1.5 line-clamp-1">{p.price_indication}</p>
                   ) : p.description ? (
-                    <p className="text-xs text-slate-500 mt-1 line-clamp-2">{p.description}</p>
+                    <p className="text-xs text-[#7a8290] mt-1 line-clamp-2">{p.description}</p>
                   ) : null}
                 </div>
               </Link>
@@ -526,30 +523,30 @@ export default async function PageRenderer({ page }) {
 
       {/* Services hub — show every supply-chain service */}
       {isServicesHub && (
-        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 border-t border-slate-100">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 border-t border-[#14161a]/10 egg-reveal">
           <div className="mb-8">
-            <span className="section-eyebrow bg-teal-50 text-teal-700 border border-teal-100 mb-4">
+            <span className="egg-eyebrow text-[#0b8f84]">
               <span aria-hidden="true">🚢</span> Supply-chain services
             </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2 mt-4 tracking-tight">Our supply-chain services</h2>
-            <p className="text-slate-500">Logistics, port operations, added value, packing, inspection and trade documentation — all in-house.</p>
+            <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-2 mt-4">Our supply-chain services</h2>
+            <p className="text-[#7a8290]">Logistics, port operations, added value, packing, inspection and trade documentation — all in-house.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
             {SERVICE_DIVISIONS.map(svc => (
               <Link key={svc.id} href={svc.path}
-                className="card-lift relative rounded-2xl border border-slate-200 bg-white p-6 group overflow-hidden">
+                className="egg-card relative p-6 group overflow-hidden">
                 <div className="absolute -right-6 -top-6 text-7xl opacity-[0.06] group-hover:opacity-[0.12] transition-opacity"
                   aria-hidden="true">{svc.icon}</div>
                 <div className="relative">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4"
-                    style={{ background: `${svc.color}1A`, color: svc.color }}>
+                    style={{ background: `${svc.color}1f`, boxShadow: `inset 0 0 0 1px ${svc.color}66` }}>
                     {svc.icon}
                   </div>
-                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-[#1d5fa1] transition-colors">
+                  <h3 className="text-lg font-semibold text-[#14161a] transition-colors">
                     {svc.label}
                   </h3>
-                  <p className="text-sm text-slate-600 mt-1.5 leading-relaxed">{svc.blurb}</p>
-                  <div className="mt-4 inline-flex items-center text-sm font-semibold text-[#1d5fa1] group-hover:gap-2 gap-1 transition-all">
+                  <p className="text-sm text-[#3f4650] mt-1.5 leading-relaxed">{svc.blurb}</p>
+                  <div className="mt-4 inline-flex items-center text-sm font-semibold text-[#0b8f84] group-hover:gap-2 gap-1 transition-all">
                     Learn more <span>→</span>
                   </div>
                 </div>
@@ -564,23 +561,23 @@ export default async function PageRenderer({ page }) {
 
       {/* Generic page — show direct children if any */}
       {!isProductsHub && !isServicesHub && !isApplicationsHub && !isApplicationLanding && !isDivisionLanding && !isSubcategoryLanding && directChildren.length > 0 && (
-        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 border-t border-slate-100">
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-8">In this section</h2>
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 border-t border-[#14161a]/10 egg-reveal">
+          <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-8">In this section</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
             {directChildren.map(p => {
               const childCat = CATEGORY_META[p.category] || cat
               return (
                 <Link key={p.id} href={p.path}
-                  className="card-lift group rounded-2xl border border-slate-200 bg-white p-6 overflow-hidden relative">
+                  className="egg-card group p-6 overflow-hidden relative">
                   <div className="absolute -right-4 -top-4 text-6xl opacity-[0.06] group-hover:opacity-[0.12] transition-opacity"
                     aria-hidden="true">{childCat.icon}</div>
-                  <h3 className="text-base font-bold text-slate-900 group-hover:text-[#1d5fa1] transition-colors">
+                  <h3 className="text-base font-semibold text-[#14161a] group-hover:text-[#0b8f84] transition-colors">
                     {p.title}
                   </h3>
                   {p.description && (
-                    <p className="text-sm text-slate-500 mt-2 line-clamp-3 leading-relaxed">{p.description}</p>
+                    <p className="text-sm text-[#7a8290] mt-2 line-clamp-3 leading-relaxed">{p.description}</p>
                   )}
-                  <span className="mt-3 inline-flex text-xs font-semibold text-[#1d5fa1] group-hover:gap-2 gap-1 transition-all">
+                  <span className="mt-3 inline-flex text-xs font-semibold text-[#0b8f84] group-hover:gap-2 gap-1 transition-all">
                     Read more <span>→</span>
                   </span>
                 </Link>
@@ -592,11 +589,11 @@ export default async function PageRenderer({ page }) {
 
       {/* Gallery */}
       {(page.gallery_urls || []).length > 0 && (
-        <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-10">
-          <h2 className="text-xl font-bold text-slate-900 mb-5">Gallery</h2>
+        <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-10 egg-reveal">
+          <h2 className="egg-display text-2xl text-[#14161a] mb-5">Gallery</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 stagger-children">
             {page.gallery_urls.map((url, i) => (
-              <div key={i} className="aspect-square rounded-xl overflow-hidden bg-slate-100 card-lift">
+              <div key={i} className="aspect-square rounded-xl overflow-hidden bg-[#f9fafb] egg-card">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={url} alt="" className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" />
               </div>
@@ -607,20 +604,20 @@ export default async function PageRenderer({ page }) {
 
       {/* CTA strip — skip on hubs / division landings (they get their own treatment) */}
       {!isProductsHub && !isServicesHub && !isApplicationsHub && !isApplicationLanding && !isDivisionLanding && !isSubcategoryLanding && (
-        <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-14">
-          <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#1a5490] via-[#1d5fa1] to-[#155187] p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-5 shadow-xl shadow-blue-900/20">
+        <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-14 egg-reveal">
+          <div className="relative rounded-3xl overflow-hidden egg-panel p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-5">
             {/* Grid overlay */}
-            <div aria-hidden="true" className="absolute inset-0 bg-grid-pattern opacity-[0.06] pointer-events-none" />
+            <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-60 pointer-events-none" />
             {/* Orange glow */}
-            <div aria-hidden="true" className="absolute -bottom-10 -right-10 w-48 h-48 rounded-full opacity-20 pointer-events-none"
+            <div aria-hidden="true" className="absolute -bottom-10 -right-10 w-56 h-56 rounded-full opacity-30 pointer-events-none"
               style={{ background: 'radial-gradient(circle, #FF6321 0%, transparent 70%)' }} />
             <div className="relative flex-1">
-              <div className="text-[11px] font-bold uppercase tracking-widest text-blue-300 mb-2">24-hour SLA</div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-white mb-1 tracking-tight">Ready for a quote?</h3>
-              <p className="text-blue-100 leading-relaxed text-sm sm:text-base">FOB / CIF / CFR pricing from 7 Egyptian ports — turnaround within 24 hours.</p>
+              <div className="egg-eyebrow text-[#d9501a] mb-3">24-hour SLA</div>
+              <h3 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-1">Ready for a quote?</h3>
+              <p className="text-[#3f4650] leading-relaxed text-sm sm:text-base">FOB / CIF / CFR pricing from 7 Egyptian ports — turnaround within 24 hours.</p>
             </div>
             <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
-              className="relative bg-[#FF6321] hover:bg-[#e0541b] text-white font-bold px-7 py-3.5 rounded-xl shadow-lg shadow-orange-900/30 whitespace-nowrap transition-all hover:-translate-y-0.5 hover:shadow-xl">
+              className="egg-btn-primary relative">
               📋 Request Quote
             </Link>
           </div>
@@ -629,13 +626,13 @@ export default async function PageRenderer({ page }) {
 
       {/* Related pages */}
       {related.length > 0 && !isProductsHub && !isServicesHub && !isApplicationsHub && !isApplicationLanding && !isDivisionLanding && !isSubcategoryLanding && directChildren.length === 0 && (
-        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 border-t border-slate-100">
-          <h2 className="text-xl font-bold text-slate-900 mb-6">More in {cat.label}</h2>
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 border-t border-[#14161a]/10 egg-reveal">
+          <h2 className="egg-display text-2xl sm:text-3xl text-[#14161a] mb-6">More in {cat.label}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 stagger-children">
             {related.map(p => (
               <Link key={p.id} href={p.path}
-                className="card-lift group rounded-xl border border-slate-200 bg-white overflow-hidden">
-                <div className="aspect-[16/9] bg-slate-100">
+                className="egg-card group overflow-hidden">
+                <div className="aspect-[16/9] bg-[#f9fafb] overflow-hidden rounded-t-2xl">
                   {p.hero_photo_url ? (
                     /* eslint-disable-next-line @next/next/no-img-element */
                     <img src={p.hero_photo_url} alt={p.title}
@@ -645,8 +642,8 @@ export default async function PageRenderer({ page }) {
                   )}
                 </div>
                 <div className="p-3">
-                  <h3 className="text-sm font-semibold text-slate-900 line-clamp-1 group-hover:text-[#1d5fa1]">{p.title}</h3>
-                  {p.description && <p className="text-xs text-slate-500 mt-1 line-clamp-2">{p.description}</p>}
+                  <h3 className="text-sm font-semibold text-[#14161a] line-clamp-1 group-hover:text-[#0b8f84]">{p.title}</h3>
+                  {p.description && <p className="text-xs text-[#7a8290] mt-1 line-clamp-2">{p.description}</p>}
                 </div>
               </Link>
             ))}
@@ -658,7 +655,7 @@ export default async function PageRenderer({ page }) {
       {(() => {
         const faqs = faqsForPage(page, commodity)
         return faqs.length > 0 ? (
-          <div className="bg-slate-50/40 border-t border-slate-200">
+          <div className="bg-[#f9fafb] border-t border-[#14161a]/10">
             <FAQJsonLd qas={faqs.map(f => ({ question: f.question, answer: f.answer }))} />
             <FAQAccordion
               faqs={faqs}
@@ -727,15 +724,15 @@ async function ApplicationsHubByDivision() {
   return (
     <article>
       {/* Hub intro */}
-      <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16 border-t border-slate-100">
+      <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16 border-t border-[#14161a]/10 egg-reveal">
         <div className="mb-10 max-w-3xl">
-          <span className="section-eyebrow bg-violet-50 text-violet-700 border border-violet-100 mb-4 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full">
+          <span className="egg-eyebrow text-[#7c3aed]">
             <span aria-hidden="true">🏭</span> Industries we serve
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-4 mb-3">
+          <h2 className="egg-display text-3xl sm:text-4xl lg:text-5xl text-[#14161a] mt-4 mb-3">
             {totalApps} industries — grouped by the division that supplies them.
           </h2>
-          <p className="text-slate-600 leading-relaxed">
+          <p className="text-[#3f4650] leading-relaxed">
             Egypt Globe Group's 7 product divisions serve {totalApps} distinct
             industries worldwide. Pick the division you source from, then drill
             into the application landing for matching SKUs, certifications,
@@ -747,10 +744,10 @@ async function ApplicationsHubByDivision() {
         <nav className="flex flex-wrap gap-2 mb-8" aria-label="Jump to division">
           {divisionsWithApps.map(d => (
             <a key={d.id} href={`#${d.id}`}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-[#1d5fa1] hover:text-[#1d5fa1] transition-colors">
+              className="egg-chip text-xs hover:text-[#14161a] transition-all hover:shadow-[inset_0_0_0_1.5px_rgba(20,22,26,.35)]">
               <span aria-hidden="true">{d.icon}</span>
               {d.label}
-              <span className="ml-1 text-[10px] font-bold tabular-nums text-slate-400">{grouped[d.id].length}</span>
+              <span className="ml-1 text-[10px] font-bold tabular-nums text-[#8a93a3]">{grouped[d.id].length}</span>
             </a>
           ))}
         </nav>
@@ -764,29 +761,29 @@ async function ApplicationsHubByDivision() {
         const divisionSkuTotal = apps.reduce((sum, a) => sum + (a._count || 0), 0)
         return (
           <section key={d.id} id={d.id}
-            className="border-t border-slate-100 scroll-mt-24"
-            style={{ background: `linear-gradient(180deg, ${d.color}05 0%, white 80%)` }}>
+            className="border-t border-[#14161a]/10 scroll-mt-24 egg-reveal"
+            style={{ background: `linear-gradient(180deg, ${d.color}0a 0%, #ffffff 80%)` }}>
             <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10 sm:py-14">
               {/* Section header — branded by division colour */}
               <div className="flex items-start gap-4 mb-6">
-                <div className="flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center text-3xl shadow-sm"
-                  style={{ background: `${d.color}20`, color: d.color }}>
+                <div className="flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center text-3xl"
+                  style={{ background: `${d.color}1f`, boxShadow: `inset 0 0 0 1px ${d.color}66` }}>
                   {d.icon}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                    <h3 className="egg-display text-3xl sm:text-4xl text-[#14161a]">
                       {d.label}
                     </h3>
-                    <Link href={d.path} className="text-xs font-bold px-2.5 py-1 rounded-full border border-slate-200 bg-white text-slate-600 hover:border-[#1d5fa1] hover:text-[#1d5fa1] transition-colors">
+                    <Link href={d.path} className="egg-chip text-xs text-[#3f4650] hover:text-[#14161a] transition-all hover:shadow-[inset_0_0_0_1.5px_rgba(20,22,26,.35)]">
                       View {d.label.toLowerCase()} →
                     </Link>
                   </div>
-                  <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">{d.blurb}</p>
-                  <div className="mt-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                  <p className="text-sm text-[#7a8290] leading-relaxed max-w-2xl">{d.blurb}</p>
+                  <div className="mt-2 text-[10px] font-mono text-[#8a93a3] uppercase tracking-[0.18em]">
                     {apps.length} application{apps.length === 1 ? '' : 's'} served from this division
                     {divisionSkuTotal > 0 && (
-                      <span className="ml-1.5 text-slate-500">
+                      <span className="ml-1.5 text-[#7a8290]">
                         · {divisionSkuTotal} SKU{divisionSkuTotal === 1 ? '' : 's'} matched
                       </span>
                     )}
@@ -798,16 +795,15 @@ async function ApplicationsHubByDivision() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 stagger-children">
                 {apps.map(a => (
                   <Link key={a.id} href={a.path}
-                    className="card-lift group rounded-2xl border bg-white p-4 transition-all hover:shadow-md"
-                    style={{ borderColor: `${d.color}20` }}>
+                    className="egg-card group p-4">
                     <div className="flex items-start gap-3">
                       <div className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center text-xl"
-                        style={{ background: `${d.color}15`, color: d.color }}>
+                        style={{ background: `${d.color}1f`, boxShadow: `inset 0 0 0 1px ${d.color}66` }}>
                         {a.icon}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start gap-1.5 mb-1">
-                          <h4 className="flex-1 font-bold text-sm text-slate-900 group-hover:text-[#1d5fa1] transition-colors leading-tight">
+                          <h4 className="flex-1 font-semibold text-sm text-[#14161a] group-hover:text-[#0b8f84] transition-colors leading-tight">
                             {a.label}
                           </h4>
                           {a._count > 0 && (
@@ -820,7 +816,7 @@ async function ApplicationsHubByDivision() {
                           )}
                         </div>
                         {a.blurb && (
-                          <p className="text-[11px] text-slate-500 leading-relaxed line-clamp-2">{a.blurb}</p>
+                          <p className="text-[11px] text-[#7a8290] leading-relaxed line-clamp-2">{a.blurb}</p>
                         )}
                         {/* If this app is also served by other divisions WITH
                            at least one matching SKU, show small chips so
@@ -837,17 +833,17 @@ async function ApplicationsHubByDivision() {
                           })
                           if (otherDivIds.length === 0) return null
                           return (
-                            <div className="flex flex-wrap items-center gap-1 mt-2 text-[9px] font-semibold uppercase tracking-wider text-slate-400">
+                            <div className="flex flex-wrap items-center gap-1 mt-2 text-[9px] font-semibold uppercase tracking-wider text-[#8a93a3]">
                               <span>Also from:</span>
                               {otherDivIds.slice(0, 3).map(otherId => {
                                 const other = PRODUCT_DIVISIONS.find(x => x.id === otherId)
                                 if (!other) return null
                                 const otherCount = matrix?.[a.id]?.[otherId] || 0
                                 return (
-                                  <span key={otherId} className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-slate-100"
+                                  <span key={otherId} className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-[#f3f4f6]"
                                     style={{ color: other.color }}>
                                     <span>{other.icon}</span>{other.label}
-                                    {otherCount > 0 && <span className="text-slate-400">·{otherCount}</span>}
+                                    {otherCount > 0 && <span className="text-[#8a93a3]">·{otherCount}</span>}
                                   </span>
                                 )
                               })}
@@ -855,7 +851,7 @@ async function ApplicationsHubByDivision() {
                           )
                         })()}
                       </div>
-                      <span className="text-slate-300 group-hover:text-[#1d5fa1] transition-colors mt-1">→</span>
+                      <span className="text-[#c9ced6] group-hover:text-[#ff6321] transition-colors mt-1">→</span>
                     </div>
                   </Link>
                 ))}
@@ -866,18 +862,20 @@ async function ApplicationsHubByDivision() {
       })}
 
       {/* Bottom CTA */}
-      <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16">
-        <div className="rounded-3xl bg-gradient-to-br from-[#1d5fa1] via-[#14467a] to-[#0f1f3a] p-8 sm:p-10 text-center text-white shadow-xl shadow-blue-900/20">
-          <h3 className="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight">
+      <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16 egg-reveal">
+        <div className="relative overflow-hidden egg-panel p-8 sm:p-10 text-center">
+          <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-60 pointer-events-none" />
+          <div aria-hidden="true" className="absolute -bottom-16 -right-16 w-64 h-64 rounded-full opacity-30 pointer-events-none"
+            style={{ background: 'radial-gradient(circle, #FF6321 0%, transparent 70%)' }} />
+          <h3 className="egg-display relative text-3xl sm:text-4xl text-[#14161a] mb-3">
             Don't see your industry?
           </h3>
-          <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
+          <p className="relative text-[#3f4650] mb-6 max-w-2xl mx-auto">
             We export to 60+ countries across many sub-industries beyond the
             ones listed here. Submit your sourcing requirement and we'll match
             it to the right division within 24 hours.
           </p>
-          <Link href="/rfq"
-            className="inline-flex items-center gap-2 bg-[#FF6321] hover:bg-[#e0541b] text-white font-bold px-7 py-3.5 rounded-xl shadow-lg transition-all hover:-translate-y-0.5">
+          <Link href="/rfq" className="egg-btn-primary relative">
             📋 Request a Quote
           </Link>
         </div>
@@ -892,22 +890,23 @@ async function ApplicationsHubByDivision() {
 function AccessRestricted({ page, visibility }) {
   return (
     <article>
-      <section className="bg-gradient-to-br from-slate-50 via-white to-blue-50/50 min-h-[60vh] flex items-center">
-        <div className="max-w-2xl mx-auto px-5 sm:px-6 lg:px-8 py-20 text-center">
+      <section className="relative bg-white min-h-[60vh] flex items-center overflow-hidden">
+        <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-60 pointer-events-none" />
+        <div className="relative max-w-2xl mx-auto px-5 sm:px-6 lg:px-8 py-20 text-center">
           <div className="text-5xl mb-4">🔒</div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3">{page.title}</h1>
-          <p className="text-slate-600 mb-8 leading-relaxed">
+          <h1 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-3">{page.title}</h1>
+          <p className="text-[#3f4650] mb-8 leading-relaxed">
             This product is outside the catalogue scope assigned to your buyer
             profile. If you'd like access, contact our export desk and we'll
             review your sourcing requirements.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a href="mailto:export@egyptglobe.com?subject=Catalogue%20access%20request"
-              className="inline-flex items-center gap-2 bg-[#1d5fa1] hover:bg-[#14467a] text-white font-bold px-6 py-3 rounded-xl shadow-md transition-all">
+              className="egg-btn-primary">
               ✉ Request access
             </a>
             <Link href="/buyer"
-              className="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-slate-900 font-bold border border-slate-200 px-6 py-3 rounded-xl transition-all">
+              className="egg-btn-ghost">
               ← Back to your dashboard
             </Link>
           </div>

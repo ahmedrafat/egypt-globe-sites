@@ -1,5 +1,6 @@
 /**
  * /case-studies — magazine index of real Egypt Globe export shipments.
+ * Light editorial edition — tokens + utilities (.egg-*) in app/globals.css.
  */
 import Link from 'next/link'
 import { getCaseStudies, getPageByPath } from '../../lib/corporatePages'
@@ -17,6 +18,8 @@ export const metadata = {
   description: 'How Egypt Globe Group ships cement to East Africa, de-icing salt to the Nordics, pharma-grade NaCl to South Asia. Real shipments, real numbers.',
 }
 
+const TONE = '#0b8f84'
+
 export default async function CaseStudiesIndex() {
   const [posts, hubPage] = await Promise.all([
     getCaseStudies({ limit: 50 }),
@@ -24,43 +27,40 @@ export default async function CaseStudiesIndex() {
   ])
 
   return (
-    <article>
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-teal-700 via-emerald-800 to-[#0f1f3a] text-white">
-        <div aria-hidden="true" className="absolute inset-0 opacity-25 pointer-events-none">
-          <div className="absolute right-0 top-0 w-[600px] h-[600px] rounded-full"
-            style={{ background: 'radial-gradient(circle, white 0%, transparent 70%)' }} />
-          <div className="absolute -bottom-32 -left-24 w-[500px] h-[500px] rounded-full"
-            style={{ background: 'radial-gradient(circle, rgba(34,197,94,0.4) 0%, transparent 70%)' }} />
-        </div>
-        <div className="absolute inset-0 bg-grid-pattern opacity-25" aria-hidden="true" />
+    <article className="bg-white text-[#14161a]">
+      {/* Hero — white editorial banner with turquoise glow */}
+      <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10">
+        <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
+        <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(55% 55% at 88% 0%, rgba(15,181,165,.2), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.08), transparent 60%)' }} />
+        <div aria-hidden="true" className="absolute -right-10 -top-16 text-[240px] leading-none opacity-[0.06] select-none pointer-events-none">📖</div>
 
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20">
-          <nav className="flex items-center gap-2 text-xs text-white/60 mb-5 flex-wrap animate-fade-in">
-            <Link href="/" className="hover:text-white">Home</Link>
+          <nav className="flex items-center gap-2 text-xs text-[#7a8290] mb-5 flex-wrap animate-fade-in">
+            <Link href="/" className="hover:text-[#14161a] transition-colors">Home</Link>
             <span>›</span>
-            <span className="text-white/90">Case Studies</span>
+            <span className="text-[#14161a] font-medium">Case Studies</span>
           </nav>
 
           <div className="flex items-center gap-2 mb-4 flex-wrap animate-fade-in-up">
-            <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 text-white border border-white/20 backdrop-blur-sm">
+            <span className="egg-chip text-xs" style={{ color: TONE, boxShadow: 'inset 0 0 0 1px rgba(15,181,165,.5)' }}>
               📖 Real shipments
             </span>
-            <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 text-white border border-white/20 backdrop-blur-sm">
+            <span className="egg-chip text-xs">
               {posts.length} {posts.length === 1 ? 'study' : 'studies'}
             </span>
-            <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 text-white border border-white/20 backdrop-blur-sm">
+            <span className="egg-chip text-xs">
               Verified numbers
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4 leading-[1.05] drop-shadow-sm animate-fade-in-up">
+          <h1 className="egg-display text-4xl sm:text-5xl lg:text-6xl text-[#14161a] mb-4 leading-[1.02] animate-fade-in-up">
             Real Egypt Globe shipments,
-            <span className="block text-white/85 text-2xl sm:text-3xl lg:text-4xl font-bold mt-2">
+            <span className="block text-[#3f4650] italic text-2xl sm:text-3xl lg:text-4xl mt-3 leading-[1.15]">
               full process and delivered numbers.
             </span>
           </h1>
-          <p className="text-base sm:text-lg leading-relaxed max-w-3xl text-white/80 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
+          <p className="text-base sm:text-lg leading-relaxed max-w-3xl text-[#3f4650] animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
             B2B export trade is built on verifiable execution, not promises.
             Each case study below walks through a real shipment — sourcing,
             loading, documentation, distribution and the lab-tested numbers
@@ -71,10 +71,10 @@ export default async function CaseStudiesIndex() {
 
       {posts.length === 0 ? (
         <section className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-20 text-center">
-          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-10 text-slate-500">
+          <div className="egg-panel p-10 text-[#7a8290]">
             <div className="text-5xl mb-3">📖</div>
             <p>Case studies publish here as we receive customer permission to share details.
-              {' '}<Link href="/contact" className="text-[#1d5fa1] font-semibold hover:underline">Get in touch</Link>{' '}
+              {' '}<Link href="/contact" className="egg-link">Get in touch</Link>{' '}
               for references aligned with your sourcing requirement.</p>
           </div>
         </section>
@@ -82,12 +82,13 @@ export default async function CaseStudiesIndex() {
         <>
           {/* Featured (first one) */}
           {posts[0] && (
-            <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16">
-              <div className="text-xs uppercase tracking-wider font-bold text-teal-700 mb-3">Featured</div>
+            <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16 egg-reveal">
+              <div className="egg-eyebrow mb-3" style={{ color: TONE }}>Featured</div>
               <Link href={posts[0].path}
-                className="card-lift group block rounded-3xl border border-slate-200 bg-white overflow-hidden">
+                className="egg-card group block rounded-3xl overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-5 gap-0">
-                  <div className="lg:col-span-3 aspect-[16/9] lg:aspect-auto overflow-hidden bg-gradient-to-br from-teal-100 via-emerald-100 to-cyan-100 relative">
+                  <div className="lg:col-span-3 aspect-[16/9] lg:aspect-auto overflow-hidden relative"
+                    style={{ background: 'linear-gradient(135deg, #e6fbf8 0%, #f2fbfa 100%)' }}>
                     {posts[0].hero_photo_url ? (
                       /* eslint-disable-next-line @next/next/no-img-element */
                       <img src={posts[0].hero_photo_url} alt={posts[0].title}
@@ -97,18 +98,18 @@ export default async function CaseStudiesIndex() {
                         <span className="text-9xl opacity-30">📖</span>
                       </div>
                     )}
-                    <div className="absolute top-4 left-4 bg-white/95 backdrop-blur text-teal-700 text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-sm">
+                    <div className="absolute top-4 left-4 egg-chip bg-white/95 backdrop-blur text-xs uppercase tracking-wider shadow-sm" style={{ color: TONE }}>
                       ★ Featured
                     </div>
                   </div>
                   <div className="lg:col-span-2 p-7 sm:p-9 lg:p-10 flex flex-col justify-center">
-                    <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 group-hover:text-[#1d5fa1] transition-colors leading-tight tracking-tight mb-3">
+                    <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] group-hover:text-[#0b8f84] transition-colors leading-tight mb-3">
                       {posts[0].title}
                     </h2>
                     {posts[0].description && (
-                      <p className="text-slate-600 leading-relaxed mb-5 line-clamp-4">{posts[0].description}</p>
+                      <p className="text-[#3f4650] leading-relaxed mb-5 line-clamp-4">{posts[0].description}</p>
                     )}
-                    <div className="inline-flex items-center text-sm font-bold text-teal-700 gap-2">
+                    <div className="inline-flex items-center text-sm font-semibold text-[#0b8f84] gap-2">
                       Read case study <span aria-hidden="true">→</span>
                     </div>
                   </div>
@@ -119,13 +120,14 @@ export default async function CaseStudiesIndex() {
 
           {/* Rest */}
           {posts.length > 1 && (
-            <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 pb-16 sm:pb-20">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-8">All case studies</h2>
+            <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 pb-16 sm:pb-20 egg-reveal">
+              <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-8">All case studies</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
                 {posts.slice(1).map(cs => (
                   <Link key={cs.id} href={cs.path}
-                    className="card-lift group rounded-2xl border border-slate-200 bg-white overflow-hidden">
-                    <div className="aspect-[16/9] overflow-hidden bg-gradient-to-br from-teal-100 via-emerald-100 to-cyan-100 relative">
+                    className="egg-card group overflow-hidden">
+                    <div className="aspect-[16/9] overflow-hidden relative rounded-t-2xl"
+                      style={{ background: 'linear-gradient(135deg, #e6fbf8 0%, #f2fbfa 100%)' }}>
                       {cs.hero_photo_url ? (
                         /* eslint-disable-next-line @next/next/no-img-element */
                         <img src={cs.hero_photo_url} alt={cs.title}
@@ -137,13 +139,13 @@ export default async function CaseStudiesIndex() {
                       )}
                     </div>
                     <div className="p-5">
-                      <h3 className="font-bold text-slate-900 line-clamp-2 group-hover:text-[#1d5fa1] transition-colors leading-tight">
+                      <h3 className="font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#0b8f84] transition-colors leading-tight">
                         {cs.title}
                       </h3>
                       {cs.description && (
-                        <p className="text-sm text-slate-500 mt-2 line-clamp-3 leading-relaxed">{cs.description}</p>
+                        <p className="text-sm text-[#7a8290] mt-2 line-clamp-3 leading-relaxed">{cs.description}</p>
                       )}
-                      <div className="mt-3 inline-flex items-center text-xs font-bold text-teal-700 group-hover:gap-2 gap-1 transition-all">
+                      <div className="mt-3 inline-flex items-center text-xs font-semibold text-[#0b8f84] group-hover:gap-2 gap-1 transition-all">
                         Read more <span>→</span>
                       </div>
                     </div>
@@ -156,7 +158,7 @@ export default async function CaseStudiesIndex() {
       )}
 
       {hubPage?.body_markdown && (
-        <section className="bg-slate-50/40 py-16 border-y border-slate-200">
+        <section className="bg-[#f9fafb] py-16 border-y border-[#14161a]/10 egg-reveal">
           <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
             <RichPageBody content={hubPage.body_markdown} title={hubPage.title} />
           </div>
@@ -164,17 +166,20 @@ export default async function CaseStudiesIndex() {
       )}
 
       {/* Bottom CTA */}
-      <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20">
-        <div className="rounded-3xl bg-gradient-to-br from-teal-700 via-emerald-800 to-[#0f1f3a] p-10 sm:p-12 text-center relative overflow-hidden shadow-2xl shadow-emerald-900/20">
-          <div aria-hidden="true" className="absolute -top-12 -right-12 text-[260px] opacity-10 select-none">📖</div>
-          <h2 className="relative text-2xl sm:text-3xl font-extrabold text-white mb-3 tracking-tight">
+      <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 egg-reveal">
+        <div className="egg-panel p-10 sm:p-12 text-center relative overflow-hidden">
+          <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-60 pointer-events-none" />
+          <div aria-hidden="true" className="absolute -bottom-20 -right-20 w-72 h-72 rounded-full opacity-40 pointer-events-none"
+            style={{ background: 'radial-gradient(circle, #0fb5a5 0%, transparent 70%)' }} />
+          <div aria-hidden="true" className="absolute -top-12 -right-12 text-[260px] opacity-[0.06] select-none pointer-events-none">📖</div>
+          <h2 className="egg-display relative text-3xl sm:text-4xl text-[#14161a] mb-3">
             Want a reference aligned with your sourcing requirement?
           </h2>
-          <p className="relative text-emerald-100 text-base sm:text-lg mb-6 max-w-2xl mx-auto">
+          <p className="relative text-[#3f4650] text-base sm:text-lg mb-6 max-w-2xl mx-auto">
             We can share customer references in your industry / region under NDA — useful for tender-bid social proof.
           </p>
           <a href="mailto:export@egyptglobe.com?subject=Case%20study%20reference%20request"
-            className="relative inline-flex items-center gap-2 bg-white hover:bg-emerald-50 text-emerald-800 font-bold px-7 py-3.5 rounded-xl shadow-lg transition-all hover:-translate-y-0.5">
+            className="egg-btn-primary relative">
             ✉ Request references
           </a>
         </div>

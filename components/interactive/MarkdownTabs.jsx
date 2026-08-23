@@ -134,7 +134,7 @@ export default function MarkdownTabs({ body, title, leadingWidget = null }) {
          mobile so first/last tab labels don't touch the screen edge. The
          outer -mx-* still breaks out of the section padding for a true
          edge-to-edge sticky surface. */}
-      <div className="sticky top-0 z-20 -mx-5 sm:-mx-6 lg:-mx-8 bg-white/85 backdrop-blur-md border-b border-slate-200">
+      <div className="sticky top-0 z-20 -mx-5 sm:-mx-6 lg:-mx-8 bg-white/85 backdrop-blur-md border-b border-[#14161a]/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-4 lg:px-6 overflow-x-auto">
           <div className="flex gap-1">
             {tabs.map(t => (
@@ -143,8 +143,8 @@ export default function MarkdownTabs({ body, title, leadingWidget = null }) {
                 onClick={() => go(t.id)}
                 className={`shrink-0 px-3 sm:px-4 py-3 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-1.5 whitespace-nowrap max-w-[260px] ${
                   active === t.id
-                    ? 'border-[#1d5fa1] text-[#1d5fa1]'
-                    : 'border-transparent text-slate-600 hover:text-slate-900 hover:border-slate-300'
+                    ? 'border-[#ff6321] text-[#14161a]'
+                    : 'border-transparent text-[#5b6472] hover:text-[#14161a] hover:border-[#14161a]/30'
                 }`}
                 title={t.label}
               >
@@ -168,8 +168,8 @@ export default function MarkdownTabs({ body, title, leadingWidget = null }) {
 
         {/* Mini section-list on the right (acts as TOC) */}
         <aside className="lg:sticky lg:top-24 self-start hidden lg:block">
-          <div className="rounded-2xl border border-slate-200 bg-white p-4">
-            <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-2">
+          <div className="rounded-2xl border border-[#14161a]/10 bg-white p-4">
+            <div className="text-[10px] uppercase tracking-wider text-[#7a8290] font-bold mb-2">
               On this page
             </div>
             <ul className="space-y-1">
@@ -179,8 +179,8 @@ export default function MarkdownTabs({ body, title, leadingWidget = null }) {
                     onClick={() => go(t.id)}
                     className={`w-full text-left text-xs px-2 py-1.5 rounded-lg flex items-center gap-1.5 transition-colors ${
                       active === t.id
-                        ? 'bg-blue-50 text-[#1d5fa1] font-bold'
-                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                        ? 'bg-[#f2fbfa] text-[#0b8f84] font-semibold'
+                        : 'text-[#3f4650] hover:bg-[#f9fafb] hover:text-[#14161a]'
                     }`}
                   >
                     <span aria-hidden="true">{t.icon}</span>
@@ -189,9 +189,9 @@ export default function MarkdownTabs({ body, title, leadingWidget = null }) {
                 </li>
               ))}
             </ul>
-            <div className="mt-3 pt-3 border-t border-slate-100">
+            <div className="mt-3 pt-3 border-t border-[#14161a]/10">
               <a href="/rfq"
-                className="block w-full text-center bg-[#FF6321] hover:bg-[#e0541b] text-white font-bold text-xs py-2.5 rounded-lg transition-all">
+                className="egg-btn-primary w-full text-xs py-2.5">
                 📋 Quote in 24 hours
               </a>
             </div>

@@ -91,17 +91,17 @@ export default function InlineQuoteCard({ page, prefill = {} }) {
 
   if (refCode) {
     return (
-      <div className="rounded-3xl border border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-emerald-50 p-7 text-center">
+      <div className="rounded-3xl ring-1 ring-[#0fb5a5]/40 bg-[#e6fbf8] p-7 text-center">
         <div className="text-5xl mb-3">✅</div>
-        <h3 className="text-2xl font-extrabold text-slate-900 mb-2">Quote request received</h3>
-        <p className="text-slate-700 mb-1">
-          Ref <span className="font-mono font-bold text-emerald-700">{refCode}</span>
+        <h3 className="egg-display text-3xl text-[#14161a] mb-2">Quote request received</h3>
+        <p className="text-[#3f4650] mb-1">
+          Ref <span className="font-mono font-bold text-[#0b8f84]">{refCode}</span>
         </p>
-        <p className="text-sm text-slate-600 mb-5">
+        <p className="text-sm text-[#3f4650] mb-5">
           Our export desk will respond to <strong>{email}</strong> within 24 hours with FOB / CIF / CFR pricing, available origin port, packing options + a sample CoA.
         </p>
         <a href={`/rfq?product=${encodeURIComponent(page.path)}&ref=${refCode}`}
-          className="inline-flex items-center gap-2 bg-[#1d5fa1] hover:bg-[#14467a] text-white font-bold px-5 py-2.5 rounded-xl shadow-md transition-all text-sm">
+          className="egg-btn-primary text-sm py-2.5">
           Add more detail (full RFQ form) →
         </a>
       </div>
@@ -109,13 +109,13 @@ export default function InlineQuoteCard({ page, prefill = {} }) {
   }
 
   return (
-    <div className="rounded-3xl border border-orange-200 bg-gradient-to-br from-orange-50/60 via-white to-orange-50/30 shadow-sm overflow-hidden">
-      <div className="px-6 py-4 border-b border-orange-100 bg-white/40">
+    <div className="rounded-3xl ring-1 ring-[#ff6321]/25 bg-[#fff8f3] overflow-hidden">
+      <div className="px-6 py-4 border-b border-[#ff6321]/15 bg-white/60">
         <div className="flex items-center gap-2">
           <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-[#FF6321] text-white text-lg shadow-sm">📋</span>
-          <h3 className="text-xl font-extrabold text-slate-900">Get a quote in 24 hours</h3>
+          <h3 className="egg-display text-2xl text-[#14161a]">Get a quote in 24 hours</h3>
         </div>
-        <p className="text-xs text-slate-500 mt-1">Pre-filled with <strong className="text-slate-700">{page.title}</strong>. Add quantity + email and we'll do the rest.</p>
+        <p className="text-xs text-[#7a8290] mt-1">Pre-filled with <strong className="text-[#3f4650]">{page.title}</strong>. Add quantity + email and we'll do the rest.</p>
       </div>
 
       <form onSubmit={onSubmit} className="p-6 space-y-4">
@@ -123,14 +123,14 @@ export default function InlineQuoteCard({ page, prefill = {} }) {
           <Field label="Quantity" required>
             <div className="flex">
               <input type="number" min="1" value={quantity} onChange={e => setQuantity(e.target.value)} required
-                className="flex-1 border border-slate-200 rounded-l-lg px-3 py-2.5 text-sm focus:border-[#FF6321] focus:ring-2 focus:ring-orange-100 outline-none"
+                className="flex-1 border border-[#14161a]/10 rounded-l-lg px-3 py-2.5 text-sm focus:border-[#ff6321] focus:ring-2 focus:ring-[#ff6321]/25 outline-none"
                 placeholder="500" />
-              <div className="bg-slate-100 border border-l-0 border-slate-200 rounded-r-lg px-3 py-2.5 text-sm font-bold text-slate-700">MT</div>
+              <div className="bg-[#f3f4f6] border border-l-0 border-[#14161a]/10 rounded-r-lg px-3 py-2.5 text-sm font-bold text-[#3f4650]">MT</div>
             </div>
           </Field>
           <Field label="Incoterm">
             <select value={incoterm} onChange={e => setIncoterm(e.target.value)}
-              className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm font-semibold focus:border-[#FF6321] focus:ring-2 focus:ring-orange-100 outline-none">
+              className="w-full border border-[#14161a]/10 rounded-lg px-3 py-2.5 text-sm font-semibold focus:border-[#ff6321] focus:ring-2 focus:ring-[#ff6321]/25 outline-none">
               {['FOB', 'CIF', 'CFR', 'DAP', 'DDP', 'EXW', 'CPT', 'CIP'].map(i => (
                 <option key={i}>{i}</option>
               ))}
@@ -140,29 +140,29 @@ export default function InlineQuoteCard({ page, prefill = {} }) {
         <Field label="Destination port (optional — we'll suggest if blank)">
           <input value={destPort} onChange={e => setDestPort(e.target.value)}
             placeholder={prefill.dest_port || 'Mombasa, Lagos, JNPT, Jeddah…'}
-            className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:border-[#FF6321] focus:ring-2 focus:ring-orange-100 outline-none" />
+            className="w-full border border-[#14161a]/10 rounded-lg px-3 py-2.5 text-sm focus:border-[#ff6321] focus:ring-2 focus:ring-[#ff6321]/25 outline-none" />
         </Field>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <Field label="Your email" required>
             <input type="email" value={email} onChange={e => setEmail(e.target.value)} required
               placeholder="you@company.com"
-              className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:border-[#FF6321] focus:ring-2 focus:ring-orange-100 outline-none" />
+              className="w-full border border-[#14161a]/10 rounded-lg px-3 py-2.5 text-sm focus:border-[#ff6321] focus:ring-2 focus:ring-[#ff6321]/25 outline-none" />
           </Field>
           <Field label="Company name (optional)">
             <input value={company} onChange={e => setCompany(e.target.value)}
               placeholder="ACME Trading FZE"
-              className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:border-[#FF6321] focus:ring-2 focus:ring-orange-100 outline-none" />
+              className="w-full border border-[#14161a]/10 rounded-lg px-3 py-2.5 text-sm focus:border-[#ff6321] focus:ring-2 focus:ring-[#ff6321]/25 outline-none" />
           </Field>
         </div>
 
         {error && <div className="text-xs text-red-700 bg-red-50 border border-red-200 rounded-lg p-2.5">⚠ {error}</div>}
 
         <button type="submit" disabled={submitting}
-          className="w-full inline-flex items-center justify-center gap-2 bg-[#FF6321] hover:bg-[#e0541b] disabled:bg-orange-300 text-white font-bold px-6 py-3.5 rounded-xl shadow-md shadow-orange-500/25 transition-all">
+          className="egg-btn-primary w-full py-3.5 disabled:opacity-60 disabled:cursor-not-allowed">
           {submitting ? '⏳ Sending…' : '📋 Get my quote in 24 hours'}
         </button>
-        <p className="text-[11px] text-slate-500 text-center leading-relaxed">
-          Your details go to our Cairo export desk only. No marketing email. Need a richer RFQ form? <a href={`/rfq?product=${encodeURIComponent(page.path)}`} className="text-[#1d5fa1] font-semibold hover:underline">Use the full form →</a>
+        <p className="text-[11px] text-[#7a8290] text-center leading-relaxed">
+          Your details go to our Cairo export desk only. No marketing email. Need a richer RFQ form? <a href={`/rfq?product=${encodeURIComponent(page.path)}`} className="text-[#0b8f84] font-semibold hover:underline">Use the full form →</a>
         </p>
       </form>
     </div>
@@ -172,8 +172,8 @@ export default function InlineQuoteCard({ page, prefill = {} }) {
 function Field({ label, required, children }) {
   return (
     <label className="block">
-      <span className="text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5 block">
-        {label} {required && <span className="text-red-500">*</span>}
+      <span className="text-xs font-bold uppercase tracking-wider text-[#3f4650] mb-1.5 block">
+        {label} {required && <span className="text-[#ff6321]">*</span>}
       </span>
       {children}
     </label>

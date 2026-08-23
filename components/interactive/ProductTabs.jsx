@@ -98,7 +98,7 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
   return (
     <section id="product-tabs" className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10">
       {/* Sticky tab bar */}
-      <div className="sticky top-0 z-20 -mx-5 sm:-mx-6 lg:-mx-8 bg-white/85 backdrop-blur-md border-b border-slate-200">
+      <div className="sticky top-0 z-20 -mx-5 sm:-mx-6 lg:-mx-8 bg-white/85 backdrop-blur-md border-b border-[#14161a]/10">
         <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 overflow-x-auto">
           <div className="flex gap-1">
             {TABS.map(t => (
@@ -107,8 +107,8 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
                 onClick={() => go(t.id)}
                 className={`shrink-0 px-3 sm:px-4 py-3 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-1.5 ${
                   active === t.id
-                    ? 'border-[#1d5fa1] text-[#1d5fa1]'
-                    : 'border-transparent text-slate-600 hover:text-slate-900 hover:border-slate-300'
+                    ? 'border-[#ff6321] text-[#14161a]'
+                    : 'border-transparent text-[#5b6472] hover:text-[#14161a] hover:border-[#14161a]/30'
                 }`}
               >
                 <span aria-hidden="true">{t.icon}</span> {t.label}
@@ -126,13 +126,13 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
           {/* Overview */}
           <div className={`space-y-6 ${active === 'overview' ? 'animate-fade-in-up' : 'hidden'}`}>
             {page.description && (
-              <p className="text-lg text-slate-700 leading-relaxed font-medium">{page.description}</p>
+              <p className="text-lg text-[#3f4650] leading-relaxed font-medium">{page.description}</p>
             )}
             {isSalt && <SourceStorySwitcher pageSourceType={specs.source_type} />}
             {!isSalt && (
-              <div className="rounded-2xl border border-slate-200 bg-white p-6">
-                <h3 className="text-lg font-bold text-slate-900 mb-3">Origin & sourcing</h3>
-                <p className="text-sm text-slate-700 leading-relaxed">
+              <div className="rounded-2xl border border-[#14161a]/10 bg-white p-6">
+                <h3 className="text-lg font-bold text-[#14161a] mb-3">Origin & sourcing</h3>
+                <p className="text-sm text-[#3f4650] leading-relaxed">
                   {specs.origin || 'Sourced from Egypt Globe Group operations.'}
                   {' '}Provenance documented on Egyptian Chamber of Commerce Certificate of Origin —
                   qualifies for COMESA / PAFTA / EU-Med preferential treatment where applicable.
@@ -219,9 +219,9 @@ function KeyStatsStrip({ page, specs }) {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
       {items.map(it => (
-        <div key={it.label} className="rounded-xl border border-slate-200 bg-white p-3">
-          <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">{it.label}</div>
-          <div className="text-base font-extrabold text-[#1d5fa1] font-mono mt-1">{it.value}</div>
+        <div key={it.label} className="rounded-xl border border-[#14161a]/10 bg-white p-3">
+          <div className="text-[10px] uppercase tracking-wider text-[#7a8290] font-bold">{it.label}</div>
+          <div className="text-base font-semibold text-[#0b8f84] font-mono mt-1">{it.value}</div>
         </div>
       ))}
     </div>
@@ -241,29 +241,29 @@ function SpecsTable({ page, specs, commodity, specEntries }) {
     .map(([k, v]) => ({ label: pretty(k), value: String(v) }))
 
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-      <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/60 flex items-center justify-between">
-        <h3 className="font-bold text-lg text-slate-900 flex items-center gap-2">
+    <div className="bg-white border border-[#14161a]/10 rounded-2xl overflow-hidden shadow-sm">
+      <div className="px-6 py-4 border-b border-[#14161a]/10 bg-[#f9fafb] flex items-center justify-between">
+        <h3 className="font-bold text-lg text-[#14161a] flex items-center gap-2">
           <span className="text-xl">🧪</span> Full specification
         </h3>
-        <span className="text-xs font-medium text-slate-500">{anchors.length + numeric.length} parameters</span>
+        <span className="text-xs font-medium text-[#7a8290]">{anchors.length + numeric.length} parameters</span>
       </div>
-      <div className="divide-y divide-slate-100">
+      <div className="divide-y divide-[#14161a]/10">
         {[...anchors, ...numeric].map((row, i) => (
-          <div key={i} className="grid grid-cols-1 sm:grid-cols-3 gap-1 px-6 py-3 hover:bg-slate-50/50 transition-colors">
-            <dt className="text-sm font-semibold text-slate-500">{row.label}</dt>
-            <dd className={`sm:col-span-2 text-sm text-slate-900 ${row.mono ? 'font-mono font-bold' : 'font-semibold'}`}>{row.value}</dd>
+          <div key={i} className="grid grid-cols-1 sm:grid-cols-3 gap-1 px-6 py-3 hover:bg-[#f9fafb] transition-colors">
+            <dt className="text-sm font-semibold text-[#7a8290]">{row.label}</dt>
+            <dd className={`sm:col-span-2 text-sm text-[#14161a] ${row.mono ? 'font-mono font-bold' : 'font-semibold'}`}>{row.value}</dd>
           </div>
         ))}
       </div>
       {commodity && (
-        <div className="px-6 py-3 bg-slate-50/40 border-t border-slate-100 text-xs text-slate-500">
-          Commodity master: <span className="font-mono font-semibold text-slate-700">{commodity.code || commodity.sku || commodity.name}</span>
+        <div className="px-6 py-3 bg-[#f9fafb] border-t border-[#14161a]/10 text-xs text-[#7a8290]">
+          Commodity master: <span className="font-mono font-semibold text-[#3f4650]">{commodity.code || commodity.sku || commodity.name}</span>
         </div>
       )}
       {page.datasheet_url && (
         <a href={page.datasheet_url} target="_blank" rel="noopener noreferrer"
-          className="block px-6 py-3 bg-blue-50 border-t border-blue-100 text-sm font-semibold text-[#1d5fa1] hover:bg-blue-100 transition-colors">
+          className="block px-6 py-3 bg-[#f2fbfa] border-t border-[#0fb5a5]/30 text-sm font-semibold text-[#0b8f84] hover:bg-[#e6f8f6] transition-colors">
           📄 Download Technical Data Sheet (PDF) →
         </a>
       )}
@@ -281,48 +281,48 @@ function QualityReferenceTable({ specs }) {
   const required = specs.filter(s => s.required)
   const optional = specs.filter(s => !s.required)
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm mt-4">
-      <div className="px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-amber-50/40 via-white to-amber-50/40 flex items-center justify-between">
-        <h3 className="font-bold text-lg text-slate-900 flex items-center gap-2">
+    <div className="bg-white border border-[#14161a]/10 rounded-2xl overflow-hidden shadow-sm mt-4">
+      <div className="px-6 py-4 border-b border-[#14161a]/10 bg-[#fbf7ee] flex items-center justify-between">
+        <h3 className="font-bold text-lg text-[#14161a] flex items-center gap-2">
           <span className="text-xl">🛡</span> Quality reference + test methods
         </h3>
-        <span className="text-xs font-medium text-slate-500">
+        <span className="text-xs font-medium text-[#7a8290]">
           {required.length} required · {optional.length} optional · {specs.length} total
         </span>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-slate-50/60 border-b border-slate-100">
+          <thead className="bg-[#f9fafb] border-b border-[#14161a]/10">
             <tr>
-              <th className="text-left text-[10px] uppercase tracking-wider font-bold text-slate-500 px-4 py-2">Parameter</th>
-              <th className="text-left text-[10px] uppercase tracking-wider font-bold text-slate-500 px-4 py-2">Target</th>
-              <th className="text-left text-[10px] uppercase tracking-wider font-bold text-slate-500 px-4 py-2">Test method</th>
-              <th className="text-left text-[10px] uppercase tracking-wider font-bold text-slate-500 px-4 py-2 hidden md:table-cell">Standard</th>
-              <th className="text-left text-[10px] uppercase tracking-wider font-bold text-slate-500 px-4 py-2 hidden lg:table-cell">Cert body</th>
-              <th className="text-center text-[10px] uppercase tracking-wider font-bold text-slate-500 px-4 py-2">Req</th>
+              <th className="text-left text-[10px] uppercase tracking-wider font-bold text-[#7a8290] px-4 py-2">Parameter</th>
+              <th className="text-left text-[10px] uppercase tracking-wider font-bold text-[#7a8290] px-4 py-2">Target</th>
+              <th className="text-left text-[10px] uppercase tracking-wider font-bold text-[#7a8290] px-4 py-2">Test method</th>
+              <th className="text-left text-[10px] uppercase tracking-wider font-bold text-[#7a8290] px-4 py-2 hidden md:table-cell">Standard</th>
+              <th className="text-left text-[10px] uppercase tracking-wider font-bold text-[#7a8290] px-4 py-2 hidden lg:table-cell">Cert body</th>
+              <th className="text-center text-[10px] uppercase tracking-wider font-bold text-[#7a8290] px-4 py-2">Req</th>
             </tr>
           </thead>
           <tbody>
             {[...required, ...optional].map(s => (
-              <tr key={s.id} className="border-b border-slate-100 hover:bg-slate-50/40">
-                <td className="px-4 py-2.5 text-slate-900 text-xs font-semibold">{s.parameter_name}</td>
-                <td className="px-4 py-2.5 text-amber-700 font-mono text-xs font-bold">
-                  {s.target_value} {s.unit && <span className="text-slate-400 font-normal">{s.unit}</span>}
+              <tr key={s.id} className="border-b border-[#14161a]/10 hover:bg-[#f9fafb]">
+                <td className="px-4 py-2.5 text-[#14161a] text-xs font-semibold">{s.parameter_name}</td>
+                <td className="px-4 py-2.5 text-[#8a6d3b] font-mono text-xs font-bold">
+                  {s.target_value} {s.unit && <span className="text-[#8a93a3] font-normal">{s.unit}</span>}
                 </td>
-                <td className="px-4 py-2.5 text-slate-600 text-xs">{s.test_method}</td>
-                <td className="px-4 py-2.5 text-slate-500 text-xs hidden md:table-cell">{s.standard_ref}</td>
-                <td className="px-4 py-2.5 text-slate-500 text-xs hidden lg:table-cell">{s.certification_body}</td>
+                <td className="px-4 py-2.5 text-[#3f4650] text-xs">{s.test_method}</td>
+                <td className="px-4 py-2.5 text-[#7a8290] text-xs hidden md:table-cell">{s.standard_ref}</td>
+                <td className="px-4 py-2.5 text-[#7a8290] text-xs hidden lg:table-cell">{s.certification_body}</td>
                 <td className="px-4 py-2.5 text-center text-xs">
                   {s.required
                     ? <span className="inline-flex items-center gap-0.5 text-red-700 font-bold">●</span>
-                    : <span className="text-slate-300">○</span>}
+                    : <span className="text-[#c9ced6]">○</span>}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <p className="px-4 py-3 text-[11px] text-slate-500 bg-slate-50/40 border-t border-slate-100">
+      <p className="px-4 py-3 text-[11px] text-[#7a8290] bg-[#f9fafb] border-t border-[#14161a]/10">
         ● Required = mandatory per shipment. ○ Optional = on-request.
         Independent third-party verification (TÜV Austria / SGS / Intertek / Bureau Veritas) available — typically 0.3-0.5% of FOB value.
       </p>
@@ -332,17 +332,17 @@ function QualityReferenceTable({ specs }) {
 
 function CertificationsBlock({ certs }) {
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm mt-4">
-      <h3 className="font-bold text-lg text-slate-900 mb-4 flex items-center gap-2">
+    <div className="bg-white border border-[#14161a]/10 rounded-2xl p-6 shadow-sm mt-4">
+      <h3 className="font-bold text-lg text-[#14161a] mb-4 flex items-center gap-2">
         <span className="text-xl">🏅</span> Certifications & Standards
       </h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         {certs.map(c => (
-          <div key={c} className="flex items-start gap-2 p-3 rounded-lg border border-slate-200 bg-slate-50/40">
-            <svg className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+          <div key={c} className="flex items-start gap-2 p-3 rounded-lg border border-[#14161a]/10 bg-[#f9fafb]">
+            <svg className="w-5 h-5 text-[#0fb5a5] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
             </svg>
-            <span className="text-sm text-slate-700 font-semibold">{c}</span>
+            <span className="text-sm text-[#3f4650] font-semibold">{c}</span>
           </div>
         ))}
       </div>
@@ -353,26 +353,26 @@ function CertificationsBlock({ certs }) {
 function ApplicationsGrid({ apps, pageTitle }) {
   if (!apps.length) {
     return (
-      <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50/40 p-8 text-center text-sm text-slate-500">
+      <div className="rounded-2xl border border-dashed border-[#14161a]/10 bg-[#f9fafb] p-8 text-center text-sm text-[#7a8290]">
         No specific application taxonomy linked. {pageTitle} is suitable for general industrial / commercial use — contact our export desk for fit-to-application advice.
       </div>
     )
   }
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-      <h3 className="font-bold text-lg text-slate-900 mb-4 flex items-center gap-2">
+    <div className="bg-white border border-[#14161a]/10 rounded-2xl p-6 shadow-sm">
+      <h3 className="font-bold text-lg text-[#14161a] mb-4 flex items-center gap-2">
         <span className="text-xl">🏭</span> Where {pageTitle} is used
       </h3>
       <div className="grid sm:grid-cols-2 gap-3">
         {apps.map(app => (
           <Link key={app.id} href={app.path}
-            className="flex items-center gap-3 p-4 border border-slate-200 rounded-xl hover:border-[#1d5fa1] hover:bg-blue-50/40 transition-all group">
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl bg-gradient-to-br from-violet-100 to-blue-100">
+            className="flex items-center gap-3 p-4 border border-[#14161a]/10 rounded-xl hover:border-[#0fb5a5] hover:bg-[#f2fbfa] transition-all group">
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl bg-[#f3f0ff] ring-1 ring-[#7c3aed]/25">
               {app.icon}
             </div>
             <div className="flex-1 min-w-0">
-              <div className="font-bold text-slate-900 group-hover:text-[#1d5fa1] transition-colors">{app.label}</div>
-              <div className="text-xs text-slate-500 mt-0.5">View matching products →</div>
+              <div className="font-bold text-[#14161a] group-hover:text-[#0b8f84] transition-colors">{app.label}</div>
+              <div className="text-xs text-[#7a8290] mt-0.5">View matching products →</div>
             </div>
           </Link>
         ))}
@@ -383,21 +383,21 @@ function ApplicationsGrid({ apps, pageTitle }) {
 
 function PackingGrid({ packing }) {
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-      <h3 className="font-bold text-lg text-slate-900 mb-4 flex items-center gap-2">
+    <div className="bg-white border border-[#14161a]/10 rounded-2xl p-6 shadow-sm">
+      <h3 className="font-bold text-lg text-[#14161a] mb-4 flex items-center gap-2">
         <span className="text-xl">📦</span> Available packing formats
       </h3>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {packing.map((p, i) => (
-          <div key={i} className="rounded-xl border border-slate-200 bg-slate-50/40 p-4 text-center">
+          <div key={i} className="rounded-xl border border-[#14161a]/10 bg-[#f9fafb] p-4 text-center">
             <div className="text-3xl mb-1">📦</div>
-            <div className="text-xs font-bold text-slate-900">{p}</div>
+            <div className="text-xs font-bold text-[#14161a]">{p}</div>
           </div>
         ))}
       </div>
-      <p className="text-xs text-slate-500 mt-4">
+      <p className="text-xs text-[#7a8290] mt-4">
         OEM / private-label printing on request.{' '}
-        <Link href="/services/packing" className="text-[#1d5fa1] font-semibold hover:underline">View packing services →</Link>
+        <Link href="/services/packing" className="text-[#0b8f84] font-semibold hover:underline">View packing services →</Link>
       </p>
     </div>
   )
@@ -408,25 +408,25 @@ function LoadingPortsCard({ ports, regions }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {ports.length > 0 && (
-        <div className="rounded-2xl bg-amber-50/60 border border-amber-100 p-5">
-          <h4 className="font-bold text-slate-900 mb-2 flex items-center gap-1.5">
+        <div className="rounded-2xl bg-[#fbf7ee] border border-[#b8862b]/25 p-5">
+          <h4 className="font-bold text-[#14161a] mb-2 flex items-center gap-1.5">
             <span className="text-lg">⚓</span> Loads from
           </h4>
           <div className="flex flex-wrap gap-1.5">
             {ports.map(p => (
-              <span key={p} className="inline-flex items-center text-xs font-semibold bg-white text-amber-900 border border-amber-200 px-2.5 py-1 rounded-full">{p}</span>
+              <span key={p} className="inline-flex items-center text-xs font-semibold bg-white text-[#8a6d3b] border border-[#b8862b]/45 px-2.5 py-1 rounded-full">{p}</span>
             ))}
           </div>
         </div>
       )}
       {regions.length > 0 && (
-        <div className="rounded-2xl bg-blue-50/60 border border-blue-100 p-5">
-          <h4 className="font-bold text-slate-900 mb-2 flex items-center gap-1.5">
+        <div className="rounded-2xl bg-[#eef6fd] border border-[#0284c7]/25 p-5">
+          <h4 className="font-bold text-[#14161a] mb-2 flex items-center gap-1.5">
             <span className="text-lg">🌍</span> Ships to
           </h4>
           <div className="flex flex-wrap gap-1.5">
             {regions.map(r => (
-              <span key={r} className="inline-flex items-center text-xs font-medium bg-white text-blue-800 border border-blue-200 px-2.5 py-1 rounded-full">{r}</span>
+              <span key={r} className="inline-flex items-center text-xs font-medium bg-white text-[#0369a1] border border-[#0284c7]/35 px-2.5 py-1 rounded-full">{r}</span>
             ))}
           </div>
         </div>
@@ -437,22 +437,26 @@ function LoadingPortsCard({ ports, regions }) {
 
 function QuoteCta({ page }) {
   return (
-    <div className="bg-gradient-to-br from-[#1d5fa1] to-[#14467a] rounded-2xl p-5 text-white shadow-xl">
-      <h3 className="font-bold text-base mb-1.5">Quote in 24 hours</h3>
-      <p className="text-blue-100 text-xs mb-4">No spam. Direct to our Cairo export desk.</p>
+    <div className="relative overflow-hidden egg-panel p-5">
+      <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-60 pointer-events-none" />
+      <div aria-hidden="true" className="absolute -bottom-10 -right-10 w-32 h-32 rounded-full opacity-30 pointer-events-none" style={{ background: 'radial-gradient(circle, #FF6321 0%, transparent 70%)' }} />
+      <div className="relative">
+      <h3 className="egg-display text-xl text-[#14161a] mb-1.5">Quote in 24 hours</h3>
+      <p className="text-[#3f4650] text-xs mb-4">No spam. Direct to our Cairo export desk.</p>
       <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
-        className="block w-full text-center bg-[#FF6321] hover:bg-[#e0541b] text-white font-bold py-2.5 rounded-xl transition-all hover:-translate-y-0.5 shadow-lg text-sm">
+        className="egg-btn-primary w-full text-sm py-2.5">
         📋 Get Quote
       </Link>
       <div className="grid grid-cols-2 gap-2 mt-2">
         <Link href={`/tds${page.path}`} target="_blank"
-          className="flex items-center justify-center gap-1 border border-white/25 text-white/85 hover:text-white hover:bg-white/10 text-xs font-bold py-2 rounded-lg transition-colors">
+          className="egg-btn-ghost text-xs py-2 px-2">
           📄 TDS
         </Link>
         <Link href={`/rfq?product=${encodeURIComponent(page.path)}&type=coa`}
-          className="flex items-center justify-center gap-1 border border-white/25 text-white/85 hover:text-white hover:bg-white/10 text-xs font-bold py-2 rounded-lg transition-colors">
+          className="egg-btn-ghost text-xs py-2 px-2">
           🧪 CoA
         </Link>
+      </div>
       </div>
     </div>
   )
@@ -460,19 +464,19 @@ function QuoteCta({ page }) {
 
 function CommercialCard({ page, visibility }) {
   return (
-    <div className="bg-orange-50 border border-orange-200 rounded-2xl p-5 shadow-sm">
-      <h3 className="font-bold text-slate-900 text-sm mb-3">Commercial</h3>
+    <div className="bg-[#fff4ec] ring-1 ring-[#ff6321]/25 rounded-2xl p-5">
+      <h3 className="font-bold text-[#14161a] text-sm mb-3">Commercial</h3>
       <div className="grid grid-cols-2 gap-3 text-xs">
         {page.moq_mt && (
           <div>
-            <div className="text-slate-500 mb-0.5">Min. order</div>
-            <div className="font-bold text-slate-900 text-base">{Number(page.moq_mt).toLocaleString()} MT</div>
+            <div className="text-[#7a8290] mb-0.5">Min. order</div>
+            <div className="font-bold text-[#14161a] text-base">{Number(page.moq_mt).toLocaleString()} MT</div>
           </div>
         )}
         {(page.lead_time_min_weeks || page.lead_time_max_weeks) && (
           <div>
-            <div className="text-slate-500 mb-0.5">Lead</div>
-            <div className="font-bold text-slate-900 text-base">
+            <div className="text-[#7a8290] mb-0.5">Lead</div>
+            <div className="font-bold text-[#14161a] text-base">
               {page.lead_time_min_weeks && page.lead_time_max_weeks
                 ? `${page.lead_time_min_weeks}–${page.lead_time_max_weeks} wk`
                 : `${page.lead_time_min_weeks || page.lead_time_max_weeks} wk`}
@@ -481,13 +485,13 @@ function CommercialCard({ page, visibility }) {
         )}
         {page.hs_code && (
           <div className="col-span-2">
-            <div className="text-slate-500 mb-0.5">HS code</div>
-            <div className="font-mono font-bold text-slate-900">{page.hs_code}</div>
+            <div className="text-[#7a8290] mb-0.5">HS code</div>
+            <div className="font-mono font-bold text-[#14161a]">{page.hs_code}</div>
           </div>
         )}
         {page.price_indication && (
-          <div className="col-span-2 pt-2 border-t border-orange-200">
-            <div className="text-slate-500 mb-0.5">Indicative price</div>
+          <div className="col-span-2 pt-2 border-t border-[#ff6321]/25">
+            <div className="text-[#7a8290] mb-0.5">Indicative price</div>
             <PriceDisplay price={page.price_indication} visibility={visibility} size="lg" placeholder="Sign in to see price" />
           </div>
         )}

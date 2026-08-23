@@ -24,7 +24,7 @@ export default async function SiteHeader({ settings }) {
   ])
 
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur-md shadow-sm">
+    <header className="sticky top-0 z-30 border-b border-[#14161a]/10 bg-white/95 backdrop-blur-md shadow-sm">
 
       {/* ── Top info strip ───────────────────────────────────────── */}
       <div className="hidden md:block bg-[#1d5fa1]">
@@ -72,45 +72,45 @@ export default async function SiteHeader({ settings }) {
 
             {/* Products mega-menu */}
             <div className="relative group">
-              <button className="flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-[#1d5fa1] hover:bg-blue-50/70 transition-colors">
+              <button className="flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-semibold text-[#3f4650] hover:text-[#0b8f84] hover:bg-[#f2fbfa] transition-colors">
                 Products
                 <svg className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7"/>
                 </svg>
               </button>
-              <div className="absolute top-full left-0 mt-2 w-[660px] bg-white border border-slate-200 rounded-2xl shadow-2xl shadow-slate-900/10
+              <div className="absolute top-full left-0 mt-2 w-[660px] bg-white border border-[#14161a]/10 rounded-2xl shadow-[0_24px_60px_-28px_rgba(20,22,26,.35)]
                 opacity-0 invisible group-hover:opacity-100 group-hover:visible
                 transition-all duration-200 translate-y-1 group-hover:translate-y-0 overflow-hidden">
                 {/* Mega-menu header */}
-                <div className="px-5 pt-4 pb-3 border-b border-slate-100 flex items-center justify-between">
-                  <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400">Product Divisions</span>
-                  <Link href="/products" className="text-xs font-bold text-[#1d5fa1] hover:underline">
+                <div className="px-5 pt-4 pb-3 border-b border-[#14161a]/10 flex items-center justify-between">
+                  <span className="text-[11px] font-bold uppercase tracking-widest text-[#8a93a3]">Product Divisions</span>
+                  <Link href="/products" className="text-xs font-semibold text-[#0b8f84] hover:underline">
                     All products →
                   </Link>
                 </div>
                 <div className="grid grid-cols-2 gap-1 p-3">
                   {PRODUCT_DIVISIONS.map(div => (
                     <Link key={div.id} href={div.path}
-                      className="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors group/item">
+                      className="flex items-start gap-3 p-3 rounded-xl hover:bg-[#f9fafb] transition-colors group/item">
                       <div className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-xl"
                         style={{ background: `${div.color}18` }}>
                         {div.icon}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="font-semibold text-sm text-slate-900 group-hover/item:text-[#1d5fa1] transition-colors">
+                        <div className="font-semibold text-sm text-[#14161a] group-hover/item:text-[#0b8f84] transition-colors">
                           {div.label}
                         </div>
-                        <div className="text-xs text-slate-500 line-clamp-1 mt-0.5">{div.blurb}</div>
+                        <div className="text-xs text-[#7a8290] line-clamp-1 mt-0.5">{div.blurb}</div>
                       </div>
                     </Link>
                   ))}
                 </div>
                 {/* Mega-menu footer */}
-                <div className="px-5 py-2.5 bg-slate-50 border-t border-slate-100 flex items-center gap-3 text-[11px] text-slate-500">
+                <div className="px-5 py-2.5 bg-[#f9fafb] border-t border-[#14161a]/10 flex items-center gap-3 text-[11px] text-[#7a8290]">
                   <span>🇪🇬 Egyptian-origin verified</span>
-                  <span className="text-slate-300">·</span>
+                  <span className="text-[#c9ced6]">·</span>
                   <span>7 seaports · FOB / CIF / CFR</span>
-                  <span className="text-slate-300">·</span>
+                  <span className="text-[#c9ced6]">·</span>
                   <span>CoA per shipment</span>
                 </div>
               </div>
@@ -118,43 +118,43 @@ export default async function SiteHeader({ settings }) {
 
             {/* Services mega-menu */}
             <div className="relative group">
-              <button className="flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-[#1d5fa1] hover:bg-blue-50/70 transition-colors">
+              <button className="flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-semibold text-[#3f4650] hover:text-[#0b8f84] hover:bg-[#f2fbfa] transition-colors">
                 Services
                 <svg className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7"/>
                 </svg>
               </button>
-              <div className="absolute top-full left-0 mt-2 w-[600px] bg-white border border-slate-200 rounded-2xl shadow-2xl shadow-slate-900/10
+              <div className="absolute top-full left-0 mt-2 w-[600px] bg-white border border-[#14161a]/10 rounded-2xl shadow-[0_24px_60px_-28px_rgba(20,22,26,.35)]
                 opacity-0 invisible group-hover:opacity-100 group-hover:visible
                 transition-all duration-200 translate-y-1 group-hover:translate-y-0 overflow-hidden">
                 {/* Mega-menu header */}
-                <div className="px-5 pt-4 pb-3 border-b border-slate-100 flex items-center justify-between">
-                  <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400">Supply-chain Services</span>
-                  <Link href="/services" className="text-xs font-bold text-[#1d5fa1] hover:underline">
+                <div className="px-5 pt-4 pb-3 border-b border-[#14161a]/10 flex items-center justify-between">
+                  <span className="text-[11px] font-bold uppercase tracking-widest text-[#8a93a3]">Supply-chain Services</span>
+                  <Link href="/services" className="text-xs font-semibold text-[#0b8f84] hover:underline">
                     All services →
                   </Link>
                 </div>
                 <div className="grid grid-cols-2 gap-1 p-3">
                   {SERVICE_DIVISIONS.map(svc => (
                     <Link key={svc.id} href={svc.path}
-                      className="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors group/item">
+                      className="flex items-start gap-3 p-3 rounded-xl hover:bg-[#f9fafb] transition-colors group/item">
                       <div className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-xl"
                         style={{ background: `${svc.color}18` }}>
                         {svc.icon}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="font-semibold text-sm text-slate-900 group-hover/item:text-[#1d5fa1] transition-colors">
+                        <div className="font-semibold text-sm text-[#14161a] group-hover/item:text-[#0b8f84] transition-colors">
                           {svc.label}
                         </div>
-                        <div className="text-xs text-slate-500 line-clamp-1 mt-0.5">{svc.blurb}</div>
+                        <div className="text-xs text-[#7a8290] line-clamp-1 mt-0.5">{svc.blurb}</div>
                       </div>
                     </Link>
                   ))}
                 </div>
                 {/* Mega-menu footer */}
-                <div className="px-5 py-2.5 bg-slate-50 border-t border-slate-100 flex items-center gap-3 text-[11px] text-slate-500">
+                <div className="px-5 py-2.5 bg-[#f9fafb] border-t border-[#14161a]/10 flex items-center gap-3 text-[11px] text-[#7a8290]">
                   <span>Logistics · Port · QC · Docs</span>
-                  <span className="text-slate-300">·</span>
+                  <span className="text-[#c9ced6]">·</span>
                   <span>Pair any product with the service it needs</span>
                 </div>
               </div>
@@ -162,37 +162,37 @@ export default async function SiteHeader({ settings }) {
 
             {/* Resources mega-menu — Markets · Trade Tools · Standards · Ports */}
             <div className="relative group">
-              <button className="flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-[#1d5fa1] hover:bg-blue-50/70 transition-colors">
+              <button className="flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-semibold text-[#3f4650] hover:text-[#0b8f84] hover:bg-[#f2fbfa] transition-colors">
                 Resources
                 <svg className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7"/>
                 </svg>
               </button>
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[920px] max-w-[calc(100vw-2rem)] bg-white border border-slate-200 rounded-2xl shadow-2xl shadow-slate-900/10
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[920px] max-w-[calc(100vw-2rem)] bg-white border border-[#14161a]/10 rounded-2xl shadow-[0_24px_60px_-28px_rgba(20,22,26,.35)]
                 opacity-0 invisible group-hover:opacity-100 group-hover:visible
                 transition-all duration-200 translate-y-1 group-hover:-translate-x-1/2 group-hover:translate-y-0 overflow-hidden">
                 {/* Mega-menu header */}
-                <div className="px-6 pt-4 pb-3 border-b border-slate-100 flex items-center justify-between">
-                  <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400">Knowledge Base — 48 reference pages</span>
-                  <Link href="/markets" className="text-xs font-bold text-[#1d5fa1] hover:underline">
+                <div className="px-6 pt-4 pb-3 border-b border-[#14161a]/10 flex items-center justify-between">
+                  <span className="text-[11px] font-bold uppercase tracking-widest text-[#8a93a3]">Knowledge Base — 48 reference pages</span>
+                  <Link href="/markets" className="text-xs font-semibold text-[#0b8f84] hover:underline">
                     Markets hub →
                   </Link>
                 </div>
 
-                <div className="grid grid-cols-4 gap-0 divide-x divide-slate-100">
+                <div className="grid grid-cols-4 gap-0 divide-x divide-[#14161a]/10">
                   {/* Markets column */}
                   <div className="p-4">
                     <div className="flex items-center gap-2 mb-3">
                       <span className="text-base">📊</span>
                       <span className="text-[11px] font-bold uppercase tracking-wider text-cyan-700">Market Intelligence</span>
                     </div>
-                    <Link href="/markets/cement-clinker-hs-2523" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Cement & clinker (HS 2523)</Link>
-                    <Link href="/markets/industrial-salt-egypt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Industrial salt</Link>
-                    <Link href="/markets/egypt-gypsum-plaster" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Gypsum & plaster</Link>
-                    <Link href="/markets/egypt-npk-fertilizer" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">NPK fertilizer market</Link>
-                    <Link href="/markets/egypt-caustic-soda" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Caustic soda (NaOH)</Link>
-                    <Link href="/markets/egypt-palm-oil" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Palm oil</Link>
-                    <Link href="/markets/mining-companies-egypt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Mining in Egypt</Link>
+                    <Link href="/markets/cement-clinker-hs-2523" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">Cement & clinker (HS 2523)</Link>
+                    <Link href="/markets/industrial-salt-egypt" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">Industrial salt</Link>
+                    <Link href="/markets/egypt-gypsum-plaster" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">Gypsum & plaster</Link>
+                    <Link href="/markets/egypt-npk-fertilizer" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">NPK fertilizer market</Link>
+                    <Link href="/markets/egypt-caustic-soda" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">Caustic soda (NaOH)</Link>
+                    <Link href="/markets/egypt-palm-oil" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">Palm oil</Link>
+                    <Link href="/markets/mining-companies-egypt" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">Mining in Egypt</Link>
                     <Link href="/markets" className="block text-[11px] font-bold text-cyan-700 hover:underline pt-2">All market briefs →</Link>
                   </div>
 
@@ -202,15 +202,15 @@ export default async function SiteHeader({ settings }) {
                       <span className="text-base">🧰</span>
                       <span className="text-[11px] font-bold uppercase tracking-wider text-orange-700">Trade Tools</span>
                     </div>
-                    <Link href="/trade-tools/hs-codes" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">HS Code library</Link>
-                    <Link href="/trade-tools/incoterms-2020" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Incoterms 2020</Link>
-                    <Link href="/trade-tools/vessel-sizes" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Vessel size guide</Link>
-                    <Link href="/trade-tools/import-guides" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight font-semibold pt-2">Country import guides — 15 markets</Link>
-                    <Link href="/trade-tools/import-guides/germany" className="block text-[11px] text-slate-500 hover:text-[#1d5fa1] py-0.5 leading-tight pl-3">→ Germany</Link>
-                    <Link href="/trade-tools/import-guides/uk" className="block text-[11px] text-slate-500 hover:text-[#1d5fa1] py-0.5 leading-tight pl-3">→ UK</Link>
-                    <Link href="/trade-tools/import-guides/usa" className="block text-[11px] text-slate-500 hover:text-[#1d5fa1] py-0.5 leading-tight pl-3">→ USA</Link>
-                    <Link href="/trade-tools/import-guides/saudi-arabia" className="block text-[11px] text-slate-500 hover:text-[#1d5fa1] py-0.5 leading-tight pl-3">→ Saudi Arabia</Link>
-                    <Link href="/trade-tools/import-guides/india" className="block text-[11px] text-slate-500 hover:text-[#1d5fa1] py-0.5 leading-tight pl-3">→ India</Link>
+                    <Link href="/trade-tools/hs-codes" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">HS Code library</Link>
+                    <Link href="/trade-tools/incoterms-2020" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">Incoterms 2020</Link>
+                    <Link href="/trade-tools/vessel-sizes" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">Vessel size guide</Link>
+                    <Link href="/trade-tools/import-guides" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight font-semibold pt-2">Country import guides — 15 markets</Link>
+                    <Link href="/trade-tools/import-guides/germany" className="block text-[11px] text-[#7a8290] hover:text-[#0b8f84] py-0.5 leading-tight pl-3">→ Germany</Link>
+                    <Link href="/trade-tools/import-guides/uk" className="block text-[11px] text-[#7a8290] hover:text-[#0b8f84] py-0.5 leading-tight pl-3">→ UK</Link>
+                    <Link href="/trade-tools/import-guides/usa" className="block text-[11px] text-[#7a8290] hover:text-[#0b8f84] py-0.5 leading-tight pl-3">→ USA</Link>
+                    <Link href="/trade-tools/import-guides/saudi-arabia" className="block text-[11px] text-[#7a8290] hover:text-[#0b8f84] py-0.5 leading-tight pl-3">→ Saudi Arabia</Link>
+                    <Link href="/trade-tools/import-guides/india" className="block text-[11px] text-[#7a8290] hover:text-[#0b8f84] py-0.5 leading-tight pl-3">→ India</Link>
                   </div>
 
                   {/* Standards column */}
@@ -219,15 +219,15 @@ export default async function SiteHeader({ settings }) {
                       <span className="text-base">📋</span>
                       <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700">Standards</span>
                     </div>
-                    <Link href="/standards/en-197-1" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">EN 197-1 — EU cement</Link>
-                    <Link href="/standards/astm-c150" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">ASTM C150 — US cement</Link>
-                    <Link href="/standards/en-16811-1" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">EN 16811-1 — EU de-icing salt</Link>
-                    <Link href="/standards/astm-d632" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">ASTM D632 — US salt</Link>
-                    <Link href="/standards/aashto-m-143" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">AASHTO M-143 — US highway</Link>
-                    <Link href="/standards/bs-3247" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">BS 3247:2011 — UK salt</Link>
-                    <Link href="/standards/gost-13830" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">GOST 13830 — CIS salt</Link>
-                    <Link href="/standards/ss-en-16811-1" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">SS-EN 16811-1 Nordic</Link>
-                    <Link href="/standards/iso-9001-salt-suppliers" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">ISO 9001 — quality</Link>
+                    <Link href="/standards/en-197-1" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">EN 197-1 — EU cement</Link>
+                    <Link href="/standards/astm-c150" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">ASTM C150 — US cement</Link>
+                    <Link href="/standards/en-16811-1" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">EN 16811-1 — EU de-icing salt</Link>
+                    <Link href="/standards/astm-d632" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">ASTM D632 — US salt</Link>
+                    <Link href="/standards/aashto-m-143" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">AASHTO M-143 — US highway</Link>
+                    <Link href="/standards/bs-3247" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">BS 3247:2011 — UK salt</Link>
+                    <Link href="/standards/gost-13830" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">GOST 13830 — CIS salt</Link>
+                    <Link href="/standards/ss-en-16811-1" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">SS-EN 16811-1 Nordic</Link>
+                    <Link href="/standards/iso-9001-salt-suppliers" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">ISO 9001 — quality</Link>
                   </div>
 
                   {/* Ports column */}
@@ -236,34 +236,34 @@ export default async function SiteHeader({ settings }) {
                       <span className="text-base">⚓</span>
                       <span className="text-[11px] font-bold uppercase tracking-wider text-blue-700">Egyptian Ports</span>
                     </div>
-                    <Link href="/ports/damietta-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Damietta — main hub, 17m</Link>
-                    <Link href="/ports/alexandria-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Alexandria — 14m</Link>
-                    <Link href="/ports/el-dekheila-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">El Dekheila — 20m Capesize</Link>
-                    <Link href="/ports/ain-sokhna-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Ain Sokhna — Red Sea 17m</Link>
-                    <Link href="/ports/port-said-east-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Port Said East — 22m ULCV</Link>
-                    <Link href="/ports/al-arish-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Al-Arish — upgraded 14m, 50k DWT</Link>
-                    <Link href="/ports/adabiya-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Adabiya — Suez Gulf bulk</Link>
-                    <Link href="/ports/safaga-salt" className="block text-xs text-slate-700 hover:text-[#1d5fa1] py-1 leading-tight">Safaga — Red Sea phosphate</Link>
+                    <Link href="/ports/damietta-salt" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">Damietta — main hub, 17m</Link>
+                    <Link href="/ports/alexandria-salt" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">Alexandria — 14m</Link>
+                    <Link href="/ports/el-dekheila-salt" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">El Dekheila — 20m Capesize</Link>
+                    <Link href="/ports/ain-sokhna-salt" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">Ain Sokhna — Red Sea 17m</Link>
+                    <Link href="/ports/port-said-east-salt" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">Port Said East — 22m ULCV</Link>
+                    <Link href="/ports/al-arish-salt" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">Al-Arish — upgraded 14m, 50k DWT</Link>
+                    <Link href="/ports/adabiya-salt" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">Adabiya — Suez Gulf bulk</Link>
+                    <Link href="/ports/safaga-salt" className="block text-xs text-[#3f4650] hover:text-[#0b8f84] py-1 leading-tight">Safaga — Red Sea phosphate</Link>
                     <Link href="/services/loading-ports" className="block text-[11px] font-bold text-blue-700 hover:underline pt-2">All Egyptian loading ports →</Link>
-                    <div className="mt-4 pt-3 border-t border-slate-100">
-                      <Link href="/blog" className="block text-xs font-semibold text-slate-700 hover:text-[#1d5fa1] py-1">📝 News & insights</Link>
-                      <Link href="/case-studies" className="block text-xs font-semibold text-slate-700 hover:text-[#1d5fa1] py-1">📖 Case studies</Link>
-                      <Link href="/coa" className="block text-xs font-semibold text-slate-700 hover:text-[#1d5fa1] py-1">🧪 CoA centre</Link>
+                    <div className="mt-4 pt-3 border-t border-[#14161a]/10">
+                      <Link href="/blog" className="block text-xs font-semibold text-[#3f4650] hover:text-[#0b8f84] py-1">📝 News & insights</Link>
+                      <Link href="/case-studies" className="block text-xs font-semibold text-[#3f4650] hover:text-[#0b8f84] py-1">📖 Case studies</Link>
+                      <Link href="/coa" className="block text-xs font-semibold text-[#3f4650] hover:text-[#0b8f84] py-1">🧪 CoA centre</Link>
                     </div>
                   </div>
                 </div>
 
                 {/* Mega-menu footer */}
-                <div className="px-6 py-2.5 bg-slate-50 border-t border-slate-100 flex items-center gap-3 text-[11px] text-slate-500">
+                <div className="px-6 py-2.5 bg-[#f9fafb] border-t border-[#14161a]/10 flex items-center gap-3 text-[11px] text-[#7a8290]">
                   <span>13 market briefs</span>
-                  <span className="text-slate-300">·</span>
+                  <span className="text-[#c9ced6]">·</span>
                   <span>19 trade tools</span>
-                  <span className="text-slate-300">·</span>
+                  <span className="text-[#c9ced6]">·</span>
                   <span>9 standards</span>
-                  <span className="text-slate-300">·</span>
+                  <span className="text-[#c9ced6]">·</span>
                   <span>8 ports</span>
-                  <span className="text-slate-300 ml-auto">·</span>
-                  <Link href="/search" className="text-[#1d5fa1] hover:underline font-semibold">🔍 Search the site →</Link>
+                  <span className="text-[#c9ced6] ml-auto">·</span>
+                  <Link href="/search" className="text-[#0b8f84] hover:underline font-semibold">🔍 Search the site →</Link>
                 </div>
               </div>
             </div>
@@ -271,30 +271,30 @@ export default async function SiteHeader({ settings }) {
             {/* About dropdown */}
             {grouped.about?.length > 0 && (
               <div className="relative group">
-                <button className="flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-[#1d5fa1] hover:bg-blue-50/70 transition-colors">
+                <button className="flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-semibold text-[#3f4650] hover:text-[#0b8f84] hover:bg-[#f2fbfa] transition-colors">
                   About
                   <svg className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7"/>
                   </svg>
                 </button>
-                <div className="absolute top-full right-0 mt-2 w-72 bg-white border border-slate-200 rounded-2xl shadow-2xl shadow-slate-900/10
+                <div className="absolute top-full right-0 mt-2 w-72 bg-white border border-[#14161a]/10 rounded-2xl shadow-[0_24px_60px_-28px_rgba(20,22,26,.35)]
                   opacity-0 invisible group-hover:opacity-100 group-hover:visible
                   transition-all duration-200 translate-y-1 group-hover:translate-y-0 overflow-hidden py-1.5">
-                  <Link href="/about" className="block px-4 py-2.5 text-sm font-bold text-slate-900 hover:bg-slate-50 hover:text-[#1d5fa1] transition-colors">
+                  <Link href="/about" className="block px-4 py-2.5 text-sm font-bold text-[#14161a] hover:bg-[#f9fafb] hover:text-[#0b8f84] transition-colors">
                     About Egypt Globe Group
                   </Link>
-                  <div className="mx-4 my-1 border-t border-slate-100" />
+                  <div className="mx-4 my-1 border-t border-[#14161a]/10" />
                   {grouped.about.map(p => (
                     <Link key={p.id} href={p.path}
-                      className="block px-4 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-[#1d5fa1] transition-colors">
+                      className="block px-4 py-2 text-sm text-[#3f4650] hover:bg-[#f9fafb] hover:text-[#0b8f84] transition-colors">
                       {p.title}
                     </Link>
                   ))}
-                  <div className="mx-4 my-1 border-t border-slate-100" />
-                  <Link href="/global-presence" className="block px-4 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-[#1d5fa1] transition-colors">
+                  <div className="mx-4 my-1 border-t border-[#14161a]/10" />
+                  <Link href="/global-presence" className="block px-4 py-2 text-sm text-[#3f4650] hover:bg-[#f9fafb] hover:text-[#0b8f84] transition-colors">
                     Global presence — 60+ markets
                   </Link>
-                  <Link href="/contact" className="block px-4 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-[#1d5fa1] transition-colors">
+                  <Link href="/contact" className="block px-4 py-2 text-sm text-[#3f4650] hover:bg-[#f9fafb] hover:text-[#0b8f84] transition-colors">
                     Contact us
                   </Link>
                 </div>
@@ -303,11 +303,11 @@ export default async function SiteHeader({ settings }) {
 
             {/* Direct links — kept lean */}
             <Link href="/applications"
-              className="px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-[#1d5fa1] hover:bg-blue-50/70 transition-colors">
+              className="px-3.5 py-2 rounded-lg text-sm font-semibold text-[#3f4650] hover:text-[#0b8f84] hover:bg-[#f2fbfa] transition-colors">
               Applications
             </Link>
             <Link href="/contact"
-              className="px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-[#1d5fa1] hover:bg-blue-50/70 transition-colors">
+              className="px-3.5 py-2 rounded-lg text-sm font-semibold text-[#3f4650] hover:text-[#0b8f84] hover:bg-[#f2fbfa] transition-colors">
               Contact
             </Link>
           </nav>
@@ -316,7 +316,7 @@ export default async function SiteHeader({ settings }) {
           <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
             {visibility.authenticated ? (
               <Link href="/buyer"
-                className="hidden md:flex items-center gap-1.5 text-sm font-semibold text-slate-700 hover:text-[#1d5fa1] px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors">
+                className="hidden md:flex items-center gap-1.5 text-sm font-semibold text-[#3f4650] hover:text-[#0b8f84] px-3 py-2 rounded-lg hover:bg-[#f9fafb] transition-colors">
                 <span className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-bold">
                   {(visibility.contactName || visibility.email || '?').charAt(0).toUpperCase()}
                 </span>
@@ -324,7 +324,7 @@ export default async function SiteHeader({ settings }) {
               </Link>
             ) : (
               <Link href="/login"
-                className="hidden md:flex items-center gap-1.5 text-sm font-semibold text-slate-600 hover:text-[#1d5fa1] px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors">
+                className="hidden md:flex items-center gap-1.5 text-sm font-semibold text-[#3f4650] hover:text-[#0b8f84] px-3 py-2 rounded-lg hover:bg-[#f9fafb] transition-colors">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                 </svg>
@@ -334,7 +334,7 @@ export default async function SiteHeader({ settings }) {
 
             {/* CTA — compact icon-only on mobile (<sm), full label sm+ */}
             <Link href="/rfq" aria-label="Get a quote"
-              className="flex items-center gap-1.5 text-sm font-bold text-white bg-[#FF6321] hover:bg-[#e0541b] active:bg-[#c84512] px-3 sm:px-5 h-10 sm:h-auto sm:py-2.5 rounded-xl sm:rounded-lg shadow-md shadow-orange-500/25 transition-all sm:hover:-translate-y-0.5">
+              className="flex items-center gap-1.5 text-sm font-bold text-white bg-[#FF6321] hover:bg-[#14161a] active:bg-[#14161a] px-3 sm:px-5 h-10 sm:h-auto sm:py-2.5 rounded-full shadow-[0_10px_30px_-10px_rgba(255,99,33,.55)] transition-all">
               <svg className="w-4 h-4 sm:hidden" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
               </svg>

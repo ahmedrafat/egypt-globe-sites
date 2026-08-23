@@ -3,12 +3,14 @@
  *
  * Two-column layout (2:1):
  *   • Left  — Specifications table + Applications grid + Packing grid
- *   • Right — Quote CTA / Origin gradient / Certifications / Key Specs
+ *   • Right — Quote CTA / Origin card / Certifications / Key Specs
  *             / MOQ + Lead Time card
  *
  * Mounts on any egg_corporate_pages row that has rich product data.
  * Derives the source type (rock vs sea) from specs.source_type so the
- * Origin card and hero gradient can adapt.
+ * Origin card can adapt (light edition: gold for rock, turquoise for sea).
+ *
+ * Design tokens + utilities (.egg-*) live in app/globals.css.
  */
 import Link from 'next/link'
 import { APPLICATIONS } from '../lib/corporatePages'
@@ -121,7 +123,7 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
     .filter(Boolean)
 
   return (
-    <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 lg:py-16">
+    <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 lg:py-16 text-[#14161a]">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
         {/* ───────── Main content (left, 2/3) ───────── */}
@@ -129,14 +131,14 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
 
           {/* Specs table */}
           {specEntries.length > 0 && (
-            <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-              <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/60 flex items-center justify-between">
-                <h2 className="font-bold text-lg text-slate-900 flex items-center gap-2">
+            <div className="egg-card overflow-hidden hover:transform-none">
+              <div className="px-6 py-4 border-b border-[#14161a]/10 bg-[#f9fafb] flex items-center justify-between">
+                <h2 className="font-semibold text-lg text-[#14161a] flex items-center gap-2">
                   <span className="text-xl">🧪</span> Product Specifications
                 </h2>
-                <span className="text-xs font-medium text-slate-500">{specEntries.length} parameters</span>
+                <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-[#7a8290]">{specEntries.length} parameters</span>
               </div>
-              <div className="divide-y divide-slate-100">
+              <div className="divide-y divide-[#14161a]/10">
                 {/* Anchor rows that are always-on if present */}
                 {[
                   page.hs_code        ? { label: 'HS Code',          value: page.hs_code, mono: true } : null,
@@ -147,32 +149,32 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
                   specs.colour        ? { label: 'Colour',           value: specs.colour } : null,
                   specs.appearance    ? { label: 'Appearance',       value: specs.appearance } : null,
                 ].filter(Boolean).map(row => (
-                  <div key={row.label} className="grid grid-cols-1 sm:grid-cols-3 gap-1 px-6 py-3 hover:bg-slate-50/50 transition-colors">
-                    <dt className="text-sm font-semibold text-slate-500">{row.label}</dt>
-                    <dd className={`sm:col-span-2 text-sm text-slate-900 ${row.mono ? 'font-mono font-bold' : 'font-semibold'}`}>{String(row.value)}</dd>
+                  <div key={row.label} className="grid grid-cols-1 sm:grid-cols-3 gap-1 px-6 py-3 hover:bg-[#f9fafb] transition-colors">
+                    <dt className="text-sm font-medium text-[#7a8290]">{row.label}</dt>
+                    <dd className={`sm:col-span-2 text-sm text-[#14161a] ${row.mono ? 'font-mono font-semibold' : 'font-semibold'}`}>{String(row.value)}</dd>
                   </div>
                 ))}
                 {/* Remaining specs (numeric / chemistry) */}
                 {specEntries
                   .filter(([k]) => !['hs_code','product_code','source_type','origin','grain_label','colour','appearance'].includes(k))
                   .map(([k, v]) => (
-                    <div key={k} className="grid grid-cols-1 sm:grid-cols-3 gap-1 px-6 py-3 hover:bg-slate-50/50 transition-colors">
-                      <dt className="text-sm font-semibold text-slate-500">{prettyKey(k)}</dt>
-                      <dd className="sm:col-span-2 text-sm text-slate-900 font-mono font-semibold">{String(v)}</dd>
+                    <div key={k} className="grid grid-cols-1 sm:grid-cols-3 gap-1 px-6 py-3 hover:bg-[#f9fafb] transition-colors">
+                      <dt className="text-sm font-medium text-[#7a8290]">{prettyKey(k)}</dt>
+                      <dd className="sm:col-span-2 text-sm text-[#14161a] font-mono font-semibold">{String(v)}</dd>
                     </div>
                   ))}
               </div>
 
               {commodity && (
-                <div className="px-6 py-3 bg-slate-50/40 border-t border-slate-100 text-xs text-slate-500">
-                  Linked to commodity master <span className="font-mono font-semibold text-slate-700">{commodity.code || commodity.sku || commodity.name}</span>
+                <div className="px-6 py-3 bg-[#f9fafb] border-t border-[#14161a]/10 text-xs text-[#7a8290]">
+                  Linked to commodity master <span className="font-mono font-semibold text-[#3f4650]">{commodity.code || commodity.sku || commodity.name}</span>
                   {commodity.origin && <> · Sourced from {commodity.origin}</>}
                 </div>
               )}
 
               {page.datasheet_url && (
                 <a href={page.datasheet_url} target="_blank" rel="noopener noreferrer"
-                  className="block px-6 py-3 bg-blue-50 border-t border-blue-100 text-sm font-semibold text-[#1d5fa1] hover:bg-blue-100 transition-colors">
+                  className="block px-6 py-3 bg-[#f2fbfa] border-t border-[#0fb5a5]/30 text-sm font-semibold text-[#0b8f84] hover:bg-[#e6f8f6] transition-colors">
                   📄 Download Technical Data Sheet (PDF) →
                 </a>
               )}
@@ -181,20 +183,20 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
 
           {/* Applications grid — rich linkable cards */}
           {apps.length > 0 && (
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-              <h2 className="font-bold text-lg text-slate-900 mb-4 flex items-center gap-2">
+            <div className="egg-card p-6 hover:transform-none">
+              <h2 className="font-semibold text-lg text-[#14161a] mb-4 flex items-center gap-2">
                 <span className="text-xl">🏭</span> Applications
               </h2>
               <div className="grid sm:grid-cols-2 gap-3">
                 {apps.map(app => (
                   <Link key={app.id} href={app.path}
-                    className="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:border-[#1d5fa1] hover:bg-blue-50/40 transition-all group">
-                    <div className="w-11 h-11 rounded-xl flex items-center justify-center text-2xl bg-gradient-to-br from-violet-100 to-blue-100">
+                    className="flex items-center gap-3 p-3 rounded-xl ring-1 ring-[#14161a]/10 hover:ring-[#7c3aed]/50 hover:bg-[#f9fafb] transition-all group">
+                    <div className="w-11 h-11 rounded-xl flex items-center justify-center text-2xl bg-[#f3f0ff] ring-1 ring-[#7c3aed]/25">
                       {app.icon}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-semibold text-slate-900 text-sm group-hover:text-[#1d5fa1] transition-colors">{app.label}</div>
-                      <div className="text-xs text-slate-500">View matching products →</div>
+                      <div className="font-semibold text-[#14161a] text-sm group-hover:text-[#0b8f84] transition-colors">{app.label}</div>
+                      <div className="text-xs text-[#7a8290]">View matching products →</div>
                     </div>
                   </Link>
                 ))}
@@ -215,23 +217,23 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
              chip rails close together — they're conceptually paired (load HERE
              → ship THERE). */}
           {(loadingPorts.length > 0 || regions.length > 0) && (
-            <div className="rounded-2xl border border-slate-200 bg-gradient-to-r from-amber-50/40 via-white to-blue-50/40 p-6">
+            <div className="egg-panel p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
                 {loadingPorts.length > 0 && (
                   <div>
-                    <h3 className="font-bold text-slate-900 text-sm mb-2 flex items-center gap-1.5">
+                    <h3 className="font-semibold text-[#14161a] text-sm mb-2 flex items-center gap-1.5">
                       <span className="text-lg">⚓</span> Loads from
                     </h3>
                     <div className="flex flex-wrap gap-1.5">
                       {loadingPorts.map(p => (
                         <span key={p}
-                          className="inline-flex items-center gap-1 text-xs font-semibold bg-white text-amber-900 border border-amber-200 px-2.5 py-1 rounded-full">
+                          className="egg-chip text-xs" style={{ color: '#8a6d3b', boxShadow: 'inset 0 0 0 1px rgba(184,134,43,.45)' }}>
                           {p}
                         </span>
                       ))}
                     </div>
                     {(isRock || isSea) && (
-                      <p className="text-[11px] text-slate-500 mt-2">
+                      <p className="text-[11px] text-[#7a8290] mt-2">
                         {isRock
                           ? 'Closest ports to Siwa / Qattara mines.'
                           : 'Closest ports to source pans.'}
@@ -241,19 +243,19 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
                 )}
                 {regions.length > 0 && (
                   <div>
-                    <h3 className="font-bold text-slate-900 text-sm mb-2 flex items-center gap-1.5">
+                    <h3 className="font-semibold text-[#14161a] text-sm mb-2 flex items-center gap-1.5">
                       <span className="text-lg">🌍</span> Ships to
                     </h3>
                     <div className="flex flex-wrap gap-1.5">
                       {regions.map(r => (
                         <span key={r}
-                          className="inline-flex items-center text-xs font-medium bg-white text-blue-800 border border-blue-200 px-2.5 py-1 rounded-full">
+                          className="egg-chip text-xs font-medium" style={{ color: '#0369a1', boxShadow: 'inset 0 0 0 1px rgba(2,132,199,.4)' }}>
                           {r}
                         </span>
                       ))}
                     </div>
-                    <p className="text-[11px] text-slate-500 mt-2">
-                      FOB / CIF / CFR worldwide. <Link href="/services/logistics" className="text-[#1d5fa1] hover:underline">Logistics →</Link>
+                    <p className="text-[11px] text-[#7a8290] mt-2">
+                      FOB / CIF / CFR worldwide. <Link href="/services/logistics" className="egg-link">Logistics →</Link>
                     </p>
                   </div>
                 )}
@@ -266,44 +268,51 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
         <aside className="space-y-5 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
 
           {/* Quote CTA + document actions */}
-          <div className="bg-gradient-to-br from-[#1d5fa1] to-[#14467a] rounded-2xl p-6 text-white shadow-xl shadow-blue-900/15">
-            <h3 className="font-bold text-lg mb-2">Request a Quote</h3>
-            <p className="text-blue-100 text-sm leading-relaxed mb-4">
-              Get pricing, availability and a proforma invoice within 24 hours.
-            </p>
-            <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
-              className="block w-full text-center bg-[#FF6321] hover:bg-[#e0541b] text-white font-bold py-3 rounded-xl transition-all hover:-translate-y-0.5 shadow-lg">
-              📋 Get Quote
-            </Link>
-            <div className="grid grid-cols-2 gap-2 mt-2">
-              <Link href={`/tds${page.path}`} target="_blank"
-                className="flex items-center justify-center gap-1.5 border border-white/25 text-white/85 hover:text-white hover:bg-white/10 text-xs font-bold py-2.5 rounded-lg transition-colors">
-                📄 Download TDS
+          <div className="relative overflow-hidden egg-panel p-6">
+            <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-60 pointer-events-none" />
+            <div aria-hidden="true" className="absolute -bottom-12 -right-12 w-40 h-40 rounded-full opacity-30 pointer-events-none"
+              style={{ background: 'radial-gradient(circle, #FF6321 0%, transparent 70%)' }} />
+            <div className="relative">
+              <div className="egg-eyebrow text-[#d9501a] mb-2">24-hour SLA</div>
+              <h3 className="egg-display text-2xl text-[#14161a] mb-2">Request a Quote</h3>
+              <p className="text-[#3f4650] text-sm leading-relaxed mb-4">
+                Get pricing, availability and a proforma invoice within 24 hours.
+              </p>
+              <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
+                className="egg-btn-primary w-full">
+                📋 Get Quote
               </Link>
-              <Link href={`/rfq?product=${encodeURIComponent(page.path)}&type=coa`}
-                className="flex items-center justify-center gap-1.5 border border-white/25 text-white/85 hover:text-white hover:bg-white/10 text-xs font-bold py-2.5 rounded-lg transition-colors">
-                🧪 Request COA
-              </Link>
+              <div className="grid grid-cols-2 gap-2 mt-2">
+                <Link href={`/tds${page.path}`} target="_blank"
+                  className="egg-btn-ghost text-xs py-2.5 px-2">
+                  📄 Download TDS
+                </Link>
+                <Link href={`/rfq?product=${encodeURIComponent(page.path)}&type=coa`}
+                  className="egg-btn-ghost text-xs py-2.5 px-2">
+                  🧪 Request COA
+                </Link>
+              </div>
+              <p className="text-[#7a8290] text-xs text-center mt-3">24-hour response · No spam</p>
             </div>
-            <p className="text-blue-200 text-xs text-center mt-3">24-hour response · No spam</p>
           </div>
 
           {/* Origin card — only for salt with rock/sea source type */}
           {(isRock || isSea) && (
-            <div className={`rounded-2xl p-6 text-white shadow-lg ${isRock
-              ? 'bg-gradient-to-br from-stone-700 to-stone-900'
-              : 'bg-gradient-to-br from-cyan-700 to-blue-900'}`}>
+            <div className="relative overflow-hidden rounded-2xl p-6 ring-1"
+              style={isRock
+                ? { background: 'linear-gradient(160deg, #fbf3e3 0%, #f6e7c8 100%)', '--tw-ring-color': 'rgba(184,134,43,.35)' }
+                : { background: 'linear-gradient(160deg, #e6fbf8 0%, #c9f3ee 100%)', '--tw-ring-color': 'rgba(15,181,165,.4)' }}>
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-xl">{isRock ? '⛏️' : '🌊'}</span>
-                <h3 className="font-bold text-base">{isRock ? 'Rock Salt Origin' : 'Sea Salt Origin'}</h3>
+                <h3 className="font-semibold text-base text-[#14161a]">{isRock ? 'Rock Salt Origin' : 'Sea Salt Origin'}</h3>
               </div>
-              <p className={`text-xs leading-relaxed ${isRock ? 'text-stone-200' : 'text-cyan-100'}`}>
+              <p className="text-xs leading-relaxed text-[#3f4650]">
                 {isRock
                   ? 'Mined from ancient halite deposits in Egypt\'s Siwa Oasis and Qattara Depression. Formed 30+ million years ago, delivering minimum 97% NaCl purity across every grade.'
                   : 'Solar-evaporated from Egypt\'s North Sinai (El-Arish / Bardawil) and Red Sea coastal salt pans. ~2,700 kWh/m² annual solar irradiance for natural mineral-balanced salt.'}
               </p>
               {specs.origin && (
-                <div className={`mt-3 text-xs font-semibold ${isRock ? 'text-stone-300' : 'text-cyan-200'}`}>
+                <div className={`mt-3 text-xs font-semibold ${isRock ? 'text-[#8a6d3b]' : 'text-[#0b8f84]'}`}>
                   {specs.origin}
                 </div>
               )}
@@ -312,17 +321,17 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
 
           {/* Certifications */}
           {certifications.length > 0 && (
-            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-              <h3 className="font-bold text-slate-900 text-sm mb-3 flex items-center gap-1.5">
+            <div className="egg-card p-5 hover:transform-none">
+              <h3 className="font-semibold text-[#14161a] text-sm mb-3 flex items-center gap-1.5">
                 <span className="text-base">🏅</span> Certifications & Standards
               </h3>
               <ul className="space-y-2">
                 {certifications.map(c => (
                   <li key={c} className="flex items-start gap-2 text-sm">
-                    <svg className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-4 h-4 text-[#0fb5a5] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                     </svg>
-                    <span className="text-slate-700">{c}</span>
+                    <span className="text-[#3f4650]">{c}</span>
                   </li>
                 ))}
               </ul>
@@ -337,19 +346,19 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
 
           {/* MOQ + Lead Time + HS code commercial card */}
           {(page.moq_mt || page.lead_time_min_weeks || page.hs_code) && (
-            <div className="bg-orange-50 border border-orange-200 rounded-2xl p-5 shadow-sm">
-              <h3 className="font-bold text-slate-900 text-sm mb-3">Commercial Terms</h3>
+            <div className="rounded-2xl p-5 bg-[#fff4ec] ring-1 ring-[#ff6321]/25">
+              <h3 className="font-semibold text-[#14161a] text-sm mb-3">Commercial Terms</h3>
               <div className="grid grid-cols-2 gap-3 text-xs">
                 {page.moq_mt && (
                   <div>
-                    <div className="text-slate-500 mb-0.5">Min. Order</div>
-                    <div className="font-bold text-slate-900 text-base">{Number(page.moq_mt).toLocaleString()} MT</div>
+                    <div className="text-[#7a8290] mb-0.5">Min. Order</div>
+                    <div className="font-semibold text-[#14161a] text-base">{Number(page.moq_mt).toLocaleString()} MT</div>
                   </div>
                 )}
                 {(page.lead_time_min_weeks || page.lead_time_max_weeks) && (
                   <div>
-                    <div className="text-slate-500 mb-0.5">Lead Time</div>
-                    <div className="font-bold text-slate-900 text-base">
+                    <div className="text-[#7a8290] mb-0.5">Lead Time</div>
+                    <div className="font-semibold text-[#14161a] text-base">
                       {page.lead_time_min_weeks && page.lead_time_max_weeks
                         ? `${page.lead_time_min_weeks}–${page.lead_time_max_weeks} wk`
                         : `${page.lead_time_min_weeks || page.lead_time_max_weeks} wk`}
@@ -358,13 +367,13 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
                 )}
                 {page.hs_code && (
                   <div className="col-span-2">
-                    <div className="text-slate-500 mb-0.5">HS Code</div>
-                    <div className="font-mono font-bold text-slate-900">{page.hs_code}</div>
+                    <div className="text-[#7a8290] mb-0.5">HS Code</div>
+                    <div className="font-mono font-semibold text-[#14161a]">{page.hs_code}</div>
                   </div>
                 )}
                 {page.price_indication && (
-                  <div className="col-span-2 pt-2 border-t border-orange-200">
-                    <div className="text-slate-500 mb-0.5">Indicative Price</div>
+                  <div className="col-span-2 pt-2 border-t border-[#ff6321]/25">
+                    <div className="text-[#7a8290] mb-0.5">Indicative Price</div>
                     <PriceDisplay price={page.price_indication} visibility={visibility} size="lg" placeholder="Sign in to see indicative price" />
                   </div>
                 )}

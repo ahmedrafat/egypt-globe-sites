@@ -108,45 +108,45 @@ export default function DocumentChecklist() {
   const [open, setOpen] = useState(null)
 
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-      <div className="px-6 py-4 border-b border-slate-200 bg-slate-50/60">
+    <div className="rounded-3xl ring-1 ring-[#14161a]/10 bg-white overflow-hidden">
+      <div className="px-6 py-4 border-b border-[#14161a]/10 bg-[#f9fafb]">
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-blue-50 to-orange-50 border border-blue-100 text-xl shadow-sm">📋</span>
-          <h3 className="text-xl font-extrabold text-slate-900">Documents shipped with every consignment</h3>
+          <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white ring-1 ring-[#14161a]/10 text-xl">📋</span>
+          <h3 className="egg-display text-2xl text-[#14161a]">Documents shipped with every consignment</h3>
         </div>
-        <p className="text-xs text-slate-500 mt-1">Click any row to expand. Advance PDF goes by email for L/C bank lodging; originals follow by DHL / FedEx.</p>
+        <p className="text-xs text-[#7a8290] mt-1">Click any row to expand. Advance PDF goes by email for L/C bank lodging; originals follow by DHL / FedEx.</p>
       </div>
 
-      <div className="divide-y divide-slate-100">
+      <div className="divide-y divide-[#14161a]/10">
         {DOCS.map(d => {
           const isOpen = open === d.id
           return (
             <div key={d.id}>
               <button
                 onClick={() => setOpen(isOpen ? null : d.id)}
-                className={`w-full text-left px-5 py-3.5 flex items-start gap-3 hover:bg-slate-50/60 transition-colors ${isOpen ? 'bg-slate-50/40' : ''}`}
+                className={`w-full text-left px-5 py-3.5 flex items-start gap-3 hover:bg-[#f9fafb] transition-colors ${isOpen ? 'bg-[#f9fafb]' : ''}`}
               >
                 <span className="text-2xl shrink-0 mt-0.5">{d.icon}</span>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-bold text-slate-900">{d.name}</span>
-                    {d.required === 'always' && <Badge color="bg-emerald-100 text-emerald-800 border-emerald-200">Always</Badge>}
-                    {d.required === 'CIF/CIP-only' && <Badge color="bg-blue-100 text-blue-800 border-blue-200">CIF / CIP only</Badge>}
+                    <span className="font-bold text-[#14161a]">{d.name}</span>
+                    {d.required === 'always' && <Badge color="bg-[#e6fbf8] text-[#0b8f84] border-[#0fb5a5]/40">Always</Badge>}
+                    {d.required === 'CIF/CIP-only' && <Badge color="bg-[#eef6fd] text-[#0369a1] border-[#0284c7]/35">CIF / CIP only</Badge>}
                     {d.required === 'agricultural-only' && <Badge color="bg-green-100 text-green-800 border-green-200">Agro only</Badge>}
                     {d.required === 'food/pharma-only' && <Badge color="bg-pink-100 text-pink-800 border-pink-200">Food / pharma only</Badge>}
-                    {d.required === 'optional' && <Badge color="bg-slate-100 text-slate-700 border-slate-200">Optional</Badge>}
+                    {d.required === 'optional' && <Badge color="bg-[#f3f4f6] text-[#3f4650] border-[#14161a]/10">Optional</Badge>}
                   </div>
-                  <div className="text-xs text-slate-500 mt-0.5">{d.short}</div>
+                  <div className="text-xs text-[#7a8290] mt-0.5">{d.short}</div>
                 </div>
                 <span className={`shrink-0 mt-1 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold transition-colors ${
-                  isOpen ? 'bg-[#1d5fa1] text-white' : 'bg-slate-100 text-slate-600'
+                  isOpen ? 'bg-[#ff6321] text-white' : 'bg-[#f3f4f6] text-[#3f4650]'
                 }`} aria-hidden="true">
                   {isOpen ? '−' : '+'}
                 </span>
               </button>
               {isOpen && (
-                <div className="px-5 pb-5 pt-1 border-t border-slate-100">
-                  <p className="text-sm text-slate-700 leading-relaxed">{d.full}</p>
+                <div className="px-5 pb-5 pt-1 border-t border-[#14161a]/10">
+                  <p className="text-sm text-[#3f4650] leading-relaxed">{d.full}</p>
                   <div className="mt-3 grid grid-cols-2 gap-3 text-xs">
                     <DeliveryFlag label="PDF advance email" enabled={d.advance} />
                     <DeliveryFlag label="Originals via courier" enabled={d.courier} />
@@ -158,8 +158,8 @@ export default function DocumentChecklist() {
         })}
       </div>
 
-      <div className="px-5 py-3 border-t border-slate-200 bg-slate-50/40 text-xs text-slate-600">
-        <strong className="text-slate-900">Letter of Credit (L/C) shipments:</strong> we lodge the full document set within 24 hours of vessel sailing for sight L/C presentation, or per the L/C terms for usance.
+      <div className="px-5 py-3 border-t border-[#14161a]/10 bg-[#f9fafb] text-xs text-[#3f4650]">
+        <strong className="text-[#14161a]">Letter of Credit (L/C) shipments:</strong> we lodge the full document set within 24 hours of vessel sailing for sight L/C presentation, or per the L/C terms for usance.
       </div>
     </div>
   )
@@ -171,8 +171,8 @@ function Badge({ color, children }) {
 
 function DeliveryFlag({ label, enabled }) {
   return (
-    <div className={`flex items-center gap-1.5 ${enabled ? 'text-emerald-700' : 'text-slate-400'}`}>
-      <span className={`inline-block w-3 h-3 rounded-full ${enabled ? 'bg-emerald-500' : 'bg-slate-300'}`} />
+    <div className={`flex items-center gap-1.5 ${enabled ? 'text-[#0b8f84]' : 'text-[#8a93a3]'}`}>
+      <span className={`inline-block w-3 h-3 rounded-full ${enabled ? 'bg-[#0fb5a5]' : 'bg-[#c9ced6]'}`} />
       <span className={enabled ? 'font-semibold' : ''}>{label}</span>
     </div>
   )

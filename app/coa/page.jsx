@@ -4,6 +4,8 @@
  * Drop 146 — public-facing browse of every active CoA across all
  * commodities, grouped by market region. Buyers land here from the
  * footer or from product pages and can filter by region or commodity.
+ *
+ * Light editorial edition — tokens + utilities (.egg-*) in app/globals.css.
  */
 import Link from 'next/link'
 import { getCoaSummary } from '../../lib/corporatePages'
@@ -39,6 +41,8 @@ function fmtDate(d) {
   catch { return '—' }
 }
 
+const TONE = '#0b8f84'
+
 export default async function CoaCenter() {
   const coas = await getCoaSummary({ limit: 200 })
 
@@ -60,43 +64,40 @@ export default async function CoaCenter() {
   const totalLabs = new Set(coas.map(c => c.lab_name)).size
 
   return (
-    <article>
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-700 via-teal-800 to-[#0f1f3a] text-white">
-        <div aria-hidden="true" className="absolute inset-0 opacity-25 pointer-events-none">
-          <div className="absolute right-0 top-0 w-[600px] h-[600px] rounded-full"
-            style={{ background: 'radial-gradient(circle, white 0%, transparent 70%)' }} />
-          <div className="absolute -bottom-32 -left-24 w-[500px] h-[500px] rounded-full"
-            style={{ background: 'radial-gradient(circle, rgba(255,99,33,0.4) 0%, transparent 70%)' }} />
-        </div>
-        <div className="absolute inset-0 bg-grid-pattern opacity-25" aria-hidden="true" />
+    <article className="bg-white text-[#14161a]">
+      {/* Hero — white editorial banner with turquoise glow */}
+      <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10">
+        <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
+        <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(55% 55% at 88% 0%, rgba(15,181,165,.2), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.09), transparent 60%)' }} />
+        <div aria-hidden="true" className="absolute -right-10 -top-16 text-[240px] leading-none opacity-[0.06] select-none pointer-events-none">🏅</div>
 
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16">
-          <nav className="flex items-center gap-2 text-xs text-white/60 mb-5 flex-wrap">
-            <Link href="/" className="hover:text-white">Home</Link>
+          <nav className="flex items-center gap-2 text-xs text-[#7a8290] mb-5 flex-wrap">
+            <Link href="/" className="hover:text-[#14161a] transition-colors">Home</Link>
             <span>›</span>
-            <span className="text-white/90">Certificate of Analysis Center</span>
+            <span className="text-[#14161a] font-medium">Certificate of Analysis Center</span>
           </nav>
 
           <div className="flex items-center gap-2 mb-4 flex-wrap">
-            <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 text-white border border-white/20 backdrop-blur-sm">
+            <span className="egg-chip text-xs" style={{ color: TONE, boxShadow: 'inset 0 0 0 1px rgba(15,181,165,.5)' }}>
               🏅 Independent TÜV Austria / SGS / Intertek / Bureau Veritas
             </span>
-            <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 text-white border border-white/20 backdrop-blur-sm">
+            <span className="egg-chip text-xs">
               {totalCoas} active CoAs
             </span>
-            <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 text-white border border-white/20 backdrop-blur-sm">
+            <span className="egg-chip text-xs">
               {totalCommodities} commodities
             </span>
-            <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 text-white border border-white/20 backdrop-blur-sm">
+            <span className="egg-chip text-xs">
               {regions.length} markets
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4 leading-[1.05] drop-shadow-sm">
+          <h1 className="egg-display text-4xl sm:text-5xl lg:text-6xl text-[#14161a] mb-4 leading-[1.02]">
             Certificate of Analysis Center
           </h1>
-          <p className="text-base sm:text-lg leading-relaxed max-w-3xl text-emerald-100">
+          <p className="text-base sm:text-lg leading-relaxed max-w-3xl text-[#3f4650]">
             Every Egypt Globe Group commodity ships with an independent third-party
             CoA from TÜV Austria Egypt, SGS Egypt, Intertek Cairo or Bureau Veritas Egypt. Region-specific
             certificates attest compliance with each destination market's standard
@@ -106,17 +107,17 @@ export default async function CoaCenter() {
       </section>
 
       {/* Region quick-jump nav */}
-      <section className="bg-white border-b border-slate-200 sticky top-0 z-10 backdrop-blur-md bg-white/85">
+      <section className="bg-white border-b border-[#14161a]/10 sticky top-0 z-10 backdrop-blur-md bg-white/85">
         <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-3 overflow-x-auto">
           <div className="flex gap-2 min-w-max">
             {regions.map(r => {
               const meta = regionMeta(r)
               return (
                 <a key={r} href={`#${r.replace(/\s+/g, '-')}`}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-[#1d5fa1] hover:text-[#1d5fa1] transition-colors whitespace-nowrap">
+                  className="egg-chip text-xs hover:text-[#14161a] transition-all hover:shadow-[inset_0_0_0_1.5px_rgba(20,22,26,.35)] whitespace-nowrap">
                   <span aria-hidden>{meta.icon}</span>
                   {meta.label}
-                  <span className="ml-1 text-[10px] font-bold tabular-nums text-slate-400">{byRegion[r].length}</span>
+                  <span className="ml-1 text-[10px] font-bold tabular-nums text-[#8a93a3]">{byRegion[r].length}</span>
                 </a>
               )
             })}
@@ -130,20 +131,20 @@ export default async function CoaCenter() {
         const items = byRegion[r]
         return (
           <section key={r} id={r.replace(/\s+/g, '-')}
-            className="border-t border-slate-100 scroll-mt-20"
-            style={{ background: `linear-gradient(180deg, ${meta.color}05 0%, white 80%)` }}>
+            className="border-t border-[#14161a]/10 scroll-mt-20 egg-reveal"
+            style={{ background: `linear-gradient(180deg, ${meta.color}0a 0%, #ffffff 80%)` }}>
             <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10">
               {/* Section header */}
               <div className="flex items-start gap-3 mb-6">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0"
-                  style={{ background: `${meta.color}1A`, color: meta.color }}>
+                  style={{ background: `${meta.color}1f`, boxShadow: `inset 0 0 0 1px ${meta.color}66` }}>
                   {meta.icon}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                  <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a]">
                     {meta.label}
                   </h2>
-                  <p className="text-sm text-slate-500 mt-0.5">
+                  <p className="text-sm text-[#7a8290] mt-0.5">
                     {items.length} active certificate{items.length === 1 ? '' : 's'} ·
                     {' '}{new Set(items.map(c => c.commodity_id)).size} commodit{new Set(items.map(c => c.commodity_id)).size === 1 ? 'y' : 'ies'}
                   </p>
@@ -156,33 +157,32 @@ export default async function CoaCenter() {
                   const com = c.commodities
                   return (
                     <Link key={c.id} href={com?.page_path || '/products'}
-                      className="group rounded-xl border bg-white p-4 hover:shadow-md transition-all"
-                      style={{ borderColor: `${meta.color}25` }}>
+                      className="egg-card group p-4">
                       <div className="flex items-start gap-2.5">
                         <span className="w-9 h-9 rounded-lg flex items-center justify-center text-base flex-shrink-0"
-                          style={{ background: `${meta.color}15`, color: meta.color }}>
+                          style={{ background: `${meta.color}1f`, boxShadow: `inset 0 0 0 1px ${meta.color}66` }}>
                           🧪
                         </span>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-1.5 flex-wrap mb-1">
-                            <span className="font-mono text-[10px] font-bold text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">{c.ref_code}</span>
+                            <span className="font-mono text-[10px] font-bold text-[#3f4650] bg-[#f3f4f6] px-1.5 py-0.5 rounded">{c.ref_code}</span>
                             {c.pass_fail === true && (
-                              <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+                              <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-[#e6fbf8] text-[#0b8f84] border border-[#0fb5a5]/40">
                                 ✓ Pass
                               </span>
                             )}
                           </div>
-                          <h3 className="font-bold text-sm text-slate-900 group-hover:text-[#1d5fa1] transition-colors leading-tight line-clamp-2">
+                          <h3 className="font-semibold text-sm text-[#14161a] group-hover:text-[#0b8f84] transition-colors leading-tight line-clamp-2">
                             {com?.name || 'Commodity'}
                           </h3>
-                          <p className="text-[11px] text-slate-500 mt-1 leading-snug">
+                          <p className="text-[11px] text-[#7a8290] mt-1 leading-snug">
                             {c.lab_name} · Issued {fmtDate(c.issue_date)}
                           </p>
                           {c.overall_result && (
-                            <p className="text-[10px] text-emerald-700 font-semibold mt-1 line-clamp-2">{c.overall_result}</p>
+                            <p className="text-[10px] text-[#0b8f84] font-semibold mt-1 line-clamp-2">{c.overall_result}</p>
                           )}
                         </div>
-                        <span className="text-slate-300 group-hover:text-[#1d5fa1] transition-colors mt-1">→</span>
+                        <span className="text-[#c9ced6] group-hover:text-[#ff6321] transition-colors mt-1">→</span>
                       </div>
                     </Link>
                   )
@@ -194,17 +194,20 @@ export default async function CoaCenter() {
       })}
 
       {/* Bottom CTA */}
-      <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16">
-        <div className="rounded-3xl bg-gradient-to-br from-emerald-700 via-teal-800 to-[#0f1f3a] p-8 sm:p-10 text-center text-white shadow-xl shadow-emerald-900/20">
-          <h2 className="text-2xl sm:text-3xl font-extrabold mb-3 tracking-tight">
+      <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16 egg-reveal">
+        <div className="egg-panel relative overflow-hidden p-8 sm:p-10 text-center">
+          <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-60 pointer-events-none" />
+          <div aria-hidden="true" className="absolute -bottom-20 -right-20 w-72 h-72 rounded-full opacity-40 pointer-events-none"
+            style={{ background: 'radial-gradient(circle, #0fb5a5 0%, transparent 70%)' }} />
+          <h2 className="egg-display relative text-3xl sm:text-4xl text-[#14161a] mb-3">
             Need a CoA for your specific shipment?
           </h2>
-          <p className="text-emerald-100 mb-6 max-w-2xl mx-auto">
+          <p className="relative text-[#3f4650] mb-6 max-w-2xl mx-auto">
             Per-shipment Certificate of Analysis issued from independent TÜV Austria / SGS / Intertek / Bureau Veritas labs,
             attesting compliance with your destination market's standard. Available within 24h of dispatch.
           </p>
           <Link href="/rfq?type=coa"
-            className="inline-flex items-center gap-2 bg-[#FF6321] hover:bg-[#e0541b] text-white font-bold px-7 py-3.5 rounded-xl shadow-lg transition-all hover:-translate-y-0.5">
+            className="egg-btn-primary relative">
             🧪 Request CoA
           </Link>
         </div>

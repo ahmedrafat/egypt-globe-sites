@@ -86,10 +86,10 @@ function keywordIcon(text) {
 function renderInline(text) {
   let out = escapeHtml(text)
   out = out.replaceAll(/\[([^\]]+)\]\(([^)]+)\)/g,
-    '<a href="$2" class="text-[#1d5fa1] hover:text-[#FF6321] underline underline-offset-2 decoration-1 hover:decoration-2 transition-all font-medium" target="_blank" rel="noopener noreferrer">$1</a>')
-  out = out.replaceAll(/\*\*([^*]+)\*\*/g, '<strong class="text-slate-900 font-semibold">$1</strong>')
-  out = out.replaceAll(/(^|[^*])\*([^*\n]+)\*/g, '$1<em class="text-slate-700 italic">$2</em>')
-  out = out.replaceAll(/`([^`]+)`/g, '<code class="bg-slate-100 text-slate-800 px-1.5 py-0.5 rounded text-[0.9em] font-mono border border-slate-200">$1</code>')
+    '<a href="$2" class="text-[#0b8f84] hover:text-[#14161a] underline underline-offset-2 decoration-1 hover:decoration-2 transition-all font-medium" target="_blank" rel="noopener noreferrer">$1</a>')
+  out = out.replaceAll(/\*\*([^*]+)\*\*/g, '<strong class="text-[#14161a] font-semibold">$1</strong>')
+  out = out.replaceAll(/(^|[^*])\*([^*\n]+)\*/g, '$1<em class="text-[#3f4650] italic">$2</em>')
+  out = out.replaceAll(/`([^`]+)`/g, '<code class="bg-[#f3f4f6] text-[#14161a] px-1.5 py-0.5 rounded text-[0.9em] font-mono border border-[#14161a]/10">$1</code>')
   return out
 }
 
@@ -110,12 +110,12 @@ function renderFeatureCardGrid(items) {
   let html = `<div class="my-7 grid grid-cols-1 sm:grid-cols-${smCols} lg:grid-cols-${lgCols} gap-4">`
   for (const it of items) {
     const ico = keywordIcon(it.title + ' ' + it.body)
-    html += `<div class="rounded-2xl border border-slate-200 bg-gradient-to-br from-white to-slate-50/50 p-5 hover:border-[#1d5fa1]/40 hover:shadow-sm transition-all">
+    html += `<div class="rounded-2xl ring-1 ring-[#14161a]/10 bg-white p-5 hover:ring-[#0fb5a5]/50 hover:shadow-sm transition-all">
       <div class="flex items-start gap-3">
-        <div class="flex-shrink-0 w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center text-2xl">${ico}</div>
+        <div class="flex-shrink-0 w-11 h-11 rounded-xl bg-[#f2fbfa] flex items-center justify-center text-2xl">${ico}</div>
         <div class="flex-1 min-w-0">
-          <div class="font-bold text-slate-900 text-[0.95rem] leading-tight">${escapeHtml(it.title)}</div>
-          ${it.body ? `<div class="text-sm text-slate-600 mt-1.5 leading-relaxed">${renderInline(it.body)}</div>` : ''}
+          <div class="font-bold text-[#14161a] text-[0.95rem] leading-tight">${escapeHtml(it.title)}</div>
+          ${it.body ? `<div class="text-sm text-[#3f4650] mt-1.5 leading-relaxed">${renderInline(it.body)}</div>` : ''}
         </div>
       </div>
     </div>`
@@ -135,9 +135,9 @@ function renderStatStrip(stats) {
   const cols = n <= 4 ? n : 4
   let html = `<div class="my-7 grid grid-cols-2 sm:grid-cols-${Math.min(cols, 4)} gap-3">`
   for (const s of stats) {
-    html += `<div class="rounded-2xl bg-gradient-to-br from-blue-50 to-white border border-blue-100 px-5 py-5">
-      <div class="text-3xl sm:text-4xl font-extrabold text-[#1d5fa1] tracking-tight">${escapeHtml(s.value)}</div>
-      <div class="text-xs text-slate-600 mt-1">${escapeHtml(s.label)}</div>
+    html += `<div class="rounded-2xl bg-[#f9fafb] border border-[#14161a]/10 px-5 py-5">
+      <div class="text-3xl sm:text-4xl font-semibold text-[#0b8f84] tracking-tight">${escapeHtml(s.value)}</div>
+      <div class="text-xs text-[#3f4650] mt-1">${escapeHtml(s.label)}</div>
     </div>`
   }
   html += '</div>'
@@ -172,7 +172,7 @@ export function parseMarkdown(content) {
   function flushParagraph() {
     if (buffer.length) {
       buffer.forEach(countWords)
-      blocks.push(`<p class="mb-5 leading-[1.75] text-slate-700 text-[1.0625rem]">${buffer.map(renderInline).join('<br/>')}</p>`)
+      blocks.push(`<p class="mb-5 leading-[1.75] text-[#3f4650] text-[1.0625rem]">${buffer.map(renderInline).join('<br/>')}</p>`)
       buffer = []
     }
   }
@@ -199,11 +199,11 @@ export function parseMarkdown(content) {
         listItems = []; inList = false; return
       }
       // Plain bullet list
-      let html = '<ul class="my-5 space-y-2 text-slate-700 leading-relaxed [list-style:none] pl-0">'
+      let html = '<ul class="my-5 space-y-2 text-[#3f4650] leading-relaxed [list-style:none] pl-0">'
       for (const it of listItems) {
         countWords(it)
         html += `<li class="relative pl-6 text-[1.0625rem]">
-          <span aria-hidden="true" class="absolute left-0 top-[0.7em] w-1.5 h-1.5 rounded-sm bg-[#1d5fa1] rotate-45"></span>
+          <span aria-hidden="true" class="absolute left-0 top-[0.7em] w-1.5 h-1.5 rounded-sm bg-[#0fb5a5] rotate-45"></span>
           ${renderInline(it)}
         </li>`
       }
@@ -212,7 +212,7 @@ export function parseMarkdown(content) {
       listItems = []; inList = false; return
     }
     // Ordered list — keep simple decimal styling
-    let html = '<ol class="my-5 space-y-2 text-slate-700 leading-relaxed list-decimal pl-6 marker:text-[#1d5fa1] marker:font-semibold">'
+    let html = '<ol class="my-5 space-y-2 text-[#3f4650] leading-relaxed list-decimal pl-6 marker:text-[#0b8f84] marker:font-semibold">'
     for (const it of listItems) {
       countWords(it)
       html += `<li class="text-[1.0625rem] pl-1">${renderInline(it)}</li>`
@@ -225,20 +225,20 @@ export function parseMarkdown(content) {
   function flushTable() {
     if (!inTable) return
     if (tableRows.length === 0) { inTable = false; return }
-    let html = '<div class="my-7 overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">'
+    let html = '<div class="my-7 overflow-x-auto rounded-xl border border-[#14161a]/10 bg-white shadow-sm">'
     html += '<table class="w-full text-sm">'
     const [header, ...rest] = tableRows
     if (header) {
-      html += '<thead class="bg-slate-50 border-b border-slate-200">'
-      html += '<tr>' + header.map(c => `<th class="px-4 py-3 text-left font-semibold text-slate-700 text-xs uppercase tracking-wider">${renderInline(c)}</th>`).join('') + '</tr>'
+      html += '<thead class="bg-[#f9fafb] border-b border-[#14161a]/10">'
+      html += '<tr>' + header.map(c => `<th class="px-4 py-3 text-left font-semibold text-[#3f4650] text-xs uppercase tracking-wider">${renderInline(c)}</th>`).join('') + '</tr>'
       html += '</thead>'
     }
     if (rest.length) {
-      html += '<tbody class="divide-y divide-slate-100">'
+      html += '<tbody class="divide-y divide-[#14161a]/10">'
       for (const row of rest) {
         row.forEach(countWords)
-        html += '<tr class="hover:bg-slate-50/40 transition-colors">' +
-          row.map(c => `<td class="px-4 py-3 text-slate-700 align-top">${renderInline(c)}</td>`).join('') + '</tr>'
+        html += '<tr class="hover:bg-[#f9fafb] transition-colors">' +
+          row.map(c => `<td class="px-4 py-3 text-[#3f4650] align-top">${renderInline(c)}</td>`).join('') + '</tr>'
       }
       html += '</tbody>'
     }
@@ -250,7 +250,7 @@ export function parseMarkdown(content) {
   function flushBlockquote() {
     if (!inBlockquote) return
     blockquoteLines.forEach(countWords)
-    blocks.push(`<blockquote class="my-6 border-l-2 border-[#1d5fa1] bg-blue-50/40 pl-5 pr-4 py-3 rounded-r-md text-slate-700 leading-relaxed text-[1.0625rem]">${blockquoteLines.map(renderInline).join(' ')}</blockquote>`)
+    blocks.push(`<blockquote class="my-6 border-l-2 border-[#b8862b] bg-[#fbf7ee] pl-5 pr-4 py-3 rounded-r-md text-[#3f4650] leading-relaxed text-[1.0625rem]">${blockquoteLines.map(renderInline).join(' ')}</blockquote>`)
     inBlockquote = false; blockquoteLines = []
   }
 
@@ -285,7 +285,7 @@ export function parseMarkdown(content) {
     // HR
     if (/^---+$/.test(line)) {
       flushAll()
-      blocks.push('<hr class="my-10 border-0 h-px bg-slate-200" />')
+      blocks.push('<hr class="my-10 border-0 h-px bg-[#e5e7eb]" />')
       continue
     }
 
@@ -297,7 +297,7 @@ export function parseMarkdown(content) {
       const ico = keywordIcon(text)
       countWords(text)
       headings.push({ id, level: 3, text: text.replace(/[*`]/g, '') })
-      blocks.push(`<h3 id="${id}" class="text-lg sm:text-xl font-bold mt-9 mb-3 text-slate-900 tracking-tight scroll-mt-28 flex items-center gap-2.5">
+      blocks.push(`<h3 id="${id}" class="egg-display font-medium text-xl sm:text-2xl mt-9 mb-3 text-[#14161a] tracking-tight scroll-mt-28 flex items-center gap-2.5">
         <span aria-hidden="true" class="text-xl opacity-80">${ico}</span>
         <span>${renderInline(text)}</span>
       </h3>`)
@@ -310,8 +310,8 @@ export function parseMarkdown(content) {
       const ico = keywordIcon(text)
       countWords(text)
       headings.push({ id, level: 2, text: text.replace(/[*`]/g, '') })
-      blocks.push(`<h2 id="${id}" class="text-xl sm:text-2xl lg:text-[1.625rem] font-bold mt-12 mb-5 text-slate-900 tracking-tight scroll-mt-28 flex items-center gap-3">
-        <span aria-hidden="true" class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-50 to-orange-50 border border-blue-100 text-2xl shadow-sm">${ico}</span>
+      blocks.push(`<h2 id="${id}" class="egg-display font-medium text-2xl sm:text-3xl lg:text-[2rem] mt-12 mb-5 text-[#14161a] tracking-tight scroll-mt-28 flex items-center gap-3">
+        <span aria-hidden="true" class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[#f9fafb] ring-1 ring-[#14161a]/10 text-2xl shadow-sm">${ico}</span>
         <span class="flex-1">${renderInline(text)}</span>
       </h2>`)
       continue
@@ -322,7 +322,7 @@ export function parseMarkdown(content) {
       const id = uniqueId(slugify(text))
       countWords(text)
       headings.push({ id, level: 1, text: text.replace(/[*`]/g, '') })
-      blocks.push(`<h1 id="${id}" class="text-2xl sm:text-3xl lg:text-4xl font-extrabold mt-10 mb-5 text-slate-900 tracking-tight scroll-mt-28">${renderInline(text)}</h1>`)
+      blocks.push(`<h1 id="${id}" class="egg-display text-3xl sm:text-4xl lg:text-5xl mt-10 mb-5 text-[#14161a] tracking-tight scroll-mt-28">${renderInline(text)}</h1>`)
       continue
     }
 

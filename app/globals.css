@@ -313,3 +313,46 @@ body.no-scroll {
   }
   .stat-card::before { animation: none; }
 }
+
+/* ───── Light editorial system (2026-08 landing → site-wide) ─────────
+   Tokens + shared utilities extracted from app/page.js so every template
+   (PageRenderer, Rich*Landing, SKU layer, hubs) speaks the same language.
+   Content is never hidden by default: .egg-reveal is a pure-CSS
+   scroll-driven entrance that only applies where the browser supports
+   animation-timeline; everywhere else elements are simply visible. */
+:root {
+  --egg-obsidian:   #14161a;   /* headings / nav */
+  --egg-body:       #3f4650;   /* body copy */
+  --egg-muted:      #7a8290;   /* labels / eyebrows */
+  --egg-panel:      #f9fafb;   /* ultra-light gray blocks */
+  --egg-hair:       rgba(20,22,26,.10);
+  --egg-teal:       #0fb5a5;   /* clear turquoise (decorative) */
+  --egg-teal-text:  #0b8f84;   /* turquoise for text on white */
+  --egg-gold:       #b8862b;   /* deep gold (text) */
+  --egg-gold-glow:  #e0b15a;   /* gold highlight */
+  --egg-ocean:      #0284c7;   /* vivid ocean */
+  --egg-ocean-text: #0369a1;
+}
+.egg-display { font-family: var(--font-fraunces, var(--font-geist-sans)), Georgia, serif; font-weight: 400; letter-spacing: -.015em; }
+.egg-grid-light { background-image: linear-gradient(rgba(20,22,26,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(20,22,26,.055) 1px, transparent 1px); background-size: 48px 48px; }
+.egg-eyebrow { display: inline-flex; align-items: center; gap: .6rem; font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--egg-muted); }
+.egg-eyebrow::before { content: ""; width: 2rem; height: 1px; background: currentColor; opacity: .7; flex: none; }
+.egg-chip { display: inline-flex; align-items: center; gap: .35rem; padding: .3rem .7rem; border-radius: 999px; background: #fff; color: #2a2f38; font-size: 11px; font-weight: 600; line-height: 1.2; box-shadow: inset 0 0 0 1px var(--egg-hair); }
+.egg-card { background: #fff; border-radius: 1rem; box-shadow: inset 0 0 0 1px var(--egg-hair); transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s; }
+.egg-card:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px rgba(20,22,26,.22), 0 18px 36px -24px rgba(20,22,26,.35); }
+.egg-panel { background: var(--egg-panel); box-shadow: inset 0 0 0 1px var(--egg-hair); border-radius: 1.25rem; }
+.egg-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; background: #ff6321; color: #fff; font-weight: 600; font-size: .875rem; padding: .8rem 1.6rem; border-radius: 999px; white-space: nowrap; box-shadow: 0 10px 30px -10px rgba(255,99,33,.55); transition: background .3s, transform .3s; }
+.egg-btn-primary:hover { background: var(--egg-obsidian); transform: scale(1.03); color: #fff; }
+.egg-btn-ghost { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; background: #fff; color: var(--egg-obsidian); font-weight: 600; font-size: .875rem; padding: .7rem 1.2rem; border-radius: 999px; white-space: nowrap; box-shadow: inset 0 0 0 1px rgba(20,22,26,.15); transition: box-shadow .2s, background .2s; }
+.egg-btn-ghost:hover { background: var(--egg-panel); box-shadow: inset 0 0 0 1px rgba(20,22,26,.35); }
+.egg-link { color: var(--egg-teal-text); font-weight: 600; text-decoration: underline; text-decoration-color: rgba(15,181,165,.45); text-underline-offset: 4px; transition: color .2s, text-decoration-color .2s; }
+.egg-link:hover { color: var(--egg-obsidian); text-decoration-color: var(--egg-teal); }
+.egg-hair { border-color: var(--egg-hair); }
+
+/* Scroll-based entrance reveal — pure CSS, no JS gating, visible fallback */
+@keyframes eggReveal { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .egg-reveal { animation: eggReveal both linear; animation-timeline: view(); animation-range: entry 0% entry 38%; }
+  }
+}

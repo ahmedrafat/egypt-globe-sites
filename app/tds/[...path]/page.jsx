@@ -5,6 +5,8 @@
  * full chemical & physical specs, certifications, packing options,
  * applications, and storage/origin/loading-port info. Auto-triggers
  * window.print() via a "Print / Save as PDF" button.
+ *
+ * Light editorial edition — tokens + utilities (.egg-*) in app/globals.css.
  */
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -66,34 +68,34 @@ export default async function TDSPage({ params }) {
   const apps = (page.applications || []).map(id => APP_BY_ID[id]).filter(Boolean)
 
   return (
-    <div className="bg-slate-50 min-h-screen print:bg-white">
+    <div className="bg-[#f9fafb] min-h-screen print:bg-white text-[#14161a]">
       {/* Toolbar — hidden in print */}
-      <div className="bg-white border-b border-slate-200 sticky top-0 z-10 print:hidden">
+      <div className="bg-white border-b border-[#14161a]/10 sticky top-0 z-10 print:hidden">
         <div className="max-w-4xl mx-auto px-6 py-3 flex items-center justify-between">
-          <Link href={page.path} className="text-sm text-slate-600 hover:text-[#1d5fa1] inline-flex items-center gap-1.5">
+          <Link href={page.path} className="text-sm text-[#3f4650] hover:text-[#0b8f84] inline-flex items-center gap-1.5 transition-colors">
             ← Back to product
           </Link>
           <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-400">Issued: {today}</span>
+            <span className="text-xs text-[#8a93a3]">Issued: {today}</span>
             <TDSPrintTrigger />
           </div>
         </div>
       </div>
 
       {/* The TDS document — A4-style page */}
-      <div className="max-w-4xl mx-auto bg-white shadow-sm print:shadow-none my-6 print:my-0 print:max-w-none">
+      <div className="max-w-4xl mx-auto bg-white ring-1 ring-[#14161a]/10 print:ring-0 my-6 print:my-0 print:max-w-none">
         <div className="px-10 py-8 sm:px-12 sm:py-10 print:p-12">
 
           {/* Letterhead */}
-          <div className="flex items-start justify-between border-b-2 border-[#1d5fa1] pb-4 mb-6">
+          <div className="flex items-start justify-between border-b-2 border-[#14161a] pb-4 mb-6">
             <div>
               <Logo imageUrl={settings.logoUrl} className="h-14" />
-              <p className="mt-2 text-xs text-slate-500">{settings.tagline}</p>
+              <p className="mt-2 text-xs text-[#7a8290]">{settings.tagline}</p>
             </div>
             <div className="text-right">
-              <div className="text-[10px] uppercase tracking-wider font-bold text-slate-400">Technical Data Sheet</div>
-              <div className="text-2xl font-extrabold text-slate-900 mt-0.5">TDS</div>
-              <div className="text-xs text-slate-500 mt-1">Issued: {today}</div>
+              <div className="text-[10px] font-mono uppercase tracking-[0.18em] text-[#7a8290]">Technical Data Sheet</div>
+              <div className="egg-display text-3xl text-[#14161a] mt-0.5">TDS</div>
+              <div className="text-xs text-[#7a8290] mt-1">Issued: {today}</div>
             </div>
           </div>
 
@@ -101,23 +103,23 @@ export default async function TDSPage({ params }) {
           <div className="mb-8">
             <div className="flex items-center gap-2 flex-wrap mb-2">
               {page.hs_code && (
-                <span className="text-xs font-mono font-bold bg-slate-100 text-slate-600 border border-slate-200 px-2 py-1 rounded">
+                <span className="text-xs font-mono font-bold bg-[#f3f4f6] text-[#3f4650] border border-[#14161a]/10 px-2 py-1 rounded">
                   HS {page.hs_code}
                 </span>
               )}
               {(specs.sku || specs.commodity_code) && (
-                <span className="text-xs font-mono font-bold bg-blue-50 text-blue-700 border border-blue-200 px-2 py-1 rounded">
+                <span className="text-xs font-mono font-bold bg-[#f2fbfa] text-[#0b8f84] border border-[#0fb5a5]/40 px-2 py-1 rounded">
                   {specs.sku || specs.commodity_code}
                 </span>
               )}
               {specs.source_type && (
-                <span className="text-xs font-bold bg-cyan-50 text-cyan-800 border border-cyan-200 px-2 py-1 rounded">
+                <span className="text-xs font-bold bg-[#eef6fd] text-[#0369a1] border border-[#0284c7]/35 px-2 py-1 rounded">
                   {specs.source_type}
                 </span>
               )}
             </div>
-            <h1 className="text-3xl font-extrabold text-slate-900 leading-tight">{page.title}</h1>
-            {page.description && <p className="text-sm text-slate-600 mt-2 leading-relaxed">{page.description}</p>}
+            <h1 className="egg-display text-3xl sm:text-4xl text-[#14161a] leading-tight">{page.title}</h1>
+            {page.description && <p className="text-sm text-[#3f4650] mt-2 leading-relaxed">{page.description}</p>}
           </div>
 
           {/* Section 1 — Identification */}
@@ -135,14 +137,14 @@ export default async function TDSPage({ params }) {
           {/* Section 2 — Chemical & physical specifications */}
           {specEntries.length > 0 && (
             <Section n="2" title="Chemical & Physical Specifications">
-              <table className="w-full text-sm border-t border-slate-200">
+              <table className="w-full text-sm border-t border-[#14161a]/10">
                 <tbody>
                   {specEntries
                     .filter(([k]) => !['sku','commodity_code','source_type','origin','product_code','grade','unit'].includes(k))
                     .map(([k, v]) => (
-                      <tr key={k} className="border-b border-slate-100">
-                        <td className="py-2 px-2 font-semibold text-slate-600 w-2/5">{prettyKey(k)}</td>
-                        <td className="py-2 px-2 text-slate-900 font-mono">{String(v)}</td>
+                      <tr key={k} className="border-b border-[#14161a]/10">
+                        <td className="py-2 px-2 font-semibold text-[#5b6472] w-2/5">{prettyKey(k)}</td>
+                        <td className="py-2 px-2 text-[#14161a] font-mono">{String(v)}</td>
                       </tr>
                     ))}
                 </tbody>
@@ -153,7 +155,7 @@ export default async function TDSPage({ params }) {
           {/* Section 3 — Packing options */}
           {(page.packing_options || []).length > 0 && (
             <Section n="3" title="Packing Options">
-              <ul className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm text-slate-700 list-disc list-inside">
+              <ul className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm text-[#3f4650] list-disc list-inside">
                 {page.packing_options.map(p => <li key={p}>{p}</li>)}
               </ul>
             </Section>
@@ -162,7 +164,7 @@ export default async function TDSPage({ params }) {
           {/* Section 4 — Applications */}
           {apps.length > 0 && (
             <Section n="4" title="Applications">
-              <ul className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm text-slate-700 list-disc list-inside">
+              <ul className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm text-[#3f4650] list-disc list-inside">
                 {apps.map(a => <li key={a.id}>{a.label}</li>)}
               </ul>
             </Section>
@@ -171,7 +173,7 @@ export default async function TDSPage({ params }) {
           {/* Section 5 — Certifications */}
           {(page.certifications || []).length > 0 && (
             <Section n="5" title="Certifications & Standards">
-              <ul className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm text-slate-700 list-disc list-inside">
+              <ul className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm text-[#3f4650] list-disc list-inside">
                 {page.certifications.map(c => <li key={c}>{c}</li>)}
               </ul>
             </Section>
@@ -193,10 +195,10 @@ export default async function TDSPage({ params }) {
           <Section n="7" title="Loading Ports (Egypt)">
             {(page.loading_ports || []).length > 0 ? (
               <>
-                <ul className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm text-slate-700 list-disc list-inside mb-2">
+                <ul className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm text-[#3f4650] list-disc list-inside mb-2">
                   {page.loading_ports.map(p => <li key={p}>{p}</li>)}
                 </ul>
-                <p className="text-xs text-slate-500 italic">
+                <p className="text-xs text-[#7a8290] italic">
                   {specs.source_type?.toLowerCase().includes('rock')
                     ? 'Lanes optimised for rock-salt loading from Siwa / Qattara feed.'
                     : specs.source_type?.toLowerCase().includes('sea')
@@ -205,7 +207,7 @@ export default async function TDSPage({ params }) {
                 </p>
               </>
             ) : (
-              <p className="text-sm text-slate-700 leading-relaxed">
+              <p className="text-sm text-[#3f4650] leading-relaxed">
                 Damietta · Port Said East · Alexandria · El-Dekheila · Ain Sokhna · Safaga · El-Arish.
                 Specific loading port confirmed at quote stage based on destination.
               </p>
@@ -224,7 +226,7 @@ export default async function TDSPage({ params }) {
 
           {/* Section 9 — Quality assurance */}
           <Section n="9" title="Quality Assurance">
-            <p className="text-sm text-slate-700 leading-relaxed">
+            <p className="text-sm text-[#3f4650] leading-relaxed">
               Every shipment ships with an Egyptian Chamber of Commerce-stamped Certificate
               of Origin and a per-batch Certificate of Analysis. Pre-shipment inspection
               (TÜV Austria / SGS / Intertek / Bureau Veritas / Cotecna) available on request. Full
@@ -234,8 +236,8 @@ export default async function TDSPage({ params }) {
           </Section>
 
           {/* Footer letterhead */}
-          <div className="border-t border-slate-200 mt-10 pt-4 text-[11px] text-slate-500 leading-relaxed">
-            <div className="font-semibold text-slate-700 mb-1">{settings.name}</div>
+          <div className="border-t border-[#14161a]/10 mt-10 pt-4 text-[11px] text-[#7a8290] leading-relaxed">
+            <div className="font-semibold text-[#3f4650] mb-1">{settings.name}</div>
             <div>Head Office: {settings.headOffice}</div>
             <div>Operations: {settings.operationsOffice}</div>
             <div className="mt-1">
@@ -261,7 +263,7 @@ export default async function TDSPage({ params }) {
 function Section({ n, title, children }) {
   return (
     <section className="mb-6">
-      <h2 className="text-xs font-bold uppercase tracking-wider text-[#1d5fa1] border-b border-slate-200 pb-2 mb-3">
+      <h2 className="text-[10px] font-mono font-semibold uppercase tracking-[0.18em] text-[#0b8f84] border-b border-[#14161a]/10 pb-2 mb-3">
         {n}. {title}
       </h2>
       {children}
@@ -274,9 +276,9 @@ function DefList({ rows }) {
     <table className="w-full text-sm">
       <tbody>
         {rows.map(([label, value]) => (
-          <tr key={label} className="border-b border-slate-100 last:border-0">
-            <td className="py-1.5 pr-4 font-semibold text-slate-600 w-2/5">{label}</td>
-            <td className="py-1.5 text-slate-900">{value}</td>
+          <tr key={label} className="border-b border-[#14161a]/10 last:border-0">
+            <td className="py-1.5 pr-4 font-semibold text-[#5b6472] w-2/5">{label}</td>
+            <td className="py-1.5 text-[#14161a]">{value}</td>
           </tr>
         ))}
       </tbody>

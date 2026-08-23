@@ -2,16 +2,22 @@
  * RichApplicationLanding — Pelot-style layout for /applications/<id>.
  *
  * Layout:
- *   1. Violet-gradient hero with breadcrumb, chip rail, dual CTA
+ *   1. Hero (light editorial edition — white with a soft violet glow)
+ *      with breadcrumb, chip rail, dual CTA
  *   2. Stats strip (matching SKUs / standards / regions)
  *   3. Industry-specific markdown body
  *   4. Matched products grid
  *   5. Related applications
  *   6. Bottom CTA
+ *
+ * Design tokens + utilities (.egg-*) live in app/globals.css.
  */
 import Link from 'next/link'
 import RichPageBody from './RichPageBody'
 import { APPLICATIONS, PRODUCT_DIVISIONS, CATEGORY_META } from '../lib/corporatePages'
+
+// Industry accent — violet, the applications colour across the site
+const TONE = '#7c3aed'
 
 export default function RichApplicationLanding({ page, application, products, siblingApps, visibility }) {
   // Aggregate certs across matched products
@@ -22,35 +28,32 @@ export default function RichApplicationLanding({ page, application, products, si
   const certList = [...certs].slice(0, 12)
 
   return (
-    <article>
-      {/* Violet hero */}
-      <section className="relative overflow-hidden text-white bg-gradient-to-br from-violet-700 via-purple-800 to-indigo-900">
-        <div aria-hidden="true" className="absolute inset-0 opacity-20 pointer-events-none">
-          <div className="absolute right-0 top-0 w-[600px] h-[600px] rounded-full"
-            style={{ background: 'radial-gradient(circle, rgba(255,99,33,0.4) 0%, transparent 70%)' }} />
-          <div className="absolute -bottom-32 -left-24 w-[500px] h-[500px] rounded-full"
-            style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.4) 0%, transparent 70%)' }} />
-        </div>
-        <div className="absolute inset-0 bg-grid-pattern opacity-25" aria-hidden="true" />
+    <article className="bg-white text-[#14161a]">
+      {/* Hero — white editorial banner with violet glow */}
+      <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10">
+        <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
+        <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
+          style={{ background: `radial-gradient(55% 55% at 88% 0%, ${TONE}22, transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.09), transparent 60%)` }} />
+        <div aria-hidden="true" className="absolute -right-10 -top-16 text-[240px] leading-none opacity-[0.06] select-none pointer-events-none">{application?.icon}</div>
 
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20">
-          <nav className="flex items-center gap-2 text-xs text-white/60 mb-5 flex-wrap animate-fade-in">
-            <Link href="/" className="hover:text-white">Home</Link>
+          <nav className="flex items-center gap-2 text-xs text-[#7a8290] mb-5 flex-wrap animate-fade-in">
+            <Link href="/" className="hover:text-[#14161a] transition-colors">Home</Link>
             <span>›</span>
-            <Link href="/applications" className="hover:text-white">Applications</Link>
+            <Link href="/applications" className="hover:text-[#14161a] transition-colors">Applications</Link>
             <span>›</span>
-            <span className="text-white/90">{page.title}</span>
+            <span className="text-[#14161a] font-medium">{page.title}</span>
           </nav>
 
           <div className="flex items-center gap-2 mb-4 flex-wrap animate-fade-in-up">
-            <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 text-white border border-white/20 backdrop-blur-sm">
+            <span className="egg-chip text-xs" style={{ color: TONE, boxShadow: `inset 0 0 0 1px ${TONE}66` }}>
               🏭 Application
             </span>
-            <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 text-white border border-white/20 backdrop-blur-sm">
+            <span className="egg-chip text-xs">
               {(products || []).length} matching SKU{(products || []).length === 1 ? '' : 's'}
             </span>
             {certList.length > 0 && (
-              <span className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 text-white border border-white/20 backdrop-blur-sm">
+              <span className="egg-chip text-xs">
                 {certList.length} standards covered
               </span>
             )}
@@ -58,39 +61,39 @@ export default function RichApplicationLanding({ page, application, products, si
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-end">
             <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4 leading-[1.05] drop-shadow-sm">
+              <h1 className="egg-display text-4xl sm:text-5xl lg:text-6xl text-[#14161a] mb-4 leading-[1.02]">
                 <span className="text-3xl sm:text-4xl lg:text-5xl mr-2">{application?.icon}</span>
                 {page.title}
               </h1>
               {page.description && (
-                <p className="text-base sm:text-lg leading-relaxed max-w-3xl text-white/80">
+                <p className="text-base sm:text-lg leading-relaxed max-w-3xl text-[#3f4650]">
                   {page.description}
                 </p>
               )}
             </div>
             <div className="flex flex-wrap gap-2 lg:justify-end animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
               <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
-                className="inline-flex items-center gap-2 bg-[#FF6321] hover:bg-[#e0541b] text-white font-bold px-5 py-3 rounded-xl shadow-lg shadow-orange-500/25 transition-all hover:-translate-y-0.5">
+                className="egg-btn-primary">
                 📋 Get Quote
               </Link>
               <Link href="/applications"
-                className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur text-white font-semibold border border-white/20 px-5 py-3 rounded-xl transition-colors">
+                className="egg-btn-ghost">
                 All applications →
               </Link>
             </div>
           </div>
 
           {/* Stats strip */}
-          <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-3 stagger-children">
+          <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-px rounded-2xl overflow-hidden ring-1 ring-[#14161a]/10 bg-[#14161a]/10 stagger-children">
             {[
               { big: String((products || []).length), label: 'SKUs serving this industry' },
               { big: certList.length > 0 ? String(certList.length) : '—', label: 'Standards & certs covered' },
               { big: '7',   label: 'Loading ports' },
               { big: '60+', label: 'Destination markets' },
             ].map(s => (
-              <div key={s.label} className="rounded-2xl bg-white/10 backdrop-blur border border-white/15 px-5 py-5">
-                <div className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">{s.big}</div>
-                <div className="text-xs text-white/70 mt-1">{s.label}</div>
+              <div key={s.label} className="bg-white/90 backdrop-blur px-5 py-5">
+                <div className="egg-display text-3xl sm:text-4xl tracking-tight" style={{ color: TONE }}>{s.big}</div>
+                <div className="text-[10px] font-mono uppercase tracking-[0.18em] text-[#7a8290] mt-2">{s.label}</div>
               </div>
             ))}
           </div>
@@ -99,7 +102,7 @@ export default function RichApplicationLanding({ page, application, products, si
 
       {/* Industry overview body */}
       {page.body_markdown && (
-        <section id="top" className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-reveal">
+        <section id="top" className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20 egg-reveal">
           <RichPageBody content={page.body_markdown} title={page.title} />
         </section>
       )}
@@ -121,21 +124,21 @@ export default function RichApplicationLanding({ page, application, products, si
         const otherKeys = Object.keys(byDivision).filter(k => !PRODUCT_DIVISIONS.find(d => d.id === k))
 
         return (
-          <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16 border-t border-slate-100 scroll-reveal">
+          <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16 border-t border-[#14161a]/10 egg-reveal">
             <div className="flex items-end justify-between gap-4 mb-8 flex-wrap">
               <div>
-                <div className="inline-block bg-violet-50 text-violet-700 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
+                <div className="egg-eyebrow mb-3" style={{ color: TONE }}>
                   Matching SKUs
                 </div>
-                <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a]">
                   {products.length} product{products.length === 1 ? '' : 's'} for {page.title.toLowerCase()}
                 </h2>
-                <p className="text-sm text-slate-500 mt-2">
+                <p className="text-sm text-[#7a8290] mt-2">
                   Sourced from {divisionsToRender.length} of our 7 product division{divisionsToRender.length === 1 ? '' : 's'}.
                 </p>
               </div>
               <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
-                className="text-sm font-semibold text-violet-700 hover:underline">
+                className="egg-link text-sm">
                 Custom blend? →
               </Link>
             </div>
@@ -147,27 +150,26 @@ export default function RichApplicationLanding({ page, application, products, si
                 return (
                   <div key={d.id}>
                     {/* Division header */}
-                    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100">
+                    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-[#14161a]/10">
                       <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
-                        style={{ background: `${d.color}1A`, color: d.color }}>
+                        style={{ background: `${d.color}1f`, boxShadow: `inset 0 0 0 1px ${d.color}66` }}>
                         {d.icon}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-bold text-slate-900 text-lg">
-                          From {d.label} <span className="text-slate-400 font-medium tabular-nums">({items.length})</span>
+                        <h3 className="font-semibold text-[#14161a] text-lg">
+                          From {d.label} <span className="text-[#8a93a3] font-medium tabular-nums">({items.length})</span>
                         </h3>
                       </div>
-                      <Link href={d.path} className="text-xs font-bold px-2.5 py-1 rounded-full border border-slate-200 bg-white text-slate-600 hover:border-[#1d5fa1] hover:text-[#1d5fa1] transition-colors flex-shrink-0">
+                      <Link href={d.path} className="egg-chip text-xs text-[#3f4650] hover:text-[#14161a] transition-all hover:shadow-[inset_0_0_0_1.5px_rgba(20,22,26,.35)] flex-shrink-0">
                         All {d.label.toLowerCase()} →
                       </Link>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                       {items.map(p => (
                         <Link key={p.id} href={p.path}
-                          className="card-lift group rounded-xl border bg-white overflow-hidden"
-                          style={{ borderColor: `${d.color}25` }}>
-                          <div className="aspect-[16/9] overflow-hidden"
-                            style={{ background: `linear-gradient(135deg, ${d.color}10, ${d.color}05)` }}>
+                          className="egg-card group overflow-hidden">
+                          <div className="aspect-[16/9] overflow-hidden rounded-t-2xl"
+                            style={{ background: `linear-gradient(135deg, ${d.color}14, #f9fafb)` }}>
                             {p.hero_photo_url ? (
                               /* eslint-disable-next-line @next/next/no-img-element */
                               <img src={p.hero_photo_url} alt={p.title}
@@ -180,13 +182,13 @@ export default function RichApplicationLanding({ page, application, products, si
                           </div>
                           <div className="p-4">
                             {p.hs_code && (
-                              <div className="text-[10px] font-mono uppercase font-bold text-slate-400 mb-1">HS {p.hs_code}</div>
+                              <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-[#8a93a3] mb-1">HS {p.hs_code}</div>
                             )}
-                            <h4 className="text-sm font-bold text-slate-900 line-clamp-2 group-hover:text-[#1d5fa1] transition-colors min-h-[2.5em]">
+                            <h4 className="text-sm font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#0b8f84] transition-colors min-h-[2.5em]">
                               {p.title}
                             </h4>
                             {p.certifications?.length > 0 && (
-                              <div className="text-xs text-slate-500 mt-1.5 line-clamp-1">{p.certifications.slice(0, 3).join(' · ')}</div>
+                              <div className="text-xs text-[#7a8290] mt-1.5 line-clamp-1">{p.certifications.slice(0, 3).join(' · ')}</div>
                             )}
                           </div>
                         </Link>
@@ -197,12 +199,12 @@ export default function RichApplicationLanding({ page, application, products, si
               })}
               {otherKeys.length > 0 && otherKeys.map(k => (
                 <div key={k}>
-                  <h3 className="font-bold text-slate-900 text-lg mb-4">Other ({byDivision[k].length})</h3>
+                  <h3 className="font-semibold text-[#14161a] text-lg mb-4">Other ({byDivision[k].length})</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                     {byDivision[k].map(p => (
-                      <Link key={p.id} href={p.path} className="card-lift group rounded-xl border border-slate-200 bg-white overflow-hidden">
+                      <Link key={p.id} href={p.path} className="egg-card group overflow-hidden">
                         <div className="p-4">
-                          <h4 className="text-sm font-bold text-slate-900 line-clamp-2 group-hover:text-[#1d5fa1] transition-colors">{p.title}</h4>
+                          <h4 className="text-sm font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#0b8f84] transition-colors">{p.title}</h4>
                         </div>
                       </Link>
                     ))}
@@ -213,10 +215,10 @@ export default function RichApplicationLanding({ page, application, products, si
           </section>
         )
       })() : (
-        <section className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-12 text-center scroll-reveal">
-          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-8 text-slate-500">
+        <section className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-12 text-center egg-reveal">
+          <div className="egg-panel p-8 text-[#7a8290]">
             <p>No products tagged for this application yet.</p>
-            <Link href="/rfq" className="text-[#1d5fa1] font-semibold hover:underline mt-2 inline-block">
+            <Link href="/rfq" className="egg-link mt-2 inline-block">
               Request a custom quote →
             </Link>
           </div>
@@ -225,18 +227,18 @@ export default function RichApplicationLanding({ page, application, products, si
 
       {/* Certifications strip */}
       {certList.length > 0 && (
-        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 scroll-reveal">
-          <div className="rounded-2xl border border-violet-100 bg-gradient-to-br from-violet-50/40 to-white p-6 sm:p-8">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 egg-reveal">
+          <div className="egg-panel p-6 sm:p-8">
             <div className="flex items-start gap-3 mb-4">
               <div className="text-2xl">🏅</div>
               <div>
-                <h3 className="font-bold text-slate-900 text-lg">Standards & Certifications Covered</h3>
-                <p className="text-sm text-slate-500 mt-0.5">SKUs in this application carry paperwork ready for the standards below.</p>
+                <h3 className="font-semibold text-[#14161a] text-lg">Standards & Certifications Covered</h3>
+                <p className="text-sm text-[#7a8290] mt-0.5">SKUs in this application carry paperwork ready for the standards below.</p>
               </div>
             </div>
             <div className="flex flex-wrap gap-2">
               {certList.map(c => (
-                <span key={c} className="inline-flex items-center text-xs font-semibold bg-white text-violet-800 border border-violet-200 px-3 py-1.5 rounded-full">
+                <span key={c} className="egg-chip text-xs" style={{ color: '#6d28d9', boxShadow: `inset 0 0 0 1px ${TONE}55` }}>
                   ✓ {c}
                 </span>
               ))}
@@ -247,18 +249,18 @@ export default function RichApplicationLanding({ page, application, products, si
 
       {/* Related applications */}
       {(siblingApps || []).length > 0 && (
-        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 scroll-reveal">
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-8">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 egg-reveal">
+          <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-8">
             Other applications served
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 stagger-children">
             {siblingApps.map(a => (
               <Link key={a.id} href={a.path}
-                className="card-lift group rounded-2xl border border-slate-200 bg-white p-5 text-center">
-                <div className="w-14 h-14 mx-auto rounded-xl flex items-center justify-center text-3xl mb-3 bg-gradient-to-br from-violet-100 to-blue-100">
+                className="egg-card group p-5 text-center">
+                <div className="w-14 h-14 mx-auto rounded-xl flex items-center justify-center text-3xl mb-3 bg-[#f3f0ff] ring-1 ring-[#7c3aed]/25">
                   {a.icon}
                 </div>
-                <h3 className="font-bold text-slate-900 group-hover:text-[#1d5fa1] transition-colors text-sm">
+                <h3 className="font-semibold text-[#14161a] group-hover:text-[#0b8f84] transition-colors text-sm">
                   {a.label}
                 </h3>
               </Link>
@@ -268,18 +270,21 @@ export default function RichApplicationLanding({ page, application, products, si
       )}
 
       {/* Bottom CTA */}
-      <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20">
-        <div className="rounded-3xl bg-gradient-to-br from-violet-700 to-indigo-900 p-10 sm:p-14 text-center relative overflow-hidden shadow-2xl shadow-violet-900/20 animate-scale-in">
-          <div aria-hidden="true" className="absolute -top-12 -right-12 text-[280px] opacity-10 select-none">{application?.icon}</div>
-          <h2 className="relative text-3xl sm:text-4xl font-extrabold text-white mb-3 tracking-tight">
+      <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 egg-reveal">
+        <div className="egg-panel p-10 sm:p-14 text-center relative overflow-hidden animate-scale-in">
+          <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-60 pointer-events-none" />
+          <div aria-hidden="true" className="absolute -bottom-20 -right-20 w-72 h-72 rounded-full opacity-35 pointer-events-none"
+            style={{ background: `radial-gradient(circle, ${TONE} 0%, transparent 70%)` }} />
+          <div aria-hidden="true" className="absolute -top-12 -right-12 text-[280px] opacity-[0.06] select-none pointer-events-none">{application?.icon}</div>
+          <h2 className="egg-display relative text-3xl sm:text-4xl text-[#14161a] mb-3">
             Have a {page.title.toLowerCase()} requirement?
           </h2>
-          <p className="relative text-violet-100 text-lg mb-7 max-w-2xl mx-auto">
+          <p className="relative text-[#3f4650] text-lg mb-7 max-w-2xl mx-auto">
             Tell us your tender spec — we'll come back within 24 hours with priced
             FOB / CIF / CFR options matched to your industry's standards.
           </p>
           <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
-            className="relative inline-flex items-center gap-2 bg-[#FF6321] hover:bg-[#e0541b] text-white font-bold px-8 py-4 rounded-xl shadow-lg transition-all hover:-translate-y-0.5">
+            className="egg-btn-primary relative px-8 py-4">
             📋 Request a Quote
           </Link>
         </div>

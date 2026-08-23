@@ -4,6 +4,8 @@
  * Server page: fetches the catalogue (product options for the dropdown)
  * and any RFQ landing copy from egg_corporate_pages, then renders the
  * client-side RFQForm. Real INSERT → market_rfqs runs in the form.
+ *
+ * Light editorial edition — tokens + utilities (.egg-*) in app/globals.css.
  */
 import {
   getPageByPath,
@@ -42,27 +44,28 @@ export default async function RFQPage({ searchParams }) {
     : 'Tell us what commodity, quantity, destination port and Incoterm you need. Our export desk in Cairo + Damietta will come back within 24 hours with a priced FOB / CIF / CFR offer plus full L/C-bank document set.'
 
   return (
-    <article>
+    <article className="bg-white text-[#14161a]">
       <ServiceJsonLd
         name="B2B Commodity Export Quote — Egypt Globe Group"
         description="Request a FOB / CIF / CFR price quote for Egyptian salt, cement, fertilizers, chemicals, industrial minerals, or agro commodities. Egypt Globe Group responds within 24 hours with pricing from any of 7 Egyptian seaports."
         url="/rfq"
       />
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#f8fafc] via-white to-[#eef4fb]">
-        <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-24 -right-32 w-[500px] h-[500px] rounded-full opacity-30"
-            style={{ background: 'radial-gradient(circle, #1d5fa133 0%, transparent 70%)' }} />
-        </div>
+      <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10">
+        <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
+        <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
+          style={{ background: isCoa
+            ? 'radial-gradient(55% 55% at 88% 0%, rgba(15,181,165,.2), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(184,134,43,.1), transparent 60%)'
+            : 'radial-gradient(55% 55% at 88% 0%, rgba(255,99,33,.16), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(15,181,165,.12), transparent 60%)' }} />
         <div className="relative max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 animate-fade-in-up">
-          <div className={`inline-flex items-center gap-2 ${isCoa ? 'bg-emerald-50 text-emerald-700' : 'bg-orange-50 text-[#FF6321]'} text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full mb-4`}>
-            <span className={`w-2 h-2 rounded-full ${isCoa ? 'bg-emerald-600' : 'bg-[#FF6321]'} animate-pulse`} />
+          <div className={`egg-eyebrow mb-4 ${isCoa ? 'text-[#0b8f84]' : 'text-[#d9501a]'}`}>
+            <span className={`w-2 h-2 rounded-full ${isCoa ? 'bg-[#0fb5a5]' : 'bg-[#FF6321]'} animate-pulse`} />
             {heroLabel}
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight mb-4 leading-[1.05]">
+          <h1 className="egg-display text-4xl sm:text-5xl lg:text-6xl text-[#14161a] mb-4 leading-[1.02]">
             {heroTitle}
           </h1>
-          <p className="text-lg text-slate-600 max-w-2xl leading-relaxed">
+          <p className="text-lg text-[#3f4650] max-w-2xl leading-relaxed">
             {heroBlurb}
           </p>
         </div>
@@ -84,8 +87,8 @@ export default async function RFQPage({ searchParams }) {
 
           <aside className="lg:col-span-4 space-y-5 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             {/* What happens next */}
-            <div className="rounded-2xl border border-slate-200 bg-white p-6">
-              <h3 className="text-base font-bold text-slate-900 mb-4">What happens next?</h3>
+            <div className="egg-card p-6 hover:transform-none">
+              <h3 className="egg-display text-2xl text-[#14161a] mb-4">What happens next?</h3>
               <ol className="space-y-3 text-sm">
                 {[
                   ['Within 1 hour', 'Your RFQ is logged + assigned to a commodity owner.'],
@@ -95,12 +98,12 @@ export default async function RFQPage({ searchParams }) {
                   ['On loading', 'Full L/C document set + Bill of Lading delivered.'],
                 ].map(([when, what], i) => (
                   <li key={i} className="flex gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#1d5fa1] text-white text-xs font-bold flex items-center justify-center mt-0.5">
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#0b8f84] text-white text-xs font-bold flex items-center justify-center mt-0.5">
                       {i + 1}
                     </span>
                     <div>
-                      <div className="text-xs font-bold text-[#1d5fa1] uppercase tracking-wider">{when}</div>
-                      <div className="text-sm text-slate-600 leading-snug mt-0.5">{what}</div>
+                      <div className="text-[10px] font-mono font-semibold text-[#0b8f84] uppercase tracking-[0.16em]">{when}</div>
+                      <div className="text-sm text-[#3f4650] leading-snug mt-0.5">{what}</div>
                     </div>
                   </li>
                 ))}
@@ -108,29 +111,34 @@ export default async function RFQPage({ searchParams }) {
             </div>
 
             {/* Direct contact */}
-            <div className="rounded-2xl bg-gradient-to-br from-[#1d5fa1] to-[#14467a] p-6 text-white">
-              <h3 className="text-base font-bold mb-3">Prefer to email?</h3>
-              <p className="text-sm text-blue-100 mb-4 leading-relaxed">
-                Send your RFQ directly to our export desk — same 24-hour SLA.
-              </p>
-              <a href={`mailto:${company.email}?subject=RFQ%20-%20Egypt%20Globe%20Group`}
-                className="block bg-white/15 hover:bg-white/25 transition-colors rounded-lg px-4 py-3 text-sm font-mono font-semibold text-white">
-                ✉ {company.email}
-              </a>
-              <a href={`tel:${company.phoneE164}`}
-                className="block mt-2 bg-white/15 hover:bg-white/25 transition-colors rounded-lg px-4 py-3 text-sm font-mono font-semibold text-white">
-                ☎ {company.phone}
-              </a>
+            <div className="relative overflow-hidden egg-panel p-6">
+              <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-60 pointer-events-none" />
+              <div aria-hidden="true" className="absolute -bottom-12 -right-12 w-40 h-40 rounded-full opacity-30 pointer-events-none"
+                style={{ background: 'radial-gradient(circle, #FF6321 0%, transparent 70%)' }} />
+              <div className="relative">
+                <h3 className="egg-display text-2xl text-[#14161a] mb-3">Prefer to email?</h3>
+                <p className="text-sm text-[#3f4650] mb-4 leading-relaxed">
+                  Send your RFQ directly to our export desk — same 24-hour SLA.
+                </p>
+                <a href={`mailto:${company.email}?subject=RFQ%20-%20Egypt%20Globe%20Group`}
+                  className="block bg-white ring-1 ring-[#14161a]/10 hover:ring-[#14161a]/35 transition-all rounded-lg px-4 py-3 text-sm font-mono font-semibold text-[#14161a]">
+                  ✉ {company.email}
+                </a>
+                <a href={`tel:${company.phoneE164}`}
+                  className="block mt-2 bg-white ring-1 ring-[#14161a]/10 hover:ring-[#14161a]/35 transition-all rounded-lg px-4 py-3 text-sm font-mono font-semibold text-[#14161a]">
+                  ☎ {company.phone}
+                </a>
+              </div>
             </div>
 
             {/* Trust */}
-            <div className="rounded-2xl border border-slate-200 bg-white p-6">
-              <h3 className="text-sm font-bold text-slate-900 mb-3">No commitment, no spam.</h3>
-              <ul className="space-y-2 text-xs text-slate-600">
-                <li className="flex items-start gap-2"><span className="text-emerald-500 font-bold">✓</span> Your RFQ is confidential — only assigned to your commodity owner.</li>
-                <li className="flex items-start gap-2"><span className="text-emerald-500 font-bold">✓</span> No automated follow-up emails. Real Egyptian export desk.</li>
-                <li className="flex items-start gap-2"><span className="text-emerald-500 font-bold">✓</span> Quote stands on FOB / CIF / CFR per your Incoterm preference.</li>
-                <li className="flex items-start gap-2"><span className="text-emerald-500 font-bold">✓</span> Full L/C-bank document set on every order.</li>
+            <div className="egg-card p-6 hover:transform-none">
+              <h3 className="text-sm font-semibold text-[#14161a] mb-3">No commitment, no spam.</h3>
+              <ul className="space-y-2 text-xs text-[#3f4650]">
+                <li className="flex items-start gap-2"><span className="text-[#0fb5a5] font-bold">✓</span> Your RFQ is confidential — only assigned to your commodity owner.</li>
+                <li className="flex items-start gap-2"><span className="text-[#0fb5a5] font-bold">✓</span> No automated follow-up emails. Real Egyptian export desk.</li>
+                <li className="flex items-start gap-2"><span className="text-[#0fb5a5] font-bold">✓</span> Quote stands on FOB / CIF / CFR per your Incoterm preference.</li>
+                <li className="flex items-start gap-2"><span className="text-[#0fb5a5] font-bold">✓</span> Full L/C-bank document set on every order.</li>
               </ul>
             </div>
           </aside>
@@ -140,7 +148,7 @@ export default async function RFQPage({ searchParams }) {
       {/* Body markdown if present (admin-editable copy below the form) */}
       {page?.body_markdown && (
         <section className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-12">
-          <div className="prose prose-slate max-w-none text-slate-600">
+          <div className="prose prose-slate max-w-none text-[#3f4650]">
             {page.description}
           </div>
         </section>

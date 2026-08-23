@@ -96,13 +96,13 @@ export default function SkuRelatedLinks({ page, commodity }) {
   if (!links.length) return null
 
   return (
-    <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10 border-t border-slate-100">
-      <div className="rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 to-blue-50/30 p-6 sm:p-8">
+    <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10 border-t border-[#14161a]/10">
+      <div className="egg-panel p-6 sm:p-8">
         <div className="mb-5">
-          <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight mb-1">
+          <h2 className="egg-display text-2xl sm:text-3xl text-[#14161a] mb-1">
             Related — bulk-salt buyer resources
           </h2>
-          <p className="text-sm text-slate-600">
+          <p className="text-sm text-[#3f4650]">
             Spec, standard, port, and buyer's guide pages for this SKU.
           </p>
         </div>
@@ -111,18 +111,18 @@ export default function SkuRelatedLinks({ page, commodity }) {
             <Link
               key={l.path + i}
               href={l.path}
-              className="group flex items-center gap-2 rounded-xl bg-white border border-slate-200 hover:border-[#1d5fa1] hover:shadow-sm transition-all px-4 py-3"
+              className="group flex items-center gap-2 rounded-xl bg-white border border-[#14161a]/10 hover:border-[#0fb5a5] hover:shadow-sm transition-all px-4 py-3"
             >
               <span className="text-xl flex-shrink-0">{LINK_ICONS[i] || '🔗'}</span>
               <div className="flex-1 min-w-0">
-                <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-0.5">
+                <div className="text-xs font-semibold text-[#7a8290] uppercase tracking-wider mb-0.5">
                   {LINK_LABELS[i] || 'Related'}
                 </div>
-                <div className="text-sm font-bold text-slate-900 group-hover:text-[#1d5fa1] transition-colors leading-tight truncate">
+                <div className="text-sm font-bold text-[#14161a] group-hover:text-[#0b8f84] transition-colors leading-tight truncate">
                   {l.label}
                 </div>
               </div>
-              <span className="text-slate-300 group-hover:text-[#1d5fa1] transition-colors">→</span>
+              <span className="text-[#c9ced6] group-hover:text-[#0b8f84] transition-colors">→</span>
             </Link>
           ))}
         </div>

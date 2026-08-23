@@ -26,7 +26,7 @@ import Link from 'next/link'
 
 const CATEGORY_META = {
   'Loose Bulk':   { icon: '⛴️', tone: 'bg-cyan-50    text-cyan-700    border-cyan-100',    label: 'Loose Bulk' },
-  'Bag':          { icon: '🛍️', tone: 'bg-amber-50   text-amber-700   border-amber-100',   label: 'Bagged' },
+  'Bag':          { icon: '🛍️', tone: 'bg-amber-50   text-[#8a6d3b]   border-amber-100',   label: 'Bagged' },
   'Jumbo Bag':    { icon: '🧰', tone: 'bg-violet-50  text-violet-700  border-violet-100',  label: 'FIBC Jumbo Bags' },
   'Bag in Jumbo': { icon: '📦', tone: 'bg-emerald-50 text-emerald-700 border-emerald-100', label: 'Bag-in-Jumbo (bulk vessel)' },
   'OEM':          { icon: '🎨', tone: 'bg-rose-50    text-rose-700    border-rose-100',    label: 'OEM / Custom' },
@@ -37,7 +37,7 @@ const CATEGORY_ORDER = ['Loose Bulk', 'Bag', 'Jumbo Bag', 'Bag in Jumbo', 'OEM']
 function vesselModeChip(mode) {
   if (mode === 'Bulk') return { label: '⛴️ Bulk vessel', cls: 'bg-cyan-100 text-cyan-800 border-cyan-200' }
   if (mode === 'Container') return { label: '📦 Container', cls: 'bg-blue-100 text-blue-800 border-blue-200' }
-  return { label: mode, cls: 'bg-slate-100 text-slate-700 border-slate-200' }
+  return { label: mode, cls: 'bg-[#f3f4f6] text-[#3f4650] border-[#14161a]/10' }
 }
 
 export default function PackingMatrix({ packingOptions = [], productPackingOptions = [] }) {
@@ -59,23 +59,23 @@ export default function PackingMatrix({ packingOptions = [], productPackingOptio
   }
 
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+    <div className="bg-white border border-[#14161a]/10 rounded-2xl shadow-sm overflow-hidden">
       {/* Header */}
-      <div className="px-5 sm:px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white">
-        <h2 className="font-bold text-lg text-slate-900 flex items-center gap-2">
+      <div className="px-5 sm:px-6 py-4 border-b border-[#14161a]/10 bg-[#f9fafb]">
+        <h2 className="font-bold text-lg text-[#14161a] flex items-center gap-2">
           <span className="text-xl" aria-hidden>📦</span>
           Packing &amp; Containerisation
         </h2>
-        <p className="text-xs text-slate-500 mt-1">
+        <p className="text-xs text-[#7a8290] mt-1">
           {packingOptions.length} formats · loaded as FIBC / bagged / bulk on container or bulk vessel.
           Inner liners, laminate, OEM print, and bag-in-jumbo all available.
         </p>
       </div>
 
       {/* Sections */}
-      <div className="divide-y divide-slate-100">
+      <div className="divide-y divide-[#14161a]/10">
         {CATEGORY_ORDER.filter(c => byCategory[c]?.length).map(category => {
-          const meta = CATEGORY_META[category] || { icon: '📦', tone: 'bg-slate-50 text-slate-700 border-slate-200', label: category }
+          const meta = CATEGORY_META[category] || { icon: '📦', tone: 'bg-[#f9fafb] text-[#3f4650] border-[#14161a]/10', label: category }
           const items = byCategory[category]
           return (
             <div key={category} className="px-5 sm:px-6 py-4">
@@ -83,7 +83,7 @@ export default function PackingMatrix({ packingOptions = [], productPackingOptio
                 <span className={`inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border ${meta.tone}`}>
                   <span>{meta.icon}</span> {meta.label}
                 </span>
-                <span className="text-[11px] text-slate-400 font-medium">{items.length} {items.length === 1 ? 'format' : 'formats'}</span>
+                <span className="text-[11px] text-[#8a93a3] font-medium">{items.length} {items.length === 1 ? 'format' : 'formats'}</span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
                 {items.map(p => {
@@ -91,9 +91,9 @@ export default function PackingMatrix({ packingOptions = [], productPackingOptio
                   const modes = (p.vessel_modes || []).map(vesselModeChip)
                   return (
                     <div key={p.id}
-                      className={`relative rounded-xl border bg-white p-3.5 transition-shadow hover:shadow-sm ${isProduct ? 'border-[#1d5fa1]/40 ring-1 ring-[#1d5fa1]/10' : 'border-slate-200'}`}>
+                      className={`relative rounded-xl border bg-white p-3.5 transition-shadow hover:shadow-sm ${isProduct ? 'border-[#0fb5a5]/60 ring-1 ring-[#0fb5a5]/20' : 'border-[#14161a]/10'}`}>
                       {isProduct && (
-                        <span className="absolute -top-2 right-3 text-[9px] font-bold uppercase tracking-wider bg-[#1d5fa1] text-white px-2 py-0.5 rounded-full shadow-sm">
+                        <span className="absolute -top-2 right-3 text-[9px] font-bold uppercase tracking-wider bg-[#0b8f84] text-white px-2 py-0.5 rounded-full shadow-sm">
                           Standard
                         </span>
                       )}
@@ -102,11 +102,11 @@ export default function PackingMatrix({ packingOptions = [], productPackingOptio
                           {meta.icon}
                         </span>
                         <div className="flex-1 min-w-0">
-                          <div className="font-bold text-sm text-slate-900 leading-tight">
+                          <div className="font-bold text-sm text-[#14161a] leading-tight">
                             {p.packing_name}
                           </div>
                           {(p.material || p.size_kg) && (
-                            <div className="text-[11px] text-slate-500 mt-0.5">
+                            <div className="text-[11px] text-[#7a8290] mt-0.5">
                               {p.size_kg ? `${Number(p.size_kg)} kg` : ''}
                               {p.size_kg && p.material ? ' · ' : ''}
                               {p.material || ''}
@@ -121,18 +121,18 @@ export default function PackingMatrix({ packingOptions = [], productPackingOptio
                               </span>
                             ))}
                             {p.oem_available && (
-                              <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-orange-100 text-orange-800 border border-orange-200">
+                              <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-orange-100 text-orange-800 border border-[#ff6321]/25">
                                 🎨 OEM
                               </span>
                             )}
                           </div>
                           {p.min_order_mt && (
-                            <div className="text-[10px] text-slate-400 mt-1.5 font-medium">
+                            <div className="text-[10px] text-[#8a93a3] mt-1.5 font-medium">
                               MOQ {Number(p.min_order_mt) >= 1000 ? `${(Number(p.min_order_mt)/1000)}k` : Number(p.min_order_mt)} MT
                             </div>
                           )}
                           {p.notes && (
-                            <p className="text-[10px] text-slate-500 mt-1.5 leading-relaxed line-clamp-2">
+                            <p className="text-[10px] text-[#7a8290] mt-1.5 leading-relaxed line-clamp-2">
                               {p.notes}
                             </p>
                           )}
@@ -148,13 +148,13 @@ export default function PackingMatrix({ packingOptions = [], productPackingOptio
       </div>
 
       {/* Footer note */}
-      <div className="px-5 sm:px-6 py-3 bg-slate-50/60 border-t border-slate-100">
-        <p className="text-[11px] text-slate-500 leading-relaxed">
-          <strong className="text-slate-700">Bag-in-Jumbo</strong> means any inner bag (PP / PE / Kraft / Laminated)
+      <div className="px-5 sm:px-6 py-3 bg-[#f9fafb] border-t border-[#14161a]/10">
+        <p className="text-[11px] text-[#7a8290] leading-relaxed">
+          <strong className="text-[#3f4650]">Bag-in-Jumbo</strong> means any inner bag (PP / PE / Kraft / Laminated)
           can be hand-stacked inside a 1MT FIBC and loaded on a <strong>bulk vessel</strong> — combines retail-ready
           packing with bulk-vessel economics.
           OEM printing, custom sizes, and inner liners on request.{' '}
-          <Link href="/services/packing" className="text-[#1d5fa1] font-semibold hover:underline">View packing services →</Link>
+          <Link href="/services/packing" className="text-[#0b8f84] font-semibold hover:underline">View packing services →</Link>
         </p>
       </div>
     </div>
@@ -164,21 +164,21 @@ export default function PackingMatrix({ packingOptions = [], productPackingOptio
 // Fallback when master packing options aren't available (Supabase down etc.)
 function SimplePackingChips({ packing }) {
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-      <h3 className="font-bold text-lg text-slate-900 mb-4 flex items-center gap-2">
+    <div className="bg-white border border-[#14161a]/10 rounded-2xl p-5 shadow-sm">
+      <h3 className="font-bold text-lg text-[#14161a] mb-4 flex items-center gap-2">
         <span className="text-xl" aria-hidden>📦</span> Available packing formats
       </h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
         {packing.map((p, i) => (
-          <div key={i} className="flex items-center gap-2.5 rounded-xl border border-slate-200 bg-slate-50/40 p-3">
+          <div key={i} className="flex items-center gap-2.5 rounded-xl border border-[#14161a]/10 bg-[#f9fafb] p-3">
             <span className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-base flex-shrink-0">📦</span>
-            <span className="text-sm font-semibold text-slate-900">{p}</span>
+            <span className="text-sm font-semibold text-[#14161a]">{p}</span>
           </div>
         ))}
       </div>
-      <p className="text-xs text-slate-500 mt-4">
+      <p className="text-xs text-[#7a8290] mt-4">
         OEM / private-label printing on request.{' '}
-        <Link href="/services/packing" className="text-[#1d5fa1] font-semibold hover:underline">View packing services →</Link>
+        <Link href="/services/packing" className="text-[#0b8f84] font-semibold hover:underline">View packing services →</Link>
       </p>
     </div>
   )

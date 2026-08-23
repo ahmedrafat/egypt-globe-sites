@@ -3,6 +3,7 @@
 /**
  * LoginForm — Supabase Auth sign-in / sign-up tabs.
  * On successful auth, the cookie is set, then we hard-navigate to /buyer.
+ * Light editorial edition — tokens + utilities (.egg-*) in app/globals.css.
  */
 import { useState } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
@@ -68,15 +69,15 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+    <div className="rounded-3xl ring-1 ring-[#14161a]/10 bg-white overflow-hidden">
       {/* Tabs */}
-      <div className="grid grid-cols-2 border-b border-slate-200 bg-slate-50">
+      <div className="grid grid-cols-2 border-b border-[#14161a]/10 bg-[#f9fafb]">
         <button onClick={() => { setTab('signin'); setError(null); setInfo(null) }}
-          className={`py-4 font-bold text-sm transition-colors ${tab === 'signin' ? 'bg-white text-[#1d5fa1] border-b-2 border-[#1d5fa1]' : 'text-slate-500 hover:text-slate-700'}`}>
+          className={`py-4 font-semibold text-sm transition-colors ${tab === 'signin' ? 'bg-white text-[#14161a] border-b-2 border-[#ff6321]' : 'text-[#7a8290] hover:text-[#14161a]'}`}>
           Sign in
         </button>
         <button onClick={() => { setTab('signup'); setError(null); setInfo(null) }}
-          className={`py-4 font-bold text-sm transition-colors ${tab === 'signup' ? 'bg-white text-[#1d5fa1] border-b-2 border-[#1d5fa1]' : 'text-slate-500 hover:text-slate-700'}`}>
+          className={`py-4 font-semibold text-sm transition-colors ${tab === 'signup' ? 'bg-white text-[#14161a] border-b-2 border-[#ff6321]' : 'text-[#7a8290] hover:text-[#14161a]'}`}>
           Create account
         </button>
       </div>
@@ -88,7 +89,7 @@ export default function LoginForm() {
           </div>
         )}
         {info && (
-          <div className="mb-4 rounded-xl bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 text-sm">
+          <div className="mb-4 rounded-xl bg-[#eef6fd] border border-[#0284c7]/35 text-[#0369a1] px-4 py-3 text-sm">
             ℹ {info}
           </div>
         )}
@@ -102,12 +103,12 @@ export default function LoginForm() {
               <Input type="password" value={password} onChange={setPassword} required autoComplete="current-password" placeholder="•••••••••" />
             </Field>
             <button type="submit" disabled={submitting}
-              className="w-full inline-flex items-center justify-center gap-2 bg-[#1d5fa1] hover:bg-[#14467a] disabled:bg-slate-300 text-white font-bold px-7 py-3.5 rounded-xl shadow-md transition-all">
+              className="egg-btn-primary w-full py-3.5 disabled:opacity-60 disabled:cursor-not-allowed">
               {submitting ? '⏳ Signing in…' : 'Sign in →'}
             </button>
-            <p className="text-xs text-center text-slate-500">
+            <p className="text-xs text-center text-[#7a8290]">
               Don't have an account?{' '}
-              <button type="button" onClick={() => setTab('signup')} className="text-[#1d5fa1] font-semibold hover:underline">
+              <button type="button" onClick={() => setTab('signup')} className="egg-link">
                 Create one
               </button>
             </p>
@@ -135,10 +136,10 @@ export default function LoginForm() {
               </Field>
             </Grid>
             <button type="submit" disabled={submitting}
-              className="w-full inline-flex items-center justify-center gap-2 bg-[#FF6321] hover:bg-[#e0541b] disabled:bg-slate-300 text-white font-bold px-7 py-3.5 rounded-xl shadow-md shadow-orange-500/20 transition-all">
+              className="egg-btn-primary w-full py-3.5 disabled:opacity-60 disabled:cursor-not-allowed">
               {submitting ? '⏳ Creating…' : 'Create account →'}
             </button>
-            <p className="text-xs text-slate-500 text-center leading-relaxed">
+            <p className="text-xs text-[#7a8290] text-center leading-relaxed">
               By creating an account you agree we may contact you about quotes.
               Approval (typically &lt; 24 h) unlocks prices and your scoped
               catalogue.
@@ -153,8 +154,8 @@ export default function LoginForm() {
 function Field({ label, required, children }) {
   return (
     <label className="block">
-      <span className="text-xs font-semibold text-slate-700 mb-1.5 block">
-        {label} {required && <span className="text-red-500">*</span>}
+      <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-[#5b6472] mb-1.5 block">
+        {label} {required && <span className="text-[#ff6321]">*</span>}
       </span>
       {children}
     </label>
@@ -166,7 +167,7 @@ function Grid({ children }) {
 function Input({ type = 'text', value, onChange, ...rest }) {
   return (
     <input type={type} value={value} onChange={e => onChange(e.target.value)}
-      className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#1d5fa1] focus:border-transparent"
+      className="egg-input w-full px-4 py-3 rounded-xl border border-[#14161a]/15 bg-white text-[#14161a] text-sm placeholder:text-[#9aa2ae] focus:outline-none focus:border-[#ff6321] focus:ring-2 focus:ring-[#ff6321]/25"
       {...rest} />
   )
 }

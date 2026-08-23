@@ -11,6 +11,8 @@
  *
  * Numbers come from the per-port pages we shipped in Drop 124c — same
  * source of truth.
+ *
+ * Light editorial edition — tokens + utilities (.egg-*) in app/globals.css.
  */
 import { useState, useMemo, useEffect } from 'react'
 
@@ -98,19 +100,19 @@ export default function TransitTimeCalculator({ defaultPorts = [], onSelect }) {
   }, [pol, region])
 
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-      <div className="px-6 py-4 border-b border-slate-200 bg-slate-50/60">
+    <div className="rounded-3xl ring-1 ring-[#14161a]/10 bg-white overflow-hidden">
+      <div className="px-6 py-4 border-b border-[#14161a]/10 bg-[#f9fafb]">
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-blue-50 to-orange-50 border border-blue-100 text-xl shadow-sm">⏱</span>
-          <h3 className="text-xl font-extrabold text-slate-900">Transit time calculator</h3>
+          <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white ring-1 ring-[#14161a]/10 text-xl">⏱</span>
+          <h3 className="egg-display text-2xl text-[#14161a]">Transit time calculator</h3>
         </div>
-        <p className="text-xs text-slate-500 mt-1">Pick loading port + destination region — get indicative transit, routing, and total order-to-arrival lead time.</p>
+        <p className="text-xs text-[#7a8290] mt-1">Pick loading port + destination region — get indicative transit, routing, and total order-to-arrival lead time.</p>
       </div>
 
       <div className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-5">
         {/* Loading port picker */}
         <div>
-          <label className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 block">Loading port (POL)</label>
+          <label className="egg-eyebrow mb-2 block">Loading port (POL)</label>
           <div className="space-y-1.5">
             {portsAvailable.map(p => (
               <button
@@ -118,13 +120,13 @@ export default function TransitTimeCalculator({ defaultPorts = [], onSelect }) {
                 onClick={() => setPol(p.id)}
                 className={`w-full text-left px-3 py-2 rounded-lg border text-sm font-semibold transition-all flex items-center gap-2 ${
                   pol === p.id
-                    ? 'bg-[#1d5fa1] border-[#1d5fa1] text-white shadow-sm'
-                    : 'bg-white border-slate-200 text-slate-700 hover:border-slate-400'
+                    ? 'bg-[#14161a] border-[#14161a] text-white shadow-sm'
+                    : 'bg-white border-[#14161a]/12 text-[#3f4650] hover:border-[#0fb5a5]'
                 }`}
               >
                 <span>{p.icon}</span>
                 <span>{p.label}</span>
-                <span className={`ml-auto text-[10px] font-medium uppercase ${pol === p.id ? 'text-white/70' : 'text-slate-500'}`}>
+                <span className={`ml-auto text-[10px] font-mono uppercase tracking-[0.12em] ${pol === p.id ? 'text-white/70' : 'text-[#7a8290]'}`}>
                   {p.source === 'red-sea' ? 'Red Sea' : 'Med'}
                 </span>
               </button>
@@ -134,11 +136,11 @@ export default function TransitTimeCalculator({ defaultPorts = [], onSelect }) {
 
         {/* Destination region picker */}
         <div>
-          <label className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 block">Destination region</label>
+          <label className="egg-eyebrow mb-2 block">Destination region</label>
           <select
             value={region}
             onChange={e => setRegion(e.target.value)}
-            className="w-full text-sm font-semibold border border-slate-200 rounded-lg px-3 py-2.5 focus:border-[#1d5fa1] focus:ring-2 focus:ring-blue-100 outline-none"
+            className="w-full text-sm font-semibold border border-[#14161a]/15 bg-white text-[#14161a] rounded-lg px-3 py-2.5 focus:border-[#ff6321] focus:ring-2 focus:ring-[#ff6321]/25 outline-none"
           >
             {REGIONS.map(r => (
               <option key={r.id} value={r.id}>{r.label}</option>
@@ -146,10 +148,10 @@ export default function TransitTimeCalculator({ defaultPorts = [], onSelect }) {
           </select>
           {regionObj && (
             <div className="mt-3">
-              <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1.5">Sample destination ports</div>
+              <div className="egg-eyebrow mb-1.5">Sample destination ports</div>
               <div className="flex flex-wrap gap-1.5">
                 {regionObj.sample.map(s => (
-                  <span key={s} className="inline-flex items-center text-[11px] font-medium bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full">{s}</span>
+                  <span key={s} className="egg-chip text-[11px] font-medium">{s}</span>
                 ))}
               </div>
             </div>
@@ -159,15 +161,16 @@ export default function TransitTimeCalculator({ defaultPorts = [], onSelect }) {
 
       {/* Result panel */}
       {lane && (
-        <div className="bg-gradient-to-br from-[#1d5fa1] via-[#14467a] to-[#0f1f3a] text-white p-6">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
+        <div className="relative overflow-hidden p-6 border-t border-[#14161a]/10" style={{ background: 'linear-gradient(160deg, #e6fbf8 0%, #eef6fd 100%)' }}>
+          <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-50 pointer-events-none" />
+          <div className="relative grid grid-cols-2 sm:grid-cols-4 gap-5">
             <ResultStat label="Vessel transit" value={`${lane.days} days`} sub={lane.via} />
             <ResultStat label="Order to sail" value="3-4 wk" sub="ex-warehouse" />
             <ResultStat label="Total order→arrival" value={`${Math.floor(totalLeadMin/7)}–${Math.ceil(totalLeadMax/7)} wk`} sub="confirmed at quote" />
             <ResultStat label="Suez canal toll" value={lane.toll} sub={lane.toll === 'YES' ? '+ ~$200-400k bulker' : 'avoided'} />
           </div>
-          <div className="mt-5 text-xs text-blue-100 leading-relaxed">
-            <strong className="text-white">{portObj?.label}</strong> → <strong className="text-white">{regionObj?.label.split(' (')[0]}</strong> via <strong className="text-white">{lane.via}</strong> routing.
+          <div className="relative mt-5 text-xs text-[#3f4650] leading-relaxed">
+            <strong className="text-[#14161a]">{portObj?.label}</strong> → <strong className="text-[#14161a]">{regionObj?.label.split(' (')[0]}</strong> via <strong className="text-[#14161a]">{lane.via}</strong> routing.
             {portObj?.source === 'red-sea' && lane.toll === 'NO' &&
               ' Sokhna / Adabiya are typically 1-2 days faster than Mediterranean POLs for any destination east of Suez, and avoid the canal toll.'}
             {portObj?.source === 'mediterranean' && lane.via === 'Gibraltar' &&
@@ -182,9 +185,9 @@ export default function TransitTimeCalculator({ defaultPorts = [], onSelect }) {
 function ResultStat({ label, value, sub }) {
   return (
     <div>
-      <div className="text-[10px] uppercase tracking-wider text-white/55 font-bold mb-1">{label}</div>
-      <div className="text-2xl font-extrabold text-white leading-tight">{value}</div>
-      {sub && <div className="text-[10px] text-white/60 mt-0.5">{sub}</div>}
+      <div className="text-[10px] font-mono uppercase tracking-[0.16em] text-[#0b8f84] mb-1">{label}</div>
+      <div className="egg-display text-2xl sm:text-3xl text-[#14161a] leading-tight">{value}</div>
+      {sub && <div className="text-[10px] text-[#7a8290] mt-0.5">{sub}</div>}
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Geist, Geist_Mono, Fraunces } from 'next/font/google'
 import './globals.css'
 import SiteHeader from '../components/SiteHeader'
 import SiteFooter from '../components/SiteFooter'
@@ -10,6 +10,8 @@ import { getCurrentBrand, brandMeta } from '../lib/brand'
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
 const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] })
+// Light editorial system — display serif shared by the landing + every template (.egg-display)
+const fraunces = Fraunces({ variable: '--font-fraunces', subsets: ['latin'], weight: ['400', '500', '600'], style: ['normal', 'italic'], display: 'swap' })
 
 /**
  * Build per-request metadata so the favicon + OG image come from
@@ -216,7 +218,7 @@ export async function generateMetadata() {
 export default async function RootLayout({ children }) {
   const settings = await getSiteSettings()
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full`}>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-white text-slate-900 antialiased">
         {/* Drop 125 — accessibility skip link (visible only on keyboard focus) */}
         <a href="#main-content"

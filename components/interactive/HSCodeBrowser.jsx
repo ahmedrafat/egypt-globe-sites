@@ -136,22 +136,22 @@ export default function HSCodeBrowser() {
   }, [filtered])
 
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-      <div className="px-6 py-4 border-b border-slate-200 bg-slate-50/60">
+    <div className="rounded-3xl ring-1 ring-[#14161a]/10 bg-white overflow-hidden">
+      <div className="px-6 py-4 border-b border-[#14161a]/10 bg-[#f9fafb]">
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-blue-50 to-orange-50 border border-blue-100 text-xl shadow-sm">🔍</span>
-          <h3 className="text-xl font-extrabold text-slate-900">Egyptian-export HS code finder</h3>
+          <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white ring-1 ring-[#14161a]/10 text-xl">🔍</span>
+          <h3 className="egg-display text-2xl text-[#14161a]">Egyptian-export HS code finder</h3>
         </div>
-        <p className="text-xs text-slate-500 mt-1">Search by code, description, or chapter. Click any row to copy the 6-digit code.</p>
+        <p className="text-xs text-[#7a8290] mt-1">Search by code, description, or chapter. Click any row to copy the 6-digit code.</p>
       </div>
 
-      <div className="px-6 pt-5 pb-3 space-y-3 border-b border-slate-100">
+      <div className="px-6 pt-5 pb-3 space-y-3 border-b border-[#14161a]/10">
         <input
           type="text"
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Search e.g. 'cement', 'urea', '2501', 'PVC'…"
-          className="w-full text-base border border-slate-200 rounded-lg px-4 py-3 focus:border-[#1d5fa1] focus:ring-2 focus:ring-blue-100 outline-none"
+          className="w-full text-base border border-[#14161a]/10 rounded-lg px-4 py-3 focus:border-[#ff6321] focus:ring-2 focus:ring-[#ff6321]/25 outline-none"
         />
         <div className="flex flex-wrap gap-1.5">
           {DIVISIONS.map(d => (
@@ -160,42 +160,42 @@ export default function HSCodeBrowser() {
               onClick={() => setDiv(d.id)}
               className={`text-xs font-bold px-3 py-1.5 rounded-full border transition-all flex items-center gap-1.5 ${
                 div === d.id
-                  ? 'bg-[#1d5fa1] border-[#1d5fa1] text-white'
-                  : 'bg-white border-slate-200 text-slate-700 hover:border-slate-400'
+                  ? 'bg-[#14161a] border-[#14161a] text-white'
+                  : 'bg-white border-[#14161a]/12 text-[#3f4650] hover:border-[#0fb5a5]'
               }`}
             >
               <span>{d.icon}</span> {d.label}
             </button>
           ))}
         </div>
-        <div className="text-xs text-slate-500">
-          Showing <strong className="text-slate-900">{filtered.length}</strong> of {CODES.length} codes{div !== 'all' ? ` in ${DIVISIONS.find(x => x.id === div)?.label}` : ''}{search ? ` matching "${search}"` : ''}.
+        <div className="text-xs text-[#7a8290]">
+          Showing <strong className="text-[#14161a]">{filtered.length}</strong> of {CODES.length} codes{div !== 'all' ? ` in ${DIVISIONS.find(x => x.id === div)?.label}` : ''}{search ? ` matching "${search}"` : ''}.
         </div>
       </div>
 
-      <div className="max-h-[640px] overflow-y-auto divide-y divide-slate-100">
+      <div className="max-h-[640px] overflow-y-auto divide-y divide-[#14161a]/10">
         {Object.entries(grouped).length === 0 ? (
-          <div className="p-10 text-center text-slate-500 text-sm">
+          <div className="p-10 text-center text-[#7a8290] text-sm">
             No HS codes match. Try a different search term or division filter.
           </div>
         ) : Object.entries(grouped).map(([chapter, codes]) => (
           <div key={chapter}>
-            <div className="px-6 py-2 bg-slate-50/40 sticky top-0 z-10 border-b border-slate-100">
-              <div className="text-[10px] uppercase tracking-wider font-bold text-slate-500">{chapter}</div>
+            <div className="px-6 py-2 bg-[#f9fafb] sticky top-0 z-10 border-b border-[#14161a]/10">
+              <div className="text-[10px] uppercase tracking-wider font-bold text-[#7a8290]">{chapter}</div>
             </div>
-            <div className="divide-y divide-slate-100">
+            <div className="divide-y divide-[#14161a]/10">
               {codes.map(c => (
                 <button key={c.code} onClick={() => copy(c.code)}
-                  className="w-full text-left px-6 py-3 hover:bg-blue-50/40 transition-colors flex items-start gap-4">
+                  className="w-full text-left px-6 py-3 hover:bg-[#f2fbfa] transition-colors flex items-start gap-4">
                   <code className={`font-mono font-bold text-sm shrink-0 px-2.5 py-1 rounded-md ${
-                    copied === c.code ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-700'
+                    copied === c.code ? 'bg-[#e6fbf8] text-[#0b8f84]' : 'bg-[#f3f4f6] text-[#3f4650]'
                   }`}>
                     {copied === c.code ? '✓ Copied' : c.code}
                   </code>
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm text-slate-900 font-medium">{c.desc}</div>
+                    <div className="text-sm text-[#14161a] font-medium">{c.desc}</div>
                   </div>
-                  <span className="text-[10px] uppercase tracking-wider font-bold text-slate-400 shrink-0">{c.div}</span>
+                  <span className="text-[10px] uppercase tracking-wider font-bold text-[#8a93a3] shrink-0">{c.div}</span>
                 </button>
               ))}
             </div>
@@ -203,10 +203,10 @@ export default function HSCodeBrowser() {
         ))}
       </div>
 
-      <div className="px-6 py-3 border-t border-slate-200 bg-slate-50/40 text-[11px] text-slate-600">
+      <div className="px-6 py-3 border-t border-[#14161a]/10 bg-[#f9fafb] text-[11px] text-[#3f4650]">
         Note: destination-country customs may apply 8/10/12-digit national extensions.
         We provide line-item-level HS classification on the Commercial Invoice.
-        Unsure which code applies? <a href="/rfq?type=hs" className="text-[#1d5fa1] font-semibold hover:underline">Send your spec → we'll return the canonical code →</a>
+        Unsure which code applies? <a href="/rfq?type=hs" className="text-[#0b8f84] font-semibold hover:underline">Send your spec → we'll return the canonical code →</a>
       </div>
     </div>
   )

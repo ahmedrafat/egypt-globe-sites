@@ -1,6 +1,7 @@
 /**
  * /products — Egypt Globe Group commodity divisions hub.
- * White theme, consistent with homepage. Responsive throughout.
+ * White theme, consistent with homepage (light editorial system —
+ * tokens + utilities in app/globals.css). Responsive throughout.
  */
 import Link from 'next/link'
 import { PRODUCT_DIVISIONS } from '../../lib/corporatePages'
@@ -39,36 +40,39 @@ const CERTS = [
 
 export default function ProductsHub() {
   return (
-    <article className="bg-white">
+    <article className="bg-white text-[#14161a]">
 
       {/* ── Hero ─────────────────────────────────────────────────── */}
-      <section className="border-b border-slate-200 px-5 sm:px-8 lg:px-14 pt-14 sm:pt-16 pb-12 sm:pb-14">
-        <nav className="flex items-center gap-2 text-[11px] text-slate-400 mb-8 font-mono uppercase tracking-wider">
-          <Link href="/" className="hover:text-slate-700 transition-colors">Home</Link>
+      <section className="relative overflow-hidden border-b border-[#14161a]/10 px-5 sm:px-8 lg:px-14 pt-14 sm:pt-16 pb-12 sm:pb-14">
+        <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
+        <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(55% 55% at 88% 0%, rgba(15,181,165,.16), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.08), transparent 60%)' }} />
+        <nav className="relative flex items-center gap-2 text-[11px] text-[#8a93a3] mb-8 font-mono uppercase tracking-wider">
+          <Link href="/" className="hover:text-[#14161a] transition-colors">Home</Link>
           <span>/</span>
-          <span className="text-slate-600">Products</span>
+          <span className="text-[#3f4650]">Products</span>
         </nav>
 
-        <div className="max-w-3xl">
-          <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-slate-400 mb-4">
+        <div className="relative max-w-3xl">
+          <p className="egg-eyebrow text-[#b8862b] mb-4">
             7 commodity divisions · 60+ destination markets
           </p>
-          <h1 className="text-[clamp(2rem,5vw,4rem)] font-bold leading-[1.06] tracking-tight mb-5 text-slate-900">
+          <h1 className="egg-display text-[clamp(2.2rem,5.5vw,4.4rem)] leading-[1.02] mb-5 text-[#14161a]">
             Egyptian commodities,<br />
-            <span className="text-[#1d5fa1]">shipped on your terms.</span>
+            <span className="italic text-[#0b8f84]">shipped on your terms.</span>
           </h1>
-          <p className="text-base sm:text-lg text-slate-500 leading-relaxed mb-8">
+          <p className="text-base sm:text-lg text-[#3f4650] leading-relaxed mb-8">
             Salt, cement, fertilizers, chemicals, industrial minerals, agro & food,
             and metals — sourced from Egyptian capacity and shipped FOB / CIF / CFR
             from 7 Egyptian seaports. Every shipment with a Certificate of Analysis.
           </p>
           <div className="flex flex-wrap items-center gap-4">
             <Link href="/rfq"
-              className="inline-flex items-center gap-2 text-sm font-bold text-white bg-[#FF6321] hover:bg-[#e0541b] px-6 py-3 transition-colors">
+              className="egg-btn-primary">
               Request a quote →
             </Link>
             <Link href="/services"
-              className="text-sm text-slate-500 hover:text-slate-900 transition-colors border-b border-slate-300 hover:border-slate-600 pb-0.5">
+              className="text-sm text-[#3f4650] hover:text-[#14161a] transition-colors border-b border-[#14161a]/30 hover:border-[#14161a] pb-0.5">
               Pairing services
             </Link>
           </div>
@@ -76,32 +80,32 @@ export default function ProductsHub() {
       </section>
 
       {/* ── Division grid ──────────────────────────────────────────── */}
-      <section className="border-b border-slate-200">
+      <section className="border-b border-[#14161a]/10 egg-reveal">
         <div className="px-5 sm:px-8 lg:px-14 pt-8 pb-2 flex items-center justify-between">
-          <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-slate-400">Product divisions</p>
+          <p className="egg-eyebrow">Product divisions</p>
         </div>
-        <div className="divide-y divide-slate-200 sm:grid sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="divide-y divide-[#14161a]/10 sm:grid sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-3 xl:grid-cols-4">
           {PRODUCT_DIVISIONS.map((div, i) => (
             <Link key={div.id} href={div.path}
               className={[
-                'flex items-start gap-4 px-5 sm:px-8 lg:px-10 py-7 hover:bg-slate-50 transition-colors group',
+                'flex items-start gap-4 px-5 sm:px-8 lg:px-10 py-7 hover:bg-[#f9fafb] transition-colors group',
                 // On sm+, add dividers between columns
-                'sm:border-b sm:border-slate-200',
+                'sm:border-b sm:border-[#14161a]/10',
                 // Right border between columns
-                i % 2 === 0 ? 'sm:border-r sm:border-r-slate-200 lg:border-r' : '',
-                i % 3 === 0 ? 'lg:border-r-slate-200' : '',
-                i % 3 === 1 ? 'lg:border-r-slate-200' : '',
+                i % 2 === 0 ? 'sm:border-r sm:border-r-[#14161a]/10 lg:border-r' : '',
+                i % 3 === 0 ? 'lg:border-r-[#14161a]/10' : '',
+                i % 3 === 1 ? 'lg:border-r-[#14161a]/10' : '',
               ].join(' ')}>
-              <div className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center text-xl mt-0.5"
-                style={{ background: `${div.color}15` }}>
+              <div className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center text-xl mt-0.5 transition-transform duration-300 group-hover:scale-110"
+                style={{ background: `${div.color}1f`, boxShadow: `inset 0 0 0 1px ${div.color}66` }}>
                 {div.icon}
               </div>
               <div className="min-w-0">
-                <div className="font-bold text-slate-900 group-hover:text-[#1d5fa1] transition-colors text-[15px] mb-1">
+                <div className="font-semibold text-[#14161a] group-hover:text-[#0b8f84] transition-colors text-[15px] mb-1">
                   {div.label}
                 </div>
-                <div className="text-sm text-slate-500 leading-relaxed line-clamp-2">{div.blurb}</div>
-                <div className="mt-2.5 text-xs font-semibold text-[#FF6321]">Browse →</div>
+                <div className="text-sm text-[#7a8290] leading-relaxed line-clamp-2">{div.blurb}</div>
+                <div className="mt-2.5 text-xs font-semibold text-[#d9501a]">Browse →</div>
               </div>
             </Link>
           ))}
@@ -109,59 +113,59 @@ export default function ProductsHub() {
       </section>
 
       {/* ── Incoterms ──────────────────────────────────────────────── */}
-      <section className="border-b border-slate-200 bg-slate-50">
+      <section className="border-b border-[#14161a]/10 bg-[#f9fafb] egg-reveal">
         <div className="px-5 sm:px-8 lg:px-14 pt-8 pb-2">
-          <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-slate-400">Incoterms we quote</p>
+          <p className="egg-eyebrow">Incoterms we quote</p>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 divide-y divide-slate-200 sm:divide-y-0">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 divide-y divide-[#14161a]/10 sm:divide-y-0">
           {INCOTERMS.map((t, i) => (
             <div key={t.term} className={[
               'px-5 sm:px-6 py-6',
-              'border-b border-slate-200',
+              'border-b border-[#14161a]/10',
               // Vertical dividers between columns only on larger screens
-              i > 0 ? 'sm:border-l sm:border-l-slate-200' : '',
-              i > 2 ? 'sm:border-t sm:border-t-slate-200' : '',
+              i > 0 ? 'sm:border-l sm:border-l-[#14161a]/10' : '',
+              i > 2 ? 'sm:border-t sm:border-t-[#14161a]/10' : '',
             ].join(' ')}>
-              <div className="text-lg font-bold mb-1" style={{ color: '#FF6321' }}>{t.term}</div>
-              <div className="text-xs text-slate-500 leading-relaxed">{t.desc}</div>
+              <div className="egg-display text-2xl mb-1" style={{ color: '#d9501a' }}>{t.term}</div>
+              <div className="text-xs text-[#7a8290] leading-relaxed">{t.desc}</div>
             </div>
           ))}
         </div>
       </section>
 
       {/* ── Ports ──────────────────────────────────────────────────── */}
-      <section className="border-b border-slate-200">
+      <section className="border-b border-[#14161a]/10 egg-reveal">
         <div className="px-5 sm:px-8 lg:px-14 py-10">
-          <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-slate-400 mb-6">
+          <p className="egg-eyebrow text-[#0369a1] mb-6">
             Loading ports — 7 Egyptian seaports
           </p>
           <div className="flex flex-wrap gap-2 sm:gap-3">
             {PORTS.map(p => (
-              <div key={p.code} className="border border-slate-200 bg-slate-50 px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-lg text-sm">
-                <div className="font-semibold text-slate-900">
+              <div key={p.code} className="egg-card px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-lg text-sm">
+                <div className="font-semibold text-[#14161a]">
                   {p.name}
-                  <span className="ml-2 text-[10px] font-mono text-slate-400">{p.code}</span>
+                  <span className="ml-2 text-[10px] font-mono text-[#0369a1]">{p.code}</span>
                 </div>
-                <div className="text-[11px] text-slate-500 mt-0.5">{p.note}</div>
+                <div className="text-[11px] text-[#7a8290] mt-0.5">{p.note}</div>
               </div>
             ))}
           </div>
-          <p className="mt-5 text-xs text-slate-400 font-mono">
+          <p className="mt-5 text-xs text-[#8a93a3] font-mono">
             Full vessel charter · 20ft / 40ft HC containers · bulk · min 25 MT per commodity
           </p>
         </div>
       </section>
 
       {/* ── Certifications ─────────────────────────────────────────── */}
-      <section className="border-b border-slate-200 bg-slate-50">
+      <section className="border-b border-[#14161a]/10 bg-[#f9fafb] egg-reveal">
         <div className="px-5 sm:px-8 lg:px-14 py-8">
-          <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-slate-400 mb-5">
+          <p className="egg-eyebrow text-[#b8862b] mb-5">
             Standards &amp; certifications
           </p>
           <div className="flex flex-wrap gap-2">
             {CERTS.map(c => (
               <span key={c}
-                className="inline-flex items-center px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-xs font-semibold text-slate-700">
+                className="egg-chip text-xs text-[#3f4650]">
                 {c}
               </span>
             ))}
@@ -170,24 +174,27 @@ export default function ProductsHub() {
       </section>
 
       {/* ── CTA ────────────────────────────────────────────────────── */}
-      <section className="px-5 sm:px-8 lg:px-14 py-16 sm:py-24 bg-white border-b border-slate-200">
-        <div className="max-w-2xl">
-          <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-slate-400 mb-8">Get a price</p>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-4 text-slate-900">
+      <section className="relative overflow-hidden px-5 sm:px-8 lg:px-14 py-16 sm:py-24 bg-white border-b border-[#14161a]/10 egg-reveal">
+        <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-50 pointer-events-none" />
+        <div aria-hidden="true" className="absolute -bottom-24 right-0 w-80 h-80 rounded-full opacity-30 pointer-events-none"
+          style={{ background: 'radial-gradient(circle, #FF6321 0%, transparent 70%)' }} />
+        <div className="relative max-w-2xl">
+          <p className="egg-eyebrow text-[#d9501a] mb-8">Get a price</p>
+          <h2 className="egg-display text-3xl sm:text-4xl lg:text-5xl mb-4 text-[#14161a]">
             Know your commodity. Need a price?
           </h2>
-          <p className="text-slate-500 text-base mb-10 leading-relaxed">
+          <p className="text-[#3f4650] text-base mb-10 leading-relaxed">
             Submit an RFQ with your commodity, quantity, destination port and preferred
             Incoterm. We respond within 24 hours with a priced offer, Certificate of
             Analysis, and L/C documentation.
           </p>
           <div className="flex flex-col sm:flex-row gap-5 items-start">
             <Link href="/rfq"
-              className="inline-flex items-center gap-2 text-sm font-bold text-white bg-[#FF6321] hover:bg-[#e0541b] px-6 py-3 transition-colors">
+              className="egg-btn-primary">
               Submit an RFQ
             </Link>
             <Link href="/services"
-              className="text-sm text-slate-400 sm:pt-3 hover:text-slate-700 transition-colors border-b border-slate-200 hover:border-slate-400 pb-0.5">
+              className="text-sm text-[#7a8290] sm:pt-3 hover:text-[#14161a] transition-colors border-b border-[#14161a]/20 hover:border-[#14161a]/60 pb-0.5">
               View pairing services →
             </Link>
           </div>

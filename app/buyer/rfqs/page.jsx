@@ -7,6 +7,7 @@
  * buyer submitted via the public form before they signed up).
  *
  * Authenticated-only — anon hits get redirected to /login.
+ * Light editorial edition — tokens + utilities (.egg-*) in app/globals.css.
  */
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
@@ -22,13 +23,13 @@ export const metadata = {
 }
 
 const STATUS_META = {
-  new:        { label: 'Submitted',        color: 'bg-amber-50 text-amber-800 border-amber-200',     dot: 'bg-amber-500' },
-  reviewed:   { label: 'Reviewed',         color: 'bg-blue-50 text-blue-800 border-blue-200',         dot: 'bg-blue-500' },
-  quoted:     { label: 'Quote sent',       color: 'bg-violet-50 text-violet-800 border-violet-200',   dot: 'bg-violet-500' },
-  contacted:  { label: 'In conversation',  color: 'bg-cyan-50 text-cyan-800 border-cyan-200',         dot: 'bg-cyan-500' },
-  sample:     { label: 'Sample sent',      color: 'bg-pink-50 text-pink-800 border-pink-200',         dot: 'bg-pink-500' },
-  won:        { label: 'Order placed',     color: 'bg-emerald-50 text-emerald-800 border-emerald-200', dot: 'bg-emerald-500' },
-  lost:       { label: 'Closed',           color: 'bg-slate-100 text-slate-700 border-slate-200',     dot: 'bg-slate-400' },
+  new:        { label: 'Submitted',        color: 'bg-[#fbf7ee] text-[#8a6d3b] border-[#b8862b]/40',     dot: 'bg-[#b8862b]' },
+  reviewed:   { label: 'Reviewed',         color: 'bg-[#eef6fd] text-[#0369a1] border-[#0284c7]/35',     dot: 'bg-[#0284c7]' },
+  quoted:     { label: 'Quote sent',       color: 'bg-[#f3f0ff] text-[#6d28d9] border-[#7c3aed]/30',     dot: 'bg-[#7c3aed]' },
+  contacted:  { label: 'In conversation',  color: 'bg-[#e6fbf8] text-[#0b8f84] border-[#0fb5a5]/40',     dot: 'bg-[#0fb5a5]' },
+  sample:     { label: 'Sample sent',      color: 'bg-pink-50 text-pink-800 border-pink-200',           dot: 'bg-pink-500' },
+  won:        { label: 'Order placed',     color: 'bg-emerald-50 text-emerald-800 border-emerald-200',   dot: 'bg-emerald-500' },
+  lost:       { label: 'Closed',           color: 'bg-[#f3f4f6] text-[#3f4650] border-[#14161a]/10',     dot: 'bg-[#8a93a3]' },
 }
 
 function fmtDate(d) {
@@ -77,17 +78,19 @@ export default async function BuyerRfqs() {
   }, {})
 
   return (
-    <article>
-      <section className="relative bg-gradient-to-br from-[#1d5fa1] via-[#14467a] to-[#0f1f3a] text-white overflow-hidden">
-        <div className="absolute inset-0 bg-grid-pattern opacity-25" aria-hidden="true" />
+    <article className="bg-white text-[#14161a]">
+      <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10">
+        <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
+        <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(55% 55% at 88% 0%, rgba(2,132,199,.14), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.08), transparent 60%)' }} />
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10 sm:py-14">
-          <nav className="text-xs text-white/60 mb-3 flex items-center gap-2 flex-wrap">
-            <Link href="/buyer" className="hover:text-white">← Buyer dashboard</Link>
+          <nav className="text-xs text-[#7a8290] mb-3 flex items-center gap-2 flex-wrap">
+            <Link href="/buyer" className="hover:text-[#14161a] transition-colors">← Buyer dashboard</Link>
             <span>/</span>
-            <span className="text-white/90">Your RFQs</span>
+            <span className="text-[#14161a] font-medium">Your RFQs</span>
           </nav>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">Your recent RFQs</h1>
-          <p className="text-blue-100 mt-2 text-sm sm:text-base">
+          <h1 className="egg-display text-4xl sm:text-5xl lg:text-6xl text-[#14161a]">Your recent RFQs</h1>
+          <p className="text-[#3f4650] mt-2 text-sm sm:text-base">
             Every quotation request you've submitted via egyptglobe.com — both
             from your authenticated account and historical anonymous submissions
             matched by email ({v.email}).
@@ -98,17 +101,17 @@ export default async function BuyerRfqs() {
       <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10">
         {/* Status KPIs */}
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 mb-8">
-          <div className="rounded-xl border border-slate-200 bg-white p-3">
-            <div className="font-bold text-2xl text-slate-900">{list.length}</div>
-            <div className="text-[10px] uppercase tracking-wider text-slate-500">Total</div>
+          <div className="egg-card p-3 hover:transform-none">
+            <div className="egg-display text-3xl text-[#14161a]">{list.length}</div>
+            <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-[#7a8290]">Total</div>
           </div>
           {Object.entries(STATUS_META).map(([s, meta]) => (
-            <div key={s} className="rounded-xl border border-slate-200 bg-white p-3">
+            <div key={s} className="egg-card p-3 hover:transform-none">
               <div className="flex items-center gap-1.5 mb-0.5">
                 <span className={`inline-block w-2 h-2 rounded-full ${meta.dot}`} />
-                <span className="font-bold text-2xl text-slate-900">{counts[s] || 0}</span>
+                <span className="egg-display text-3xl text-[#14161a]">{counts[s] || 0}</span>
               </div>
-              <div className="text-[10px] uppercase tracking-wider text-slate-500 truncate">{meta.label}</div>
+              <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-[#7a8290] truncate">{meta.label}</div>
             </div>
           ))}
         </div>
@@ -120,16 +123,16 @@ export default async function BuyerRfqs() {
         )}
 
         {list.length === 0 ? (
-          <div className="rounded-3xl border border-slate-200 bg-white p-10 sm:p-12 text-center">
+          <div className="egg-panel p-10 sm:p-12 text-center">
             <div className="text-5xl mb-3">📋</div>
-            <h2 className="text-xl font-extrabold text-slate-900 mb-2">No RFQs yet</h2>
-            <p className="text-slate-600 mb-6 max-w-md mx-auto">
+            <h2 className="egg-display text-3xl text-[#14161a] mb-2">No RFQs yet</h2>
+            <p className="text-[#3f4650] mb-6 max-w-md mx-auto">
               When you submit a quotation request through the catalogue or the
               RFQ form, it'll appear here so you can track its status from
               "Submitted" through "Quote sent" and "Order placed".
             </p>
             <Link href="/rfq"
-              className="inline-flex items-center gap-2 bg-[#FF6321] hover:bg-[#e0541b] text-white font-bold px-6 py-3 rounded-xl shadow-md transition-all">
+              className="egg-btn-primary">
               📋 Submit your first RFQ
             </Link>
           </div>
@@ -138,18 +141,18 @@ export default async function BuyerRfqs() {
             {list.map(r => {
               const meta = STATUS_META[r.status || 'new'] || STATUS_META.new
               return (
-                <div key={r.id} className="rounded-2xl border border-slate-200 bg-white p-5 hover:border-[#1d5fa1] transition-colors">
+                <div key={r.id} className="egg-card p-5">
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                        <span className="font-mono text-[11px] font-bold text-slate-500">{r.ref_code || '—'}</span>
+                        <span className="font-mono text-[11px] font-bold text-[#7a8290]">{r.ref_code || '—'}</span>
                         <span className={`inline-flex items-center gap-1.5 text-[11px] font-bold px-2 py-0.5 rounded-full border ${meta.color}`}>
                           <span className={`inline-block w-1.5 h-1.5 rounded-full ${meta.dot}`} />
                           {meta.label}
                         </span>
                       </div>
-                      <h3 className="font-bold text-slate-900 text-lg">{r.commodity_name || 'Quote request'}</h3>
-                      <div className="text-xs text-slate-500 mt-1 flex flex-wrap gap-x-4 gap-y-1">
+                      <h3 className="font-semibold text-[#14161a] text-lg">{r.commodity_name || 'Quote request'}</h3>
+                      <div className="text-xs text-[#7a8290] mt-1 flex flex-wrap gap-x-4 gap-y-1">
                         {r.quantity && <span>📦 {Number(r.quantity).toLocaleString()} {r.unit || 'MT'}</span>}
                         {r.incoterm && <span>📜 {r.incoterm}</span>}
                         {(r.dest_port || r.country || r.dest_country) && (
@@ -158,7 +161,7 @@ export default async function BuyerRfqs() {
                         <span>📅 Submitted {fmtDate(r.created_at)} ({fmtAge(r.created_at)})</span>
                       </div>
                       {r.quoted_price && (
-                        <div className="mt-2 inline-flex items-center gap-2 bg-violet-50 border border-violet-200 text-violet-900 text-xs font-bold px-3 py-1.5 rounded-lg">
+                        <div className="mt-2 inline-flex items-center gap-2 bg-[#f3f0ff] border border-[#7c3aed]/30 text-[#4c1d95] text-xs font-bold px-3 py-1.5 rounded-lg">
                           ✓ Quoted: {r.quoted_currency || 'USD'} {Number(r.quoted_price).toLocaleString()}
                           {r.unit && <span className="font-normal">/ {r.unit}</span>}
                         </div>
@@ -166,7 +169,7 @@ export default async function BuyerRfqs() {
                     </div>
                     <div className="shrink-0">
                       <a href={`mailto:export@egyptglobe.com?subject=RFQ%20${encodeURIComponent(r.ref_code || r.id)}%20-%20${encodeURIComponent(r.commodity_name || '')}`}
-                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1d5fa1] hover:bg-blue-50 border border-blue-200 px-3 py-1.5 rounded-lg transition-colors">
+                        className="egg-btn-ghost text-xs py-1.5 px-3">
                         ✉ Follow up
                       </a>
                     </div>
@@ -179,7 +182,7 @@ export default async function BuyerRfqs() {
 
         <div className="mt-10 text-center">
           <Link href="/rfq"
-            className="inline-flex items-center gap-2 bg-[#FF6321] hover:bg-[#e0541b] text-white font-bold px-6 py-3 rounded-xl shadow-md transition-all">
+            className="egg-btn-primary">
             📋 Submit a new RFQ
           </Link>
         </div>
