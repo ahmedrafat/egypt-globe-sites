@@ -19,11 +19,14 @@
  *                                  protocol, internal QA gate, HS code)
  *
  * preceded by the five-gate QA verification chain. Every panel renders in
- * the DOM (display:none when inactive) so crawlers see every fact pre-JS.
+ * the DOM. As of Aug 2026 the tab strip is gone: all seven sections are
+ * stacked as one spec document with a sticky contents rail, because a
+ * bulk buyer scans and prints a spec sheet rather than clicking through
+ * it (tabs were hiding ~2/3 of each page behind display:none).
  *
  * Vector protocol: monochrome micro-icons only (components/ui/Icon).
  */
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import SourceStorySwitcher from './SourceStorySwitcher'
 import TransitTimeCalculator from './TransitTimeCalculator'
@@ -33,6 +36,7 @@ import PriceDisplay from '../PriceDisplay'
 import PackingMatrix from '../PackingMatrix'
 import CoaCenter from './CoaCenter'
 import Icon, { APPLICATION_ICON } from '../ui/Icon'
+import SectionIndex, { SECTION_ANCHOR } from '../ui/SectionIndex'
 
 /* ─── spec vocabulary ─────────────────────────────────────────────────── */
 
@@ -123,19 +127,20 @@ const QA_CHAIN = [
   ['5', 'Destination acceptance', 'CoA cross-referenced with the buyer’s arrival laboratory; retained samples arbitrate any variance', 'Buyer lab · on discharge'],
 ]
 
-const TABS = [
-  { id: 'overview',     label: 'Overview',       icon: 'book' },
-  { id: 'specs',        label: 'Specifications', icon: 'beaker' },
-  { id: 'certificates', label: 'Certificates',   icon: 'shield' },
-  { id: 'applications', label: 'Applications',   icon: 'factory' },
-  { id: 'logistics',    label: 'Logistics',      icon: 'ship' },
-  { id: 'documents',    label: 'Documents',      icon: 'doc' },
-  { id: 'quote',        label: 'Get a quote',    icon: 'mail' },
+/* Section order of the spec document; labels match the rendered <h2>s. */
+const SECTIONS = [
+  { id: 'overview',     label: 'Overview',                 icon: 'book' },
+  { id: 'specs',        label: 'Specifications',           icon: 'beaker' },
+  { id: 'certificates', label: 'Certificates of Analysis', icon: 'shield' },
+  { id: 'applications', label: 'Applications & packing',   icon: 'factory' },
+  { id: 'logistics',    label: 'Logistics & transit',      icon: 'ship' },
+  { id: 'documents',    label: 'Export documents',         icon: 'doc' },
+  { id: 'quote',        label: 'Request a quote',          icon: 'mail' },
 ]
 
 export default function ProductTabs({ page, commodity, applications: matchedApps, qualitySpecs, packingOptions, coas, brand, visibility }) {
-  const [active, setActive] = useState('overview')
   const [transitSelection, setTransitSelection] = useState({})
+  const sectionList = SECTIONS
 
   const specs = page.specs || {}
   const certs = page.certifications || []
@@ -145,54 +150,13 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
   const sourceType = (specs.source_type || '').toLowerCase()
   const isSalt = page.path?.startsWith('/products/salt') || sourceType.includes('rock') || sourceType.includes('sea')
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-    const h = window.location.hash.replace('#', '')
-    if (h && TABS.find(t => t.id === h)) setActive(h)
-    function onHash() {
-      const h = window.location.hash.replace('#', '')
-      if (h && TABS.find(t => t.id === h)) setActive(h)
-    }
-    window.addEventListener('hashchange', onHash)
-    return () => window.removeEventListener('hashchange', onHash)
-  }, [])
-
-  function go(id) {
-    setActive(id)
-    if (typeof window !== 'undefined') {
-      history.replaceState(null, '', `#${id}`)
-      const el = document.getElementById('product-tabs')
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
-  }
-
   return (
     <section id="product-tabs" className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10">
-      {/* Sticky tab bar */}
-      <div className="sticky top-0 z-20 -mx-5 sm:-mx-6 lg:-mx-8 bg-white/85 backdrop-blur-md border-b border-[#14161a]/10">
-        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 overflow-x-auto">
-          <div className="flex gap-1">
-            {TABS.map(t => (
-              <button
-                key={t.id}
-                onClick={() => go(t.id)}
-                className={`shrink-0 px-3 sm:px-4 py-3 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-1.5 ${
-                  active === t.id
-                    ? 'border-[#ff6321] text-[#14161a]'
-                    : 'border-transparent text-[#5b6472] hover:text-[#14161a] hover:border-[#14161a]/30'
-                }`}
-              >
-                <Icon name={t.icon} className="w-3.5 h-3.5" /> {t.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div className="pt-8 grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8">
-        <div className="min-w-0 space-y-8">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8 lg:gap-12">
+        <div className="min-w-0">
+          <SectionIndex variant="mobile" sections={sectionList} />
           {/* Overview */}
-          <div className={`space-y-6 ${active === 'overview' ? 'animate-fade-in-up' : 'hidden'}`}>
+          <section id="overview" className={`space-y-6 ${SECTION_ANCHOR}`}>
             {page.description && (
               <p className="text-lg text-[#3f4650] leading-relaxed font-medium">{page.description}</p>
             )}
@@ -210,54 +174,109 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
               </div>
             )}
             <KeyStatsStrip page={page} specs={specs} />
-          </div>
+          </section>
 
           {/* Specifications — structured spec sheet */}
-          <div className={`space-y-4 ${active === 'specs' ? 'animate-fade-in-up' : 'hidden'}`}>
+          <section id="specs" className={`mt-12 pt-10 border-t border-[#14161a]/10 space-y-4 ${SECTION_ANCHOR}`}>
+            <header className="mb-5">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[#f6f7f9] ring-1 ring-[#14161a]/10">
+                  <Icon name="beaker" className="w-3.5 h-3.5 text-[#5b6472]" />
+                </span>
+                <span className="font-mono text-[10px] tabular-nums tracking-[0.18em] text-[#9aa2ae]">02</span>
+              </div>
+              <h2 className="egg-display text-2xl sm:text-3xl leading-tight text-[#14161a]">Specifications</h2>
+            </header>
             <QaChainStrip />
             <SpecSheet page={page} specs={specs} commodity={commodity} qualitySpecs={qualitySpecs || []} />
             {certs.length > 0 && <CertificationsBlock certs={certs} />}
-          </div>
+          </section>
 
           {/* Certificates of Analysis */}
-          <div className={active === 'certificates' ? 'animate-fade-in-up' : 'hidden'}>
+          <section id="certificates" className={`mt-12 pt-10 border-t border-[#14161a]/10 ${SECTION_ANCHOR}`}>
+            <header className="mb-5">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[#f6f7f9] ring-1 ring-[#14161a]/10">
+                  <Icon name="shield" className="w-3.5 h-3.5 text-[#5b6472]" />
+                </span>
+                <span className="font-mono text-[10px] tabular-nums tracking-[0.18em] text-[#9aa2ae]">03</span>
+              </div>
+              <h2 className="egg-display text-2xl sm:text-3xl leading-tight text-[#14161a]">Certificates of Analysis</h2>
+            </header>
             <CoaCenter coas={coas || []} commodityName={page.title} requestPath={page.path} brand={brand} commodity={commodity} />
-          </div>
+          </section>
 
           {/* Applications */}
-          <div className={`space-y-6 ${active === 'applications' ? 'animate-fade-in-up' : 'hidden'}`}>
+          <section id="applications" className={`mt-12 pt-10 border-t border-[#14161a]/10 space-y-6 ${SECTION_ANCHOR}`}>
+            <header className="mb-5">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[#f6f7f9] ring-1 ring-[#14161a]/10">
+                  <Icon name="factory" className="w-3.5 h-3.5 text-[#5b6472]" />
+                </span>
+                <span className="font-mono text-[10px] tabular-nums tracking-[0.18em] text-[#9aa2ae]">04</span>
+              </div>
+              <h2 className="egg-display text-2xl sm:text-3xl leading-tight text-[#14161a]">Applications & packing</h2>
+            </header>
             <ApplicationsGrid apps={apps} pageTitle={page.title} />
             {(packingOptions?.length > 0 || packing.length > 0) && (
               <PackingMatrix packingOptions={packingOptions} productPackingOptions={packing} />
             )}
-          </div>
+          </section>
 
           {/* Logistics */}
-          <div className={`space-y-6 ${active === 'logistics' ? 'animate-fade-in-up' : 'hidden'}`}>
+          <section id="logistics" className={`mt-12 pt-10 border-t border-[#14161a]/10 space-y-6 ${SECTION_ANCHOR}`}>
+            <header className="mb-5">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[#f6f7f9] ring-1 ring-[#14161a]/10">
+                  <Icon name="ship" className="w-3.5 h-3.5 text-[#5b6472]" />
+                </span>
+                <span className="font-mono text-[10px] tabular-nums tracking-[0.18em] text-[#9aa2ae]">05</span>
+              </div>
+              <h2 className="egg-display text-2xl sm:text-3xl leading-tight text-[#14161a]">Logistics & transit</h2>
+            </header>
             <TransitTimeCalculator
               defaultPorts={page.loading_ports || []}
               onSelect={(s) => setTransitSelection(s)}
             />
             <LoadingPortsCard ports={page.loading_ports || []} regions={page.regions || []} />
-          </div>
+          </section>
 
           {/* Documents */}
-          <div className={active === 'documents' ? 'animate-fade-in-up' : 'hidden'}>
+          <section id="documents" className={`mt-12 pt-10 border-t border-[#14161a]/10 ${SECTION_ANCHOR}`}>
+            <header className="mb-5">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[#f6f7f9] ring-1 ring-[#14161a]/10">
+                  <Icon name="doc" className="w-3.5 h-3.5 text-[#5b6472]" />
+                </span>
+                <span className="font-mono text-[10px] tabular-nums tracking-[0.18em] text-[#9aa2ae]">06</span>
+              </div>
+              <h2 className="egg-display text-2xl sm:text-3xl leading-tight text-[#14161a]">Export documents</h2>
+            </header>
             <DocumentChecklist />
-          </div>
+          </section>
 
           {/* Quote */}
-          <div className={active === 'quote' ? 'animate-fade-in-up' : 'hidden'}>
+          <section id="quote" className={`mt-12 pt-10 border-t border-[#14161a]/10 ${SECTION_ANCHOR}`}>
+            <header className="mb-5">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[#f6f7f9] ring-1 ring-[#14161a]/10">
+                  <Icon name="mail" className="w-3.5 h-3.5 text-[#5b6472]" />
+                </span>
+                <span className="font-mono text-[10px] tabular-nums tracking-[0.18em] text-[#9aa2ae]">07</span>
+              </div>
+              <h2 className="egg-display text-2xl sm:text-3xl leading-tight text-[#14161a]">Request a quote</h2>
+            </header>
             <InlineQuoteCard page={page} prefill={transitSelection} />
-          </div>
+          </section>
         </div>
 
-        {/* Sticky right rail */}
+        {/* Sticky right rail — commercial summary, then document contents */}
         <aside className="lg:sticky lg:top-24 self-start space-y-4">
           <QuoteCta page={page} />
           {(page.moq_mt || page.lead_time_min_weeks || page.hs_code || page.price_indication) && (
             <CommercialCard page={page} visibility={visibility} />
           )}
+          <SectionIndex variant="desktop" sections={sectionList} />
         </aside>
       </div>
     </section>

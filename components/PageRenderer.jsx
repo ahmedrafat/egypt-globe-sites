@@ -11,7 +11,7 @@ import MarkdownBody from './MarkdownBody'
 import RichPageBody from './RichPageBody'
 import ProductDetailBlock from './ProductDetailBlock'
 import ProductTabs from './interactive/ProductTabs'
-import MarkdownTabs from './interactive/MarkdownTabs'
+import MarkdownDocument from './interactive/MarkdownDocument'
 import TariffCalculator from './interactive/TariffCalculator'
 import HSCodeBrowser from './interactive/HSCodeBrowser'
 import {
@@ -29,8 +29,7 @@ import {
   CATEGORY_META,
   PRODUCT_DIVISIONS,
   SERVICE_DIVISIONS,
-  APPLICATIONS,
-} from '../lib/corporatePages'
+  APPLICATIONS, categoryMetaFor } from '../lib/corporatePages'
 import RichDivisionLanding from './RichDivisionLanding'
 import RichSubcategoryLanding from './RichSubcategoryLanding'
 import RichApplicationLanding from './RichApplicationLanding'
@@ -68,7 +67,7 @@ function buildCrumbs(page) {
 const PRODUCT_DIVISION_BY_PATH = Object.fromEntries(PRODUCT_DIVISIONS.map(d => [d.path, d]))
 
 export default async function PageRenderer({ page }) {
-  const cat = CATEGORY_META[page.category] || CATEGORY_META.other
+  const cat = categoryMetaFor(page.category, page.path)
 
   const isHomePath = page.path === '/'
   const isProductsHub = page.path === '/products'
@@ -347,9 +346,9 @@ export default async function PageRenderer({ page }) {
       {/* Drop 132 + 133 — interactive layouts replace markdown long-scroll.
          SKU pages → ProductTabs (Drop 132).
          Editorial pages (about / services / case-studies / blog / country
-         guides / HS-code glossary / division pillars) → MarkdownTabs which
-         auto-splits body_markdown by ## H2 boundaries into clickable tabs
-         (Drop 133). Plus per-page-category interactive widget on top:
+         guides / HS-code glossary / division pillars) → MarkdownDocument, which
+         auto-splits body_markdown by ## H2 into stacked, anchored sections
+         with a sticky contents rail (Aug 2026; superseded the Drop 133 tabs). Plus per-page-category interactive widget on top:
            /trade-tools/import-guides/<country>  → <TariffCalculator>
            /trade-tools/hs-codes                  → <HSCodeBrowser>
          body_markdown column kept in DB for /llms-full.txt + reversibility. */}
@@ -371,22 +370,22 @@ export default async function PageRenderer({ page }) {
           <HSCodeBrowser />
         </section>
       ) : page.path?.startsWith('/trade-tools/import-guides/') && page.path !== '/trade-tools/import-guides' ? (
-        // Country import guide — TariffCalculator above the auto-tabs.
-        <MarkdownTabs body={page.body_markdown} title={page.title}
+        // Country import guide — TariffCalculator above the document.
+        <MarkdownDocument body={page.body_markdown} title={page.title}
           leadingWidget={<TariffCalculator countryId={page.path.split('/').pop()} />}
         />
       ) : isPackingService ? (
         // Drop 143 — packing service page surfaces the comprehensive
         // PackingMatrix above the editorial body so buyers see every
         // format (PE bags, OEM, FIBC sizes, bag-in-jumbo) at a glance.
-        <MarkdownTabs body={page.body_markdown} title={page.title}
+        <MarkdownDocument body={page.body_markdown} title={page.title}
           leadingWidget={
             <PackingMatrix packingOptions={packingOptions} productPackingOptions={[]} />
           }
         />
       ) : page.body_markdown ? (
-        // Every other editorial page — auto-tabbed body_markdown.
-        <MarkdownTabs body={page.body_markdown} title={page.title} />
+        // Every other editorial page — sectioned body_markdown document.
+        <MarkdownDocument body={page.body_markdown} title={page.title} />
       ) : (
         // Pages with no body_markdown — keep ProductDetailBlock for any
         // structured product data they carry (mostly subcategory landings).
@@ -561,7 +560,7 @@ export default async function PageRenderer({ page }) {
           <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-8">In this section</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
             {directChildren.map(p => {
-              const childCat = CATEGORY_META[p.category] || cat
+              const childCat = categoryMetaFor(p.category, p.path) || cat
               return (
                 <Link key={p.id} href={p.path}
                   className="egg-card group p-6 overflow-hidden relative">
