@@ -18,6 +18,7 @@
  * Vector protocol: monochrome micro-icons only (components/ui/Icon) —
  * no emoji, no watermark glyphs.
  */
+import HeroMotif from './HeroMotif'
 import Link from 'next/link'
 import { APPLICATIONS } from '../lib/corporatePages'
 import RichPageBody from './RichPageBody'
@@ -49,6 +50,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
       {/* Hero */}
       <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10">
         <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
+        <HeroMotif category={page.category} path={page.path} tone={tone} />
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: `radial-gradient(60% 55% at 88% 0%, ${tone}26, transparent 60%), radial-gradient(45% 45% at 0% 100%, rgba(255,99,33,.10), transparent 60%)` }} />
 

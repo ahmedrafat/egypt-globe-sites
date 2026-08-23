@@ -6,6 +6,7 @@
  *
  * Design tokens + utilities (.egg-*) live in app/globals.css.
  */
+import HeroMotif from '../../components/HeroMotif'
 import Link from 'next/link'
 import {
   SERVICE_DIVISIONS,
@@ -33,6 +34,8 @@ export default async function ServicesHub() {
       {/* Hero — white editorial banner with teal glow */}
       <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10">
         <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
+        {/* freight + inspection = sweep and range */}
+        <HeroMotif variant="radar" tone="#0d9488" />
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: `radial-gradient(55% 55% at 88% 0%, ${TONE}26, transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.09), transparent 60%)` }} />
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-24">

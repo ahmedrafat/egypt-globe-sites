@@ -2,6 +2,7 @@
  * /blog — magazine index of all blog articles.
  * Light editorial edition — tokens + utilities (.egg-*) in app/globals.css.
  */
+import HeroMotif from '../../components/HeroMotif'
 import Link from 'next/link'
 import { getPagesByCategory, getPageByPath } from '../../lib/corporatePages'
 import RichPageBody from '../../components/RichPageBody'
@@ -29,6 +30,8 @@ export default async function BlogIndex() {
       {/* Hero — white editorial banner with warm glow */}
       <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10">
         <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
+        {/* editorial wayfinding */}
+        <HeroMotif variant="compass" tone="#b8862b" />
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: 'radial-gradient(55% 55% at 88% 0%, rgba(255,99,33,.16), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(184,134,43,.14), transparent 60%)' }} />
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20">

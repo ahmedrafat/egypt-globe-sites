@@ -356,3 +356,32 @@ body.no-scroll {
     .egg-reveal { animation: eggReveal both linear; animation-timeline: view(); animation-range: entry 0% entry 38%; }
   }
 }
+
+/* ─── Hero motifs ──────────────────────────────────────────────────────
+   Decorative hero geometry (components/HeroMotif.jsx). Motion is CSS-only
+   so it costs no JS and runs on the compositor. Every variant draws inside
+   a 0 0 400 400 viewBox centred on (200,200); SVG's default transform-box
+   is view-box, so `transform-origin: 50% 50%` resolves to (200,200) and
+   each group spins about its own axis. Purely decorative — all loops stop
+   under prefers-reduced-motion.                                          */
+.egg-motif { pointer-events: none; opacity: .32; }
+.egg-motif-spin,
+.egg-motif-spin-r,
+.egg-motif-sweep { transform-origin: 50% 50%; will-change: transform; }
+.egg-motif-spin   { animation: eggMotifSpin 200s linear infinite; }
+.egg-motif-spin-r { animation: eggMotifSpin 140s linear infinite reverse; }
+.egg-motif-sweep  { animation: eggMotifSpin 14s linear infinite; }
+.egg-motif-drift  { animation: eggMotifDrift 20s ease-in-out infinite; }
+.egg-motif-pulse  { animation: eggMotifPulse 4s ease-in-out infinite; }
+
+@keyframes eggMotifSpin  { to { transform: rotate(360deg); } }
+@keyframes eggMotifDrift { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(12px); } }
+@keyframes eggMotifPulse { 0%, 100% { opacity: .2; } 50% { opacity: .95; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .egg-motif-spin,
+  .egg-motif-spin-r,
+  .egg-motif-sweep,
+  .egg-motif-drift,
+  .egg-motif-pulse { animation: none !important; }
+}

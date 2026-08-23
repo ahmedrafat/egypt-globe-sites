@@ -7,6 +7,7 @@
  *
  * Light editorial edition — tokens + utilities (.egg-*) in app/globals.css.
  */
+import HeroMotif from '../../components/HeroMotif'
 import {
   getPageByPath,
   getRfqProductOptions,
@@ -54,6 +55,8 @@ export default async function RFQPage({ searchParams }) {
       {/* Hero */}
       <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10">
         <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
+        {/* entry point — matches the orange CTA */}
+        <HeroMotif variant="compass" tone="#ff6321" />
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: isCoa
             ? 'radial-gradient(55% 55% at 88% 0%, rgba(15,181,165,.2), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(184,134,43,.1), transparent 60%)'

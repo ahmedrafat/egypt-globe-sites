@@ -5,6 +5,7 @@
  * the page has rich product data, gallery, child grid for category
  * landings, related-pages strip, and a CTA banner.
  */
+import HeroMotif from './HeroMotif'
 import Link from 'next/link'
 import MarkdownBody from './MarkdownBody'
 import RichPageBody from './RichPageBody'
@@ -251,8 +252,9 @@ export default async function PageRenderer({ page }) {
           </div>
         )}
 
-        {/* Decorative patterns — fine light grid + accent glow */}
+        {/* Decorative patterns — fine light grid + accent glow + content motif */}
         <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
+        <HeroMotif category={page.category} path={page.path} sourceType={sourceType} tone={heroTone} />
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: `radial-gradient(60% 55% at 88% 0%, ${heroTone}24, transparent 60%), radial-gradient(45% 40% at 0% 100%, ${heroTone}12, transparent 60%)` }} />
 

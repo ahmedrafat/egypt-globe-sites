@@ -10,6 +10,7 @@
  * Every link present before this edition is preserved. Vector protocol:
  * monochrome micro-icons only.
  */
+import HeroMotif from '../../../components/HeroMotif'
 import Link from 'next/link'
 import {
   getPageByPath,
@@ -95,6 +96,8 @@ export default async function SaltMainPage() {
       {/* Hero ─────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10">
         <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
+        {/* halite is cubic — the crystal habit of salt */}
+        <HeroMotif variant="lattice" tone="#0fb5a5" />
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: `radial-gradient(55% 55% at 88% 0%, ${TEAL}2b, transparent 60%), radial-gradient(40% 45% at 0% 100%, ${GOLD}22, transparent 60%)` }} />
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-24">

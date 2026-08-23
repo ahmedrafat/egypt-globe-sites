@@ -14,6 +14,7 @@
  *
  * Vector protocol: monochrome micro-icons only — no emoji, no watermarks.
  */
+import HeroMotif from './HeroMotif'
 import Link from 'next/link'
 import { APPLICATIONS } from '../lib/corporatePages'
 import RichPageBody from './RichPageBody'
@@ -40,6 +41,7 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
       {/* Hero */}
       <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10">
         <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
+        <HeroMotif category={page.category} path={page.path} tone={tone} />
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: `radial-gradient(55% 55% at 88% 0%, ${tone}24, transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.08), transparent 60%)` }} />
 

@@ -3,6 +3,7 @@
  * White theme, consistent with homepage (light editorial system —
  * tokens + utilities in app/globals.css). Responsive throughout.
  */
+import HeroMotif from '../../components/HeroMotif'
 import Link from 'next/link'
 import { PRODUCT_DIVISIONS } from '../../lib/corporatePages'
 import Icon, { DIVISION_ICON } from '../../components/ui/Icon'
@@ -58,6 +59,8 @@ export default function ProductsHub() {
       {/* ── Hero ─────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden border-b border-[#14161a]/10 px-5 sm:px-8 lg:px-14 pt-14 sm:pt-16 pb-12 sm:pb-14">
         <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
+        {/* catalogue navigation across all divisions */}
+        <HeroMotif variant="compass" tone="#0fb5a5" />
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: 'radial-gradient(55% 55% at 88% 0%, rgba(15,181,165,.16), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.08), transparent 60%)' }} />
         <nav className="relative flex items-center gap-2 text-[11px] text-[#8a93a3] mb-8 font-mono uppercase tracking-wider">

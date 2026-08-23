@@ -8,6 +8,7 @@
  * Drop 168. Light editorial edition — tokens + utilities (.egg-*) in
  * app/globals.css.
  */
+import HeroMotif from '../../components/HeroMotif'
 import Link from 'next/link'
 import { searchPages } from '../../lib/corporatePages'
 import { CATEGORY_META } from '../../lib/corporatePages'
@@ -37,6 +38,8 @@ export default async function SearchPage({ searchParams }) {
     <div className="bg-white min-h-screen text-[#14161a]">
       <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10 py-12">
         <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
+        {/* scanning the catalogue */}
+        <HeroMotif variant="radar" tone="#0284c7" />
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: 'radial-gradient(55% 55% at 88% 0%, rgba(2,132,199,.14), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(15,181,165,.12), transparent 60%)' }} />
         <div className="relative max-w-4xl mx-auto px-5 sm:px-6 lg:px-8">
