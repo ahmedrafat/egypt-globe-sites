@@ -15,11 +15,18 @@ const BASE = 'https://egyptglobe.com'
 
 export function OrganizationJsonLd({ settings }) {
   const s = settings || {}
+  // getSiteSettings() normalises the site_settings row to camelCase; this
+  // component previously read the raw snake_case column names, so every
+  // settings-derived field silently fell through — the LinkedIn company
+  // profile never reached sameAs, and taxID and streetAddress were dropped
+  // from the Organization entity entirely. Read camelCase first, keep the
+  // snake_case fallback for any caller passing a raw row.
+  const pick = (...keys) => keys.map(k => s[k]).find(Boolean) || undefined
   const sameAs = [
-    s.linkedin_url,
-    s.twitter_url,
-    s.facebook_url,
-    s.instagram_url,
+    pick('linkedin', 'linkedin_url'),
+    pick('twitter', 'twitter_url'),
+    pick('facebook', 'facebook_url'),
+    pick('instagram', 'instagram_url'),
   ].filter(Boolean)
 
   // Owned brand network — declaring the group's operating brands as
@@ -47,25 +54,25 @@ export function OrganizationJsonLd({ settings }) {
       {
         '@type': 'Organization',
         '@id': `${BASE}#org`,
-        name: s.brand_name || 'Egypt Globe Group',
-        legalName: s.legal_name || 'Egypt Globe Group, LLC',
+        name: pick('name', 'brand_name') || 'Egypt Globe Group',
+        legalName: pick('legalName', 'legal_name') || 'Egypt Globe Group, LLC',
         url: BASE,
         logo: {
           '@type': 'ImageObject',
-          url: s.logo_url || `${BASE}/og-image.png`,
+          url: pick('logoUrl', 'logo_url') || `${BASE}/og-image.png`,
           width: 1200,
           height: 630,
         },
         description:
           'Egyptian B2B export trading conglomerate. Salt, cement, fertilizers, chemicals, construction materials, agro & food, industrial minerals, metals. FOB / CIF from 7 Egyptian ports to 60+ countries. Quote in 24h.',
-        foundingDate: s.founding_date || '2014',
-        ...(s.tax_card ? { taxID: s.tax_card } : {}),
+        foundingDate: pick('foundingDate', 'founding_date') || '2014',
+        ...(pick('taxCard', 'tax_card') ? { taxID: pick('taxCard', 'tax_card') } : {}),
         ...(brandSameAs.length ? { sameAs: brandSameAs } : {}),
         subOrganization,
         contactPoint: [
           {
             '@type': 'ContactPoint',
-            telephone: s.phone_e164 || '+201007729844',
+            telephone: pick('phoneE164', 'phone_e164') || '+201007729844',
             contactType: 'sales',
             email: s.email || 'export@egyptglobe.com',
             areaServed: ['Africa', 'Asia', 'Europe', 'Middle East', 'Americas'],
@@ -76,7 +83,7 @@ export function OrganizationJsonLd({ settings }) {
           '@type': 'PostalAddress',
           addressCountry: 'EG',
           addressLocality: 'Cairo',
-          ...(s.head_office ? { streetAddress: s.head_office } : {}),
+          ...(pick('headOffice', 'head_office') ? { streetAddress: pick('headOffice', 'head_office') } : {}),
         },
       },
       {
