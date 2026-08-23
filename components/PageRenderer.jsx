@@ -29,7 +29,7 @@ import {
   CATEGORY_META,
   PRODUCT_DIVISIONS,
   SERVICE_DIVISIONS,
-  APPLICATIONS, categoryMetaFor } from '../lib/corporatePages'
+  APPLICATIONS, APPLICATION_VARIANTS, categoryMetaFor } from '../lib/corporatePages'
 import RichDivisionLanding from './RichDivisionLanding'
 import RichSubcategoryLanding from './RichSubcategoryLanding'
 import RichApplicationLanding from './RichApplicationLanding'
@@ -721,8 +721,33 @@ async function ApplicationsHubByDivision() {
     }
   }
 
-  // Total count for the summary line
-  const totalApps = APPLICATIONS.length
+  // The long-tail application pages that are published but kept out of the
+  // nav taxonomy. Without these the hub listed 16 of the 29 published
+  // application pages and the rest were reachable only from a table further
+  // down the body. They carry no SKU matrix entry, so they are never pruned.
+  for (const v of APPLICATION_VARIANTS) {
+    for (const divId of (v.divisions || [])) {
+      if (!grouped[divId]) continue
+      grouped[divId].push({ ...v, _count: 0, _variant: true })
+    }
+  }
+
+  // Coverage guard — if an application page is published that neither the
+  // taxonomy nor the variant list knows about, surface it rather than let it
+  // silently disappear from the hub the way these fourteen did.
+  const knownPaths = new Set([
+    ...APPLICATIONS.map(a => a.path),
+    ...APPLICATION_VARIANTS.map(v => v.path),
+  ])
+  const unlisted = (await getDirectChildren('/applications') || [])
+    .filter(p => !knownPaths.has(p.path))
+
+  // Distinct application pages reachable from this hub
+  const totalApps = new Set([
+    ...APPLICATIONS.map(a => a.path),
+    ...APPLICATION_VARIANTS.map(v => v.path),
+    ...unlisted.map(p => p.path),
+  ]).size
   const divisionsWithApps = divisionsList.filter(d => grouped[d.id].length > 0)
 
   return (
@@ -884,6 +909,22 @@ async function ApplicationsHubByDivision() {
           </Link>
         </div>
       </section>
+
+      {/* Any published application page the taxonomy and the variant list both
+          miss still gets a link here, so the hub can never again list fewer
+          pages than exist. Empty in the normal case. */}
+      {unlisted.length > 0 && (
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 pb-14 egg-reveal">
+          <h3 className="egg-eyebrow mb-4">Also served</h3>
+          <div className="flex flex-wrap gap-2">
+            {unlisted.map(p => (
+              <Link key={p.path} href={p.path} className="egg-chip text-xs hover:text-[#14161a] transition-all">
+                {p.title}
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </article>
   )
 }
