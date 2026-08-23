@@ -379,6 +379,15 @@ export default async function PageRenderer({ page }) {
         <MarkdownDocument body={page.body_markdown} title={page.title}
           leadingWidget={<TariffCalculator countryId={page.path.split('/').pop()} />}
         />
+      ) : isApplicationsHub ? (
+        // The industry picker IS the page — it used to render below the whole
+        // editorial body, which pushed it ~6,300px down, beneath prose that
+        // describes it ("Pick your industry", "Click any application below").
+        // Same treatment as the packing and import-guide pages: widget first,
+        // supporting copy after.
+        <MarkdownDocument body={page.body_markdown} title={page.title}
+          leadingWidget={<ApplicationsHubByDivision />}
+        />
       ) : isPackingService ? (
         // Drop 143 — packing service page surfaces the comprehensive
         // PackingMatrix above the editorial body so buyers see every
@@ -431,10 +440,7 @@ export default async function PageRenderer({ page }) {
       )}
 
       {/* Applications hub — Drop 145 grouped-by-source-division layout.
-         Each PRODUCT_DIVISIONS gets its own section with the matching
-         applications underneath. Apps that serve multiple divisions
-         appear under each (clear "where this comes from" signal). */}
-      {isApplicationsHub && <ApplicationsHubByDivision />}
+         Rendered as the leadingWidget above, so the picker comes first. */}
 
       {/* Application landing — show all matching salt products */}
       {isApplicationLanding && (
