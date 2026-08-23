@@ -266,7 +266,7 @@ export default async function HomePage() {
 
       {/* ── 1. HERO ─────────────────────────────────────────────────── */}
       <section data-hero className="relative min-h-[92vh] flex flex-col justify-between overflow-hidden px-5 sm:px-10 lg:px-16 pt-20 sm:pt-24 pb-10 bg-white">
-        {/* layered backdrop (parallaxed by GSAP) — photo + hairline grid only */}
+        {/* layered backdrop (parallaxed by GSAP) — photo + hairline grid + compass ring */}
         <div data-hero-bg className="absolute inset-[-12%] z-0 pointer-events-none" aria-hidden="true">
           {heroPhoto && (
             <Image src={heroPhoto} alt="" fill sizes="100vw" preload className="object-cover opacity-[0.16]" />
@@ -274,6 +274,14 @@ export default async function HomePage() {
           {heroPhoto && <div className="absolute inset-0 bg-gradient-to-b from-white/85 via-white/70 to-white/95" />}
           <div className="absolute inset-0 egg-hero-glow" />
           <div className="absolute inset-0 egg-grid-light opacity-70" />
+          {/* slow compass ring — decorative, rotates once every 3 min */}
+          <svg className="egg-compass absolute -right-[12%] top-[8%] w-[min(78vw,760px)] h-[min(78vw,760px)]"
+            viewBox="0 0 400 400" fill="none" aria-hidden="true" focusable="false">
+            <circle cx="200" cy="200" r="196" stroke="#0284c7" strokeWidth="0.6" strokeDasharray="2 10" />
+            <circle cx="200" cy="200" r="150" stroke="#b8862b" strokeWidth="0.6" strokeDasharray="1 6" />
+            <circle cx="200" cy="200" r="96" stroke="#0fb5a5" strokeWidth="0.8" />
+            <path d="M200 20 L200 380 M20 200 L380 200 M73 73 L327 327 M327 73 L73 327" stroke="#94a3b8" strokeWidth="0.4" />
+          </svg>
         </div>
         <div className="absolute inset-x-0 bottom-0 h-40 z-[1] bg-gradient-to-b from-transparent to-white" aria-hidden="true" />
 
@@ -1049,6 +1057,11 @@ const SCOPED_CSS = `
 .egg-sc .egg-hero-glow{background:
   radial-gradient(60% 50% at 85% 10%,rgba(255,99,33,.10),transparent 60%),
   radial-gradient(55% 45% at 10% 85%,rgba(15,181,165,.12),transparent 60%)}
+/* Decorative compass ring. Rotates about its own centre; lives inside
+   [data-hero-bg], which GSAP parallaxes — parent and child transforms
+   compose, so the two never fight. */
+.egg-sc .egg-compass{opacity:.35;transform-origin:50% 50%;will-change:transform;animation:eggCompass 180s linear infinite}
+@keyframes eggCompass{to{transform:rotate(360deg)}}
 .egg-rise{opacity:0;transform:translateY(18px);animation:eggRise .9s cubic-bezier(.2,.7,.2,1) forwards}
 @keyframes eggRise{to{opacity:1;transform:none}}
 .egg-marquee{display:flex;width:max-content;animation:eggMarquee 54s linear infinite}
@@ -1101,7 +1114,7 @@ const SCOPED_CSS = `
 
 @media (prefers-reduced-motion:reduce){
   .egg-rise{animation:none;opacity:1;transform:none}
-  .egg-marquee,.egg-bounce{animation:none!important}
+  .egg-marquee,.egg-bounce,.egg-compass{animation:none!important}
 }
 `
 
