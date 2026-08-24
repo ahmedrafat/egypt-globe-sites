@@ -811,6 +811,31 @@
       "source": "/products/cement/:rest+",
       "destination": "/products/construction/cement-and-clinker",
       "permanent": true
+    },
+    {
+      "source": "/blog/egyptian-bulk-sea-salt-vs-mediterranean-spanish-greek",
+      "destination": "/blog/bulk-egyptian-sea-salt-buyers-guide-2026",
+      "permanent": true
+    },
+    {
+      "source": "/blog/bulk-egyptian-salt-price-2026-fob-guide",
+      "destination": "/blog/2026-buyers-guide-egyptian-bulk-salt",
+      "permanent": true
+    },
+    {
+      "source": "/products/salt/salt/egg-salt-010",
+      "destination": "/products/salt/salt",
+      "permanent": true
+    },
+    {
+      "source": "/request-for-quote/new",
+      "destination": "/rfq",
+      "permanent": true
+    },
+    {
+      "source": "/request-for-quote/:rest+",
+      "destination": "/rfq",
+      "permanent": true
     }
   ]
 }
