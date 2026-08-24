@@ -47,6 +47,19 @@ export default function WebVitalsReporter() {
     // from a production one — and local dev TTFB (2-8 s against the remote
     // DB) skewed the Aug-24 field analysis badly enough to invert it.
     if (/^(localhost|127\.|0\.0\.0\.0|.*\.local)$/.test(window.location.hostname)) return
+
+    // Crawlers must not beacon either. Googlebot renders the page, so it
+    // fired the beacon too — and because sendBeacon is a POST that the
+    // renderer records as a page resource, Search Console reported it under
+    // "page resources couldn't be loaded" (1 of 21). Nothing was broken for
+    // users, but it is noise that would mask a real resource failure later,
+    // and a crawler render is not a user session worth measuring. Skipping
+    // it at the source is better than rejecting it server-side: the request
+    // is never made at all.
+    const ua = navigator.userAgent || ''
+    if (navigator.webdriver ||
+        /bot|crawl|spider|slurp|bingpreview|lighthouse|headless|chrome-lighthouse|google-inspectiontool/i.test(ua)) return
+
     const session_id = getSessionId()
     const device = detectDevice()
     const rfq_visitor = window.location.pathname.startsWith('/rfq')
