@@ -40,7 +40,7 @@ export function OrganizationJsonLd({ settings }) {
     { name: 'Globe Salt', url: 'https://globesalt.com',     desc: 'Wholesale bulk salt export' },
     { name: 'Sinai Salt', url: 'https://sinaisalt.com',     desc: 'North Sinai sea salt' },
     { name: 'Salt Siwa',  url: 'https://saltsiwa.com',      desc: 'Siwa & Qattara rock salt' },
-    { name: 'Egypt Globe Cement', url: 'https://cement-site.vercel.app', desc: 'Egyptian cement & clinker export' },
+    { name: 'Egypt Globe Cement', url: 'https://cement.egyptglobe.com', desc: 'Egyptian cement & clinker export' },
   ]
   const subOrganization = BRAND_SITES.map(b => ({
     '@type': 'Organization', name: b.name, url: b.url, description: b.desc,
