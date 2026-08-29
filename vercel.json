@@ -31,6 +31,11 @@
   ],
   "redirects": [
     {
+      "source": "/products/fertilizers/fertilizers/egg-frt-001",
+      "destination": "/products/fertilizers/nitrogen/egg-urea-001",
+      "permanent": true
+    },
+    {
       "source": "/products/salt/de-icing-salt/:rest*",
       "destination": "/products/salt",
       "permanent": true
