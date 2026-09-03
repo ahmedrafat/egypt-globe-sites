@@ -67,7 +67,7 @@ export async function generateMetadata() {
     ? 'Egypt Globe Group — Verified Bulk Commodity Exporter, Egypt'
     : `${m.siteName} — Egyptian Commodity Exporter`
   const description = isUmbrella
-    ? 'Institutional reliability in bulk commodity exporting. Internal QA division since 2014 — every lot laboratory-verified before B/L. Salt, cement & clinker, fertilizers, chemicals, minerals, agro, metals. FOB / CIF / CFR from 7 Egyptian seaports to 60+ markets. SGS · TÜV Austria · Intertek · BV. Quote in 24h.'
+    ? 'Verified bulk commodity exporter from Egypt — salt, cement, fertilizers, chemicals, minerals, metals. Every lot lab-verified before B/L. FOB / CIF, 7 ports.'
     : 'Egyptian commodity exporter. Quote in 24 hours.'
   const canonical = isUmbrella ? BASE : `https://${m.host}`
   return {
