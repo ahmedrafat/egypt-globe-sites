@@ -13,6 +13,7 @@ import QaChainTable, { DataTable } from '../../components/QaChainTable'
 export const revalidate = 3600
 
 export const metadata = {
+  alternates: { canonical: '/products' },
   title: 'Products — Egyptian Commodity Exporter',
   description:
     'Salt, fertilizers, construction materials, chemicals, industrial minerals, agro & food, metals — 7 commodity divisions, every lot laboratory-verified before B/L, exported FOB / CIF / CFR from 7 Egyptian seaports to 60+ markets with TÜV Austria / SGS / Intertek / BV inspection.',

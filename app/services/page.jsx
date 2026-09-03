@@ -20,6 +20,7 @@ import Icon, { SERVICE_ICON } from '../../components/ui/Icon'
 export const revalidate = 60
 
 export const metadata = {
+  alternates: { canonical: '/services' },
   title: 'Services — Logistics, Port, Packing, Inspection, Distribution',
   description: 'Egypt Globe Group supply-chain services: logistics, port operations, added-value processing, packing, inspection, distribution and trade documentation across 7 Egyptian ports.',
 }

@@ -190,9 +190,10 @@ export async function generateMetadata() {
       apple: [{ url: '/og-image.png' }],
     },
     manifest: '/site.webmanifest',
-    // Drop 167 — per-brand canonical so Google indexes products on the brand
-    // domain (not the umbrella) when the request comes through the brand host.
-    alternates: { canonical: canonicalBase },
+    // No layout-level canonical. Every route declares its own (the catch-all,
+    // the homepage and the dedicated routes all do); a canonical set here is
+    // inherited by any route that forgets, and six hub pages spent months
+    // canonicalising to the homepage on the www host because of it.
     openGraph: {
       type: 'website',
       title: brandName,

@@ -26,6 +26,7 @@ import QaChainTable, { DataTable } from '../../../components/QaChainTable'
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
+  alternates: { canonical: '/products/salt' },
   title: 'Bulk Salt Supplier Egypt — Rock, Sea, De-icing & Industrial NaCl',
   description: 'Bulk Egyptian salt exporter — Siwa Oasis crystalline rock salt (≥ 97 % NaCl, chemical, food and pharma grades) and North Sinai / Red Sea sea salt (industrial and de-icing scale). Per-lot CoA before B/L, TÜV Austria / SGS / Intertek inspection, FOB / CIF / CFR from 7 Egyptian ports. 8 grades, 100+ SKUs. Quote in 24h.',
 }

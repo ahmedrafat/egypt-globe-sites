@@ -12,6 +12,7 @@ import Icon from '../../components/ui/Icon'
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
+  alternates: { canonical: '/blog' },
   title: 'News & Insights — Blog',
   description: 'Egypt Globe Group blog — company news, market commentary, industry analysis and Egyptian B2B export trade trends.',
 }

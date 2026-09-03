@@ -21,6 +21,7 @@ import Icon from '../../components/ui/Icon'
 export const revalidate = 60
 
 export const metadata = {
+  alternates: { canonical: '/rfq' },
   title: 'Request a Quote — Egyptian Salt, Cement & Fertilizers',
   description:
     'Submit a B2B RFQ for Egyptian salt, cement, fertilizers, chemicals, or minerals. Egypt Globe Group responds within 24 hours with FOB / CIF / CFR pricing from 7 Egyptian seaports.',

@@ -16,6 +16,7 @@ import Icon from '../../components/ui/Icon'
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
+  alternates: { canonical: '/case-studies' },
   title: 'Case Studies — Real Egypt Globe Shipments',
   description: 'How Egypt Globe Group ships cement to East Africa, de-icing salt to the Nordics, pharma-grade NaCl to South Asia. Real shipments, real numbers.',
 }
