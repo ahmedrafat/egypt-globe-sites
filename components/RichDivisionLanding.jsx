@@ -22,6 +22,7 @@ import HeroMotif from './HeroMotif'
 import Link from 'next/link'
 import { APPLICATIONS } from '../lib/corporatePages'
 import RichPageBody from './RichPageBody'
+import HubFaqs from './HubFaqs'
 import Icon, { DIVISION_ICON, APPLICATION_ICON } from './ui/Icon'
 import QualityStrip from './QualityStrip'
 
@@ -267,6 +268,9 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
           </div>
         </section>
       )}
+
+      {/* Per-page FAQs from the CMS (seo.faqs) — FAQPage schema + accordion */}
+      <HubFaqs page={page} />
 
       {/* Bottom CTA */}
       <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 egg-reveal">

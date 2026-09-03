@@ -20,6 +20,7 @@ import {
 } from '../../../lib/corporatePages'
 import Icon, { APPLICATION_ICON } from '../../../components/ui/Icon'
 import QualityStrip from '../../../components/QualityStrip'
+import HubFaqs from '../../../components/HubFaqs'
 import QaChainTable, { DataTable } from '../../../components/QaChainTable'
 
 // Drop 139c — render on demand (multi-query salt catalogue page)
@@ -365,6 +366,9 @@ export default async function SaltMainPage() {
           </div>
         </section>
       )}
+
+      {/* Per-page FAQs from the CMS row (seo.faqs) — FAQPage schema + accordion */}
+      <HubFaqs page={page} />
 
       {/* Bottom CTA */}
       <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 egg-reveal">
