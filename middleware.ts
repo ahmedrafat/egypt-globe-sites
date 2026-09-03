@@ -57,23 +57,6 @@ export function middleware(request: NextRequest) {
 
   // Stamp the response too so client code (Brand badge etc.) can detect it
   response.headers.set('x-egg-brand', brand)
-
-  // Security headers, set here as well as in next.config.mjs headers().
-  // On Vercel the config route declares all six (confirmed in the build
-  // output) and a local `next start` emits all six, but the production
-  // response carried only Referrer-Policy and Permissions-Policy — HSTS,
-  // X-Frame-Options, X-Content-Type-Options and X-DNS-Prefetch-Control were
-  // dropped somewhere in the platform layer, on both the apex and the
-  // deployment host, and not by this middleware (robots.txt bypasses it and
-  // lost them too). Headers set on this response demonstrably survive
-  // (x-egg-brand above), so this makes delivery deterministic. Static files
-  // outside the matcher (robots, sitemap, heroes, ogs) do not need them.
-  response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload')
-  response.headers.set('X-Content-Type-Options', 'nosniff')
-  response.headers.set('X-Frame-Options', 'SAMEORIGIN')
-  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
-  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), interest-cohort=()')
-  response.headers.set('X-DNS-Prefetch-Control', 'on')
   return response
 }
 
