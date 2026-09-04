@@ -11,10 +11,14 @@
  * auth-gated and have no indexable content.
  */
 import type { MetadataRoute } from 'next'
-import { getAllPages, getCustomerLogos, getCaseStudies } from '../lib/corporatePages'
+import { getSitemapPages, getCustomerLogos, getCaseStudies } from '../lib/corporatePages'
 
-// ISR only — CDN caches the sitemap and re-generates hourly at runtime.
-// Removing force-dynamic lets the revalidate=3600 below actually apply.
+// Rendered per request. The ISR variant (revalidate = 3600) was measured on
+// 4 Sep 2026 serving a copy generated at the previous deploy for 24 h+ — the
+// revalidation never fired, so two pages published on 3–4 Sep were missing
+// while the always-dynamic llms.txt routes listed them. Googlebot fetches
+// this file a few times a day; one 80 KB query per fetch is the right trade.
+export const dynamic = 'force-dynamic'
 
 const BASE = 'https://egyptglobe.com'
 
@@ -43,7 +47,7 @@ const CATEGORY_RANK: Record<string, { priority: number; changeFrequency: Metadat
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [pages, logos, caseStudies] = await Promise.all([
-    getAllPages(),
+    getSitemapPages(),
     getCustomerLogos().catch(() => []),
     getCaseStudies({ limit: 200 }).catch(() => []),
   ])
@@ -80,6 +84,3 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return out
 }
 
-// ISR — re-build sitemap every hour (matches the rest of the site's
-// revalidate cadence; CMS edits propagate within an hour without deploy).
-export const revalidate = 3600
