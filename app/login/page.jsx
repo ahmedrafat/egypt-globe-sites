@@ -15,6 +15,9 @@ export const metadata = {
   title: 'Buyer Sign In',
   description: 'Sign in to see prices, your scoped catalogue, and submit RFQs from your buyer profile.',
   robots: { index: false, follow: true },
+  // Self-referencing canonical: the layout no longer supplies one (1c04c4c),
+  // and the daily site-health crawl flags any page without its own.
+  alternates: { canonical: '/login' },
 }
 
 export default async function LoginPage() {
