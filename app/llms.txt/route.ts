@@ -9,12 +9,12 @@
  * Best-practice format per llmstxt.org spec — Markdown with H1 site name,
  * blockquote summary, then optional H2 sections with link lists.
  */
-import { getAllPages, getCustomerLogos } from '../../lib/corporatePages'
+import { getAllPagesLite, getCustomerLogos } from '../../lib/corporatePages'
 
 const BASE = 'https://egyptglobe.com'
 
 export async function GET() {
-  const pages = await getAllPages()
+  const pages = await getAllPagesLite() // index only needs title/description/path
   const logos = await getCustomerLogos().catch(() => [])
 
   const byCategory: Record<string, typeof pages> = {}
