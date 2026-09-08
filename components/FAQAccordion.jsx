@@ -44,7 +44,7 @@ export default function FAQAccordion({ faqs, title = 'Frequently asked questions
                 {qa.question}
               </span>
               <span
-                className="shrink-0 mt-0.5 w-7 h-7 rounded-full bg-[#f3f4f6] group-open:bg-[#ff6321] group-open:text-white flex items-center justify-center text-sm font-bold text-[#3f4650] transition-colors"
+                className="shrink-0 mt-0.5 w-7 h-7 rounded-full bg-[#f3f4f6] group-open:bg-[#d0450f] group-open:text-white flex items-center justify-center text-sm font-bold text-[#3f4650] transition-colors"
                 aria-hidden="true"
               >
                 <span className="group-open:hidden">+</span>
@@ -58,9 +58,9 @@ export default function FAQAccordion({ faqs, title = 'Frequently asked questions
         ))}
       </div>
 
-      <p className="text-xs text-[#7a8290] mt-6 text-center">
+      <p className="text-xs text-[#5b6577] mt-6 text-center">
         Other questions?{' '}
-        <a href="mailto:export@egyptglobe.com" className="text-[#0b8f84] font-semibold hover:underline">
+        <a href="mailto:export@egyptglobe.com" className="text-[#087a70] font-semibold hover:underline">
           Email our export desk
         </a>{' '}
         — we respond within 24 hours.
@@ -77,12 +77,12 @@ function linkify(text) {
   // Markdown-style links
   html = html.replace(
     /\[([^\]]+)\]\(([^)]+)\)/g,
-    '<a href="$2" class="text-[#0b8f84] font-semibold hover:underline">$1</a>'
+    '<a href="$2" class="text-[#087a70] font-semibold hover:underline">$1</a>'
   )
   // Bare https URLs
   html = html.replace(
     /(?<!href=")\b(https?:\/\/[^\s<]+)/g,
-    '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-[#0b8f84] font-semibold hover:underline">$1</a>'
+    '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-[#087a70] font-semibold hover:underline">$1</a>'
   )
   return html
 }

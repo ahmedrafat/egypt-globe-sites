@@ -6,6 +6,7 @@
  *
  * Design tokens + utilities (.egg-*) live in app/globals.css.
  */
+import { routeOpenGraph } from '../../lib/seo'
 import HeroMotif from '../../components/HeroMotif'
 import Link from 'next/link'
 import {
@@ -21,6 +22,7 @@ export const revalidate = 60
 
 export const metadata = {
   alternates: { canonical: '/services' },
+  openGraph: routeOpenGraph({ path: '/services' }),
   title: 'Services — Logistics, Port, Packing, Inspection, Distribution',
   description: 'Egypt Globe Group supply-chain services: logistics, port operations, added-value processing, packing, inspection, distribution and trade documentation across 7 Egyptian ports.',
 }
@@ -40,7 +42,7 @@ export default async function ServicesHub() {
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: `radial-gradient(55% 55% at 88% 0%, ${TONE}26, transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.09), transparent 60%)` }} />
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-24">
-          <nav className="flex items-center gap-2 text-xs text-[#7a8290] mb-5 flex-wrap animate-fade-in">
+          <nav className="flex items-center gap-2 text-xs text-[#5b6577] mb-5 flex-wrap animate-fade-in">
             <Link href="/" className="hover:text-[#14161a] transition-colors">Home</Link>
             <span>›</span>
             <span className="text-[#14161a] font-medium">Services</span>
@@ -98,7 +100,7 @@ export default async function ServicesHub() {
             ].map(s => (
               <div key={s.label} className="bg-white/90 backdrop-blur px-5 py-5">
                 <div className="egg-display text-3xl sm:text-4xl tracking-tight" style={{ color: TONE }}>{s.big}</div>
-                <div className="text-[10px] font-mono uppercase tracking-[0.18em] text-[#7a8290] mt-2">{s.label}</div>
+                <div className="text-[11px] font-mono uppercase tracking-[0.18em] text-[#5b6577] mt-2">{s.label}</div>
               </div>
             ))}
           </div>
@@ -111,7 +113,7 @@ export default async function ServicesHub() {
       {/* Service cards grid */}
       <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 egg-reveal">
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="egg-eyebrow text-[#0b8f84] justify-center mb-3">
+          <div className="egg-eyebrow text-[#087a70] justify-center mb-3">
             All services
           </div>
           <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-3">
@@ -140,11 +142,11 @@ export default async function ServicesHub() {
                   style={{ color: svc.color }}>
                   <Icon name={SERVICE_ICON[svc.id] || 'ship'} className="w-6 h-6" />
                 </div>
-                <h3 className="text-lg font-semibold text-[#14161a] group-hover:text-[#0b8f84] transition-colors mb-2">
+                <h3 className="text-lg font-semibold text-[#14161a] group-hover:text-[#087a70] transition-colors mb-2">
                   {svc.label}
                 </h3>
                 <p className="text-sm text-[#3f4650] leading-relaxed">{svc.blurb}</p>
-                <div className="mt-4 inline-flex items-center text-sm font-semibold text-[#0b8f84] group-hover:gap-2 gap-1 transition-all">
+                <div className="mt-4 inline-flex items-center text-sm font-semibold text-[#087a70] group-hover:gap-2 gap-1 transition-all">
                   Learn more <span>→</span>
                 </div>
               </div>
@@ -196,7 +198,7 @@ export default async function ServicesHub() {
                 <div key={c.t} className="egg-card p-4 hover:transform-none">
                   <span className="inline-flex w-8 h-8 items-center justify-center rounded-lg ring-1 ring-[#14161a]/15 text-[#14161a] mb-2"><Icon name={c.ico} className="w-4 h-4" /></span>
                   <div className="font-semibold text-[#14161a] text-sm">{c.t}</div>
-                  <div className="text-xs text-[#7a8290] leading-snug mt-1">{c.b}</div>
+                  <div className="text-xs text-[#5b6577] leading-snug mt-1">{c.b}</div>
                 </div>
               ))}
             </div>

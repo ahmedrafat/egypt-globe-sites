@@ -10,6 +10,8 @@
  * Every link present before this edition is preserved. Vector protocol:
  * monochrome micro-icons only.
  */
+import { routeOpenGraph } from '../../../lib/seo'
+import CardImage from '../../../components/ui/CardImage'
 import HeroMotif from '../../../components/HeroMotif'
 import Link from 'next/link'
 import {
@@ -28,6 +30,7 @@ export const dynamic = 'force-dynamic'
 
 export const metadata = {
   alternates: { canonical: '/products/salt' },
+  openGraph: routeOpenGraph({ path: '/products/salt' }),
   title: 'Bulk Salt Supplier Egypt — Rock, Sea, De-icing & Industrial NaCl',
   description: 'Bulk Egyptian salt exporter — Siwa Oasis crystalline rock salt (≥ 97 % NaCl, chemical, food and pharma grades) and North Sinai / Red Sea sea salt (industrial and de-icing scale). Per-lot CoA before B/L, TÜV Austria / SGS / Intertek inspection, FOB / CIF / CFR from 7 Egyptian ports. 8 grades, 100+ SKUs. Quote in 24h.',
 }
@@ -46,7 +49,7 @@ const GRADES = [
 const APPS_BY_ID = Object.fromEntries(APPLICATIONS.map(a => [a.id, a]))
 
 const TEAL = '#0fb5a5'
-const TEAL_TEXT = '#0b8f84'
+const TEAL_TEXT = '#087a70'
 const GOLD = '#b8862b'
 const GOLD_TEXT = '#8a6d3b'
 
@@ -103,7 +106,7 @@ export default async function SaltMainPage() {
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: `radial-gradient(55% 55% at 88% 0%, ${TEAL}2b, transparent 60%), radial-gradient(40% 45% at 0% 100%, ${GOLD}22, transparent 60%)` }} />
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-24">
-          <nav className="flex items-center gap-2 text-xs text-[#7a8290] mb-5 flex-wrap animate-fade-in">
+          <nav className="flex items-center gap-2 text-xs text-[#5b6577] mb-5 flex-wrap animate-fade-in">
             <Link href="/" className="hover:text-[#14161a] transition-colors">Home</Link>
             <span>›</span>
             <Link href="/products" className="hover:text-[#14161a] transition-colors">Products</Link>
@@ -120,7 +123,7 @@ export default async function SaltMainPage() {
             </span>
             <span className="egg-chip text-xs">NaCl ≥ 97%</span>
             <span className="egg-chip font-mono text-[11px] text-[#5b6472]">HS 2501</span>
-            <span className="egg-chip text-xs text-[#0b8f84]" style={{ boxShadow: 'inset 0 0 0 1px rgba(15,181,165,.45)' }}>
+            <span className="egg-chip text-xs text-[#087a70]" style={{ boxShadow: 'inset 0 0 0 1px rgba(15,181,165,.45)' }}>
               <Icon name="shield" className="w-3.5 h-3.5" /> Per-lot CoA
             </span>
           </div>
@@ -128,7 +131,7 @@ export default async function SaltMainPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-end">
             <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
               <h1 className="egg-display text-4xl sm:text-5xl lg:text-6xl text-[#14161a] mb-4 leading-[1.02]">
-                Bulk Egyptian salt — sea &amp; rock,<br /><span className="italic text-[#0b8f84]">certified lot by lot.</span>
+                Bulk Egyptian salt — sea &amp; rock,<br /><span className="italic text-[#087a70]">certified lot by lot.</span>
               </h1>
               <p className="text-base sm:text-lg leading-relaxed max-w-3xl text-[#3f4650]">
                 {all.length} SKUs across 8 grades from two verified Egyptian sources: Siwa Oasis crystalline
@@ -148,8 +151,8 @@ export default async function SaltMainPage() {
           <div className="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-px rounded-2xl overflow-hidden ring-1 ring-[#14161a]/10 bg-[#14161a]/10 stagger-children">
             {STATS.map(s => (
               <div key={s.label} className="bg-white/90 backdrop-blur px-5 py-5">
-                <div className="egg-display text-3xl sm:text-4xl tracking-tight text-[#0b8f84]">{s.big}</div>
-                <div className="text-[10px] font-mono uppercase tracking-[0.18em] text-[#7a8290] mt-2">{s.label}</div>
+                <div className="egg-display text-3xl sm:text-4xl tracking-tight text-[#087a70]">{s.big}</div>
+                <div className="text-[11px] font-mono uppercase tracking-[0.18em] text-[#5b6577] mt-2">{s.label}</div>
               </div>
             ))}
           </div>
@@ -162,7 +165,7 @@ export default async function SaltMainPage() {
       {/* Source split — Siwa rock vs Sinai sea ───────────────────── */}
       <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 egg-reveal">
         <div className="text-center mb-10 animate-fade-in-up">
-          <div className="egg-eyebrow text-[#0b8f84] justify-center mb-3">Two Egyptian sources</div>
+          <div className="egg-eyebrow text-[#087a70] justify-center mb-3">Two Egyptian sources</div>
           <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-3">
             Siwa Oasis crystalline rock salt or Sinai sea salt — specified, not assumed.
           </h2>
@@ -179,9 +182,9 @@ export default async function SaltMainPage() {
           <div className="egg-card rounded-3xl overflow-hidden animate-fade-in-up">
             <div className="relative overflow-hidden p-7" style={{ background: 'linear-gradient(160deg, #e6fbf8 0%, #c9f3ee 100%)' }}>
               <div className="relative flex items-center gap-3 mb-3">
-                <span className="inline-flex w-11 h-11 items-center justify-center rounded-xl bg-white/70 ring-1 ring-[#0fb5a5]/40 text-[#0b8f84]"><Icon name="wave" className="w-5 h-5" /></span>
+                <span className="inline-flex w-11 h-11 items-center justify-center rounded-xl bg-white/70 ring-1 ring-[#0fb5a5]/40 text-[#087a70]"><Icon name="wave" className="w-5 h-5" /></span>
                 <div>
-                  <div className="egg-eyebrow text-[#0b8f84]">Source 1 · industrial &amp; de-icing scale</div>
+                  <div className="egg-eyebrow text-[#087a70]">Source 1 · industrial &amp; de-icing scale</div>
                   <h3 className="egg-display text-3xl text-[#14161a]">Sinai Sea Salt</h3>
                 </div>
               </div>
@@ -193,9 +196,9 @@ export default async function SaltMainPage() {
                 tolerance (kiln-dried ≤ 1.5 %, natural 3–4 %).
               </p>
               <div className="relative mt-4 grid grid-cols-3 gap-2 text-center">
-                <div><div className="egg-display text-3xl text-[#0b8f84]">{sea.length}</div><div className="text-[10px] font-mono tracking-[0.14em] text-[#5b6472] uppercase">SKUs</div></div>
-                <div><div className="egg-display text-3xl text-[#0b8f84]">94–99+%</div><div className="text-[10px] font-mono tracking-[0.14em] text-[#5b6472] uppercase">NaCl tiers</div></div>
-                <div><div className="egg-display text-3xl text-[#0b8f84]">4</div><div className="text-[10px] font-mono tracking-[0.14em] text-[#5b6472] uppercase">Loading ports</div></div>
+                <div><div className="egg-display text-3xl text-[#087a70]">{sea.length}</div><div className="text-[11px] font-mono tracking-[0.14em] text-[#5b6472] uppercase">SKUs</div></div>
+                <div><div className="egg-display text-3xl text-[#087a70]">94–99+%</div><div className="text-[11px] font-mono tracking-[0.14em] text-[#5b6472] uppercase">NaCl tiers</div></div>
+                <div><div className="egg-display text-3xl text-[#087a70]">4</div><div className="text-[11px] font-mono tracking-[0.14em] text-[#5b6472] uppercase">Loading ports</div></div>
               </div>
             </div>
             <div className="p-6">
@@ -237,9 +240,9 @@ export default async function SaltMainPage() {
                 laboratory on every production lot and re-tested at the port.
               </p>
               <div className="relative mt-4 grid grid-cols-3 gap-2 text-center">
-                <div><div className="egg-display text-3xl text-[#8a6d3b]">{rock.length || '—'}</div><div className="text-[10px] font-mono tracking-[0.14em] text-[#5b6472] uppercase">SKUs</div></div>
-                <div><div className="egg-display text-3xl text-[#8a6d3b]">≥97%</div><div className="text-[10px] font-mono tracking-[0.14em] text-[#5b6472] uppercase">NaCl floor</div></div>
-                <div><div className="egg-display text-3xl text-[#8a6d3b]">4</div><div className="text-[10px] font-mono tracking-[0.14em] text-[#5b6472] uppercase">Loading ports</div></div>
+                <div><div className="egg-display text-3xl text-[#8a6d3b]">{rock.length || '—'}</div><div className="text-[11px] font-mono tracking-[0.14em] text-[#5b6472] uppercase">SKUs</div></div>
+                <div><div className="egg-display text-3xl text-[#8a6d3b]">≥97%</div><div className="text-[11px] font-mono tracking-[0.14em] text-[#5b6472] uppercase">NaCl floor</div></div>
+                <div><div className="egg-display text-3xl text-[#8a6d3b]">4</div><div className="text-[11px] font-mono tracking-[0.14em] text-[#5b6472] uppercase">Loading ports</div></div>
               </div>
             </div>
             <div className="p-6">
@@ -253,11 +256,11 @@ export default async function SaltMainPage() {
               </div>
               <div className="egg-eyebrow mb-3">Best for</div>
               <ul className="space-y-1.5 text-sm text-[#3f4650]">
-                <li className="flex items-start gap-2"><span className="text-[#b8862b] font-bold">›</span> Chlor-alkali, PVC and soda-ash feedstock — low Ca / Mg / SO₄</li>
-                <li className="flex items-start gap-2"><span className="text-[#b8862b] font-bold">›</span> Food-grade and pharmaceutical NaCl (USP / BP / EP after refining)</li>
-                <li className="flex items-start gap-2"><span className="text-[#b8862b] font-bold">›</span> De-icing road salt to EN 16811-1 Grade A / B / C, ASTM D632, BS 3247, GOST 13830</li>
-                <li className="flex items-start gap-2"><span className="text-[#b8862b] font-bold">›</span> Drilling-mud weighting, oil &amp; gas completion brines</li>
-                <li className="flex items-start gap-2"><span className="text-[#b8862b] font-bold">›</span> Leather tanning, textile dyeing (low iron) and livestock lick blocks</li>
+                <li className="flex items-start gap-2"><span className="text-[#8a6d3b] font-bold">›</span> Chlor-alkali, PVC and soda-ash feedstock — low Ca / Mg / SO₄</li>
+                <li className="flex items-start gap-2"><span className="text-[#8a6d3b] font-bold">›</span> Food-grade and pharmaceutical NaCl (USP / BP / EP after refining)</li>
+                <li className="flex items-start gap-2"><span className="text-[#8a6d3b] font-bold">›</span> De-icing road salt to EN 16811-1 Grade A / B / C, ASTM D632, BS 3247, GOST 13830</li>
+                <li className="flex items-start gap-2"><span className="text-[#8a6d3b] font-bold">›</span> Drilling-mud weighting, oil &amp; gas completion brines</li>
+                <li className="flex items-start gap-2"><span className="text-[#8a6d3b] font-bold">›</span> Leather tanning, textile dyeing (low iron) and livestock lick blocks</li>
               </ul>
               <Link href="#rock-catalogue" className="egg-link mt-5 inline-flex items-center gap-1 text-sm">Browse {rock.length || 'rock'} rock-salt SKUs →</Link>
             </div>
@@ -305,7 +308,7 @@ export default async function SaltMainPage() {
                   <div className="w-12 h-12 mx-auto rounded-xl flex items-center justify-center mb-3 ring-1 ring-[#14161a]/15 text-[#14161a] group-hover:ring-[#7c3aed]/60 transition-colors">
                     <Icon name={APPLICATION_ICON[a.id] || 'factory'} className="w-5 h-5" />
                   </div>
-                  <h3 className="font-semibold text-[#14161a] group-hover:text-[#0b8f84] transition-colors text-sm">{a.label}</h3>
+                  <h3 className="font-semibold text-[#14161a] group-hover:text-[#087a70] transition-colors text-sm">{a.label}</h3>
                 </Link>
               ))}
             </div>
@@ -316,18 +319,18 @@ export default async function SaltMainPage() {
       {/* Bulk salt by grade — internal links to the 8 grade hubs ── */}
       <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 egg-reveal">
         <div className="text-center mb-8 animate-fade-in-up">
-          <div className="egg-eyebrow text-[#0b8f84] justify-center mb-3">Bulk salt by grade</div>
+          <div className="egg-eyebrow text-[#087a70] justify-center mb-3">Bulk salt by grade</div>
           <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a]">Every grade of Egyptian bulk salt</h2>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 stagger-children">
           {GRADES.map(g => (
             <Link key={g.href} href={g.href} className="egg-card group px-4 py-4 flex items-center gap-3">
               <span className="inline-flex w-9 h-9 items-center justify-center rounded-lg ring-1 ring-[#14161a]/15 text-[#14161a]"><Icon name={g.icon} className="w-4 h-4" /></span>
-              <span className="font-semibold text-sm text-[#14161a] group-hover:text-[#0b8f84] transition-colors">{g.label}</span>
+              <span className="font-semibold text-sm text-[#14161a] group-hover:text-[#087a70] transition-colors">{g.label}</span>
             </Link>
           ))}
         </div>
-        <p className="text-center text-sm text-[#7a8290] mt-6">
+        <p className="text-center text-sm text-[#5b6577] mt-6">
           For grades, standards and lane economics see the full{' '}
           <Link href="/markets/industrial-salt-egypt" className="egg-link">industrial salt supplier guide</Link>.
         </p>
@@ -338,7 +341,7 @@ export default async function SaltMainPage() {
         <section id="sea-catalogue" className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 scroll-mt-20 egg-reveal">
           <div className="flex items-end justify-between gap-4 mb-8 flex-wrap animate-fade-in-up">
             <div>
-              <div className="egg-eyebrow text-[#0b8f84] mb-2"><Icon name="wave" className="w-3.5 h-3.5" /> Sea Salt</div>
+              <div className="egg-eyebrow text-[#087a70] mb-2"><Icon name="wave" className="w-3.5 h-3.5" /> Sea Salt</div>
               <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a]">{sea.length} sea-salt SKUs</h2>
             </div>
             <Link href="/rfq" className="egg-link text-sm">Quote any combination →</Link>
@@ -394,23 +397,21 @@ function SaltCard({ p, type }) {
       <div className="aspect-[16/9] overflow-hidden rounded-t-2xl"
         style={{ background: isSea ? 'linear-gradient(135deg, #e6fbf8, #f9fafb)' : 'linear-gradient(135deg, #fbf3e3, #f9fafb)' }}>
         {p.hero_photo_url ? (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img src={p.hero_photo_url} alt={p.title}
-            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
+          <CardImage src={p.hero_photo_url} className="group-hover:scale-105 transition-transform duration-500" />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-[#14161a]/20"><Icon name={isSea ? 'wave' : 'pickaxe'} className="w-10 h-10" strokeWidth={1.25} /></div>
         )}
       </div>
       <div className="p-4">
-        {p.hs_code && <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-[#8a93a3] mb-1">HS {p.hs_code}</div>}
-        <h3 className="text-sm font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#0b8f84] transition-colors min-h-[2.5em]">{p.title}</h3>
+        {p.hs_code && <div className="text-[11px] font-mono uppercase tracking-[0.14em] text-[#67707f] mb-1">HS {p.hs_code}</div>}
+        <h3 className="text-sm font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#087a70] transition-colors min-h-[2.5em]">{p.title}</h3>
         {p.specs?.nacl_min && <div className="text-xs font-mono text-[#5b6472] mt-1.5">NaCl {p.specs.nacl_min}</div>}
         {p.applications?.length > 0 && (
           <div className="flex flex-wrap gap-1 mt-2">
             {p.applications.slice(0, 2).map(a => (
-              <span key={a} className="text-[10px] font-semibold bg-[#f3f0ff] text-[#6d28d9] ring-1 ring-[#7c3aed]/25 px-2 py-0.5 rounded-full">{a.replace(/_/g, ' ')}</span>
+              <span key={a} className="text-[11px] font-semibold bg-[#f3f0ff] text-[#6d28d9] ring-1 ring-[#7c3aed]/25 px-2 py-0.5 rounded-full">{a.replace(/_/g, ' ')}</span>
             ))}
-            {p.applications.length > 2 && <span className="text-[10px] text-[#8a93a3]">+{p.applications.length - 2}</span>}
+            {p.applications.length > 2 && <span className="text-[11px] text-[#67707f]">+{p.applications.length - 2}</span>}
           </div>
         )}
       </div>

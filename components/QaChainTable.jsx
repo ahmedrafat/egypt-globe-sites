@@ -18,16 +18,16 @@ export default function QaChainTable({ rows = DEFAULT_ROWS, title = 'QA verifica
     <div className="bg-white border border-[#14161a]/10 rounded-2xl overflow-hidden shadow-sm">
       <div className="px-5 sm:px-6 py-4 border-b border-[#14161a]/10 bg-[#f9fafb] flex items-center justify-between gap-3">
         <h3 className="font-semibold text-lg text-[#14161a] flex items-center gap-2">
-          <Icon name="shield" className="w-5 h-5 text-[#0b8f84]" /> {title}
+          <Icon name="shield" className="w-5 h-5 text-[#087a70]" /> {title}
         </h3>
-        <span className="text-xs font-medium text-[#7a8290] hidden sm:inline">5 gates · every consignment</span>
+        <span className="text-xs font-medium text-[#5b6577] hidden sm:inline">5 gates · every consignment</span>
       </div>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto" tabIndex={0}>
         <table className="w-full text-sm">
           <thead className="bg-white border-b border-[#14161a]/10">
             <tr>
               {['Gate', 'Control', 'Evidence', 'Who · frequency'].map((h, i) => (
-                <th key={h} className={`text-left text-[10px] uppercase tracking-wider font-semibold text-[#7a8290] px-4 py-2 ${i === 2 ? 'hidden md:table-cell' : ''}`}>{h}</th>
+                <th key={h} className={`text-left text-[11px] uppercase tracking-wider font-semibold text-[#5b6577] px-4 py-2 ${i === 2 ? 'hidden md:table-cell' : ''}`}>{h}</th>
               ))}
             </tr>
           </thead>
@@ -43,7 +43,7 @@ export default function QaChainTable({ rows = DEFAULT_ROWS, title = 'QA verifica
           </tbody>
         </table>
       </div>
-      {note && <p className="px-5 py-3 text-[11px] text-[#7a8290] bg-[#f9fafb] border-t border-[#14161a]/10 leading-relaxed">{note}</p>}
+      {note && <p className="px-5 py-3 text-[11px] text-[#5b6577] bg-[#f9fafb] border-t border-[#14161a]/10 leading-relaxed">{note}</p>}
     </div>
   )
 }
@@ -54,13 +54,13 @@ export function DataTable({ title, icon = 'beaker', head, rows, note, mono = [] 
     <div className="bg-white border border-[#14161a]/10 rounded-2xl overflow-hidden shadow-sm">
       {title && (
         <div className="px-5 sm:px-6 py-4 border-b border-[#14161a]/10 bg-[#f9fafb]">
-          <h3 className="font-semibold text-lg text-[#14161a] flex items-center gap-2"><Icon name={icon} className="w-5 h-5 text-[#0b8f84]" /> {title}</h3>
+          <h3 className="font-semibold text-lg text-[#14161a] flex items-center gap-2"><Icon name={icon} className="w-5 h-5 text-[#087a70]" /> {title}</h3>
         </div>
       )}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto" tabIndex={0}>
         <table className="w-full text-sm">
           <thead className="bg-white border-b border-[#14161a]/10">
-            <tr>{head.map(h => <th key={h} className="text-left text-[10px] uppercase tracking-wider font-semibold text-[#7a8290] px-4 py-2">{h}</th>)}</tr>
+            <tr>{head.map(h => <th key={h} className="text-left text-[11px] uppercase tracking-wider font-semibold text-[#5b6577] px-4 py-2">{h}</th>)}</tr>
           </thead>
           <tbody className="divide-y divide-[#14161a]/10">
             {rows.map((r, i) => (
@@ -73,7 +73,7 @@ export function DataTable({ title, icon = 'beaker', head, rows, note, mono = [] 
           </tbody>
         </table>
       </div>
-      {note && <p className="px-5 py-3 text-[11px] text-[#7a8290] bg-[#f9fafb] border-t border-[#14161a]/10 leading-relaxed">{note}</p>}
+      {note && <p className="px-5 py-3 text-[11px] text-[#5b6577] bg-[#f9fafb] border-t border-[#14161a]/10 leading-relaxed">{note}</p>}
     </div>
   )
 }

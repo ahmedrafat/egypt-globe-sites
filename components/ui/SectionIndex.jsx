@@ -62,7 +62,7 @@ export default function SectionIndex({ sections, className = '', variant = 'both
                   : 'border-transparent text-[#5b6472] hover:text-[#14161a] hover:bg-[#f6f7f9]'
               }`}
             >
-              <span className={`mt-0.5 font-mono text-[10px] tabular-nums ${on ? 'text-[#d9501a]' : 'text-[#9aa2ae]'}`}>
+              <span className={`mt-0.5 font-mono text-[11px] tabular-nums ${on ? 'text-[#c2410c]' : 'text-[#67707f]'}`}>
                 {String(i + 1).padStart(2, '0')}
               </span>
               <span className="leading-snug">{s.label}</span>
@@ -78,12 +78,12 @@ export default function SectionIndex({ sections, className = '', variant = 'both
       {/* Mobile — collapsed by default so it never buries the document */}
       <details className="lg:hidden mb-8 rounded-2xl border border-[#14161a]/10 bg-[#f9fafb] overflow-hidden">
         <summary className="cursor-pointer select-none list-none px-4 py-3 flex items-center justify-between gap-3">
-          <span className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.18em] text-[#5b6472]">
+          <span className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-[0.18em] text-[#5b6472]">
             <Icon name="grid" className="w-3.5 h-3.5" />
             Contents
-            <span className="text-[#9aa2ae] normal-case tracking-normal">· {sections.length} sections</span>
+            <span className="text-[#67707f] normal-case tracking-normal">· {sections.length} sections</span>
           </span>
-          <span aria-hidden="true" className="text-[#7a8290] text-xs">▾</span>
+          <span aria-hidden="true" className="text-[#5b6577] text-xs">▾</span>
         </summary>
         <div className="px-2 pb-3">{list}</div>
       </details>
@@ -91,15 +91,15 @@ export default function SectionIndex({ sections, className = '', variant = 'both
   )
 
   const desktop = (
-      <aside className={`hidden lg:block lg:sticky lg:top-24 self-start ${className}`}>
+      <div className={`hidden lg:block lg:sticky lg:top-24 self-start ${className}`}>
         <nav aria-label="On this page" className="rounded-2xl border border-[#14161a]/10 bg-white p-4">
-          <div className="text-[10px] font-mono uppercase tracking-[0.18em] text-[#7a8290] mb-3 flex items-center gap-2">
-            <span className="w-4 h-0.5 bg-[#FF6321] rounded-full" />
+          <div className="text-[11px] font-mono uppercase tracking-[0.18em] text-[#5b6577] mb-3 flex items-center gap-2">
+            <span className="w-4 h-0.5 bg-[#d0450f] rounded-full" />
             Contents
           </div>
           {list}
         </nav>
-      </aside>
+      </div>
   )
 
   if (variant === 'mobile') return mobile

@@ -33,7 +33,7 @@ function keywordIcon(text, cls = 'w-5 h-5') { return iconSvg(keywordIconName(tex
 function renderInline(text) {
   let out = escapeHtml(text)
   out = out.replaceAll(/\[([^\]]+)\]\(([^)]+)\)/g,
-    '<a href="$2" class="text-[#0b8f84] hover:text-[#14161a] underline underline-offset-2 decoration-1 hover:decoration-2 transition-all font-medium" target="_blank" rel="noopener noreferrer">$1</a>')
+    '<a href="$2" class="text-[#087a70] hover:text-[#14161a] underline underline-offset-2 decoration-1 hover:decoration-2 transition-all font-medium" target="_blank" rel="noopener noreferrer">$1</a>')
   out = out.replaceAll(/\*\*([^*]+)\*\*/g, '<strong class="text-[#14161a] font-semibold">$1</strong>')
   out = out.replaceAll(/(^|[^*])\*([^*\n]+)\*/g, '$1<em class="text-[#3f4650] italic">$2</em>')
   out = out.replaceAll(/`([^`]+)`/g, '<code class="bg-[#f3f4f6] text-[#14161a] px-1.5 py-0.5 rounded text-[0.9em] font-mono border border-[#14161a]/10">$1</code>')
@@ -83,7 +83,7 @@ function renderStatStrip(stats) {
   let html = `<div class="my-7 grid grid-cols-2 sm:grid-cols-${Math.min(cols, 4)} gap-3">`
   for (const s of stats) {
     html += `<div class="rounded-2xl bg-[#f9fafb] border border-[#14161a]/10 px-5 py-5">
-      <div class="text-3xl sm:text-4xl font-semibold text-[#0b8f84] tracking-tight">${escapeHtml(s.value)}</div>
+      <div class="text-3xl sm:text-4xl font-semibold text-[#087a70] tracking-tight">${escapeHtml(s.value)}</div>
       <div class="text-xs text-[#3f4650] mt-1">${escapeHtml(s.label)}</div>
     </div>`
   }
@@ -159,7 +159,7 @@ export function parseMarkdown(content) {
       listItems = []; inList = false; return
     }
     // Ordered list — keep simple decimal styling
-    let html = '<ol class="my-5 space-y-2 text-[#3f4650] leading-relaxed list-decimal pl-6 marker:text-[#0b8f84] marker:font-semibold">'
+    let html = '<ol class="my-5 space-y-2 text-[#3f4650] leading-relaxed list-decimal pl-6 marker:text-[#087a70] marker:font-semibold">'
     for (const it of listItems) {
       countWords(it)
       html += `<li class="text-[1.0625rem] pl-1">${renderInline(it)}</li>`
@@ -172,7 +172,7 @@ export function parseMarkdown(content) {
   function flushTable() {
     if (!inTable) return
     if (tableRows.length === 0) { inTable = false; return }
-    let html = '<div class="my-7 overflow-x-auto rounded-xl border border-[#14161a]/10 bg-white shadow-sm">'
+    let html = '<div class="my-7 overflow-x-auto rounded-xl border border-[#14161a]/10 bg-white shadow-sm" tabindex="0">'
     html += '<table class="w-full text-sm">'
     const [header, ...rest] = tableRows
     if (header) {
@@ -245,7 +245,7 @@ export function parseMarkdown(content) {
       countWords(text)
       headings.push({ id, level: 3, text: text.replace(/[*`]/g, '') })
       blocks.push(`<h3 id="${id}" class="egg-display font-medium text-xl sm:text-2xl mt-9 mb-3 text-[#14161a] tracking-tight scroll-mt-28 flex items-center gap-2.5">
-        <span aria-hidden="true" class="inline-flex items-center justify-center w-7 h-7 rounded-md ring-1 ring-[#14161a]/12 text-[#0b8f84]">${ico}</span>
+        <span aria-hidden="true" class="inline-flex items-center justify-center w-7 h-7 rounded-md ring-1 ring-[#14161a]/12 text-[#087a70]">${ico}</span>
         <span>${renderInline(text)}</span>
       </h3>`)
       continue
@@ -258,7 +258,7 @@ export function parseMarkdown(content) {
       countWords(text)
       headings.push({ id, level: 2, text: text.replace(/[*`]/g, '') })
       blocks.push(`<h2 id="${id}" class="egg-display font-medium text-2xl sm:text-3xl lg:text-[2rem] mt-12 mb-5 text-[#14161a] tracking-tight scroll-mt-28 flex items-center gap-3">
-        <span aria-hidden="true" class="inline-flex items-center justify-center w-9 h-9 rounded-lg ring-1 ring-[#14161a]/12 text-[#0b8f84] bg-white">${ico}</span>
+        <span aria-hidden="true" class="inline-flex items-center justify-center w-9 h-9 rounded-lg ring-1 ring-[#14161a]/12 text-[#087a70] bg-white">${ico}</span>
         <span class="flex-1">${renderInline(text)}</span>
       </h2>`)
       continue

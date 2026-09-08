@@ -2,6 +2,8 @@
  * /case-studies — magazine index of real Egypt Globe export shipments.
  * Light editorial edition — tokens + utilities (.egg-*) in app/globals.css.
  */
+import { routeOpenGraph } from '../../lib/seo'
+import CardImage from '../../components/ui/CardImage'
 import HeroMotif from '../../components/HeroMotif'
 import Link from 'next/link'
 import { getCaseStudies, getPageByPath } from '../../lib/corporatePages'
@@ -17,11 +19,12 @@ export const dynamic = 'force-dynamic'
 
 export const metadata = {
   alternates: { canonical: '/case-studies' },
+  openGraph: routeOpenGraph({ path: '/case-studies' }),
   title: 'Case Studies — Real Egypt Globe Shipments',
   description: 'How Egypt Globe Group ships cement to East Africa, de-icing salt to the Nordics, pharma-grade NaCl to South Asia. Real shipments, real numbers.',
 }
 
-const TONE = '#0b8f84'
+const TONE = '#087a70'
 
 export default async function CaseStudiesIndex() {
   const [posts, hubPage] = await Promise.all([
@@ -39,7 +42,7 @@ export default async function CaseStudiesIndex() {
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: 'radial-gradient(55% 55% at 88% 0%, rgba(15,181,165,.2), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.08), transparent 60%)' }} />
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20">
-          <nav className="flex items-center gap-2 text-xs text-[#7a8290] mb-5 flex-wrap animate-fade-in">
+          <nav className="flex items-center gap-2 text-xs text-[#5b6577] mb-5 flex-wrap animate-fade-in">
             <Link href="/" className="hover:text-[#14161a] transition-colors">Home</Link>
             <span>›</span>
             <span className="text-[#14161a] font-medium">Case Studies</span>
@@ -74,7 +77,7 @@ export default async function CaseStudiesIndex() {
 
       {posts.length === 0 ? (
         <section className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-20 text-center">
-          <div className="egg-panel p-10 text-[#7a8290]">
+          <div className="egg-panel p-10 text-[#5b6577]">
             <Icon name="book" className="w-10 h-10 mx-auto mb-3 text-[#14161a]/40" strokeWidth={1.25} />
             <p>Case studies publish here as we receive customer permission to share details.
               {' '}<Link href="/contact" className="egg-link">Get in touch</Link>{' '}
@@ -93,9 +96,7 @@ export default async function CaseStudiesIndex() {
                   <div className="lg:col-span-3 aspect-[16/9] lg:aspect-auto overflow-hidden relative"
                     style={{ background: 'linear-gradient(135deg, #e6fbf8 0%, #f2fbfa 100%)' }}>
                     {posts[0].hero_photo_url ? (
-                      /* eslint-disable-next-line @next/next/no-img-element */
-                      <img src={posts[0].hero_photo_url} alt={posts[0].title}
-                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
+                      <CardImage src={posts[0].hero_photo_url} className="group-hover:scale-105 transition-transform duration-700" sizes="(max-width: 1024px) 100vw, 60vw" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
                         <Icon name="book" className="w-16 h-16 text-[#14161a]/20" strokeWidth={1} />
@@ -106,13 +107,13 @@ export default async function CaseStudiesIndex() {
                     </div>
                   </div>
                   <div className="lg:col-span-2 p-7 sm:p-9 lg:p-10 flex flex-col justify-center">
-                    <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] group-hover:text-[#0b8f84] transition-colors leading-tight mb-3">
+                    <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] group-hover:text-[#087a70] transition-colors leading-tight mb-3">
                       {posts[0].title}
                     </h2>
                     {posts[0].description && (
                       <p className="text-[#3f4650] leading-relaxed mb-5 line-clamp-4">{posts[0].description}</p>
                     )}
-                    <div className="inline-flex items-center text-sm font-semibold text-[#0b8f84] gap-2">
+                    <div className="inline-flex items-center text-sm font-semibold text-[#087a70] gap-2">
                       Read case study <span aria-hidden="true">→</span>
                     </div>
                   </div>
@@ -132,9 +133,7 @@ export default async function CaseStudiesIndex() {
                     <div className="aspect-[16/9] overflow-hidden relative rounded-t-2xl"
                       style={{ background: 'linear-gradient(135deg, #e6fbf8 0%, #f2fbfa 100%)' }}>
                       {cs.hero_photo_url ? (
-                        /* eslint-disable-next-line @next/next/no-img-element */
-                        <img src={cs.hero_photo_url} alt={cs.title}
-                          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
+                        <CardImage src={cs.hero_photo_url} className="group-hover:scale-105 transition-transform duration-500" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
                           <Icon name="book" className="w-12 h-12 text-[#14161a]/20" strokeWidth={1} />
@@ -142,13 +141,13 @@ export default async function CaseStudiesIndex() {
                       )}
                     </div>
                     <div className="p-5">
-                      <h3 className="font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#0b8f84] transition-colors leading-tight">
+                      <h3 className="font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#087a70] transition-colors leading-tight">
                         {cs.title}
                       </h3>
                       {cs.description && (
-                        <p className="text-sm text-[#7a8290] mt-2 line-clamp-3 leading-relaxed">{cs.description}</p>
+                        <p className="text-sm text-[#5b6577] mt-2 line-clamp-3 leading-relaxed">{cs.description}</p>
                       )}
-                      <div className="mt-3 inline-flex items-center text-xs font-semibold text-[#0b8f84] group-hover:gap-2 gap-1 transition-all">
+                      <div className="mt-3 inline-flex items-center text-xs font-semibold text-[#087a70] group-hover:gap-2 gap-1 transition-all">
                         Read more <span>→</span>
                       </div>
                     </div>

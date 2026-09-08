@@ -143,7 +143,7 @@ export default function HSCodeBrowser() {
           <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white ring-1 ring-[#14161a]/10 text-[#14161a]"><Icon name="search" className="w-4 h-4" /></span>
           <h3 className="egg-display text-2xl text-[#14161a]">Egyptian-export HS code finder</h3>
         </div>
-        <p className="text-xs text-[#7a8290] mt-1">Search by code, description, or chapter. Click any row to copy the 6-digit code.</p>
+        <p className="text-xs text-[#5b6577] mt-1">Search by code, description, or chapter. Click any row to copy the 6-digit code.</p>
       </div>
 
       <div className="px-6 pt-5 pb-3 space-y-3 border-b border-[#14161a]/10">
@@ -169,34 +169,34 @@ export default function HSCodeBrowser() {
             </button>
           ))}
         </div>
-        <div className="text-xs text-[#7a8290]">
+        <div className="text-xs text-[#5b6577]">
           Showing <strong className="text-[#14161a]">{filtered.length}</strong> of {CODES.length} codes{div !== 'all' ? ` in ${DIVISIONS.find(x => x.id === div)?.label}` : ''}{search ? ` matching "${search}"` : ''}.
         </div>
       </div>
 
       <div className="max-h-[640px] overflow-y-auto divide-y divide-[#14161a]/10">
         {Object.entries(grouped).length === 0 ? (
-          <div className="p-10 text-center text-[#7a8290] text-sm">
+          <div className="p-10 text-center text-[#5b6577] text-sm">
             No HS codes match. Try a different search term or division filter.
           </div>
         ) : Object.entries(grouped).map(([chapter, codes]) => (
           <div key={chapter}>
             <div className="px-6 py-2 bg-[#f9fafb] sticky top-0 z-10 border-b border-[#14161a]/10">
-              <div className="text-[10px] uppercase tracking-wider font-bold text-[#7a8290]">{chapter}</div>
+              <div className="text-[11px] uppercase tracking-wider font-bold text-[#5b6577]">{chapter}</div>
             </div>
             <div className="divide-y divide-[#14161a]/10">
               {codes.map(c => (
                 <button key={c.code} onClick={() => copy(c.code)}
                   className="w-full text-left px-6 py-3 hover:bg-[#f2fbfa] transition-colors flex items-start gap-4">
                   <code className={`font-mono font-bold text-sm shrink-0 px-2.5 py-1 rounded-md ${
-                    copied === c.code ? 'bg-[#e6fbf8] text-[#0b8f84]' : 'bg-[#f3f4f6] text-[#3f4650]'
+                    copied === c.code ? 'bg-[#e6fbf8] text-[#087a70]' : 'bg-[#f3f4f6] text-[#3f4650]'
                   }`}>
                     {copied === c.code ? '✓ Copied' : c.code}
                   </code>
                   <div className="flex-1 min-w-0">
                     <div className="text-sm text-[#14161a] font-medium">{c.desc}</div>
                   </div>
-                  <span className="text-[10px] uppercase tracking-wider font-bold text-[#8a93a3] shrink-0">{c.div}</span>
+                  <span className="text-[11px] uppercase tracking-wider font-bold text-[#67707f] shrink-0">{c.div}</span>
                 </button>
               ))}
             </div>
@@ -207,7 +207,7 @@ export default function HSCodeBrowser() {
       <div className="px-6 py-3 border-t border-[#14161a]/10 bg-[#f9fafb] text-[11px] text-[#3f4650]">
         Note: destination-country customs may apply 8/10/12-digit national extensions.
         We provide line-item-level HS classification on the Commercial Invoice.
-        Unsure which code applies? <a href="/rfq?type=hs" className="text-[#0b8f84] font-semibold hover:underline">Send your spec → we'll return the canonical code →</a>
+        Unsure which code applies? <a href="/rfq?type=hs" className="text-[#087a70] font-semibold hover:underline">Send your spec → we'll return the canonical code →</a>
       </div>
     </div>
   )

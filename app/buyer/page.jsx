@@ -37,7 +37,7 @@ export default async function BuyerDashboard() {
 
   const statusBadge = {
     pending:    { label: 'Pending approval',  cls: 'bg-[#fbf7ee] text-[#8a6d3b] border-[#b8862b]/40' },
-    approved:   { label: 'Approved',          cls: 'bg-[#e6fbf8] text-[#0b8f84] border-[#0fb5a5]/40' },
+    approved:   { label: 'Approved',          cls: 'bg-[#e6fbf8] text-[#087a70] border-[#0fb5a5]/40' },
     suspended:  { label: 'Suspended',         cls: 'bg-red-50 text-red-800 border-red-200' },
     rejected:   { label: 'Rejected',          cls: 'bg-red-50 text-red-800 border-red-200' },
     no_profile: { label: 'Profile incomplete', cls: 'bg-[#f3f4f6] text-[#3f4650] border-[#14161a]/10' },
@@ -87,21 +87,21 @@ export default async function BuyerDashboard() {
             <div className="egg-display text-4xl text-[#14161a] mt-1">
               {v.visibleAll ? 'Full' : v.visibleCategories.length + v.visiblePaths.length}
             </div>
-            <p className="text-sm text-[#7a8290] mt-1">
+            <p className="text-sm text-[#5b6577] mt-1">
               {v.visibleAll ? 'catalogue access' : 'scoped products'}
             </p>
           </div>
           <div className="egg-card p-6 hover:transform-none">
             <div className="egg-eyebrow mb-1">Total catalogue</div>
             <div className="egg-display text-4xl text-[#14161a] mt-1">{totalSkus || 0}</div>
-            <p className="text-sm text-[#7a8290] mt-1">SKUs across 7 divisions</p>
+            <p className="text-sm text-[#5b6577] mt-1">SKUs across 7 divisions</p>
           </div>
           <div className="egg-card p-6 hover:transform-none">
             <div className="egg-eyebrow mb-1">Prices</div>
             <div className="egg-display text-4xl text-[#14161a] mt-1">
               {v.showPrices ? '✓ Visible' : 'Hidden'}
             </div>
-            <p className="text-sm text-[#7a8290] mt-1">
+            <p className="text-sm text-[#5b6577] mt-1">
               {v.showPrices ? 'You see indicative pricing' : 'Unlock with approval'}
             </p>
           </div>
@@ -111,21 +111,21 @@ export default async function BuyerDashboard() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
           <Link href="/buyer/rfqs"
             className="egg-card group p-5 flex items-center gap-4">
-            <div className="shrink-0 w-12 h-12 rounded-xl bg-[#0b8f84] text-white flex items-center justify-center text-2xl"></div>
+            <div className="shrink-0 w-12 h-12 rounded-xl bg-[#087a70] text-white flex items-center justify-center text-2xl"></div>
             <div className="flex-1 min-w-0">
-              <div className="font-semibold text-[#14161a] group-hover:text-[#0b8f84]">Your RFQs</div>
-              <div className="text-xs text-[#7a8290]">Track quotation requests + their status</div>
+              <div className="font-semibold text-[#14161a] group-hover:text-[#087a70]">Your RFQs</div>
+              <div className="text-xs text-[#5b6577]">Track quotation requests + their status</div>
             </div>
-            <span className="text-[#0b8f84] font-bold">→</span>
+            <span className="text-[#087a70] font-bold">→</span>
           </Link>
           <Link href="/rfq"
             className="egg-card group p-5 flex items-center gap-4">
-            <div className="shrink-0 w-12 h-12 rounded-xl bg-[#FF6321] text-white flex items-center justify-center text-2xl">＋</div>
+            <div className="shrink-0 w-12 h-12 rounded-xl bg-[#d0450f] text-white flex items-center justify-center text-2xl">＋</div>
             <div className="flex-1 min-w-0">
-              <div className="font-semibold text-[#14161a] group-hover:text-[#d9501a]">New RFQ</div>
-              <div className="text-xs text-[#7a8290]">Submit a new quotation request — 24h response</div>
+              <div className="font-semibold text-[#14161a] group-hover:text-[#c2410c]">New RFQ</div>
+              <div className="text-xs text-[#5b6577]">Submit a new quotation request — 24h response</div>
             </div>
-            <span className="text-[#FF6321] font-bold">→</span>
+            <span className="text-[#c2410c] font-bold">→</span>
           </Link>
         </div>
 
@@ -138,16 +138,16 @@ export default async function BuyerDashboard() {
                 className="egg-card group p-5">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-3"
                   style={{ background: `${d.color}1f`, boxShadow: `inset 0 0 0 1px ${d.color}66`, color: d.color }}><Icon name={DIVISION_ICON[d.id] || 'box'} className="w-5 h-5" /></div>
-                <h3 className="font-semibold text-[#14161a] group-hover:text-[#0b8f84] transition-colors">
+                <h3 className="font-semibold text-[#14161a] group-hover:text-[#087a70] transition-colors">
                   {d.label}
                 </h3>
-                <p className="text-xs text-[#7a8290] mt-1.5 line-clamp-2">{d.blurb}</p>
+                <p className="text-xs text-[#5b6577] mt-1.5 line-clamp-2">{d.blurb}</p>
               </Link>
             ))}
         </div>
 
         {!v.visibleAll && v.visibleCategories.length === 0 && v.visiblePaths.length === 0 && (
-          <div className="egg-panel px-6 py-10 text-center text-[#7a8290] mt-6">
+          <div className="egg-panel px-6 py-10 text-center text-[#5b6577] mt-6">
             No catalogue scope assigned yet. Contact <a href="mailto:export@egyptglobe.com" className="egg-link">export@egyptglobe.com</a> with your sourcing requirements and we'll set it up.
           </div>
         )}

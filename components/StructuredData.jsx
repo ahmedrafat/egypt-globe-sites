@@ -180,6 +180,7 @@ export function WebPageJsonLd({ page, type = 'WebPage' }) {
     url: `${BASE}${page.path}`,
     isPartOf: { '@id': `${BASE}#website` },
     publisher: { '@id': `${BASE}#org` },
+    ...(page.created_at ? { datePublished: new Date(page.created_at).toISOString() } : {}),
     ...(page.updated_at ? { dateModified: new Date(page.updated_at).toISOString() } : {}),
     ...(page.hero_photo_url ? {
       primaryImageOfPage: {

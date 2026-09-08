@@ -96,7 +96,7 @@ export default function InlineQuoteCard({ page, prefill = {} }) {
         <div className="text-5xl mb-3"><Icon name="check" className="w-10 h-10 mx-auto text-emerald-600" strokeWidth={2.2} /></div>
         <h3 className="egg-display text-3xl text-[#14161a] mb-2">Quote request received</h3>
         <p className="text-[#3f4650] mb-1">
-          Ref <span className="font-mono font-bold text-[#0b8f84]">{refCode}</span>
+          Ref <span className="font-mono font-bold text-[#087a70]">{refCode}</span>
         </p>
         <p className="text-sm text-[#3f4650] mb-5">
           Our export desk will respond to <strong>{email}</strong> within 24 hours with FOB / CIF / CFR pricing, available origin port, packing options + a sample CoA.
@@ -113,10 +113,10 @@ export default function InlineQuoteCard({ page, prefill = {} }) {
     <div className="rounded-3xl ring-1 ring-[#ff6321]/25 bg-[#fff8f3] overflow-hidden">
       <div className="px-6 py-4 border-b border-[#ff6321]/15 bg-white/60">
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-[#FF6321] text-white shadow-sm"><Icon name="doc" className="w-4 h-4" /></span>
+          <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-[#d0450f] text-white shadow-sm"><Icon name="doc" className="w-4 h-4" /></span>
           <h3 className="egg-display text-2xl text-[#14161a]">Get a quote in 24 hours</h3>
         </div>
-        <p className="text-xs text-[#7a8290] mt-1">Pre-filled with <strong className="text-[#3f4650]">{page.title}</strong>. Add quantity + email and we'll do the rest.</p>
+        <p className="text-xs text-[#5b6577] mt-1">Pre-filled with <strong className="text-[#3f4650]">{page.title}</strong>. Add quantity + email and we'll do the rest.</p>
       </div>
 
       <form onSubmit={onSubmit} className="p-6 space-y-4">
@@ -130,7 +130,7 @@ export default function InlineQuoteCard({ page, prefill = {} }) {
             </div>
           </Field>
           <Field label="Incoterm">
-            <select value={incoterm} onChange={e => setIncoterm(e.target.value)}
+            <select value={incoterm} onChange={e => setIncoterm(e.target.value)} aria-label="Incoterm"
               className="w-full border border-[#14161a]/10 rounded-lg px-3 py-2.5 text-sm font-semibold focus:border-[#ff6321] focus:ring-2 focus:ring-[#ff6321]/25 outline-none">
               {['FOB', 'CIF', 'CFR', 'DAP', 'DDP', 'EXW', 'CPT', 'CIP'].map(i => (
                 <option key={i}>{i}</option>
@@ -162,8 +162,8 @@ export default function InlineQuoteCard({ page, prefill = {} }) {
           className="egg-btn-primary w-full py-3.5 disabled:opacity-60 disabled:cursor-not-allowed">
           {submitting ? '⏳ Sending…' : 'Get my quote in 24 hours'}
         </button>
-        <p className="text-[11px] text-[#7a8290] text-center leading-relaxed">
-          Your details go to our Cairo export desk only. No marketing email. Need a richer RFQ form? <a href={`/rfq?product=${encodeURIComponent(page.path)}`} className="text-[#0b8f84] font-semibold hover:underline">Use the full form →</a>
+        <p className="text-[11px] text-[#5b6577] text-center leading-relaxed">
+          Your details go to our Cairo export desk only. No marketing email. Need a richer RFQ form? <a href={`/rfq?product=${encodeURIComponent(page.path)}`} className="text-[#087a70] font-semibold hover:underline">Use the full form →</a>
         </p>
       </form>
     </div>
@@ -174,7 +174,7 @@ function Field({ label, required, children }) {
   return (
     <label className="block">
       <span className="text-xs font-bold uppercase tracking-wider text-[#3f4650] mb-1.5 block">
-        {label} {required && <span className="text-[#ff6321]">*</span>}
+        {label} {required && <span className="text-[#c2410c]">*</span>}
       </span>
       {children}
     </label>

@@ -52,7 +52,7 @@ export default async function SearchPage({ searchParams }) {
               name="q"
               defaultValue={q}
               placeholder="Search commodities, ports, standards, HS codes…"
-              className="flex-1 px-4 py-3 rounded-full bg-white text-[#14161a] placeholder-[#9aa2ae] ring-1 ring-[#14161a]/15 focus:outline-none focus:ring-2 focus:ring-[#ff6321]"
+              className="flex-1 px-4 py-3 rounded-full bg-white text-[#14161a] placeholder-[#67707f] ring-1 ring-[#14161a]/15 focus:outline-none focus:ring-2 focus:ring-[#ff6321]"
               autoFocus
             />
             <button
@@ -63,7 +63,7 @@ export default async function SearchPage({ searchParams }) {
             </button>
           </form>
           {q && (
-            <p className="mt-4 text-sm text-[#7a8290]">
+            <p className="mt-4 text-sm text-[#5b6577]">
               {results.length} {results.length === 1 ? 'result' : 'results'} found
             </p>
           )}
@@ -106,9 +106,9 @@ export default async function SearchPage({ searchParams }) {
                         <Icon name={CATEGORY_ICON[r.category] || 'grid'} className="w-3 h-3" />
                         {meta.label}
                       </span>
-                      <span className="text-xs text-[#8a93a3]">{r.path}</span>
+                      <span className="text-xs text-[#67707f]">{r.path}</span>
                     </div>
-                    <h2 className="text-lg font-semibold text-[#14161a] hover:text-[#0b8f84] mb-1">
+                    <h2 className="text-lg font-semibold text-[#14161a] hover:text-[#087a70] mb-1">
                       {r.title}
                     </h2>
                     {r.description && (

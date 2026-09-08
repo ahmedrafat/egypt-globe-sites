@@ -137,7 +137,7 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
                 <h2 className="font-semibold text-lg text-[#14161a] flex items-center gap-2">
                   <span className="text-xl"><Icon name="beaker" className="w-3.5 h-3.5" /></span> Product Specifications
                 </h2>
-                <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-[#7a8290]">{specEntries.length} parameters</span>
+                <span className="text-[11px] font-mono uppercase tracking-[0.16em] text-[#5b6577]">{specEntries.length} parameters</span>
               </div>
               <div className="divide-y divide-[#14161a]/10">
                 {/* Anchor rows that are always-on if present */}
@@ -151,7 +151,7 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
                   specs.appearance    ? { label: 'Appearance',       value: specs.appearance } : null,
                 ].filter(Boolean).map(row => (
                   <div key={row.label} className="grid grid-cols-1 sm:grid-cols-3 gap-1 px-6 py-3 hover:bg-[#f9fafb] transition-colors">
-                    <dt className="text-sm font-medium text-[#7a8290]">{row.label}</dt>
+                    <dt className="text-sm font-medium text-[#5b6577]">{row.label}</dt>
                     <dd className={`sm:col-span-2 text-sm text-[#14161a] ${row.mono ? 'font-mono font-semibold' : 'font-semibold'}`}>{String(row.value)}</dd>
                   </div>
                 ))}
@@ -160,14 +160,14 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
                   .filter(([k]) => !['hs_code','product_code','source_type','origin','grain_label','colour','appearance'].includes(k))
                   .map(([k, v]) => (
                     <div key={k} className="grid grid-cols-1 sm:grid-cols-3 gap-1 px-6 py-3 hover:bg-[#f9fafb] transition-colors">
-                      <dt className="text-sm font-medium text-[#7a8290]">{prettyKey(k)}</dt>
+                      <dt className="text-sm font-medium text-[#5b6577]">{prettyKey(k)}</dt>
                       <dd className="sm:col-span-2 text-sm text-[#14161a] font-mono font-semibold">{String(v)}</dd>
                     </div>
                   ))}
               </div>
 
               {commodity && (
-                <div className="px-6 py-3 bg-[#f9fafb] border-t border-[#14161a]/10 text-xs text-[#7a8290]">
+                <div className="px-6 py-3 bg-[#f9fafb] border-t border-[#14161a]/10 text-xs text-[#5b6577]">
                   Linked to commodity master <span className="font-mono font-semibold text-[#3f4650]">{commodity.code || commodity.sku || commodity.name}</span>
                   {commodity.origin && <> · Sourced from {commodity.origin}</>}
                 </div>
@@ -175,7 +175,7 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
 
               {page.datasheet_url && (
                 <a href={page.datasheet_url} target="_blank" rel="noopener noreferrer"
-                  className="block px-6 py-3 bg-[#f2fbfa] border-t border-[#0fb5a5]/30 text-sm font-semibold text-[#0b8f84] hover:bg-[#e6f8f6] transition-colors">
+                  className="block px-6 py-3 bg-[#f2fbfa] border-t border-[#0fb5a5]/30 text-sm font-semibold text-[#087a70] hover:bg-[#e6f8f6] transition-colors">
                   <Icon name="doc" className="w-3.5 h-3.5" /> Download Technical Data Sheet (PDF) →
                 </a>
               )}
@@ -194,8 +194,8 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
                     className="flex items-center gap-3 p-3 rounded-xl ring-1 ring-[#14161a]/10 hover:ring-[#7c3aed]/50 hover:bg-[#f9fafb] transition-all group">
                     <div className="w-11 h-11 rounded-xl flex items-center justify-center ring-1 ring-[#14161a]/15 text-[#14161a]"><Icon name={APPLICATION_ICON[app.id] || 'factory'} className="w-5 h-5" /></div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-semibold text-[#14161a] text-sm group-hover:text-[#0b8f84] transition-colors">{app.label}</div>
-                      <div className="text-xs text-[#7a8290]">View matching products →</div>
+                      <div className="font-semibold text-[#14161a] text-sm group-hover:text-[#087a70] transition-colors">{app.label}</div>
+                      <div className="text-xs text-[#5b6577]">View matching products →</div>
                     </div>
                   </Link>
                 ))}
@@ -232,7 +232,7 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
                       ))}
                     </div>
                     {(isRock || isSea) && (
-                      <p className="text-[11px] text-[#7a8290] mt-2">
+                      <p className="text-[11px] text-[#5b6577] mt-2">
                         {isRock
                           ? 'Closest ports to Siwa / Qattara mines.'
                           : 'Closest ports to source pans.'}
@@ -253,7 +253,7 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
                         </span>
                       ))}
                     </div>
-                    <p className="text-[11px] text-[#7a8290] mt-2">
+                    <p className="text-[11px] text-[#5b6577] mt-2">
                       FOB / CIF / CFR worldwide. <Link href="/services/logistics" className="egg-link">Logistics →</Link>
                     </p>
                   </div>
@@ -264,7 +264,7 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
         </div>
 
         {/* ───────── Sidebar (right, 1/3) ───────── */}
-        <aside className="space-y-5 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+        <div className="space-y-5 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
 
           {/* Quote CTA + document actions */}
           <div className="relative overflow-hidden egg-panel p-6">
@@ -272,7 +272,7 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
             <div aria-hidden="true" className="absolute -bottom-12 -right-12 w-40 h-40 rounded-full opacity-30 pointer-events-none"
               style={{ background: 'radial-gradient(circle, #FF6321 0%, transparent 70%)' }} />
             <div className="relative">
-              <div className="egg-eyebrow text-[#d9501a] mb-2">24-hour SLA</div>
+              <div className="egg-eyebrow text-[#c2410c] mb-2">24-hour SLA</div>
               <h3 className="egg-display text-2xl text-[#14161a] mb-2">Request a Quote</h3>
               <p className="text-[#3f4650] text-sm leading-relaxed mb-4">
                 Get pricing, availability and a proforma invoice within 24 hours.
@@ -291,7 +291,7 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
                   <Icon name="beaker" className="w-3.5 h-3.5" /> Request COA
                 </Link>
               </div>
-              <p className="text-[#7a8290] text-xs text-center mt-3">24-hour response · No spam</p>
+              <p className="text-[#5b6577] text-xs text-center mt-3">24-hour response · No spam</p>
             </div>
           </div>
 
@@ -311,7 +311,7 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
                   : 'Solar-evaporated from Egypt\'s North Sinai (El-Arish / Bardawil) and Red Sea coastal salt pans. ~2,700 kWh/m² annual solar irradiance for natural mineral-balanced salt.'}
               </p>
               {specs.origin && (
-                <div className={`mt-3 text-xs font-semibold ${isRock ? 'text-[#8a6d3b]' : 'text-[#0b8f84]'}`}>
+                <div className={`mt-3 text-xs font-semibold ${isRock ? 'text-[#8a6d3b]' : 'text-[#087a70]'}`}>
                   {specs.origin}
                 </div>
               )}
@@ -350,13 +350,13 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
               <div className="grid grid-cols-2 gap-3 text-xs">
                 {page.moq_mt && (
                   <div>
-                    <div className="text-[#7a8290] mb-0.5">Min. Order</div>
+                    <div className="text-[#5b6577] mb-0.5">Min. Order</div>
                     <div className="font-semibold text-[#14161a] text-base">{Number(page.moq_mt).toLocaleString()} MT</div>
                   </div>
                 )}
                 {(page.lead_time_min_weeks || page.lead_time_max_weeks) && (
                   <div>
-                    <div className="text-[#7a8290] mb-0.5">Lead Time</div>
+                    <div className="text-[#5b6577] mb-0.5">Lead Time</div>
                     <div className="font-semibold text-[#14161a] text-base">
                       {page.lead_time_min_weeks && page.lead_time_max_weeks
                         ? `${page.lead_time_min_weeks}–${page.lead_time_max_weeks} wk`
@@ -366,20 +366,20 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
                 )}
                 {page.hs_code && (
                   <div className="col-span-2">
-                    <div className="text-[#7a8290] mb-0.5">HS Code</div>
+                    <div className="text-[#5b6577] mb-0.5">HS Code</div>
                     <div className="font-mono font-semibold text-[#14161a]">{page.hs_code}</div>
                   </div>
                 )}
                 {page.price_indication && (
                   <div className="col-span-2 pt-2 border-t border-[#ff6321]/25">
-                    <div className="text-[#7a8290] mb-0.5">Indicative Price</div>
+                    <div className="text-[#5b6577] mb-0.5">Indicative Price</div>
                     <PriceDisplay price={page.price_indication} visibility={visibility} size="lg" placeholder="Sign in to see indicative price" />
                   </div>
                 )}
               </div>
             </div>
           )}
-        </aside>
+        </div>
       </div>
     </section>
   )

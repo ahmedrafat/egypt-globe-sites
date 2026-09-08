@@ -158,13 +158,13 @@ export default function TariffCalculator({ countryId = 'kenya' }) {
           <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white ring-1 ring-[#14161a]/10 text-[#14161a]"><Icon name="coins" className="w-4 h-4" /></span>
           <h3 className="egg-display text-2xl text-[#14161a]">{country.label} import cost calculator</h3>
         </div>
-        <p className="text-xs text-[#7a8290] mt-1">Pick commodity + CIF value → indicative duty + VAT + levies. Final rates confirmed by your customs broker.</p>
+        <p className="text-xs text-[#5b6577] mt-1">Pick commodity + CIF value → indicative duty + VAT + levies. Final rates confirmed by your customs broker.</p>
       </div>
 
       <div className="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
           <div>
-            <label className="text-xs font-bold uppercase tracking-wider text-[#7a8290] mb-1.5 block">Commodity</label>
+            <label className="text-xs font-bold uppercase tracking-wider text-[#5b6577] mb-1.5 block">Commodity</label>
             <select value={commodity} onChange={e => setCommodity(e.target.value)}
               className="w-full text-sm font-semibold border border-[#14161a]/10 rounded-lg px-3 py-2.5 focus:border-[#ff6321] focus:ring-2 focus:ring-[#ff6321]/25 outline-none">
               {Object.entries(COMMODITIES).map(([k, v]) => (
@@ -174,7 +174,7 @@ export default function TariffCalculator({ countryId = 'kenya' }) {
           </div>
 
           <div>
-            <label className="text-xs font-bold uppercase tracking-wider text-[#7a8290] mb-1.5 block">CIF value (USD)</label>
+            <label className="text-xs font-bold uppercase tracking-wider text-[#5b6577] mb-1.5 block">CIF value (USD)</label>
             <div className="flex">
               <div className="bg-[#f3f4f6] border border-r-0 border-[#14161a]/10 rounded-l-lg px-3 py-2.5 text-sm font-bold text-[#3f4650]">USD</div>
               <input type="number" min="0" value={cifValue} onChange={e => setCifValue(e.target.value)}
@@ -183,7 +183,7 @@ export default function TariffCalculator({ countryId = 'kenya' }) {
             <div className="flex flex-wrap gap-1.5 mt-2">
               {[10000, 50000, 100000, 500000, 1000000].map(p => (
                 <button key={p} type="button" onClick={() => setCifValue(p)}
-                  className="text-[10px] font-bold px-2 py-1 rounded-md bg-[#f3f4f6] hover:bg-[#e5e7eb] text-[#3f4650]">
+                  className="text-[11px] font-bold px-2 py-1 rounded-md bg-[#f3f4f6] hover:bg-[#e5e7eb] text-[#3f4650]">
                   ${(p/1000).toFixed(0)}k
                 </button>
               ))}
@@ -194,10 +194,10 @@ export default function TariffCalculator({ countryId = 'kenya' }) {
             <div className="rounded-xl border border-[#0fb5a5]/40 bg-[#e6fbf8] p-3">
               <label className="flex items-start gap-2.5 cursor-pointer">
                 <input type="checkbox" checked={usePref} onChange={e => setUsePref(e.target.checked)}
-                  className="mt-0.5 w-4 h-4 accent-[#0b8f84]" />
+                  className="mt-0.5 w-4 h-4 accent-[#087a70]" />
                 <div>
                   <div className="text-sm font-bold text-[#0b5f57]">Apply {country.fta} preferential treatment</div>
-                  <div className="text-[11px] text-[#0b8f84] mt-0.5">{country.ftaNote}</div>
+                  <div className="text-[11px] text-[#087a70] mt-0.5">{country.ftaNote}</div>
                 </div>
               </label>
             </div>
@@ -206,7 +206,7 @@ export default function TariffCalculator({ countryId = 'kenya' }) {
           {/* Drop 138c — Live WITS rate badge (informational + toggle) */}
           <div className={`rounded-xl border p-3 ${liveLoading ? 'border-[#14161a]/10 bg-[#f9fafb]' : liveRate != null ? 'border-[#0284c7]/35 bg-[#eef6fd]' : 'border-[#b8862b]/40 bg-[#fbf7ee]'}`}>
             {liveLoading ? (
-              <div className="flex items-center gap-2 text-xs text-[#7a8290]">
+              <div className="flex items-center gap-2 text-xs text-[#5b6577]">
                 <span className="inline-block w-3 h-3 rounded-full border-2 border-[#14161a]/20 border-t-[#14161a] animate-spin" />
                 Looking up live tariff from World Bank WITS…
               </div>
@@ -217,7 +217,7 @@ export default function TariffCalculator({ countryId = 'kenya' }) {
                 <div className="flex-1">
                   <div className="text-sm font-bold text-[#0369a1]">
                     Live MFN rate: <span className="font-mono">{liveRate}%</span>
-                    <span className="ml-2 text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#eef6fd] text-[#0369a1] font-bold align-middle">{liveSource}</span>
+                    <span className="ml-2 text-[11px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#eef6fd] text-[#0369a1] font-bold align-middle">{liveSource}</span>
                   </div>
                   <div className="text-[11px] text-[#0369a1] mt-0.5">
                     {usePref && country.pref?.[commodity] !== undefined
@@ -236,9 +236,9 @@ export default function TariffCalculator({ countryId = 'kenya' }) {
 
         <div>
           <div className="relative overflow-hidden rounded-2xl p-5 text-[#14161a] ring-1 ring-[#14161a]/10 bg-[linear-gradient(160deg,#e6fbf8_0%,#eef6fd_100%)]">
-            <div className="text-[10px] font-mono uppercase tracking-[0.16em] text-[#0b8f84] mb-1">Cost breakdown</div>
+            <div className="text-[11px] font-mono uppercase tracking-[0.16em] text-[#087a70] mb-1">Cost breakdown</div>
             <div className="egg-display text-3xl sm:text-4xl text-[#14161a] leading-tight mb-1">USD {Math.round(breakdown.total).toLocaleString()}</div>
-            <div className="text-xs text-[#7a8290] mb-4">total landed cost · CIF + import charges</div>
+            <div className="text-xs text-[#5b6577] mb-4">total landed cost · CIF + import charges</div>
 
             <div className="space-y-1.5 text-sm border-t border-[#14161a]/10 pt-3">
               <Row label={`CIF value`}         value={breakdown.cif} />
@@ -247,17 +247,17 @@ export default function TariffCalculator({ countryId = 'kenya' }) {
               ))}
               <div className="pt-1.5 mt-1.5 border-t border-[#14161a]/10">
                 <div className="flex items-baseline justify-between">
-                  <span className="text-xs text-[#7a8290]">Total import charges</span>
+                  <span className="text-xs text-[#5b6577]">Total import charges</span>
                   <span className="text-sm font-semibold text-[#14161a]">+{Math.round(breakdown.totalCharges).toLocaleString()} ({totalPct}% of CIF)</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <p className="text-[11px] text-[#7a8290] mt-3 leading-relaxed">
+          <p className="text-[11px] text-[#5b6577] mt-3 leading-relaxed">
             Indicative only. Actual rates depend on your destination port + national regulations + your broker's classification. HS code <strong className="text-[#3f4650]">{com.hs}</strong> for <strong className="text-[#3f4650]">{com.label}</strong>.
             {country.pref && usePref && breakdown.lines[0].value === 0 && (
-              <span className="text-[#0b8f84] font-semibold"> {country.fta} preferential treatment applied — saved ~{country.mfn[commodity]}% MFN duty.</span>
+              <span className="text-[#087a70] font-semibold"> {country.fta} preferential treatment applied — saved ~{country.mfn[commodity]}% MFN duty.</span>
             )}
           </p>
         </div>

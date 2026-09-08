@@ -14,6 +14,7 @@
  *
  * Vector protocol: monochrome micro-icons only — no emoji, no watermarks.
  */
+import CardImage from './ui/CardImage'
 import HeroMotif from './HeroMotif'
 import Link from 'next/link'
 import { APPLICATIONS } from '../lib/corporatePages'
@@ -22,6 +23,9 @@ import HubFaqs from './HubFaqs'
 import Icon, { DIVISION_ICON, APPLICATION_ICON } from './ui/Icon'
 
 const APP_BY_ID = Object.fromEntries(APPLICATIONS.map(a => [a.id, a]))
+
+const STAT_COLS = { 2: 'lg:grid-cols-2', 3: 'lg:grid-cols-3', 4: 'lg:grid-cols-4' }
+
 
 export default function RichSubcategoryLanding({ page, division, skus, siblingSubcats, visibility }) {
   const appIds = new Set()
@@ -37,6 +41,13 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
   const divIcon = DIVISION_ICON[division.id] || 'box'
   const n = (skus || []).length
 
+  const statTiles = [
+    { big: String(n), label: 'SKUs in this sub-category' },
+    certList.length > 0 ? { big: String(certList.length), label: 'Certifications & standards' } : null,
+    apps.length > 0 ? { big: String(apps.length), label: 'Applications served' } : null,
+    { big: '100%', label: 'Lots CoA-verified before B/L' },
+  ].filter(Boolean)
+
   return (
     <article className="bg-white text-[#14161a]">
       {/* Hero */}
@@ -47,7 +58,7 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
           style={{ background: `radial-gradient(55% 55% at 88% 0%, ${tone}24, transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.08), transparent 60%)` }} />
 
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20">
-          <nav className="flex items-center gap-2 text-xs text-[#7a8290] mb-5 flex-wrap animate-fade-in">
+          <nav className="flex items-center gap-2 text-xs text-[#5b6577] mb-5 flex-wrap animate-fade-in">
             <Link href="/" className="hover:text-[#14161a] transition-colors">Home</Link>
             <span>›</span>
             <Link href="/products" className="hover:text-[#14161a] transition-colors">Products</Link>
@@ -64,7 +75,7 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
             <span className="egg-chip text-xs">{n} {n === 1 ? 'SKU' : 'SKUs'}</span>
             {sampleHs && <span className="egg-chip font-mono text-[11px] text-[#5b6472]">HS {sampleHs}</span>}
             <span className="egg-chip text-xs font-mono tracking-[0.08em]">FOB · CIF · CFR</span>
-            <span className="egg-chip text-xs text-[#0b8f84]" style={{ boxShadow: 'inset 0 0 0 1px rgba(15,181,165,.45)' }}>
+            <span className="egg-chip text-xs text-[#087a70]" style={{ boxShadow: 'inset 0 0 0 1px rgba(15,181,165,.45)' }}>
               <Icon name="shield" className="w-3.5 h-3.5" /> Per-lot CoA
             </span>
           </div>
@@ -83,16 +94,13 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
           </div>
 
           {/* Stats strip */}
-          <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-px rounded-2xl overflow-hidden ring-1 ring-[#14161a]/10 bg-[#14161a]/10 stagger-children">
-            {[
-              { big: String(n), label: 'SKUs in this sub-category' },
-              { big: certList.length > 0 ? String(certList.length) : '—', label: 'Certifications & standards' },
-              { big: apps.length > 0 ? String(apps.length) : '—', label: 'Applications served' },
-              { big: '100%', label: 'Lots CoA-verified before B/L' },
-            ].map(s => (
+          {/* Batch 1 — a tile only renders when it has a value; a dash in
+              display type read as an unfinished page (audit UI3). */}
+          <div className={`mt-10 grid grid-cols-2 ${STAT_COLS[statTiles.length] || 'lg:grid-cols-4'} gap-px rounded-2xl overflow-hidden ring-1 ring-[#14161a]/10 bg-[#14161a]/10 stagger-children`}>
+            {statTiles.map(s => (
               <div key={s.label} className="bg-white/90 backdrop-blur px-5 py-5">
                 <div className="egg-display text-3xl sm:text-4xl tracking-tight" style={{ color: tone }}>{s.big}</div>
-                <div className="text-[10px] font-mono uppercase tracking-[0.18em] text-[#7a8290] mt-2">{s.label}</div>
+                <div className="text-[11px] font-mono uppercase tracking-[0.18em] text-[#5b6577] mt-2">{s.label}</div>
               </div>
             ))}
           </div>
@@ -104,7 +112,7 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
         <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 border-t border-[#14161a]/10 egg-reveal">
           <div className="flex items-end justify-between gap-4 mb-10 flex-wrap">
             <div>
-              <div className="egg-eyebrow text-[#0b8f84] mb-3">Catalogue</div>
+              <div className="egg-eyebrow text-[#087a70] mb-3">Catalogue</div>
               <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a]">
                 {n} {n === 1 ? 'product' : 'products'} ready for export
               </h2>
@@ -118,9 +126,7 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
                 <div className="aspect-[16/9] overflow-hidden rounded-t-2xl"
                   style={{ background: `linear-gradient(135deg, ${tone}1a, #f9fafb)` }}>
                   {p.hero_photo_url ? (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img src={p.hero_photo_url} alt={p.title}
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
+                    <CardImage src={p.hero_photo_url} className="group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[#14161a]/20">
                       <Icon name={divIcon} className="w-10 h-10" strokeWidth={1.25} />
@@ -128,13 +134,13 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
                   )}
                 </div>
                 <div className="p-4">
-                  {p.hs_code && <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-[#8a93a3] mb-1">HS {p.hs_code}</div>}
-                  <h3 className="text-sm font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#0b8f84] transition-colors min-h-[2.5em]">{p.title}</h3>
+                  {p.hs_code && <div className="text-[11px] font-mono uppercase tracking-[0.14em] text-[#67707f] mb-1">HS {p.hs_code}</div>}
+                  <h3 className="text-sm font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#087a70] transition-colors min-h-[2.5em]">{p.title}</h3>
                   {p.specs?.nacl_min && <div className="text-xs font-mono text-[#5b6472] mt-1.5">NaCl {p.specs.nacl_min}</div>}
                   {p.price_indication && visibility?.showPrices ? (
-                    <p className="text-xs text-[#d9501a] font-semibold mt-1.5 line-clamp-1">{p.price_indication}</p>
+                    <p className="text-xs text-[#c2410c] font-semibold mt-1.5 line-clamp-1">{p.price_indication}</p>
                   ) : p.certifications?.length > 0 ? (
-                    <div className="text-xs text-[#7a8290] mt-1.5 line-clamp-1">{p.certifications.slice(0, 3).join(' · ')}</div>
+                    <div className="text-xs text-[#5b6577] mt-1.5 line-clamp-1">{p.certifications.slice(0, 3).join(' · ')}</div>
                   ) : null}
                 </div>
               </Link>
@@ -168,7 +174,7 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
                   <div className="w-12 h-12 mx-auto rounded-xl flex items-center justify-center mb-3 ring-1 ring-[#14161a]/15 text-[#14161a] group-hover:ring-[#7c3aed]/60 transition-colors">
                     <Icon name={APPLICATION_ICON[a.id] || 'factory'} className="w-5 h-5" />
                   </div>
-                  <h3 className="font-semibold text-[#14161a] group-hover:text-[#0b8f84] transition-colors text-sm">{a.label}</h3>
+                  <h3 className="font-semibold text-[#14161a] group-hover:text-[#087a70] transition-colors text-sm">{a.label}</h3>
                 </Link>
               ))}
             </div>
@@ -184,12 +190,12 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
               <span className="inline-flex w-9 h-9 items-center justify-center rounded-lg bg-white ring-1 ring-[#14161a]/15 text-[#14161a]"><Icon name="shield" className="w-[18px] h-[18px]" /></span>
               <div>
                 <h3 className="font-semibold text-[#14161a] text-lg">Certifications &amp; standards</h3>
-                <p className="text-sm text-[#7a8290] mt-0.5">Every shipment carries a per-lot Certificate of Analysis and paperwork prepared for these standards.</p>
+                <p className="text-sm text-[#5b6577] mt-0.5">Every shipment carries a per-lot Certificate of Analysis and paperwork prepared for these standards.</p>
               </div>
             </div>
             <div className="flex flex-wrap gap-2">
               {certList.map(c => (
-                <span key={c} className="egg-chip text-xs text-[#0b8f84]" style={{ boxShadow: 'inset 0 0 0 1px rgba(15,181,165,.45)' }}>
+                <span key={c} className="egg-chip text-xs text-[#087a70]" style={{ boxShadow: 'inset 0 0 0 1px rgba(15,181,165,.45)' }}>
                   <Icon name="check" className="w-3 h-3" strokeWidth={2.4} /> {c}
                 </span>
               ))}
@@ -211,8 +217,8 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
                   <Icon name={divIcon} className="w-10 h-10" strokeWidth={1.25} />
                 </div>
                 <div className="p-4">
-                  <h3 className="font-semibold text-[#14161a] group-hover:text-[#0b8f84] transition-colors text-sm">{sc.title}</h3>
-                  {sc.sku_count > 0 && <div className="text-xs text-[#7a8290] mt-1">{sc.sku_count} {sc.sku_count === 1 ? 'SKU' : 'SKUs'}</div>}
+                  <h3 className="font-semibold text-[#14161a] group-hover:text-[#087a70] transition-colors text-sm">{sc.title}</h3>
+                  {sc.sku_count > 0 && <div className="text-xs text-[#5b6577] mt-1">{sc.sku_count} {sc.sku_count === 1 ? 'SKU' : 'SKUs'}</div>}
                 </div>
               </Link>
             ))}

@@ -64,10 +64,10 @@ export default function PackingMatrix({ packingOptions = [], productPackingOptio
       {/* Header */}
       <div className="px-5 sm:px-6 py-4 border-b border-[#14161a]/10 bg-[#f9fafb]">
         <h2 className="font-bold text-lg text-[#14161a] flex items-center gap-2">
-          <Icon name="box" className="w-5 h-5 text-[#0b8f84]" />
+          <Icon name="box" className="w-5 h-5 text-[#087a70]" />
           Packing &amp; Containerisation
         </h2>
-        <p className="text-xs text-[#7a8290] mt-1">
+        <p className="text-xs text-[#5b6577] mt-1">
           {packingOptions.length} formats · loaded as FIBC / bagged / bulk on container or bulk vessel.
           Inner liners, laminate, OEM print, and bag-in-jumbo all available.
         </p>
@@ -84,7 +84,7 @@ export default function PackingMatrix({ packingOptions = [], productPackingOptio
                 <span className={`inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border ${meta.tone}`}>
                   <Icon name={meta.icon} className="w-3 h-3" /> {meta.label}
                 </span>
-                <span className="text-[11px] text-[#8a93a3] font-medium">{items.length} {items.length === 1 ? 'format' : 'formats'}</span>
+                <span className="text-[11px] text-[#67707f] font-medium">{items.length} {items.length === 1 ? 'format' : 'formats'}</span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
                 {items.map(p => {
@@ -94,7 +94,7 @@ export default function PackingMatrix({ packingOptions = [], productPackingOptio
                     <div key={p.id}
                       className={`relative rounded-xl border bg-white p-3.5 transition-shadow hover:shadow-sm ${isProduct ? 'border-[#0fb5a5]/60 ring-1 ring-[#0fb5a5]/20' : 'border-[#14161a]/10'}`}>
                       {isProduct && (
-                        <span className="absolute -top-2 right-3 text-[9px] font-bold uppercase tracking-wider bg-[#0b8f84] text-white px-2 py-0.5 rounded-full shadow-sm">
+                        <span className="absolute -top-2 right-3 text-[9px] font-bold uppercase tracking-wider bg-[#087a70] text-white px-2 py-0.5 rounded-full shadow-sm">
                           Standard
                         </span>
                       )}
@@ -106,7 +106,7 @@ export default function PackingMatrix({ packingOptions = [], productPackingOptio
                             {p.packing_name}
                           </div>
                           {(p.material || p.size_kg) && (
-                            <div className="text-[11px] text-[#7a8290] mt-0.5">
+                            <div className="text-[11px] text-[#5b6577] mt-0.5">
                               {p.size_kg ? `${Number(p.size_kg)} kg` : ''}
                               {p.size_kg && p.material ? ' · ' : ''}
                               {p.material || ''}
@@ -116,23 +116,23 @@ export default function PackingMatrix({ packingOptions = [], productPackingOptio
                           {/* Vessel-mode + OEM chip rail */}
                           <div className="flex flex-wrap gap-1 mt-2">
                             {modes.map((m, i) => (
-                              <span key={i} className={`text-[10px] font-semibold px-1.5 py-0.5 rounded border ${m.cls}`}>
+                              <span key={i} className={`text-[11px] font-semibold px-1.5 py-0.5 rounded border ${m.cls}`}>
                                 {m.label}
                               </span>
                             ))}
                             {p.oem_available && (
-                              <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-orange-100 text-orange-800 border border-[#ff6321]/25">
+                              <span className="text-[11px] font-semibold px-1.5 py-0.5 rounded bg-orange-100 text-orange-800 border border-[#ff6321]/25">
                                 OEM
                               </span>
                             )}
                           </div>
                           {p.min_order_mt && (
-                            <div className="text-[10px] text-[#8a93a3] mt-1.5 font-medium">
+                            <div className="text-[11px] text-[#67707f] mt-1.5 font-medium">
                               MOQ {Number(p.min_order_mt) >= 1000 ? `${(Number(p.min_order_mt)/1000)}k` : Number(p.min_order_mt)} MT
                             </div>
                           )}
                           {p.notes && (
-                            <p className="text-[10px] text-[#7a8290] mt-1.5 leading-relaxed line-clamp-2">
+                            <p className="text-[11px] text-[#5b6577] mt-1.5 leading-relaxed line-clamp-2">
                               {p.notes}
                             </p>
                           )}
@@ -149,12 +149,12 @@ export default function PackingMatrix({ packingOptions = [], productPackingOptio
 
       {/* Footer note */}
       <div className="px-5 sm:px-6 py-3 bg-[#f9fafb] border-t border-[#14161a]/10">
-        <p className="text-[11px] text-[#7a8290] leading-relaxed">
+        <p className="text-[11px] text-[#5b6577] leading-relaxed">
           <strong className="text-[#3f4650]">Bag-in-Jumbo</strong> means any inner bag (PP / PE / Kraft / Laminated)
           can be hand-stacked inside a 1MT FIBC and loaded on a <strong>bulk vessel</strong> — combines retail-ready
           packing with bulk-vessel economics.
           OEM printing, custom sizes, and inner liners on request.{' '}
-          <Link href="/services/packing" className="text-[#0b8f84] font-semibold hover:underline">View packing services →</Link>
+          <Link href="/services/packing" className="text-[#087a70] font-semibold hover:underline">View packing services →</Link>
         </p>
       </div>
     </div>
@@ -166,7 +166,7 @@ function SimplePackingChips({ packing }) {
   return (
     <div className="bg-white border border-[#14161a]/10 rounded-2xl p-5 shadow-sm">
       <h3 className="font-bold text-lg text-[#14161a] mb-4 flex items-center gap-2">
-        <Icon name="box" className="w-5 h-5 text-[#0b8f84]" /> Available packing formats
+        <Icon name="box" className="w-5 h-5 text-[#087a70]" /> Available packing formats
       </h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
         {packing.map((p, i) => (
@@ -176,9 +176,9 @@ function SimplePackingChips({ packing }) {
           </div>
         ))}
       </div>
-      <p className="text-xs text-[#7a8290] mt-4">
+      <p className="text-xs text-[#5b6577] mt-4">
         OEM / private-label printing on request.{' '}
-        <Link href="/services/packing" className="text-[#0b8f84] font-semibold hover:underline">View packing services →</Link>
+        <Link href="/services/packing" className="text-[#087a70] font-semibold hover:underline">View packing services →</Link>
       </p>
     </div>
   )

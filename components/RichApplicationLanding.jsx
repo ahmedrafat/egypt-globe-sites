@@ -12,6 +12,7 @@
  *
  * Design tokens + utilities (.egg-*) live in app/globals.css.
  */
+import CardImage from './ui/CardImage'
 import HeroMotif from './HeroMotif'
 import Link from 'next/link'
 import RichPageBody from './RichPageBody'
@@ -38,7 +39,7 @@ export default function RichApplicationLanding({ page, application, products, si
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: `radial-gradient(55% 55% at 88% 0%, ${TONE}22, transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.09), transparent 60%)` }} />
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20">
-          <nav className="flex items-center gap-2 text-xs text-[#7a8290] mb-5 flex-wrap animate-fade-in">
+          <nav className="flex items-center gap-2 text-xs text-[#5b6577] mb-5 flex-wrap animate-fade-in">
             <Link href="/" className="hover:text-[#14161a] transition-colors">Home</Link>
             <span>›</span>
             <Link href="/applications" className="hover:text-[#14161a] transition-colors">Applications</Link>
@@ -93,7 +94,7 @@ export default function RichApplicationLanding({ page, application, products, si
             ].map(s => (
               <div key={s.label} className="bg-white/90 backdrop-blur px-5 py-5">
                 <div className="egg-display text-3xl sm:text-4xl tracking-tight" style={{ color: TONE }}>{s.big}</div>
-                <div className="text-[10px] font-mono uppercase tracking-[0.18em] text-[#7a8290] mt-2">{s.label}</div>
+                <div className="text-[11px] font-mono uppercase tracking-[0.18em] text-[#5b6577] mt-2">{s.label}</div>
               </div>
             ))}
           </div>
@@ -133,7 +134,7 @@ export default function RichApplicationLanding({ page, application, products, si
                 <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a]">
                   {products.length} product{products.length === 1 ? '' : 's'} for {page.title.toLowerCase()}
                 </h2>
-                <p className="text-sm text-[#7a8290] mt-2">
+                <p className="text-sm text-[#5b6577] mt-2">
                   Sourced from {divisionsToRender.length} of our 7 product division{divisionsToRender.length === 1 ? '' : 's'}.
                 </p>
               </div>
@@ -156,7 +157,7 @@ export default function RichApplicationLanding({ page, application, products, si
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="font-semibold text-[#14161a] text-lg">
-                          From {d.label} <span className="text-[#8a93a3] font-medium tabular-nums">({items.length})</span>
+                          From {d.label} <span className="text-[#67707f] font-medium tabular-nums">({items.length})</span>
                         </h3>
                       </div>
                       <Link href={d.path} className="egg-chip text-xs text-[#3f4650] hover:text-[#14161a] transition-all hover:shadow-[inset_0_0_0_1.5px_rgba(20,22,26,.35)] flex-shrink-0">
@@ -170,9 +171,7 @@ export default function RichApplicationLanding({ page, application, products, si
                           <div className="aspect-[16/9] overflow-hidden rounded-t-2xl"
                             style={{ background: `linear-gradient(135deg, ${d.color}14, #f9fafb)` }}>
                             {p.hero_photo_url ? (
-                              /* eslint-disable-next-line @next/next/no-img-element */
-                              <img src={p.hero_photo_url} alt={p.title}
-                                className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
+                              <CardImage src={p.hero_photo_url} className="group-hover:scale-105 transition-transform duration-500" />
                             ) : (
                               <div className="w-full h-full flex items-center justify-center text-5xl opacity-40">
                                 <Icon name={DIVISION_ICON[d.id] || 'box'} className="w-5 h-5" />
@@ -181,13 +180,13 @@ export default function RichApplicationLanding({ page, application, products, si
                           </div>
                           <div className="p-4">
                             {p.hs_code && (
-                              <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-[#8a93a3] mb-1">HS {p.hs_code}</div>
+                              <div className="text-[11px] font-mono uppercase tracking-[0.14em] text-[#67707f] mb-1">HS {p.hs_code}</div>
                             )}
-                            <h4 className="text-sm font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#0b8f84] transition-colors min-h-[2.5em]">
+                            <h4 className="text-sm font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#087a70] transition-colors min-h-[2.5em]">
                               {p.title}
                             </h4>
                             {p.certifications?.length > 0 && (
-                              <div className="text-xs text-[#7a8290] mt-1.5 line-clamp-1">{p.certifications.slice(0, 3).join(' · ')}</div>
+                              <div className="text-xs text-[#5b6577] mt-1.5 line-clamp-1">{p.certifications.slice(0, 3).join(' · ')}</div>
                             )}
                           </div>
                         </Link>
@@ -203,7 +202,7 @@ export default function RichApplicationLanding({ page, application, products, si
                     {byDivision[k].map(p => (
                       <Link key={p.id} href={p.path} className="egg-card group overflow-hidden">
                         <div className="p-4">
-                          <h4 className="text-sm font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#0b8f84] transition-colors">{p.title}</h4>
+                          <h4 className="text-sm font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#087a70] transition-colors">{p.title}</h4>
                         </div>
                       </Link>
                     ))}
@@ -215,7 +214,7 @@ export default function RichApplicationLanding({ page, application, products, si
         )
       })() : (
         <section className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8 py-12 text-center egg-reveal">
-          <div className="egg-panel p-8 text-[#7a8290]">
+          <div className="egg-panel p-8 text-[#5b6577]">
             <p>No products tagged for this application yet.</p>
             <Link href="/rfq" className="egg-link mt-2 inline-block">
               Request a custom quote →
@@ -232,7 +231,7 @@ export default function RichApplicationLanding({ page, application, products, si
               <span className="inline-flex w-9 h-9 items-center justify-center rounded-lg bg-white ring-1 ring-[#14161a]/15 text-[#14161a]"><Icon name="shield" className="w-[18px] h-[18px]" /></span>
               <div>
                 <h3 className="font-semibold text-[#14161a] text-lg">Standards & Certifications Covered</h3>
-                <p className="text-sm text-[#7a8290] mt-0.5">SKUs in this application carry paperwork ready for the standards below.</p>
+                <p className="text-sm text-[#5b6577] mt-0.5">SKUs in this application carry paperwork ready for the standards below.</p>
               </div>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -257,7 +256,7 @@ export default function RichApplicationLanding({ page, application, products, si
               <Link key={a.id} href={a.path}
                 className="egg-card group p-5 text-center">
                 <div className="w-12 h-12 mx-auto rounded-xl flex items-center justify-center mb-3 ring-1 ring-[#14161a]/15 text-[#14161a]"><Icon name={APPLICATION_ICON[a.id] || 'factory'} className="w-5 h-5" /></div>
-                <h3 className="font-semibold text-[#14161a] group-hover:text-[#0b8f84] transition-colors text-sm">
+                <h3 className="font-semibold text-[#14161a] group-hover:text-[#087a70] transition-colors text-sm">
                   {a.label}
                 </h3>
               </Link>

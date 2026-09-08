@@ -107,7 +107,7 @@ export default function TransitTimeCalculator({ defaultPorts = [], onSelect }) {
           <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white ring-1 ring-[#14161a]/10 text-xl">⏱</span>
           <h3 className="egg-display text-2xl text-[#14161a]">Transit time calculator</h3>
         </div>
-        <p className="text-xs text-[#7a8290] mt-1">Pick loading port + destination region — get indicative transit, routing, and total order-to-arrival lead time.</p>
+        <p className="text-xs text-[#5b6577] mt-1">Pick loading port + destination region — get indicative transit, routing, and total order-to-arrival lead time.</p>
       </div>
 
       <div className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -127,7 +127,7 @@ export default function TransitTimeCalculator({ defaultPorts = [], onSelect }) {
               >
                 <Icon name={p.icon} className="w-3.5 h-3.5" />
                 <span>{p.label}</span>
-                <span className={`ml-auto text-[10px] font-mono uppercase tracking-[0.12em] ${pol === p.id ? 'text-white/70' : 'text-[#7a8290]'}`}>
+                <span className={`ml-auto text-[11px] font-mono uppercase tracking-[0.12em] ${pol === p.id ? 'text-white/70' : 'text-[#5b6577]'}`}>
                   {p.source === 'red-sea' ? 'Red Sea' : 'Med'}
                 </span>
               </button>
@@ -137,8 +137,9 @@ export default function TransitTimeCalculator({ defaultPorts = [], onSelect }) {
 
         {/* Destination region picker */}
         <div>
-          <label className="egg-eyebrow mb-2 block">Destination region</label>
+          <label htmlFor="transit-region" className="egg-eyebrow mb-2 block">Destination region</label>
           <select
+            id="transit-region"
             value={region}
             onChange={e => setRegion(e.target.value)}
             className="w-full text-sm font-semibold border border-[#14161a]/15 bg-white text-[#14161a] rounded-lg px-3 py-2.5 focus:border-[#ff6321] focus:ring-2 focus:ring-[#ff6321]/25 outline-none"
@@ -186,9 +187,9 @@ export default function TransitTimeCalculator({ defaultPorts = [], onSelect }) {
 function ResultStat({ label, value, sub }) {
   return (
     <div>
-      <div className="text-[10px] font-mono uppercase tracking-[0.16em] text-[#0b8f84] mb-1">{label}</div>
+      <div className="text-[11px] font-mono uppercase tracking-[0.16em] text-[#087a70] mb-1">{label}</div>
       <div className="egg-display text-2xl sm:text-3xl text-[#14161a] leading-tight">{value}</div>
-      {sub && <div className="text-[10px] text-[#7a8290] mt-0.5">{sub}</div>}
+      {sub && <div className="text-[11px] text-[#5b6577] mt-0.5">{sub}</div>}
     </div>
   )
 }

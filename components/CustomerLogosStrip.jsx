@@ -94,7 +94,7 @@ function CompactCard({ logo }) {
         /* eslint-disable-next-line @next/next/no-img-element */
         <img src={logo.logo_url} alt={logo.label} className="h-8 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity" />
       ) : (
-        <span className="text-[10px] font-semibold text-slate-400 line-clamp-2 leading-tight">{logo.label}</span>
+        <span className="text-[11px] font-semibold text-slate-400 line-clamp-2 leading-tight">{logo.label}</span>
       )}
     </div>
   )

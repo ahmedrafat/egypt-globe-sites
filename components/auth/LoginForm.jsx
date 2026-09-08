@@ -73,11 +73,11 @@ export default function LoginForm() {
       {/* Tabs */}
       <div className="grid grid-cols-2 border-b border-[#14161a]/10 bg-[#f9fafb]">
         <button onClick={() => { setTab('signin'); setError(null); setInfo(null) }}
-          className={`py-4 font-semibold text-sm transition-colors ${tab === 'signin' ? 'bg-white text-[#14161a] border-b-2 border-[#ff6321]' : 'text-[#7a8290] hover:text-[#14161a]'}`}>
+          className={`py-4 font-semibold text-sm transition-colors ${tab === 'signin' ? 'bg-white text-[#14161a] border-b-2 border-[#ff6321]' : 'text-[#5b6577] hover:text-[#14161a]'}`}>
           Sign in
         </button>
         <button onClick={() => { setTab('signup'); setError(null); setInfo(null) }}
-          className={`py-4 font-semibold text-sm transition-colors ${tab === 'signup' ? 'bg-white text-[#14161a] border-b-2 border-[#ff6321]' : 'text-[#7a8290] hover:text-[#14161a]'}`}>
+          className={`py-4 font-semibold text-sm transition-colors ${tab === 'signup' ? 'bg-white text-[#14161a] border-b-2 border-[#ff6321]' : 'text-[#5b6577] hover:text-[#14161a]'}`}>
           Create account
         </button>
       </div>
@@ -106,7 +106,7 @@ export default function LoginForm() {
               className="egg-btn-primary w-full py-3.5 disabled:opacity-60 disabled:cursor-not-allowed">
               {submitting ? '⏳ Signing in…' : 'Sign in →'}
             </button>
-            <p className="text-xs text-center text-[#7a8290]">
+            <p className="text-xs text-center text-[#5b6577]">
               Don't have an account?{' '}
               <button type="button" onClick={() => setTab('signup')} className="egg-link">
                 Create one
@@ -139,7 +139,7 @@ export default function LoginForm() {
               className="egg-btn-primary w-full py-3.5 disabled:opacity-60 disabled:cursor-not-allowed">
               {submitting ? '⏳ Creating…' : 'Create account →'}
             </button>
-            <p className="text-xs text-[#7a8290] text-center leading-relaxed">
+            <p className="text-xs text-[#5b6577] text-center leading-relaxed">
               By creating an account you agree we may contact you about quotes.
               Approval (typically &lt; 24 h) unlocks prices and your scoped
               catalogue.
@@ -154,8 +154,8 @@ export default function LoginForm() {
 function Field({ label, required, children }) {
   return (
     <label className="block">
-      <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-[#5b6472] mb-1.5 block">
-        {label} {required && <span className="text-[#ff6321]">*</span>}
+      <span className="text-[11px] font-mono uppercase tracking-[0.16em] text-[#5b6472] mb-1.5 block">
+        {label} {required && <span className="text-[#c2410c]">*</span>}
       </span>
       {children}
     </label>
@@ -167,7 +167,7 @@ function Grid({ children }) {
 function Input({ type = 'text', value, onChange, ...rest }) {
   return (
     <input type={type} value={value} onChange={e => onChange(e.target.value)}
-      className="egg-input w-full px-4 py-3 rounded-xl border border-[#14161a]/15 bg-white text-[#14161a] text-sm placeholder:text-[#9aa2ae] focus:outline-none focus:border-[#ff6321] focus:ring-2 focus:ring-[#ff6321]/25"
+      className="egg-input w-full px-4 py-3 rounded-xl border border-[#14161a]/15 bg-white text-[#14161a] text-sm placeholder:text-[#67707f] focus:outline-none focus:border-[#ff6321] focus:ring-2 focus:ring-[#ff6321]/25"
       {...rest} />
   )
 }

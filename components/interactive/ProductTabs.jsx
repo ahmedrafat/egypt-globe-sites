@@ -149,6 +149,12 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
 
   const sourceType = (specs.source_type || '').toLowerCase()
   const isSalt = page.path?.startsWith('/products/salt') || sourceType.includes('rock') || sourceType.includes('sea')
+  // Batch 1 — the hero already prints page.description; repeating it here
+  // (and again as the body intro) was the "same paragraph three times"
+  // finding. The overview now opens with a sentence built from the
+  // specification, and falls back to the description only when no spec
+  // fields exist.
+  const overviewLead = specSummary(page, specs, commodity) || page.description
 
   return (
     <section id="product-tabs" className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10">
@@ -157,14 +163,15 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
           <SectionIndex variant="mobile" sections={sectionList} />
           {/* Overview */}
           <section id="overview" className={`space-y-6 ${SECTION_ANCHOR}`}>
-            {page.description && (
-              <p className="text-lg text-[#3f4650] leading-relaxed font-medium">{page.description}</p>
+            <h2 className="sr-only">Overview</h2>
+            {overviewLead && (
+              <p className="text-lg text-[#3f4650] leading-relaxed font-medium">{overviewLead}</p>
             )}
             <QaPromise page={page} />
             {isSalt && <SourceStorySwitcher pageSourceType={specs.source_type} />}
             {!isSalt && (
               <div className="rounded-2xl border border-[#14161a]/10 bg-white p-6">
-                <h3 className="text-lg font-bold text-[#14161a] mb-3 flex items-center gap-2"><Icon name="pin" className="w-4 h-4 text-[#0b8f84]" /> Origin &amp; sourcing</h3>
+                <h3 className="text-lg font-bold text-[#14161a] mb-3 flex items-center gap-2"><Icon name="pin" className="w-4 h-4 text-[#087a70]" /> Origin &amp; sourcing</h3>
                 <p className="text-sm text-[#3f4650] leading-relaxed">
                   {specs.origin || 'Sourced from Egypt Globe Group operations.'}
                   {' '}Provenance is documented on an Egyptian Chamber of Commerce Certificate of Origin and
@@ -183,7 +190,7 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
                 <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[#f6f7f9] ring-1 ring-[#14161a]/10">
                   <Icon name="beaker" className="w-3.5 h-3.5 text-[#5b6472]" />
                 </span>
-                <span className="font-mono text-[10px] tabular-nums tracking-[0.18em] text-[#9aa2ae]">02</span>
+                <span className="font-mono text-[11px] tabular-nums tracking-[0.18em] text-[#67707f]">02</span>
               </div>
               <h2 className="egg-display text-2xl sm:text-3xl leading-tight text-[#14161a]">Specifications</h2>
             </header>
@@ -199,7 +206,7 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
                 <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[#f6f7f9] ring-1 ring-[#14161a]/10">
                   <Icon name="shield" className="w-3.5 h-3.5 text-[#5b6472]" />
                 </span>
-                <span className="font-mono text-[10px] tabular-nums tracking-[0.18em] text-[#9aa2ae]">03</span>
+                <span className="font-mono text-[11px] tabular-nums tracking-[0.18em] text-[#67707f]">03</span>
               </div>
               <h2 className="egg-display text-2xl sm:text-3xl leading-tight text-[#14161a]">Certificates of Analysis</h2>
             </header>
@@ -213,7 +220,7 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
                 <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[#f6f7f9] ring-1 ring-[#14161a]/10">
                   <Icon name="factory" className="w-3.5 h-3.5 text-[#5b6472]" />
                 </span>
-                <span className="font-mono text-[10px] tabular-nums tracking-[0.18em] text-[#9aa2ae]">04</span>
+                <span className="font-mono text-[11px] tabular-nums tracking-[0.18em] text-[#67707f]">04</span>
               </div>
               <h2 className="egg-display text-2xl sm:text-3xl leading-tight text-[#14161a]">Applications & packing</h2>
             </header>
@@ -230,7 +237,7 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
                 <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[#f6f7f9] ring-1 ring-[#14161a]/10">
                   <Icon name="ship" className="w-3.5 h-3.5 text-[#5b6472]" />
                 </span>
-                <span className="font-mono text-[10px] tabular-nums tracking-[0.18em] text-[#9aa2ae]">05</span>
+                <span className="font-mono text-[11px] tabular-nums tracking-[0.18em] text-[#67707f]">05</span>
               </div>
               <h2 className="egg-display text-2xl sm:text-3xl leading-tight text-[#14161a]">Logistics & transit</h2>
             </header>
@@ -248,7 +255,7 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
                 <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[#f6f7f9] ring-1 ring-[#14161a]/10">
                   <Icon name="doc" className="w-3.5 h-3.5 text-[#5b6472]" />
                 </span>
-                <span className="font-mono text-[10px] tabular-nums tracking-[0.18em] text-[#9aa2ae]">06</span>
+                <span className="font-mono text-[11px] tabular-nums tracking-[0.18em] text-[#67707f]">06</span>
               </div>
               <h2 className="egg-display text-2xl sm:text-3xl leading-tight text-[#14161a]">Export documents</h2>
             </header>
@@ -262,7 +269,7 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
                 <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[#f6f7f9] ring-1 ring-[#14161a]/10">
                   <Icon name="mail" className="w-3.5 h-3.5 text-[#5b6472]" />
                 </span>
-                <span className="font-mono text-[10px] tabular-nums tracking-[0.18em] text-[#9aa2ae]">07</span>
+                <span className="font-mono text-[11px] tabular-nums tracking-[0.18em] text-[#67707f]">07</span>
               </div>
               <h2 className="egg-display text-2xl sm:text-3xl leading-tight text-[#14161a]">Request a quote</h2>
             </header>
@@ -271,13 +278,13 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
         </div>
 
         {/* Sticky right rail — commercial summary, then document contents */}
-        <aside className="lg:sticky lg:top-24 self-start space-y-4">
+        <div className="lg:sticky lg:top-24 self-start space-y-4">
           <QuoteCta page={page} />
           {(page.moq_mt || page.lead_time_min_weeks || page.hs_code || page.price_indication) && (
             <CommercialCard page={page} visibility={visibility} />
           )}
           <SectionIndex variant="desktop" sections={sectionList} />
-        </aside>
+        </div>
       </div>
     </section>
   )
@@ -290,7 +297,7 @@ function QaPromise({ page }) {
   return (
     <div className="rounded-2xl ring-1 ring-[#0fb5a5]/35 bg-[#f2fbfa] p-5 sm:p-6">
       <div className="flex items-start gap-3">
-        <span className="shrink-0 inline-flex w-9 h-9 items-center justify-center rounded-lg bg-white ring-1 ring-[#0fb5a5]/40 text-[#0b8f84]"><Icon name="shield" className="w-[18px] h-[18px]" /></span>
+        <span className="shrink-0 inline-flex w-9 h-9 items-center justify-center rounded-lg bg-white ring-1 ring-[#0fb5a5]/40 text-[#087a70]"><Icon name="shield" className="w-[18px] h-[18px]" /></span>
         <div>
           <h3 className="text-base font-bold text-[#14161a]">Quality at the Core — how this product is verified</h3>
           <p className="text-sm text-[#3f4650] leading-relaxed mt-1.5">
@@ -323,8 +330,8 @@ function KeyStatsStrip({ page, specs }) {
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
       {items.map(it => (
         <div key={it.label} className="rounded-xl border border-[#14161a]/10 bg-white p-3">
-          <div className="text-[10px] uppercase tracking-wider text-[#7a8290] font-bold">{it.label}</div>
-          <div className="text-base font-semibold text-[#0b8f84] font-mono mt-1">{it.value}</div>
+          <div className="text-[11px] uppercase tracking-wider text-[#5b6577] font-bold">{it.label}</div>
+          <div className="text-base font-semibold text-[#087a70] font-mono mt-1">{it.value}</div>
         </div>
       ))}
     </div>
@@ -336,11 +343,11 @@ function QaChainStrip() {
     <div className="bg-white border border-[#14161a]/10 rounded-2xl overflow-hidden shadow-sm">
       <div className="px-5 sm:px-6 py-4 border-b border-[#14161a]/10 bg-[#f9fafb] flex items-center justify-between gap-3">
         <h3 className="font-bold text-lg text-[#14161a] flex items-center gap-2">
-          <Icon name="shield" className="w-5 h-5 text-[#0b8f84]" /> QA verification chain — extraction to destination port
+          <Icon name="shield" className="w-5 h-5 text-[#087a70]" /> QA verification chain — extraction to destination port
         </h3>
-        <span className="text-xs font-medium text-[#7a8290] hidden sm:inline">5 gates · every consignment</span>
+        <span className="text-xs font-medium text-[#5b6577] hidden sm:inline">5 gates · every consignment</span>
       </div>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto" tabIndex={0}>
         <table className="w-full text-sm">
           <thead className="bg-[#f9fafb] border-b border-[#14161a]/10">
             <tr>
@@ -364,7 +371,40 @@ function QaChainStrip() {
 }
 
 function Th({ children, className = '' }) {
-  return <th className={`text-left text-[10px] uppercase tracking-wider font-bold text-[#7a8290] px-4 py-2 ${className}`}>{children}</th>
+  return <th className={`text-left text-[11px] uppercase tracking-wider font-bold text-[#5b6577] px-4 py-2 ${className}`}>{children}</th>
+}
+
+const DEFAULT_SALT_METHODS = [
+  [/nacl/, 'AOAC 920.179 / ISO 27053'],
+  [/calcium|\bca\b|ca_max/, 'Per EN 16811-1 / ISO 2482'],
+  [/magnesium|\bmg\b|mg_max/, 'Per EN 16811-1 / ISO 2482'],
+  [/sulph|sulf|so4/, 'Gravimetric, ISO 2480'],
+  [/insolub/, 'AOAC 925.45 / EN 1936'],
+  [/moisture/, 'ISO 27053'],
+  [/particle|sieve|grain|granulom/, 'ISO 13320 (laser diffraction) / sieve'],
+  [/bulk density/, 'ASTM D7263 / EN 1097-3'],
+]
+
+/**
+ * specSummary — one factual sentence from the spec sheet for the overview.
+ * Uses only fields that exist on the row; never invents a value.
+ */
+function specSummary(page, specs, commodity) {
+  const parts = []
+  const src = specs.origin || specs.source_type
+  if (src) parts.push(`${fmt(src)}`)
+  if (specs.nacl_min) parts.push(`NaCl ${String(specs.nacl_min).includes('%') ? '' : '≥ '}${fmt(specs.nacl_min)}`)
+  if (specs.purity && !specs.nacl_min) parts.push(`purity ${fmt(specs.purity)}`)
+  if (specs.particle_size) parts.push(`particle size ${fmt(specs.particle_size)}`)
+  if (specs.grain_label) parts.push(`${fmt(specs.grain_label).toLowerCase()} grain`)
+  if (specs.moisture_max) parts.push(`moisture ${String(specs.moisture_max).match(/^[≤<]/) ? '' : '≤ '}${fmt(specs.moisture_max)}`)
+  const moq = page.moq_mt || commodity?.moq_mt || specs.moq_mt
+  if (moq) parts.push(`minimum order ${fmt(moq)}${/mt|t\b/i.test(String(moq)) ? '' : ' MT'}`)
+  const lead = specs.lead_time || commodity?.lead_time || specs.lead_time_weeks
+  if (lead) parts.push(`lead time ${fmt(lead)}`)
+  if (parts.length < 2) return ''
+  const first = parts[0].charAt(0).toUpperCase() + parts[0].slice(1)
+  return `${first} · ${parts.slice(1).join(' · ')}. Every lot is tested at source and again at the port of loading; the Certificate of Analysis is issued before the Bill of Lading.`
 }
 
 /**
@@ -388,11 +428,23 @@ function SpecSheet({ page, specs, commodity, qualitySpecs }) {
       rows[k] = { key: k, label: q.parameter_name || pretty(k), value: val, group: classify(k) }
     }
     rows[k].method = q.test_method && q.test_method !== 'Per applicable standard' ? q.test_method : rows[k].method
-    rows[k].standard = q.standard_ref || rows[k].standard
+    // ISO 9001 is the QA-system reference, not a test standard for a
+    // parameter; showing it as the "standard" of Appearance or Shelf life
+    // read as filler (audit UX2). Keep the sampling frequency, drop the ref.
+    rows[k].standard = q.standard_ref && !/ISO\s*9001/i.test(q.standard_ref) ? q.standard_ref : rows[k].standard
     rows[k].freq = q.sampling_freq || rows[k].freq
     rows[k].required = !!q.required
   }
 
+  // Fill the test-method column for the core salt parameters when the row
+  // carries none. These are the methods the salt hub already publishes for
+  // the same parameters, so the SKU sheet and the hub agree.
+  const isSaltSheet = (page.path || '').startsWith('/products/salt') || /rock|sea/i.test(String(specs.source_type || ''))
+  if (isSaltSheet) for (const r of Object.values(rows)) {
+    if (r.method) continue
+    const key = `${r.key} ${r.label}`.toLowerCase()
+    for (const [re, m] of DEFAULT_SALT_METHODS) if (re.test(key)) { r.method = m; break }
+  }
   const byGroup = g => Object.values(rows).filter(r => r.group === g).sort((a, b) => (b.required ? 1 : 0) - (a.required ? 1 : 0))
   const physical = byGroup('physical')
   const chemical = byGroup('chemical')
@@ -454,7 +506,7 @@ function SpecSheet({ page, specs, commodity, qualitySpecs }) {
         ))}
       </Table>
 
-      <p className="px-1 text-[11px] text-[#7a8290] leading-relaxed">
+      <p className="px-1 text-[11px] text-[#5b6577] leading-relaxed">
         ● Required parameter — tested on every shipment before the Bill of Lading. Values are contractual limits guaranteed at the port of loading.
         Independent third-party verification is typically 0.3–0.5 % of FOB value.
         {commodity && <> Commodity master: <span className="font-mono font-semibold text-[#3f4650]">{commodity.code || commodity.sku || commodity.name}</span>.</>}
@@ -462,7 +514,7 @@ function SpecSheet({ page, specs, commodity, qualitySpecs }) {
 
       {page.datasheet_url && (
         <a href={page.datasheet_url} target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-2 px-5 py-3 rounded-xl bg-[#f2fbfa] ring-1 ring-[#0fb5a5]/30 text-sm font-semibold text-[#0b8f84] hover:bg-[#e6f8f6] transition-colors">
+          className="flex items-center gap-2 px-5 py-3 rounded-xl bg-[#f2fbfa] ring-1 ring-[#0fb5a5]/30 text-sm font-semibold text-[#087a70] hover:bg-[#e6f8f6] transition-colors">
           <Icon name="doc" className="w-4 h-4" /> Download Technical Data Sheet (PDF) →
         </a>
       )}
@@ -474,10 +526,10 @@ function Table({ title, icon, cols, children, count }) {
   return (
     <div className="bg-white border border-[#14161a]/10 rounded-2xl overflow-hidden shadow-sm">
       <div className="px-5 sm:px-6 py-4 border-b border-[#14161a]/10 bg-[#f9fafb] flex items-center justify-between gap-3">
-        <h3 className="font-bold text-lg text-[#14161a] flex items-center gap-2"><Icon name={icon} className="w-5 h-5 text-[#0b8f84]" /> {title}</h3>
-        {count != null && <span className="text-xs font-medium text-[#7a8290]">{count} parameters</span>}
+        <h3 className="font-bold text-lg text-[#14161a] flex items-center gap-2"><Icon name={icon} className="w-5 h-5 text-[#087a70]" /> {title}</h3>
+        {count != null && <span className="text-xs font-medium text-[#5b6577]">{count} parameters</span>}
       </div>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto" tabIndex={0}>
         <table className="w-full text-sm">
           <thead className="bg-white border-b border-[#14161a]/10"><tr>{cols.map((c, i) => <Th key={c} className={i >= 2 ? 'hidden md:table-cell' : ''}>{c}</Th>)}</tr></thead>
           <tbody className="divide-y divide-[#14161a]/10">{children}</tbody>
@@ -490,10 +542,10 @@ function Table({ title, icon, cols, children, count }) {
 function SpecRow({ r }) {
   return (
     <tr className="hover:bg-[#f9fafb]">
-      <td className="px-4 py-2.5 align-top text-[#14161a] text-xs font-semibold">{r.label}{r.required && <span className="ml-1 text-[#d9501a]" title="Required per shipment">●</span>}</td>
+      <td className="px-4 py-2.5 align-top text-[#14161a] text-xs font-semibold">{r.label}{r.required && <span className="ml-1 text-[#c2410c]" title="Required per shipment">●</span>}</td>
       <td className="px-4 py-2.5 align-top text-[#14161a] font-mono text-xs font-bold">{r.value}</td>
       <td className="px-4 py-2.5 align-top text-[#3f4650] text-xs hidden md:table-cell">{r.method || '—'}</td>
-      <td className="px-4 py-2.5 align-top text-[#7a8290] text-xs hidden md:table-cell">{r.standard || '—'}{r.freq ? <span className="block text-[10px]">{r.freq}</span> : null}</td>
+      <td className="px-4 py-2.5 align-top text-[#5b6577] text-xs hidden md:table-cell">{r.standard || '—'}{r.freq ? <span className="block text-[11px]">{r.freq}</span> : null}</td>
     </tr>
   )
 }
@@ -501,7 +553,7 @@ function SpecRow({ r }) {
 function Id({ label, value, mono }) {
   return (
     <div className="min-w-0">
-      <div className="text-[10px] uppercase tracking-wider text-[#7a8290] font-bold">{label}</div>
+      <div className="text-[11px] uppercase tracking-wider text-[#5b6577] font-bold">{label}</div>
       <div className={`text-sm text-[#14161a] font-semibold truncate ${mono ? 'font-mono' : ''}`} title={value}>{value}</div>
     </div>
   )
@@ -511,12 +563,12 @@ function CertificationsBlock({ certs }) {
   return (
     <div className="bg-white border border-[#14161a]/10 rounded-2xl p-6 shadow-sm">
       <h3 className="font-bold text-lg text-[#14161a] mb-4 flex items-center gap-2">
-        <Icon name="shield" className="w-5 h-5 text-[#0b8f84]" /> Certifications &amp; standards
+        <Icon name="shield" className="w-5 h-5 text-[#087a70]" /> Certifications &amp; standards
       </h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         {certs.map(c => (
           <div key={c} className="flex items-start gap-2 p-3 rounded-lg border border-[#14161a]/10 bg-[#f9fafb]">
-            <Icon name="check" className="w-4 h-4 text-[#0b8f84] shrink-0 mt-0.5" strokeWidth={2.2} />
+            <Icon name="check" className="w-4 h-4 text-[#087a70] shrink-0 mt-0.5" strokeWidth={2.2} />
             <span className="text-sm text-[#3f4650] font-semibold">{c}</span>
           </div>
         ))}
@@ -528,7 +580,7 @@ function CertificationsBlock({ certs }) {
 function ApplicationsGrid({ apps, pageTitle }) {
   if (!apps.length) {
     return (
-      <div className="rounded-2xl border border-dashed border-[#14161a]/10 bg-[#f9fafb] p-8 text-center text-sm text-[#7a8290]">
+      <div className="rounded-2xl border border-dashed border-[#14161a]/10 bg-[#f9fafb] p-8 text-center text-sm text-[#5b6577]">
         No specific application taxonomy linked. {pageTitle} is suitable for general industrial / commercial use — contact our export desk for fit-to-application advice.
       </div>
     )
@@ -536,7 +588,7 @@ function ApplicationsGrid({ apps, pageTitle }) {
   return (
     <div className="bg-white border border-[#14161a]/10 rounded-2xl p-6 shadow-sm">
       <h3 className="font-bold text-lg text-[#14161a] mb-4 flex items-center gap-2">
-        <Icon name="factory" className="w-5 h-5 text-[#0b8f84]" /> Where {pageTitle} is used
+        <Icon name="factory" className="w-5 h-5 text-[#087a70]" /> Where {pageTitle} is used
       </h3>
       <div className="grid sm:grid-cols-2 gap-3">
         {apps.map(app => (
@@ -546,8 +598,8 @@ function ApplicationsGrid({ apps, pageTitle }) {
               <Icon name={APPLICATION_ICON[app.id] || 'factory'} className="w-5 h-5" />
             </div>
             <div className="flex-1 min-w-0">
-              <div className="font-bold text-[#14161a] group-hover:text-[#0b8f84] transition-colors">{app.label}</div>
-              <div className="text-xs text-[#7a8290] mt-0.5">View matching products →</div>
+              <div className="font-bold text-[#14161a] group-hover:text-[#087a70] transition-colors">{app.label}</div>
+              <div className="text-xs text-[#5b6577] mt-0.5">View matching products →</div>
             </div>
           </Link>
         ))}
@@ -570,7 +622,7 @@ function LoadingPortsCard({ ports, regions }) {
               <span key={p} className="inline-flex items-center text-xs font-semibold bg-white text-[#8a6d3b] border border-[#b8862b]/45 px-2.5 py-1 rounded-full">{p}</span>
             ))}
           </div>
-          <p className="text-[11px] text-[#7a8290] mt-2">Resident EGG stevedoring, agency and port-QC teams at every berth.</p>
+          <p className="text-[11px] text-[#5b6577] mt-2">Resident EGG stevedoring, agency and port-QC teams at every berth.</p>
         </div>
       )}
       {regions.length > 0 && (
@@ -622,13 +674,13 @@ function CommercialCard({ page, visibility }) {
       <div className="grid grid-cols-2 gap-3 text-xs">
         {page.moq_mt && (
           <div>
-            <div className="text-[#7a8290] mb-0.5">Min. order</div>
+            <div className="text-[#5b6577] mb-0.5">Min. order</div>
             <div className="font-bold text-[#14161a] text-base">{Number(page.moq_mt).toLocaleString()} MT</div>
           </div>
         )}
         {(page.lead_time_min_weeks || page.lead_time_max_weeks) && (
           <div>
-            <div className="text-[#7a8290] mb-0.5">Lead</div>
+            <div className="text-[#5b6577] mb-0.5">Lead</div>
             <div className="font-bold text-[#14161a] text-base">
               {page.lead_time_min_weeks && page.lead_time_max_weeks
                 ? `${page.lead_time_min_weeks}–${page.lead_time_max_weeks} wk`
@@ -638,13 +690,13 @@ function CommercialCard({ page, visibility }) {
         )}
         {page.hs_code && (
           <div className="col-span-2">
-            <div className="text-[#7a8290] mb-0.5">HS code</div>
+            <div className="text-[#5b6577] mb-0.5">HS code</div>
             <div className="font-mono font-bold text-[#14161a]">{page.hs_code}</div>
           </div>
         )}
         {page.price_indication && (
           <div className="col-span-2 pt-2 border-t border-[#ff6321]/25">
-            <div className="text-[#7a8290] mb-0.5">Indicative price</div>
+            <div className="text-[#5b6577] mb-0.5">Indicative price</div>
             <PriceDisplay price={page.price_indication} visibility={visibility} size="lg" placeholder="Sign in to see price" />
           </div>
         )}

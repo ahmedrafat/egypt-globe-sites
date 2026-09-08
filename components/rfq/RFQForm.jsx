@@ -318,10 +318,10 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
             : 'Your request is in our queue. Our export desk reviews every RFQ within 1 hour and replies with a priced offer within 24 hours.'}
         </p>
         <div className="inline-block bg-white border border-[#14161a]/15 rounded-xl px-5 py-3 mb-6">
-          <div className="text-[10px] uppercase tracking-wider font-bold text-[#8a93a3]">Reference</div>
+          <div className="text-[11px] uppercase tracking-wider font-bold text-[#67707f]">Reference</div>
           <div className="font-mono font-bold text-lg text-[#14161a]">{refCode}</div>
         </div>
-        <p className="text-sm text-[#7a8290]">
+        <p className="text-sm text-[#5b6577]">
           Save this reference — quote any reply about it.
         </p>
       </div>
@@ -393,7 +393,7 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
                       <Icon name={c.icon} className="w-5 h-5" />
                       <div className="flex-1 min-w-0">
                         <div className="text-sm font-bold leading-tight truncate">{c.label}</div>
-                        <div className={`text-[10px] ${isActive ? 'text-white/70' : 'text-[#7a8290]'}`}>
+                        <div className={`text-[11px] ${isActive ? 'text-white/70' : 'text-[#5b6577]'}`}>
                           {count} {count === 1 ? 'product' : 'products'}
                         </div>
                       </div>
@@ -405,7 +405,7 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
             {form.productCategory && (
               <button type="button"
                 onClick={() => setForm(f => ({ ...f, productCategory: '', productPath: '', commodity: '' }))}
-                className="text-xs text-[#7a8290] hover:text-[#0b8f84] mt-2 inline-flex items-center gap-1">
+                className="text-xs text-[#5b6577] hover:text-[#087a70] mt-2 inline-flex items-center gap-1">
                 ← Change category
               </button>
             )}
@@ -423,7 +423,7 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
                   </option>
                 ))}
               </select>
-              <p className="text-[11px] text-[#7a8290] mt-1.5">
+              <p className="text-[11px] text-[#5b6577] mt-1.5">
                 {productsInCategory.length} {productsInCategory.length === 1 ? 'product' : 'products'} in this category.
               </p>
             </Field>
@@ -442,7 +442,7 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
             <div className="sm:col-span-2 rounded-2xl bg-[#f2fbfa] ring-1 ring-[#0fb5a5]/35 p-5 space-y-4">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <div className="font-bold text-[#0b8f84] flex items-center gap-2">
+                  <div className="font-bold text-[#087a70] flex items-center gap-2">
                     Auto-filled from catalogue: <span className="text-[#14161a]">{selected.title}</span>
                   </div>
                   <div className="text-xs text-[#3f4650] flex flex-wrap gap-x-4 gap-y-1 mt-1">
@@ -461,7 +461,7 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
               {/* Specs grid */}
               {specEntries.length > 0 && (
                 <div>
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-[#7a8290] mb-2">
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-[#5b6577] mb-2">
                     Quality specifications ({specEntries.length} parameters)
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
@@ -474,7 +474,7 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
                   </div>
                   {specEntries.length > 4 && (
                     <button type="button" onClick={() => setShowAllSpecs(s => !s)}
-                      className="mt-2 text-xs font-semibold text-[#0b8f84] hover:underline">
+                      className="mt-2 text-xs font-semibold text-[#087a70] hover:underline">
                       {showAllSpecs ? '▴ Show fewer specs' : `▾ Show all ${specEntries.length} parameters`}
                     </button>
                   )}
@@ -484,12 +484,12 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
               {/* Certifications */}
               {selected.certifications?.length > 0 && (
                 <div>
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-[#7a8290] mb-1.5">
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-[#5b6577] mb-1.5">
                     Certifications & standards
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {selected.certifications.map(c => (
-                      <span key={c} className="text-[11px] font-semibold bg-white text-[#0b8f84] border border-[#0fb5a5]/45 px-2 py-0.5 rounded-full">
+                      <span key={c} className="text-[11px] font-semibold bg-white text-[#087a70] border border-[#0fb5a5]/45 px-2 py-0.5 rounded-full">
                         ✓ {c}
                       </span>
                     ))}
@@ -497,7 +497,7 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
                 </div>
               )}
 
-              <div className="text-[11px] text-[#7a8290] leading-relaxed border-t border-[#0fb5a5]/25 pt-2">
+              <div className="text-[11px] text-[#5b6577] leading-relaxed border-t border-[#0fb5a5]/25 pt-2">
                 The full specification sheet ships with your quote. Adjust anything below if your tender requires different parameters.
               </div>
             </div>
@@ -538,7 +538,7 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
                 </optgroup>
               ))}
             </select>
-            <span className="text-[11px] text-[#7a8290] mt-1 block">Or type a custom port in the box below.</span>
+            <span className="text-[11px] text-[#5b6577] mt-1 block">Or type a custom port in the box below.</span>
             <Input value={form.dest_port} onChange={v => update('dest_port', v)} placeholder="Custom destination port" />
           </Field>
 
@@ -546,13 +546,13 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
             {/* Suggested for THIS product (from page.packing_options) */}
             {selected?.packing_options?.length > 0 && (
               <>
-                <div className="text-[10px] font-bold uppercase tracking-wider text-[#8a93a3] mb-1.5">Suggested for this product</div>
+                <div className="text-[11px] font-bold uppercase tracking-wider text-[#67707f] mb-1.5">Suggested for this product</div>
                 <div className="flex flex-wrap gap-2 mb-3">
                   {selected.packing_options.map(p => (
                     <button key={p} type="button" onClick={() => update('packaging', p)}
                       className={`text-xs font-semibold px-3 py-1.5 rounded-full border transition-colors ${form.packaging === p
-                        ? 'bg-[#0b8f84] text-white border-[#0b8f84]'
-                        : 'bg-white text-[#3f4650] border-[#14161a]/15 hover:border-[#0fb5a5] hover:text-[#0b8f84]'}`}>
+                        ? 'bg-[#087a70] text-white border-[#087a70]'
+                        : 'bg-white text-[#3f4650] border-[#14161a]/15 hover:border-[#0fb5a5] hover:text-[#087a70]'}`}>
                       {p}
                     </button>
                   ))}
@@ -562,7 +562,7 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
             {/* Drop 141 — comprehensive default chip-rail covering the
                packing types every product can be supplied in. Includes
                PE bags, all FIBC sizes, OEM and bag-in-jumbo. */}
-            <div className="text-[10px] font-bold uppercase tracking-wider text-[#8a93a3] mb-1.5">Or pick from common formats</div>
+            <div className="text-[11px] font-bold uppercase tracking-wider text-[#67707f] mb-1.5">Or pick from common formats</div>
             <div className="flex flex-wrap gap-2 mb-3">
               {[
                 'Loose Bulk',
@@ -583,8 +583,8 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
               ].map(p => (
                 <button key={p} type="button" onClick={() => update('packaging', p)}
                   className={`text-xs font-semibold px-3 py-1.5 rounded-full border transition-colors ${form.packaging === p
-                    ? 'bg-[#ff6321] text-white border-[#ff6321]'
-                    : 'bg-white text-[#3f4650] border-[#14161a]/15 hover:border-[#ff6321] hover:text-[#d9501a]'}`}>
+                    ? 'bg-[#d0450f] text-white border-[#ff6321]'
+                    : 'bg-white text-[#3f4650] border-[#14161a]/15 hover:border-[#ff6321] hover:text-[#c2410c]'}`}>
                   {p}
                 </button>
               ))}
@@ -609,11 +609,11 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
                     <Icon name={m.icon} className="w-4 h-4 text-[#14161a]" />
                     <span className="font-bold text-sm text-[#14161a]">{m.label}</span>
                   </div>
-                  <span className="text-[10px] text-[#7a8290] leading-tight">{m.sub}</span>
+                  <span className="text-[11px] text-[#5b6577] leading-tight">{m.sub}</span>
                 </button>
               ))}
             </div>
-            <span className="text-[11px] text-[#7a8290] mt-2 block">
+            <span className="text-[11px] text-[#5b6577] mt-2 block">
               <strong>Tip:</strong> any inner bag (PP / PE / Kraft / Laminated) can be stacked inside a 1MT FIBC and loaded on a bulk vessel — combines retail-ready packing with bulk economics.
             </span>
           </Field>
@@ -644,10 +644,10 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
 
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
         <button type="submit" disabled={submitting}
-          className={`flex-1 inline-flex items-center justify-center gap-2 ${isCoa ? 'bg-[#0b8f84] hover:bg-[#14161a] shadow-[0_10px_30px_-10px_rgba(15,181,165,.55)]' : 'bg-[#ff6321] hover:bg-[#14161a] shadow-[0_10px_30px_-10px_rgba(255,99,33,.55)]'} disabled:bg-[#c9ced6] disabled:cursor-not-allowed text-white font-semibold px-7 py-4 rounded-full transition-all hover:scale-[1.02] disabled:transform-none`}>
+          className={`flex-1 inline-flex items-center justify-center gap-2 ${isCoa ? 'bg-[#087a70] hover:bg-[#14161a] shadow-[0_10px_30px_-10px_rgba(15,181,165,.55)]' : 'bg-[#d0450f] hover:bg-[#14161a] shadow-[0_10px_30px_-10px_rgba(255,99,33,.55)]'} disabled:bg-[#c9ced6] disabled:cursor-not-allowed text-white font-semibold px-7 py-4 rounded-full transition-all hover:scale-[1.02] disabled:transform-none`}>
           {submitting ? '⏳ Submitting…' : (isCoa ? 'Request CoA' : 'Submit RFQ')}
         </button>
-        <p className="text-xs text-[#7a8290] text-center sm:text-left max-w-xs">
+        <p className="text-xs text-[#5b6577] text-center sm:text-left max-w-xs">
           By submitting, you agree we may contact you about your RFQ. We do not send marketing email.
         </p>
       </div>
@@ -662,7 +662,7 @@ function FormSection({ title, subtitle, children }) {
     <div className="egg-card rounded-2xl p-6 sm:p-7 hover:transform-none">
       <div className="mb-5">
         <h2 className="egg-display text-2xl text-[#14161a]">{title}</h2>
-        {subtitle && <p className="text-sm text-[#7a8290] mt-0.5">{subtitle}</p>}
+        {subtitle && <p className="text-sm text-[#5b6577] mt-0.5">{subtitle}</p>}
       </div>
       {children}
     </div>
@@ -677,14 +677,14 @@ function Field({ label, full = false, required = false, children }) {
   return (
     <label className={`block ${full ? 'sm:col-span-2' : ''}`}>
       <span className="text-xs font-semibold text-[#3f4650] mb-1.5 block">
-        {label} {required && <span className="text-[#ff6321]">*</span>}
+        {label} {required && <span className="text-[#c2410c]">*</span>}
       </span>
       {children}
     </label>
   )
 }
 
-const inputCls = 'w-full px-4 py-3 rounded-xl border border-[#14161a]/15 bg-white text-[#14161a] text-sm placeholder:text-[#9aa2ae] focus:outline-none focus:ring-2 focus:ring-[#ff6321]/25 focus:border-[#ff6321] transition-shadow'
+const inputCls = 'w-full px-4 py-3 rounded-xl border border-[#14161a]/15 bg-white text-[#14161a] text-sm placeholder:text-[#67707f] focus:outline-none focus:ring-2 focus:ring-[#ff6321]/25 focus:border-[#ff6321] transition-shadow'
 
 function Input({ value, onChange, type = 'text', ...rest }) {
   return <input type={type} value={value} onChange={e => onChange(e.target.value)} className={inputCls} {...rest} />

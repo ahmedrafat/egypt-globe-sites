@@ -5,6 +5,8 @@
  * the page has rich product data, gallery, child grid for category
  * landings, related-pages strip, and a CTA banner.
  */
+import Image from 'next/image'
+import CardImage from './ui/CardImage'
 import HeroMotif from './HeroMotif'
 import Link from 'next/link'
 import MarkdownBody from './MarkdownBody'
@@ -65,6 +67,13 @@ function buildCrumbs(page) {
 }
 
 const PRODUCT_DIVISION_BY_PATH = Object.fromEntries(PRODUCT_DIVISIONS.map(d => [d.path, d]))
+
+/** snake_case enum values (extra_coarse, kiln_dried) → readable chip text. */
+function humanise(v) {
+  const s = String(v ?? '')
+  return /^[a-z]+(_[a-z0-9]+)+$/.test(s) ? s.replace(/_/g, ' ').replace(/^\w/, c => c.toUpperCase()) : s
+}
+
 
 export default async function PageRenderer({ page }) {
   const cat = categoryMetaFor(page.category, page.path)
@@ -251,9 +260,8 @@ export default async function PageRenderer({ page }) {
                taller than 16:9 on mobile, so object-cover crops top+bottom —
                object-top favours the top of the frame, where the subject
                usually sits. */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={page.hero_photo_url} alt=""
-              className="absolute inset-0 w-full h-full object-cover object-top opacity-[0.38]" />
+            <Image src={page.hero_photo_url} alt="" fill priority sizes="100vw"
+              className="object-cover object-top opacity-[0.38]" />
             <div className="absolute inset-0 bg-gradient-to-b from-[#03182d]/70 via-[#03182d]/60 to-[#03182d]/85" />
           </div>
         )}
@@ -304,7 +312,7 @@ export default async function PageRenderer({ page }) {
             )}
             {page.specs?.grain_label && (
               <span className="egg-chip egg-chip-dark hidden sm:inline-flex text-xs">
-                {page.specs.grain_label}
+                {humanise(page.specs.grain_label)}
               </span>
             )}
             {page.hs_code && (
@@ -412,11 +420,11 @@ export default async function PageRenderer({ page }) {
       {isProductsHub && (
         <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 border-t border-[#14161a]/10 egg-reveal">
           <div className="mb-8">
-            <span className="egg-eyebrow text-[#0b8f84]">
+            <span className="egg-eyebrow text-[#087a70]">
               <span aria-hidden="true"></span> Product catalogue
             </span>
             <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-2 mt-4">Browse our 6 product divisions</h2>
-            <p className="text-[#7a8290]">Each division ships from Egyptian ports under FOB / CIF / CFR Incoterms with per-shipment certificate of analysis.</p>
+            <p className="text-[#5b6577]">Each division ships from Egyptian ports under FOB / CIF / CFR Incoterms with per-shipment certificate of analysis.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
             {PRODUCT_DIVISIONS.map(div => (
@@ -431,7 +439,7 @@ export default async function PageRenderer({ page }) {
                     {div.label}
                   </h3>
                   <p className="text-sm text-[#3f4650] mt-1.5 leading-relaxed">{div.blurb}</p>
-                  <div className="mt-4 inline-flex items-center text-sm font-semibold text-[#0b8f84] group-hover:gap-2 gap-1 transition-all">
+                  <div className="mt-4 inline-flex items-center text-sm font-semibold text-[#087a70] group-hover:gap-2 gap-1 transition-all">
                     Explore {div.label.toLowerCase()} <span>→</span>
                   </div>
                 </div>
@@ -460,29 +468,27 @@ export default async function PageRenderer({ page }) {
                   className="egg-card group overflow-hidden">
                   <div className="aspect-[16/9] bg-[#f9fafb] overflow-hidden rounded-t-2xl">
                     {p.hero_photo_url ? (
-                      /* eslint-disable-next-line @next/next/no-img-element */
-                      <img src={p.hero_photo_url} alt={p.title}
-                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
+                      <CardImage src={p.hero_photo_url} className="group-hover:scale-105 transition-transform duration-500" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-[#14161a]/20 bg-gradient-to-br from-[#f2fbfa] to-[#f9fafb]"><Icon name="cube" className="w-10 h-10" strokeWidth={1.25} /></div>
                     )}
                   </div>
                   <div className="p-4">
                     {p.hs_code && (
-                      <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-[#8a93a3] mb-1">HS {p.hs_code}</div>
+                      <div className="text-[11px] font-mono uppercase tracking-[0.14em] text-[#67707f] mb-1">HS {p.hs_code}</div>
                     )}
-                    <h3 className="text-sm font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#0b8f84] transition-colors">
+                    <h3 className="text-sm font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#087a70] transition-colors">
                       {p.title}
                     </h3>
                     {p.certifications?.length > 0 && (
-                      <div className="text-xs text-[#7a8290] mt-1.5 line-clamp-1">{p.certifications.slice(0, 3).join(' · ')}</div>
+                      <div className="text-xs text-[#5b6577] mt-1.5 line-clamp-1">{p.certifications.slice(0, 3).join(' · ')}</div>
                     )}
                   </div>
                 </Link>
               ))}
             </div>
           ) : (
-            <div className="egg-panel p-8 text-center text-[#7a8290]">
+            <div className="egg-panel p-8 text-center text-[#5b6577]">
               No products tagged for this application yet. <Link href="/rfq" className="egg-link">Request a quote →</Link>
             </div>
           )}
@@ -505,24 +511,22 @@ export default async function PageRenderer({ page }) {
                 className="egg-card group overflow-hidden">
                 <div className="aspect-[16/9] bg-[#f9fafb] overflow-hidden rounded-t-2xl">
                   {p.hero_photo_url ? (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img src={p.hero_photo_url} alt={p.title}
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
+                    <CardImage src={p.hero_photo_url} className="group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[#14161a]/20" style={{ background: `linear-gradient(135deg, ${cat.color}14, #f9fafb)` }}><Icon name={CATEGORY_ICON[page.category] || 'grid'} className="w-10 h-10" strokeWidth={1.25} /></div>
                   )}
                 </div>
                 <div className="p-4">
                   {p.hs_code && (
-                    <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-[#8a93a3] mb-1">HS {p.hs_code}</div>
+                    <div className="text-[11px] font-mono uppercase tracking-[0.14em] text-[#67707f] mb-1">HS {p.hs_code}</div>
                   )}
-                  <h3 className="text-sm font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#0b8f84] transition-colors">
+                  <h3 className="text-sm font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#087a70] transition-colors">
                     {p.title}
                   </h3>
                   {p.price_indication && visibility.showPrices ? (
-                    <p className="text-xs text-[#d9501a] font-semibold mt-1.5 line-clamp-1">{p.price_indication}</p>
+                    <p className="text-xs text-[#c2410c] font-semibold mt-1.5 line-clamp-1">{p.price_indication}</p>
                   ) : p.description ? (
-                    <p className="text-xs text-[#7a8290] mt-1 line-clamp-2">{p.description}</p>
+                    <p className="text-xs text-[#5b6577] mt-1 line-clamp-2">{p.description}</p>
                   ) : null}
                 </div>
               </Link>
@@ -535,11 +539,11 @@ export default async function PageRenderer({ page }) {
       {isServicesHub && (
         <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 border-t border-[#14161a]/10 egg-reveal">
           <div className="mb-8">
-            <span className="egg-eyebrow text-[#0b8f84]">
+            <span className="egg-eyebrow text-[#087a70]">
               <span aria-hidden="true"></span> Supply-chain services
             </span>
             <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-2 mt-4">Our supply-chain services</h2>
-            <p className="text-[#7a8290]">Logistics, port operations, added value, packing, inspection and trade documentation — all in-house.</p>
+            <p className="text-[#5b6577]">Logistics, port operations, added value, packing, inspection and trade documentation — all in-house.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
             {SERVICE_DIVISIONS.map(svc => (
@@ -554,7 +558,7 @@ export default async function PageRenderer({ page }) {
                     {svc.label}
                   </h3>
                   <p className="text-sm text-[#3f4650] mt-1.5 leading-relaxed">{svc.blurb}</p>
-                  <div className="mt-4 inline-flex items-center text-sm font-semibold text-[#0b8f84] group-hover:gap-2 gap-1 transition-all">
+                  <div className="mt-4 inline-flex items-center text-sm font-semibold text-[#087a70] group-hover:gap-2 gap-1 transition-all">
                     Learn more <span>→</span>
                   </div>
                 </div>
@@ -577,13 +581,13 @@ export default async function PageRenderer({ page }) {
               return (
                 <Link key={p.id} href={p.path}
                   className="egg-card group p-6 overflow-hidden relative">
-                  <h3 className="text-base font-semibold text-[#14161a] group-hover:text-[#0b8f84] transition-colors">
+                  <h3 className="text-base font-semibold text-[#14161a] group-hover:text-[#087a70] transition-colors">
                     {p.title}
                   </h3>
                   {p.description && (
-                    <p className="text-sm text-[#7a8290] mt-2 line-clamp-3 leading-relaxed">{p.description}</p>
+                    <p className="text-sm text-[#5b6577] mt-2 line-clamp-3 leading-relaxed">{p.description}</p>
                   )}
-                  <span className="mt-3 inline-flex text-xs font-semibold text-[#0b8f84] group-hover:gap-2 gap-1 transition-all">
+                  <span className="mt-3 inline-flex text-xs font-semibold text-[#087a70] group-hover:gap-2 gap-1 transition-all">
                     Read more <span>→</span>
                   </span>
                 </Link>
@@ -618,7 +622,7 @@ export default async function PageRenderer({ page }) {
             <div aria-hidden="true" className="absolute -bottom-10 -right-10 w-56 h-56 rounded-full opacity-30 pointer-events-none"
               style={{ background: 'radial-gradient(circle, #FF6321 0%, transparent 70%)' }} />
             <div className="relative flex-1">
-              <div className="egg-eyebrow text-[#d9501a] mb-3">24-hour SLA</div>
+              <div className="egg-eyebrow text-[#c2410c] mb-3">24-hour SLA</div>
               <h3 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-1">Ready for a quote?</h3>
               <p className="text-[#3f4650] leading-relaxed text-sm sm:text-base">FOB / CIF / CFR pricing from 7 Egyptian ports — turnaround within 24 hours.</p>
             </div>
@@ -640,16 +644,14 @@ export default async function PageRenderer({ page }) {
                 className="egg-card group overflow-hidden">
                 <div className="aspect-[16/9] bg-[#f9fafb] overflow-hidden rounded-t-2xl">
                   {p.hero_photo_url ? (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img src={p.hero_photo_url} alt={p.title}
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
+                    <CardImage src={p.hero_photo_url} className="group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[#14161a]/20"><Icon name={CATEGORY_ICON[p.category] || 'grid'} className="w-8 h-8" strokeWidth={1.25} /></div>
                   )}
                 </div>
                 <div className="p-3">
-                  <h3 className="text-sm font-semibold text-[#14161a] line-clamp-1 group-hover:text-[#0b8f84]">{p.title}</h3>
-                  {p.description && <p className="text-xs text-[#7a8290] mt-1 line-clamp-2">{p.description}</p>}
+                  <h3 className="text-sm font-semibold text-[#14161a] line-clamp-1 group-hover:text-[#087a70]">{p.title}</h3>
+                  {p.description && <p className="text-xs text-[#5b6577] mt-1 line-clamp-2">{p.description}</p>}
                 </div>
               </Link>
             ))}
@@ -778,7 +780,7 @@ async function ApplicationsHubByDivision() {
               className="egg-chip text-xs hover:text-[#14161a] transition-all hover:shadow-[inset_0_0_0_1.5px_rgba(20,22,26,.35)]">
               <Icon name={DIVISION_ICON[d.id] || 'box'} className="w-3.5 h-3.5" />
               {d.label}
-              <span className="ml-1 text-[10px] font-bold tabular-nums text-[#8a93a3]">{grouped[d.id].length}</span>
+              <span className="ml-1 text-[11px] font-bold tabular-nums text-[#67707f]">{grouped[d.id].length}</span>
             </a>
           ))}
         </nav>
@@ -810,11 +812,11 @@ async function ApplicationsHubByDivision() {
                       View {d.label.toLowerCase()} →
                     </Link>
                   </div>
-                  <p className="text-sm text-[#7a8290] leading-relaxed max-w-2xl">{d.blurb}</p>
-                  <div className="mt-2 text-[10px] font-mono text-[#8a93a3] uppercase tracking-[0.18em]">
+                  <p className="text-sm text-[#5b6577] leading-relaxed max-w-2xl">{d.blurb}</p>
+                  <div className="mt-2 text-[11px] font-mono text-[#67707f] uppercase tracking-[0.18em]">
                     {apps.length} application{apps.length === 1 ? '' : 's'} served from this division
                     {divisionSkuTotal > 0 && (
-                      <span className="ml-1.5 text-[#7a8290]">
+                      <span className="ml-1.5 text-[#5b6577]">
                         · {divisionSkuTotal} SKU{divisionSkuTotal === 1 ? '' : 's'} matched
                       </span>
                     )}
@@ -834,12 +836,12 @@ async function ApplicationsHubByDivision() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start gap-1.5 mb-1">
-                          <h4 className="flex-1 font-semibold text-sm text-[#14161a] group-hover:text-[#0b8f84] transition-colors leading-tight">
+                          <h4 className="flex-1 font-semibold text-sm text-[#14161a] group-hover:text-[#087a70] transition-colors leading-tight">
                             {a.label}
                           </h4>
                           {a._count > 0 && (
                             <span
-                              className="flex-shrink-0 inline-flex items-center justify-center min-w-[26px] h-[20px] px-1.5 rounded-full text-[10px] font-bold tabular-nums"
+                              className="flex-shrink-0 inline-flex items-center justify-center min-w-[26px] h-[20px] px-1.5 rounded-full text-[11px] font-bold tabular-nums"
                               style={{ background: `${d.color}15`, color: d.color }}
                               title={`${a._count} ${d.label} SKU${a._count === 1 ? '' : 's'} match this application`}>
                               {a._count}
@@ -847,7 +849,7 @@ async function ApplicationsHubByDivision() {
                           )}
                         </div>
                         {a.blurb && (
-                          <p className="text-[11px] text-[#7a8290] leading-relaxed line-clamp-2">{a.blurb}</p>
+                          <p className="text-[11px] text-[#5b6577] leading-relaxed line-clamp-2">{a.blurb}</p>
                         )}
                         {/* If this app is also served by other divisions WITH
                            at least one matching SKU, show small chips so
@@ -864,7 +866,7 @@ async function ApplicationsHubByDivision() {
                           })
                           if (otherDivIds.length === 0) return null
                           return (
-                            <div className="flex flex-wrap items-center gap-1 mt-2 text-[9px] font-semibold uppercase tracking-wider text-[#8a93a3]">
+                            <div className="flex flex-wrap items-center gap-1 mt-2 text-[9px] font-semibold uppercase tracking-wider text-[#67707f]">
                               <span>Also from:</span>
                               {otherDivIds.slice(0, 3).map(otherId => {
                                 const other = PRODUCT_DIVISIONS.find(x => x.id === otherId)
@@ -874,7 +876,7 @@ async function ApplicationsHubByDivision() {
                                   <span key={otherId} className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-[#f3f4f6]"
                                     style={{ color: other.color }}>
                                     <Icon name={DIVISION_ICON[other.id] || APPLICATION_ICON[other.id] || 'box'} className="w-3 h-3" />{other.label}
-                                    {otherCount > 0 && <span className="text-[#8a93a3]">·{otherCount}</span>}
+                                    {otherCount > 0 && <span className="text-[#67707f]">·{otherCount}</span>}
                                   </span>
                                 )
                               })}
@@ -882,7 +884,7 @@ async function ApplicationsHubByDivision() {
                           )
                         })()}
                       </div>
-                      <span className="text-[#c9ced6] group-hover:text-[#ff6321] transition-colors mt-1">→</span>
+                      <span className="text-[#67707f] group-hover:text-[#c2410c] transition-colors mt-1">→</span>
                     </div>
                   </Link>
                 ))}

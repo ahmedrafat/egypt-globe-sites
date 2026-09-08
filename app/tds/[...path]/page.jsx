@@ -72,11 +72,11 @@ export default async function TDSPage({ params }) {
       {/* Toolbar — hidden in print */}
       <div className="bg-white border-b border-[#14161a]/10 sticky top-0 z-10 print:hidden">
         <div className="max-w-4xl mx-auto px-6 py-3 flex items-center justify-between">
-          <Link href={page.path} className="text-sm text-[#3f4650] hover:text-[#0b8f84] inline-flex items-center gap-1.5 transition-colors">
+          <Link href={page.path} className="text-sm text-[#3f4650] hover:text-[#087a70] inline-flex items-center gap-1.5 transition-colors">
             ← Back to product
           </Link>
           <div className="flex items-center gap-2">
-            <span className="text-xs text-[#8a93a3]">Issued: {today}</span>
+            <span className="text-xs text-[#67707f]">Issued: {today}</span>
             <TDSPrintTrigger />
           </div>
         </div>
@@ -90,12 +90,12 @@ export default async function TDSPage({ params }) {
           <div className="flex items-start justify-between border-b-2 border-[#14161a] pb-4 mb-6">
             <div>
               <Logo imageUrl={settings.logoUrl} className="h-14" />
-              <p className="mt-2 text-xs text-[#7a8290]">{settings.tagline}</p>
+              <p className="mt-2 text-xs text-[#5b6577]">{settings.tagline}</p>
             </div>
             <div className="text-right">
-              <div className="text-[10px] font-mono uppercase tracking-[0.18em] text-[#7a8290]">Technical Data Sheet</div>
+              <div className="text-[11px] font-mono uppercase tracking-[0.18em] text-[#5b6577]">Technical Data Sheet</div>
               <div className="egg-display text-3xl text-[#14161a] mt-0.5">TDS</div>
-              <div className="text-xs text-[#7a8290] mt-1">Issued: {today}</div>
+              <div className="text-xs text-[#5b6577] mt-1">Issued: {today}</div>
             </div>
           </div>
 
@@ -108,7 +108,7 @@ export default async function TDSPage({ params }) {
                 </span>
               )}
               {(specs.sku || specs.commodity_code) && (
-                <span className="text-xs font-mono font-bold bg-[#f2fbfa] text-[#0b8f84] border border-[#0fb5a5]/40 px-2 py-1 rounded">
+                <span className="text-xs font-mono font-bold bg-[#f2fbfa] text-[#087a70] border border-[#0fb5a5]/40 px-2 py-1 rounded">
                   {specs.sku || specs.commodity_code}
                 </span>
               )}
@@ -198,7 +198,7 @@ export default async function TDSPage({ params }) {
                 <ul className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm text-[#3f4650] list-disc list-inside mb-2">
                   {page.loading_ports.map(p => <li key={p}>{p}</li>)}
                 </ul>
-                <p className="text-xs text-[#7a8290] italic">
+                <p className="text-xs text-[#5b6577] italic">
                   {specs.source_type?.toLowerCase().includes('rock')
                     ? 'Lanes optimised for rock-salt loading from Siwa / Qattara feed.'
                     : specs.source_type?.toLowerCase().includes('sea')
@@ -236,7 +236,7 @@ export default async function TDSPage({ params }) {
           </Section>
 
           {/* Footer letterhead */}
-          <div className="border-t border-[#14161a]/10 mt-10 pt-4 text-[11px] text-[#7a8290] leading-relaxed">
+          <div className="border-t border-[#14161a]/10 mt-10 pt-4 text-[11px] text-[#5b6577] leading-relaxed">
             <div className="font-semibold text-[#3f4650] mb-1">{settings.name}</div>
             <div>Head Office: {settings.headOffice}</div>
             <div>Operations: {settings.operationsOffice}</div>
@@ -263,7 +263,7 @@ export default async function TDSPage({ params }) {
 function Section({ n, title, children }) {
   return (
     <section className="mb-6">
-      <h2 className="text-[10px] font-mono font-semibold uppercase tracking-[0.18em] text-[#0b8f84] border-b border-[#14161a]/10 pb-2 mb-3">
+      <h2 className="text-[11px] font-mono font-semibold uppercase tracking-[0.18em] text-[#087a70] border-b border-[#14161a]/10 pb-2 mb-3">
         {n}. {title}
       </h2>
       {children}

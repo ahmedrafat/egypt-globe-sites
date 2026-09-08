@@ -116,14 +116,14 @@ export default function SkuRelatedLinks({ page, commodity }) {
             >
               <span className="flex-shrink-0 inline-flex w-8 h-8 items-center justify-center rounded-lg ring-1 ring-[#14161a]/15 text-[#14161a]"><Icon name={LINK_ICONS[i] || 'arrow'} className="w-4 h-4" /></span>
               <div className="flex-1 min-w-0">
-                <div className="text-xs font-semibold text-[#7a8290] uppercase tracking-wider mb-0.5">
+                <div className="text-xs font-semibold text-[#5b6577] uppercase tracking-wider mb-0.5">
                   {LINK_LABELS[i] || 'Related'}
                 </div>
-                <div className="text-sm font-bold text-[#14161a] group-hover:text-[#0b8f84] transition-colors leading-tight truncate">
+                <div className="text-sm font-bold text-[#14161a] group-hover:text-[#087a70] transition-colors leading-tight truncate">
                   {l.label}
                 </div>
               </div>
-              <span className="text-[#c9ced6] group-hover:text-[#0b8f84] transition-colors">→</span>
+              <span className="text-[#67707f] group-hover:text-[#087a70] transition-colors">→</span>
             </Link>
           ))}
         </div>

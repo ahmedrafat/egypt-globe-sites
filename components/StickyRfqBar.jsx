@@ -62,7 +62,7 @@ export default function StickyRfqBar({ pageTitle, pagePath }) {
         <button
           onClick={dismiss}
           aria-label="Dismiss quote bar"
-          className="shrink-0 w-9 h-9 rounded-full text-[#8a93a3] hover:text-[#14161a] hover:bg-[#f3f4f6] active:bg-[#e5e7eb] transition-colors flex items-center justify-center"
+          className="shrink-0 w-9 h-9 rounded-full text-[#67707f] hover:text-[#14161a] hover:bg-[#f3f4f6] active:bg-[#e5e7eb] transition-colors flex items-center justify-center"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
@@ -70,7 +70,7 @@ export default function StickyRfqBar({ pageTitle, pagePath }) {
         </button>
 
         <div className="flex-1 min-w-0">
-          <div className="text-[10px] font-bold uppercase tracking-wider text-[#FF6321] leading-none mb-0.5">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-[#c2410c] leading-none mb-0.5">
             24-hour SLA
           </div>
           <div className="text-sm font-bold text-[#14161a] truncate leading-tight">
@@ -80,7 +80,7 @@ export default function StickyRfqBar({ pageTitle, pagePath }) {
 
         <a
           href={rfqHref}
-          className="shrink-0 inline-flex items-center gap-1.5 bg-[#ff6321] hover:bg-[#14161a] text-white font-semibold text-sm px-5 h-11 rounded-full shadow-[0_10px_30px_-10px_rgba(255,99,33,.55)] transition-colors"
+          className="shrink-0 inline-flex items-center gap-1.5 bg-[#d0450f] hover:bg-[#14161a] text-white font-semibold text-sm px-5 h-11 rounded-full shadow-[0_10px_30px_-10px_rgba(255,99,33,.55)] transition-colors"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>

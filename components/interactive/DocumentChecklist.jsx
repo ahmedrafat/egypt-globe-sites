@@ -115,7 +115,7 @@ export default function DocumentChecklist() {
           <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white ring-1 ring-[#14161a]/10 text-[#14161a]"><Icon name="doc" className="w-4 h-4" /></span>
           <h3 className="egg-display text-2xl text-[#14161a]">Documents shipped with every consignment</h3>
         </div>
-        <p className="text-xs text-[#7a8290] mt-1">Click any row to expand. Advance PDF goes by email for L/C bank lodging; originals follow by DHL / FedEx.</p>
+        <p className="text-xs text-[#5b6577] mt-1">Click any row to expand. Advance PDF goes by email for L/C bank lodging; originals follow by DHL / FedEx.</p>
       </div>
 
       <div className="divide-y divide-[#14161a]/10">
@@ -131,16 +131,16 @@ export default function DocumentChecklist() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-bold text-[#14161a]">{d.name}</span>
-                    {d.required === 'always' && <Badge color="bg-[#e6fbf8] text-[#0b8f84] border-[#0fb5a5]/40">Always</Badge>}
+                    {d.required === 'always' && <Badge color="bg-[#e6fbf8] text-[#087a70] border-[#0fb5a5]/40">Always</Badge>}
                     {d.required === 'CIF/CIP-only' && <Badge color="bg-[#eef6fd] text-[#0369a1] border-[#0284c7]/35">CIF / CIP only</Badge>}
                     {d.required === 'agricultural-only' && <Badge color="bg-green-100 text-green-800 border-green-200">Agro only</Badge>}
                     {d.required === 'food/pharma-only' && <Badge color="bg-pink-100 text-pink-800 border-pink-200">Food / pharma only</Badge>}
                     {d.required === 'optional' && <Badge color="bg-[#f3f4f6] text-[#3f4650] border-[#14161a]/10">Optional</Badge>}
                   </div>
-                  <div className="text-xs text-[#7a8290] mt-0.5">{d.short}</div>
+                  <div className="text-xs text-[#5b6577] mt-0.5">{d.short}</div>
                 </div>
                 <span className={`shrink-0 mt-1 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold transition-colors ${
-                  isOpen ? 'bg-[#ff6321] text-white' : 'bg-[#f3f4f6] text-[#3f4650]'
+                  isOpen ? 'bg-[#d0450f] text-white' : 'bg-[#f3f4f6] text-[#3f4650]'
                 }`} aria-hidden="true">
                   {isOpen ? '−' : '+'}
                 </span>
@@ -167,12 +167,12 @@ export default function DocumentChecklist() {
 }
 
 function Badge({ color, children }) {
-  return <span className={`inline-flex items-center text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${color}`}>{children}</span>
+  return <span className={`inline-flex items-center text-[11px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${color}`}>{children}</span>
 }
 
 function DeliveryFlag({ label, enabled }) {
   return (
-    <div className={`flex items-center gap-1.5 ${enabled ? 'text-[#0b8f84]' : 'text-[#8a93a3]'}`}>
+    <div className={`flex items-center gap-1.5 ${enabled ? 'text-[#087a70]' : 'text-[#67707f]'}`}>
       <span className={`inline-block w-3 h-3 rounded-full ${enabled ? 'bg-[#0fb5a5]' : 'bg-[#c9ced6]'}`} />
       <span className={enabled ? 'font-semibold' : ''}>{label}</span>
     </div>

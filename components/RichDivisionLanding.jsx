@@ -18,6 +18,7 @@
  * Vector protocol: monochrome micro-icons only (components/ui/Icon) —
  * no emoji, no watermark glyphs.
  */
+import CardImage from './ui/CardImage'
 import HeroMotif from './HeroMotif'
 import Link from 'next/link'
 import { APPLICATIONS } from '../lib/corporatePages'
@@ -56,7 +57,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
           style={{ background: `radial-gradient(60% 55% at 88% 0%, ${tone}26, transparent 60%), radial-gradient(45% 45% at 0% 100%, rgba(255,99,33,.10), transparent 60%)` }} />
 
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-24">
-          <nav className="flex items-center gap-2 text-xs text-[#7a8290] mb-5 flex-wrap animate-fade-in">
+          <nav className="flex items-center gap-2 text-xs text-[#5b6577] mb-5 flex-wrap animate-fade-in">
             <Link href="/" className="hover:text-[#14161a] transition-colors">Home</Link>
             <span>›</span>
             <Link href="/products" className="hover:text-[#14161a] transition-colors">Products</Link>
@@ -71,7 +72,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
             <span className="egg-chip text-xs">{skuCount} SKUs</span>
             <span className="egg-chip text-xs">{subCount} sub-categories</span>
             <span className="egg-chip text-xs font-mono tracking-[0.08em]">FOB · CIF · CFR</span>
-            <span className="egg-chip text-xs text-[#0b8f84]" style={{ boxShadow: 'inset 0 0 0 1px rgba(15,181,165,.45)' }}>
+            <span className="egg-chip text-xs text-[#087a70]" style={{ boxShadow: 'inset 0 0 0 1px rgba(15,181,165,.45)' }}>
               <Icon name="shield" className="w-3.5 h-3.5" /> Per-lot CoA
             </span>
           </div>
@@ -105,7 +106,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
             {stats.map(s => (
               <div key={s.label} className="bg-white/90 backdrop-blur px-5 py-5">
                 <div className="egg-display text-3xl sm:text-4xl tracking-tight" style={{ color: tone }}>{s.big}</div>
-                <div className="text-[10px] font-mono uppercase tracking-[0.18em] text-[#7a8290] mt-2">{s.label}</div>
+                <div className="text-[11px] font-mono uppercase tracking-[0.18em] text-[#5b6577] mt-2">{s.label}</div>
               </div>
             ))}
           </div>
@@ -126,7 +127,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
       {subCount > 0 && (
         <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 border-t border-[#14161a]/10 egg-reveal">
           <div className="text-center mb-10">
-            <div className="egg-eyebrow text-[#0b8f84] justify-center mb-3">Browse the catalogue</div>
+            <div className="egg-eyebrow text-[#087a70] justify-center mb-3">Browse the catalogue</div>
             <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-3">
               {subCount} sub-categories — pick your commodity
             </h2>
@@ -142,9 +143,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
                 <div className="aspect-[16/9] overflow-hidden relative rounded-t-2xl"
                   style={{ background: `linear-gradient(135deg, ${tone}1a, ${tone}08)` }}>
                   {sc.hero_photo_url ? (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img src={sc.hero_photo_url} alt={sc.title}
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
+                    <CardImage src={sc.hero_photo_url} className="group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[#14161a]/20">
                       <Icon name={divIcon} className="w-12 h-12" strokeWidth={1.25} />
@@ -155,11 +154,11 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
                   </div>
                 </div>
                 <div className="p-5">
-                  <h3 className="text-lg font-semibold text-[#14161a] group-hover:text-[#0b8f84] transition-colors">{sc.title}</h3>
+                  <h3 className="text-lg font-semibold text-[#14161a] group-hover:text-[#087a70] transition-colors">{sc.title}</h3>
                   {sc.description && (
                     <p className="text-sm text-[#3f4650] mt-1.5 line-clamp-2 leading-relaxed">{sc.description}</p>
                   )}
-                  <div className="mt-3 inline-flex items-center text-sm font-semibold text-[#0b8f84] group-hover:gap-2 gap-1 transition-all">
+                  <div className="mt-3 inline-flex items-center text-sm font-semibold text-[#087a70] group-hover:gap-2 gap-1 transition-all">
                     Browse {sc.title.toLowerCase()} <span>→</span>
                   </div>
                 </div>
@@ -189,7 +188,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
                   <div className="w-12 h-12 mx-auto rounded-xl flex items-center justify-center mb-3 ring-1 ring-[#14161a]/15 text-[#14161a] group-hover:ring-[#7c3aed]/60 transition-colors">
                     <Icon name={APPLICATION_ICON[a.id] || 'factory'} className="w-5 h-5" />
                   </div>
-                  <h3 className="font-semibold text-[#14161a] group-hover:text-[#0b8f84] transition-colors text-sm">{a.label}</h3>
+                  <h3 className="font-semibold text-[#14161a] group-hover:text-[#087a70] transition-colors text-sm">{a.label}</h3>
                 </Link>
               ))}
             </div>
@@ -201,7 +200,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
       <section className="bg-white py-16 sm:py-20 border-b border-[#14161a]/10 egg-reveal">
         <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
-            <div className="egg-eyebrow text-[#d9501a] justify-center mb-3">Why Egypt Globe</div>
+            <div className="egg-eyebrow text-[#c2410c] justify-center mb-3">Why Egypt Globe</div>
             <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-3">
               Institutional reliability in Egyptian-origin {division.label.toLowerCase()}.
             </h2>
@@ -230,7 +229,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
         <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 egg-reveal">
           <div className="flex items-end justify-between gap-4 mb-10 flex-wrap">
             <div>
-              <div className="egg-eyebrow text-[#0b8f84] mb-3">Featured products</div>
+              <div className="egg-eyebrow text-[#087a70] mb-3">Featured products</div>
               <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a]">Recently shipped from this division.</h2>
             </div>
             <Link href={`/rfq?product=${encodeURIComponent(page.path)}`} className="egg-link text-sm">
@@ -243,9 +242,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
                 <div className="aspect-[16/9] overflow-hidden rounded-t-2xl"
                   style={{ background: `linear-gradient(135deg, ${tone}1a, #f9fafb)` }}>
                   {p.hero_photo_url ? (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img src={p.hero_photo_url} alt={p.title}
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" />
+                    <CardImage src={p.hero_photo_url} className="group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[#14161a]/20">
                       <Icon name={divIcon} className="w-10 h-10" strokeWidth={1.25} />
@@ -254,13 +251,13 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
                 </div>
                 <div className="p-4">
                   {p.hs_code && (
-                    <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-[#8a93a3] mb-1">HS {p.hs_code}</div>
+                    <div className="text-[11px] font-mono uppercase tracking-[0.14em] text-[#67707f] mb-1">HS {p.hs_code}</div>
                   )}
-                  <h3 className="text-sm font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#0b8f84] transition-colors min-h-[2.5em]">
+                  <h3 className="text-sm font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#087a70] transition-colors min-h-[2.5em]">
                     {p.title}
                   </h3>
                   {p.price_indication && visibility?.showPrices && (
-                    <p className="text-xs text-[#d9501a] font-semibold mt-1.5 line-clamp-1">{p.price_indication}</p>
+                    <p className="text-xs text-[#c2410c] font-semibold mt-1.5 line-clamp-1">{p.price_indication}</p>
                   )}
                 </div>
               </Link>

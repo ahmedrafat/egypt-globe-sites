@@ -143,7 +143,7 @@ export default function MarkdownDocument({ body, title, leadingWidget = null }) 
                     <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[#f6f7f9] ring-1 ring-[#14161a]/10">
                       <Icon name={p.icon} className="w-3.5 h-3.5 text-[#5b6472]" />
                     </span>
-                    <span className="font-mono text-[10px] tabular-nums tracking-[0.18em] text-[#9aa2ae]">
+                    <span className="font-mono text-[11px] tabular-nums tracking-[0.18em] text-[#67707f]">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                   </div>

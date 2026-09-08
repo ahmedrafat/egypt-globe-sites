@@ -7,6 +7,7 @@
  *
  * Light editorial edition — tokens + utilities (.egg-*) in app/globals.css.
  */
+import { routeOpenGraph } from '../../lib/seo'
 import HeroMotif from '../../components/HeroMotif'
 import Link from 'next/link'
 import { getCoaSummary } from '../../lib/corporatePages'
@@ -18,6 +19,7 @@ export const metadata = {
   title: 'Certificate of Analysis Center',
   description: 'Independent TÜV Austria / SGS / Intertek / Bureau Veritas certificates of analysis for every Egypt Globe Group commodity, organised by destination market region (Europe, GCC, East Africa, Far East, South Asia, Mediterranean, Americas).',
   alternates: { canonical: 'https://egyptglobe.com/coa' },
+  openGraph: routeOpenGraph({ path: '/coa' }),
 }
 
 const REGION_META = {
@@ -43,7 +45,7 @@ function fmtDate(d) {
   catch { return '—' }
 }
 
-const TONE = '#0b8f84'
+const TONE = '#087a70'
 
 export default async function CoaCenter() {
   const coas = await getCoaSummary({ limit: 200 })
@@ -75,7 +77,7 @@ export default async function CoaCenter() {
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: 'radial-gradient(55% 55% at 88% 0%, rgba(15,181,165,.2), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.09), transparent 60%)' }} />
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16">
-          <nav className="flex items-center gap-2 text-xs text-[#7a8290] mb-5 flex-wrap">
+          <nav className="flex items-center gap-2 text-xs text-[#5b6577] mb-5 flex-wrap">
             <Link href="/" className="hover:text-[#14161a] transition-colors">Home</Link>
             <span>›</span>
             <span className="text-[#14161a] font-medium">Certificate of Analysis Center</span>
@@ -110,7 +112,7 @@ export default async function CoaCenter() {
 
       {/* Region quick-jump nav */}
       <section className="bg-white border-b border-[#14161a]/10 sticky top-0 z-10 backdrop-blur-md bg-white/85">
-        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-3 overflow-x-auto">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-3 overflow-x-auto" tabIndex={0}>
           <div className="flex gap-2 min-w-max">
             {regions.map(r => {
               const meta = regionMeta(r)
@@ -119,7 +121,7 @@ export default async function CoaCenter() {
                   className="egg-chip text-xs hover:text-[#14161a] transition-all hover:shadow-[inset_0_0_0_1.5px_rgba(20,22,26,.35)] whitespace-nowrap">
                   <Icon name={meta.icon} className="w-3.5 h-3.5" />
                   {meta.label}
-                  <span className="ml-1 text-[10px] font-bold tabular-nums text-[#8a93a3]">{byRegion[r].length}</span>
+                  <span className="ml-1 text-[11px] font-bold tabular-nums text-[#67707f]">{byRegion[r].length}</span>
                 </a>
               )
             })}
@@ -143,7 +145,7 @@ export default async function CoaCenter() {
                   <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a]">
                     {meta.label}
                   </h2>
-                  <p className="text-sm text-[#7a8290] mt-0.5">
+                  <p className="text-sm text-[#5b6577] mt-0.5">
                     {items.length} active certificate{items.length === 1 ? '' : 's'} ·
                     {' '}{new Set(items.map(c => c.commodity_id)).size} commodit{new Set(items.map(c => c.commodity_id)).size === 1 ? 'y' : 'ies'}
                   </p>
@@ -163,24 +165,24 @@ export default async function CoaCenter() {
                                                   </span>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-1.5 flex-wrap mb-1">
-                            <span className="font-mono text-[10px] font-bold text-[#3f4650] bg-[#f3f4f6] px-1.5 py-0.5 rounded">{c.ref_code}</span>
+                            <span className="font-mono text-[11px] font-bold text-[#3f4650] bg-[#f3f4f6] px-1.5 py-0.5 rounded">{c.ref_code}</span>
                             {c.pass_fail === true && (
-                              <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-[#e6fbf8] text-[#0b8f84] border border-[#0fb5a5]/40">
+                              <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-[#e6fbf8] text-[#087a70] border border-[#0fb5a5]/40">
                                 ✓ Pass
                               </span>
                             )}
                           </div>
-                          <h3 className="font-semibold text-sm text-[#14161a] group-hover:text-[#0b8f84] transition-colors leading-tight line-clamp-2">
+                          <h3 className="font-semibold text-sm text-[#14161a] group-hover:text-[#087a70] transition-colors leading-tight line-clamp-2">
                             {com?.name || 'Commodity'}
                           </h3>
-                          <p className="text-[11px] text-[#7a8290] mt-1 leading-snug">
+                          <p className="text-[11px] text-[#5b6577] mt-1 leading-snug">
                             {c.lab_name} · Issued {fmtDate(c.issue_date)}
                           </p>
                           {c.overall_result && (
-                            <p className="text-[10px] text-[#0b8f84] font-semibold mt-1 line-clamp-2">{c.overall_result}</p>
+                            <p className="text-[11px] text-[#087a70] font-semibold mt-1 line-clamp-2">{c.overall_result}</p>
                           )}
                         </div>
-                        <span className="text-[#c9ced6] group-hover:text-[#ff6321] transition-colors mt-1">→</span>
+                        <span className="text-[#67707f] group-hover:text-[#c2410c] transition-colors mt-1">→</span>
                       </div>
                     </Link>
                   )

@@ -20,9 +20,9 @@ export default function QualityStrip({ division, compact = false }) {
     <section className="bg-[#f9fafb] border-b border-[#14161a]/10">
       <div className={`max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 ${compact ? 'py-8' : 'py-12 lg:py-14'} grid lg:grid-cols-12 gap-8 lg:gap-12 items-start`}>
         <div className="lg:col-span-4">
-          <p className="flex items-center gap-3 text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.26em] text-[#7a8290]">
+          <p className="flex items-center gap-3 text-[11px] sm:text-[11px] font-mono uppercase tracking-[0.26em] text-[#5b6577]">
             <span className="h-px w-8 bg-[#b8862b]/60" />
-            <span className="text-[#b8862b]">Quality at the Core · since 2014</span>
+            <span className="text-[#8a6d3b]">Quality at the Core · since 2014</span>
           </p>
           <h2 className="egg-display mt-4 text-2xl sm:text-3xl text-[#14161a] leading-[1.1]">
             Institutional reliability in {division ? `${division.toLowerCase()} export` : 'bulk commodity exporting'}.

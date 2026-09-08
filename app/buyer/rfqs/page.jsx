@@ -27,10 +27,10 @@ const STATUS_META = {
   new:        { label: 'Submitted',        color: 'bg-[#fbf7ee] text-[#8a6d3b] border-[#b8862b]/40',     dot: 'bg-[#b8862b]' },
   reviewed:   { label: 'Reviewed',         color: 'bg-[#eef6fd] text-[#0369a1] border-[#0284c7]/35',     dot: 'bg-[#0284c7]' },
   quoted:     { label: 'Quote sent',       color: 'bg-[#f3f0ff] text-[#6d28d9] border-[#7c3aed]/30',     dot: 'bg-[#7c3aed]' },
-  contacted:  { label: 'In conversation',  color: 'bg-[#e6fbf8] text-[#0b8f84] border-[#0fb5a5]/40',     dot: 'bg-[#0fb5a5]' },
+  contacted:  { label: 'In conversation',  color: 'bg-[#e6fbf8] text-[#087a70] border-[#0fb5a5]/40',     dot: 'bg-[#0fb5a5]' },
   sample:     { label: 'Sample sent',      color: 'bg-pink-50 text-pink-800 border-pink-200',           dot: 'bg-pink-500' },
   won:        { label: 'Order placed',     color: 'bg-emerald-50 text-emerald-800 border-emerald-200',   dot: 'bg-emerald-500' },
-  lost:       { label: 'Closed',           color: 'bg-[#f3f4f6] text-[#3f4650] border-[#14161a]/10',     dot: 'bg-[#8a93a3]' },
+  lost:       { label: 'Closed',           color: 'bg-[#f3f4f6] text-[#3f4650] border-[#14161a]/10',     dot: 'bg-[#67707f]' },
 }
 
 function fmtDate(d) {
@@ -85,7 +85,7 @@ export default async function BuyerRfqs() {
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: 'radial-gradient(55% 55% at 88% 0%, rgba(2,132,199,.14), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.08), transparent 60%)' }} />
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10 sm:py-14">
-          <nav className="text-xs text-[#7a8290] mb-3 flex items-center gap-2 flex-wrap">
+          <nav className="text-xs text-[#5b6577] mb-3 flex items-center gap-2 flex-wrap">
             <Link href="/buyer" className="hover:text-[#14161a] transition-colors">← Buyer dashboard</Link>
             <span>/</span>
             <span className="text-[#14161a] font-medium">Your RFQs</span>
@@ -104,7 +104,7 @@ export default async function BuyerRfqs() {
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 mb-8">
           <div className="egg-card p-3 hover:transform-none">
             <div className="egg-display text-3xl text-[#14161a]">{list.length}</div>
-            <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-[#7a8290]">Total</div>
+            <div className="text-[11px] font-mono uppercase tracking-[0.14em] text-[#5b6577]">Total</div>
           </div>
           {Object.entries(STATUS_META).map(([s, meta]) => (
             <div key={s} className="egg-card p-3 hover:transform-none">
@@ -112,7 +112,7 @@ export default async function BuyerRfqs() {
                 <span className={`inline-block w-2 h-2 rounded-full ${meta.dot}`} />
                 <span className="egg-display text-3xl text-[#14161a]">{counts[s] || 0}</span>
               </div>
-              <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-[#7a8290] truncate">{meta.label}</div>
+              <div className="text-[11px] font-mono uppercase tracking-[0.14em] text-[#5b6577] truncate">{meta.label}</div>
             </div>
           ))}
         </div>
@@ -146,14 +146,14 @@ export default async function BuyerRfqs() {
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                        <span className="font-mono text-[11px] font-bold text-[#7a8290]">{r.ref_code || '—'}</span>
+                        <span className="font-mono text-[11px] font-bold text-[#5b6577]">{r.ref_code || '—'}</span>
                         <span className={`inline-flex items-center gap-1.5 text-[11px] font-bold px-2 py-0.5 rounded-full border ${meta.color}`}>
                           <span className={`inline-block w-1.5 h-1.5 rounded-full ${meta.dot}`} />
                           {meta.label}
                         </span>
                       </div>
                       <h3 className="font-semibold text-[#14161a] text-lg">{r.commodity_name || 'Quote request'}</h3>
-                      <div className="text-xs text-[#7a8290] mt-1 flex flex-wrap gap-x-4 gap-y-1">
+                      <div className="text-xs text-[#5b6577] mt-1 flex flex-wrap gap-x-4 gap-y-1">
                         {r.quantity && <span>{Number(r.quantity).toLocaleString()} {r.unit || 'MT'}</span>}
                         {r.incoterm && <span>{r.incoterm}</span>}
                         {(r.dest_port || r.country || r.dest_country) && (

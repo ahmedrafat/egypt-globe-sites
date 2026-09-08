@@ -7,6 +7,7 @@
  *
  * Light editorial edition — tokens + utilities (.egg-*) in app/globals.css.
  */
+import { routeOpenGraph } from '../../lib/seo'
 import HeroMotif from '../../components/HeroMotif'
 import {
   getPageByPath,
@@ -22,6 +23,7 @@ export const revalidate = 60
 
 export const metadata = {
   alternates: { canonical: '/rfq' },
+  openGraph: routeOpenGraph({ path: '/rfq' }),
   title: 'Request a Quote — Egyptian Salt, Cement & Fertilizers',
   description:
     'Submit a B2B RFQ for Egyptian salt, cement, fertilizers, chemicals, or minerals. Egypt Globe Group responds within 24 hours with FOB / CIF / CFR pricing from 7 Egyptian seaports.',
@@ -63,8 +65,8 @@ export default async function RFQPage({ searchParams }) {
             ? 'radial-gradient(55% 55% at 88% 0%, rgba(15,181,165,.2), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(184,134,43,.1), transparent 60%)'
             : 'radial-gradient(55% 55% at 88% 0%, rgba(255,99,33,.16), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(15,181,165,.12), transparent 60%)' }} />
         <div className="relative max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 animate-fade-in-up">
-          <div className={`egg-eyebrow mb-4 ${isCoa ? 'text-[#0b8f84]' : 'text-[#d9501a]'}`}>
-            <span className={`w-2 h-2 rounded-full ${isCoa ? 'bg-[#0fb5a5]' : 'bg-[#FF6321]'} animate-pulse`} />
+          <div className={`egg-eyebrow mb-4 ${isCoa ? 'text-[#087a70]' : 'text-[#c2410c]'}`}>
+            <span className={`w-2 h-2 rounded-full ${isCoa ? 'bg-[#0fb5a5]' : 'bg-[#d0450f]'} animate-pulse`} />
             {heroLabel}
           </div>
           <h1 className="egg-display text-4xl sm:text-5xl lg:text-6xl text-[#14161a] mb-4 leading-[1.02]">
@@ -90,7 +92,7 @@ export default async function RFQPage({ searchParams }) {
             />
           </div>
 
-          <aside className="lg:col-span-4 space-y-5 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+          <div className="lg:col-span-4 space-y-5 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             {/* What happens next */}
             <div className="egg-card p-6 hover:transform-none">
               <h3 className="egg-display text-2xl text-[#14161a] mb-4">What happens next?</h3>
@@ -103,11 +105,11 @@ export default async function RFQPage({ searchParams }) {
                   ['On loading', 'Port-laboratory CoA issued before the B/L; full L/C document set delivered. Out-of-spec lots never load.'],
                 ].map(([when, what], i) => (
                   <li key={i} className="flex gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#0b8f84] text-white text-xs font-bold flex items-center justify-center mt-0.5">
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#087a70] text-white text-xs font-bold flex items-center justify-center mt-0.5">
                       {i + 1}
                     </span>
                     <div>
-                      <div className="text-[10px] font-mono font-semibold text-[#0b8f84] uppercase tracking-[0.16em]">{when}</div>
+                      <div className="text-[11px] font-mono font-semibold text-[#087a70] uppercase tracking-[0.16em]">{when}</div>
                       <div className="text-sm text-[#3f4650] leading-snug mt-0.5">{what}</div>
                     </div>
                   </li>
@@ -146,7 +148,7 @@ export default async function RFQPage({ searchParams }) {
                 <li className="flex items-start gap-2"><span className="text-[#0fb5a5] font-bold">✓</span> Full L/C-bank document set on every order.</li>
               </ul>
             </div>
-          </aside>
+          </div>
         </div>
       </section>
 

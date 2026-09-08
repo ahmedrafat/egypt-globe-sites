@@ -11,8 +11,8 @@ export default function PriceDisplay({ price, visibility, size = 'md', placehold
   if (!price) return null
   if (visibility?.showPrices) {
     const cls = size === 'lg'
-      ? 'text-base font-bold text-[#FF6321]'
-      : 'text-xs font-semibold text-[#FF6321]'
+      ? 'text-base font-bold text-[#c2410c]'
+      : 'text-xs font-semibold text-[#c2410c]'
     return <span className={cls}>{price}</span>
   }
 

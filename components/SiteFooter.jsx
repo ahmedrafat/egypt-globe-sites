@@ -50,21 +50,21 @@ export default function SiteFooter({ settings }) {
 
           {/* ── Product divisions ──────────────────────────────── */}
           <div className="col-span-1 lg:col-span-2">
-            <h4 className="text-[10px] font-mono font-semibold uppercase tracking-[0.22em] text-[#7a8290] mb-4 flex items-center gap-2">
-              <span className="w-4 h-0.5 bg-[#FF6321] rounded-full" />
+            <h2 className="text-[11px] font-mono font-semibold uppercase tracking-[0.22em] text-[#5b6577] mb-4 flex items-center gap-2">
+              <span className="w-4 h-0.5 bg-[#d0450f] rounded-full" />
               Products
-            </h4>
+            </h2>
             <ul className="space-y-2.5 text-sm">
               {PRODUCT_DIVISIONS.map(div => (
                 <li key={div.id}>
                   <Link href={div.path} className="text-[#3f4650] hover:text-[#14161a] transition-colors flex items-center gap-2 group">
-                    <Icon name={DIVISION_ICON[div.id] || 'box'} className="w-3.5 h-3.5 text-[#7a8290] group-hover:text-[#14161a] transition-colors" />
+                    <Icon name={DIVISION_ICON[div.id] || 'box'} className="w-3.5 h-3.5 text-[#5b6577] group-hover:text-[#14161a] transition-colors" />
                     {div.label}
                   </Link>
                 </li>
               ))}
               <li className="pt-1">
-                <Link href="/products" className="text-[#d9501a] font-semibold hover:underline text-xs">
+                <Link href="/products" className="text-[#c2410c] font-semibold hover:underline text-xs">
                   All products →
                 </Link>
               </li>
@@ -73,40 +73,40 @@ export default function SiteFooter({ settings }) {
 
           {/* ── Service divisions ──────────────────────────────── */}
           <div className="col-span-1 lg:col-span-2">
-            <h4 className="text-[10px] font-mono font-semibold uppercase tracking-[0.22em] text-[#7a8290] mb-4 flex items-center gap-2">
-              <span className="w-4 h-0.5 bg-[#FF6321] rounded-full" />
+            <h2 className="text-[11px] font-mono font-semibold uppercase tracking-[0.22em] text-[#5b6577] mb-4 flex items-center gap-2">
+              <span className="w-4 h-0.5 bg-[#d0450f] rounded-full" />
               Services
-            </h4>
+            </h2>
             <ul className="space-y-2.5 text-sm">
               {SERVICE_DIVISIONS.map(svc => (
                 <li key={svc.id}>
                   <Link href={svc.path} className="text-[#3f4650] hover:text-[#14161a] transition-colors flex items-center gap-2 group">
-                    <Icon name={SERVICE_ICON[svc.id] || 'ship'} className="w-3.5 h-3.5 text-[#7a8290] group-hover:text-[#14161a] transition-colors" />
+                    <Icon name={SERVICE_ICON[svc.id] || 'ship'} className="w-3.5 h-3.5 text-[#5b6577] group-hover:text-[#14161a] transition-colors" />
                     {svc.label}
                   </Link>
                 </li>
               ))}
               <li className="pt-1">
-                <Link href="/services" className="text-[#d9501a] font-semibold hover:underline text-xs">
+                <Link href="/services" className="text-[#c2410c] font-semibold hover:underline text-xs">
                   All services →
                 </Link>
               </li>
               <li className="pt-2 mt-1 border-t border-[#14161a]/10">
                 <a href={LOGISTICS_PORTAL_URL} target="_blank" rel="noopener noreferrer"
-                  className="text-[#7a8290] hover:text-[#14161a] text-xs flex items-center gap-1.5 transition-colors">
+                  className="text-[#5b6577] hover:text-[#14161a] text-xs flex items-center gap-1.5 transition-colors">
                   <Icon name="anchor" className="w-3.5 h-3.5" /> Provider portal ↗
                 </a>
-                <span className="text-[10px] text-[#8a93a3] block mt-0.5">For freight carriers</span>
+                <span className="text-[11px] text-[#67707f] block mt-0.5">For freight carriers</span>
               </li>
             </ul>
           </div>
 
           {/* ── Company links ──────────────────────────────────── */}
           <div className="col-span-1 lg:col-span-2">
-            <h4 className="text-[10px] font-mono font-semibold uppercase tracking-[0.22em] text-[#7a8290] mb-4 flex items-center gap-2">
-              <span className="w-4 h-0.5 bg-[#FF6321] rounded-full" />
+            <h2 className="text-[11px] font-mono font-semibold uppercase tracking-[0.22em] text-[#5b6577] mb-4 flex items-center gap-2">
+              <span className="w-4 h-0.5 bg-[#d0450f] rounded-full" />
               Company
-            </h4>
+            </h2>
             <ul className="space-y-2.5 text-sm">
               {[
                 ['/about', 'About'],
@@ -137,27 +137,27 @@ export default function SiteFooter({ settings }) {
 
           {/* ── Contact block — spans full on mobile so address reads cleanly ── */}
           <div className="col-span-2 sm:col-span-1 lg:col-span-3">
-            <h4 className="text-[10px] font-mono font-semibold uppercase tracking-[0.22em] text-[#7a8290] mb-4 flex items-center gap-2">
-              <span className="w-4 h-0.5 bg-[#FF6321] rounded-full" />
+            <h2 className="text-[11px] font-mono font-semibold uppercase tracking-[0.22em] text-[#5b6577] mb-4 flex items-center gap-2">
+              <span className="w-4 h-0.5 bg-[#d0450f] rounded-full" />
               Contact
-            </h4>
+            </h2>
             <ul className="space-y-3 text-sm">
               <li>
                 <div className="text-xs font-semibold text-[#14161a] mb-0.5"><Icon name="pin" className="w-3.5 h-3.5" /> Head Office — Cairo</div>
-                <p className="text-[#7a8290] text-xs leading-relaxed">{s.headOffice}</p>
+                <p className="text-[#5b6577] text-xs leading-relaxed">{s.headOffice}</p>
               </li>
               <li>
                 <div className="text-xs font-semibold text-[#14161a] mb-0.5"><Icon name="anchor" className="w-3.5 h-3.5" /> Operations — Damietta</div>
-                <p className="text-[#7a8290] text-xs leading-relaxed">{s.operationsOffice}</p>
+                <p className="text-[#5b6577] text-xs leading-relaxed">{s.operationsOffice}</p>
               </li>
               <li className="pt-1 border-t border-[#14161a]/10">
                 <a href={`tel:${s.phoneE164}`}
-                  className="block text-[#14161a] hover:text-[#0b8f84] transition-colors font-medium text-sm">
+                  className="block text-[#14161a] hover:text-[#087a70] transition-colors font-medium text-sm">
                   <Icon name="phone" className="w-3.5 h-3.5" /> {s.phone}
                 </a>
-                <span className="block text-[#8a93a3] text-xs mt-0.5">Tel &amp; Fax: {s.telFax}</span>
+                <span className="block text-[#67707f] text-xs mt-0.5">Tel &amp; Fax: {s.telFax}</span>
                 <a href={`mailto:${s.email}`}
-                  className="block text-[#14161a] hover:text-[#0b8f84] transition-colors mt-1 text-sm">
+                  className="block text-[#14161a] hover:text-[#087a70] transition-colors mt-1 text-sm">
                   <Icon name="mail" className="w-3.5 h-3.5" /> {s.email}
                 </a>
               </li>
@@ -180,7 +180,7 @@ export default function SiteFooter({ settings }) {
             { label: 'Egyptian Export License', value: s.exportLicense },
           ].map(item => (
             <div key={item.label} className="rounded-xl bg-white ring-1 ring-[#14161a]/10 px-4 py-3 hover:ring-[#14161a]/25 transition-all">
-              <div className="text-[#7a8290] uppercase tracking-[0.18em] text-[10px] font-mono font-semibold mb-1">
+              <div className="text-[#5b6577] uppercase tracking-[0.18em] text-[11px] font-mono font-semibold mb-1">
                 {item.label}
               </div>
               <div className="text-[#14161a] font-semibold text-sm">{item.value}</div>
@@ -192,10 +192,10 @@ export default function SiteFooter({ settings }) {
       {/* ── Bottom bar ───────────────────────────────────────────── */}
       <div className="border-t border-[#14161a]/10 bg-white">
         <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
-          <span className="text-[#7a8290]">
+          <span className="text-[#5b6577]">
             © {new Date().getFullYear()} {s.name} · All rights reserved · Egypt
           </span>
-          <div className="flex items-center gap-5 text-[#7a8290]">
+          <div className="flex items-center gap-5 text-[#5b6577]">
             <Link href="/contact" className="hover:text-[#14161a] transition-colors">Contact</Link>
             <Link href="/rfq" className="hover:text-[#14161a] transition-colors">RFQ</Link>
             <Link href="/about/quality-compliance" className="hover:text-[#14161a] transition-colors">Quality</Link>

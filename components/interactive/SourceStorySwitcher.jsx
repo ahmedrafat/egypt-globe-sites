@@ -44,8 +44,8 @@ const SOURCES = {
     icon: 'wave',
     badge: 'Solar-evaporated',
     panelBg: 'linear-gradient(160deg, #e6fbf8 0%, #c9f3ee 100%)',
-    accent: '#0b8f84',
-    badgeBg: 'bg-[#e6fbf8] text-[#0b8f84] border-[#0fb5a5]/45',
+    accent: '#087a70',
+    badgeBg: 'bg-[#e6fbf8] text-[#087a70] border-[#0fb5a5]/45',
     title: 'Solar-evaporated from Egypt\'s coastal pans',
     location: 'North Sinai (El-Arish / Bardawil) · Red Sea',
     purity: '94–99.5% NaCl across grades',
@@ -89,14 +89,14 @@ export default function SourceStorySwitcher({ pageSourceType }) {
               <div className="flex items-center gap-2">
                 <Icon name={s.icon} className="w-5 h-5" />
                 <div className="min-w-0">
-                  <div className={`text-[10px] font-mono uppercase tracking-[0.16em] ${isActive ? 'text-white/60' : 'text-[#7a8290]'}`}>
+                  <div className={`text-[11px] font-mono uppercase tracking-[0.16em] ${isActive ? 'text-white/60' : 'text-[#5b6577]'}`}>
                     {s.badge}
                   </div>
                   <div className="font-semibold text-sm sm:text-base">{s.label}</div>
                 </div>
                 {isThisPage && (
-                  <span className={`ml-auto text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ${
-                    isActive ? 'bg-white/15 text-white' : 'bg-[#e6fbf8] text-[#0b8f84]'
+                  <span className={`ml-auto text-[11px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ${
+                    isActive ? 'bg-white/15 text-white' : 'bg-[#e6fbf8] text-[#087a70]'
                   }`}>
                     This product
                   </span>
@@ -127,7 +127,7 @@ export default function SourceStorySwitcher({ pageSourceType }) {
         </ul>
 
         <div className="relative mt-5 pt-5 border-t border-[#14161a]/10 flex items-center gap-2 text-xs">
-          <span className="text-[#7a8290]">Loads from:</span>
+          <span className="text-[#5b6577]">Loads from:</span>
           <span className="font-semibold text-[#14161a]">{src.portsHint}</span>
         </div>
       </div>
@@ -138,7 +138,7 @@ export default function SourceStorySwitcher({ pageSourceType }) {
 function Stat({ label, value, accent }) {
   return (
     <div>
-      <div className="text-[10px] font-mono uppercase tracking-[0.16em] mb-0.5" style={{ color: accent }}>{label}</div>
+      <div className="text-[11px] font-mono uppercase tracking-[0.16em] mb-0.5" style={{ color: accent }}>{label}</div>
       <div className="text-sm font-semibold text-[#14161a] leading-tight">{value}</div>
     </div>
   )

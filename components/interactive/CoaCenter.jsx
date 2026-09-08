@@ -21,7 +21,7 @@ const REGION_META = {
   'Europe':         { icon: 'dot', label: 'Europe',                tone: 'bg-[#eef6fd] text-[#0369a1] border-[#0284c7]/35' },
   'North Europe':   { icon: 'snow', label: 'North Europe',          tone: 'bg-cyan-50 text-cyan-800 border-cyan-200' },
   'Mediterranean':  { icon: 'wave', label: 'Mediterranean',         tone: 'bg-sky-50 text-sky-800 border-sky-200' },
-  'GCC':            { icon: 'building', label: 'GCC / Saudi',           tone: 'bg-[#e6fbf8] text-[#0b8f84] border-[#0fb5a5]/40' },
+  'GCC':            { icon: 'building', label: 'GCC / Saudi',           tone: 'bg-[#e6fbf8] text-[#087a70] border-[#0fb5a5]/40' },
   'MENA':           { icon: 'sun', label: 'MENA',                  tone: 'bg-amber-50 text-[#8a6d3b] border-amber-200' },
   'North Africa':   { icon: 'layers', label: 'North Africa',          tone: 'bg-orange-50 text-orange-800 border-orange-200' },
   'East Africa':    { icon: 'globe', label: 'East Africa',           tone: 'bg-amber-50 text-[#8a6d3b] border-amber-200' },
@@ -127,7 +127,7 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
       <div className="egg-panel p-6 sm:p-8 text-center">
         <Icon name="beaker" className="w-10 h-10 mx-auto mb-3 text-[#14161a]/40" strokeWidth={1.25} />
         <h3 className="font-bold text-lg text-[#14161a] mb-2">No Certificate of Analysis on file yet</h3>
-        <p className="text-sm text-[#7a8290] mb-4 max-w-md mx-auto">
+        <p className="text-sm text-[#5b6577] mb-4 max-w-md mx-auto">
           Our internal Egypt Globe QC Lab issues a CoA with every shipment, and
           we can arrange independent third-party verification (SGS / Intertek /
           Bureau Veritas / TUV) on request — typically 0.3-0.5% of FOB value.
@@ -152,11 +152,11 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
       <div className="px-5 sm:px-6 py-4 border-b border-[#14161a]/10 bg-[#f9fafb]">
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div>
-            <h2 className="font-bold text-lg text-[#14161a] flex items-center gap-2">
-              <Icon name="beaker" className="w-5 h-5 text-[#0b8f84]" />
+            <h3 className="font-bold text-lg text-[#14161a] flex items-center gap-2">
+              <Icon name="beaker" className="w-5 h-5 text-[#087a70]" />
               Certificates of Analysis
-            </h2>
-            <p className="text-xs text-[#7a8290] mt-1">
+            </h3>
+            <p className="text-xs text-[#5b6577] mt-1">
               {coas.length} active CoA{coas.length === 1 ? '' : 's'} across {regions.length} market{regions.length === 1 ? '' : 's'}.
               Issued by our Egypt Globe QC Lab — third-party verification (SGS / Intertek / Bureau Veritas / TUV) on request.
             </p>
@@ -171,7 +171,7 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
       </div>
 
       {/* Region tabs (scrollable on mobile) */}
-      <div className="border-b border-[#14161a]/10 overflow-x-auto">
+      <div className="border-b border-[#14161a]/10 overflow-x-auto" tabIndex={0}>
         <div className="flex gap-1 px-3 sm:px-5 py-2 min-w-max">
           {regions.map(r => {
             const m = regionMeta(r)
@@ -184,7 +184,7 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
                     : `${m.tone} hover:border-[#14161a]/40`}`}>
                 <Icon name={m.icon} className="w-3.5 h-3.5" />
                 {m.label}
-                <span className={`text-[10px] font-bold px-1 rounded ${isActive ? 'bg-white/25' : 'bg-white text-[#7a8290]'}`}>
+                <span className={`text-[11px] font-bold px-1 rounded ${isActive ? 'bg-white/25' : 'bg-white text-[#5b6577]'}`}>
                   {grouped[r].length}
                 </span>
               </button>
@@ -209,32 +209,32 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
                   <div className="flex items-center gap-2 flex-wrap mb-1">
                     <span className="font-mono text-[11px] font-bold text-[#14161a] bg-[#f3f4f6] px-2 py-0.5 rounded">{coa.ref_code}</span>
                     {coa.pass_fail === true && (
-                      <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#e6fbf8] text-[#0b8f84] border border-[#0fb5a5]/40">
+                      <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#e6fbf8] text-[#087a70] border border-[#0fb5a5]/40">
                         ✓ Pass
                       </span>
                     )}
                     {coa.pass_fail === false && (
-                      <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-red-100 text-red-800 border border-red-200">
+                      <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-red-100 text-red-800 border border-red-200">
                         ✗ Fail
                       </span>
                     )}
                     {expired && (
-                      <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-red-50 text-red-700 border border-red-200">
+                      <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-red-50 text-red-700 border border-red-200">
                         Expired
                       </span>
                     )}
                     {expiringSoon && !expired && (
-                      <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#fbf7ee] text-[#8a6d3b] border border-[#b8862b]/40">
+                      <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#fbf7ee] text-[#8a6d3b] border border-[#b8862b]/40">
                         Expires in {days}d
                       </span>
                     )}
                   </div>
                   <div className="text-sm font-bold text-[#14161a]">
                     {coa.lab_name}
-                    {coa.lab_certificate_no && <span className="text-[#8a93a3] font-mono font-normal ml-2">{coa.lab_certificate_no}</span>}
+                    {coa.lab_certificate_no && <span className="text-[#67707f] font-mono font-normal ml-2">{coa.lab_certificate_no}</span>}
                   </div>
                   {coa.overall_result && (
-                    <p className="text-xs text-[#0b8f84] font-semibold mt-1">{coa.overall_result}</p>
+                    <p className="text-xs text-[#087a70] font-semibold mt-1">{coa.overall_result}</p>
                   )}
                 </div>
                 <div className="flex items-center gap-1.5 flex-shrink-0">
@@ -248,8 +248,8 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
                       commodityGrade: coa.commodity_grade,
                       brand,  // Drop 158 — per-brand letterhead
                     })}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-white px-3 py-2 rounded-lg shadow-sm transition-colors hover:opacity-90"
-                    style={{ background: brand?.primary_color || '#0b8f84' }}
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#14161a] bg-white px-3 py-2 rounded-lg shadow-sm ring-1 ring-[#14161a]/15 transition-colors hover:bg-[#f9fafb]"
+                    style={{ borderLeft: `3px solid ${brand?.primary_color || '#087a70'}` }}
                     title="Open print dialog — choose Save as PDF or send to printer"
                   >
                     Print / PDF
@@ -259,7 +259,7 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
                       href={coa.pdf_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold bg-white hover:bg-[#f9fafb] text-[#0b8f84] border border-[#14161a]/20 px-3 py-2 rounded-lg shadow-sm transition-colors"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold bg-white hover:bg-[#f9fafb] text-[#087a70] border border-[#14161a]/20 px-3 py-2 rounded-lg shadow-sm transition-colors"
                       title="Download the lab's original PDF (uploaded by QC)"
                     >
                       Original PDF
@@ -269,23 +269,23 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
               </div>
 
               {/* Date strip */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4 text-[10px] uppercase tracking-wider font-semibold text-[#7a8290]">
-                {coa.sample_date && <div><div className="text-[#8a93a3]">Sampled</div><div className="text-[#3f4650] font-bold normal-case tracking-normal">{fmtDate(coa.sample_date)}</div></div>}
-                {coa.analysis_date && <div><div className="text-[#8a93a3]">Analysed</div><div className="text-[#3f4650] font-bold normal-case tracking-normal">{fmtDate(coa.analysis_date)}</div></div>}
-                {coa.issue_date && <div><div className="text-[#8a93a3]">Issued</div><div className="text-[#3f4650] font-bold normal-case tracking-normal">{fmtDate(coa.issue_date)}</div></div>}
-                {coa.expiry_date && <div><div className="text-[#8a93a3]">Expires</div><div className={`font-bold normal-case tracking-normal ${expired ? 'text-red-700' : expiringSoon ? 'text-[#8a6d3b]' : 'text-[#3f4650]'}`}>{fmtDate(coa.expiry_date)}</div></div>}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4 text-[11px] uppercase tracking-wider font-semibold text-[#5b6577]">
+                {coa.sample_date && <div><div className="text-[#67707f]">Sampled</div><div className="text-[#3f4650] font-bold normal-case tracking-normal">{fmtDate(coa.sample_date)}</div></div>}
+                {coa.analysis_date && <div><div className="text-[#67707f]">Analysed</div><div className="text-[#3f4650] font-bold normal-case tracking-normal">{fmtDate(coa.analysis_date)}</div></div>}
+                {coa.issue_date && <div><div className="text-[#67707f]">Issued</div><div className="text-[#3f4650] font-bold normal-case tracking-normal">{fmtDate(coa.issue_date)}</div></div>}
+                {coa.expiry_date && <div><div className="text-[#67707f]">Expires</div><div className={`font-bold normal-case tracking-normal ${expired ? 'text-red-700' : expiringSoon ? 'text-[#8a6d3b]' : 'text-[#3f4650]'}`}>{fmtDate(coa.expiry_date)}</div></div>}
               </div>
 
               {/* Drop 148 — Packing + cargo metadata strip (only if any field set) */}
               {(coa.packing_name || coa.packing_label || coa.quantity_mt || coa.vessel_name || coa.pol_unlocode || coa.pod_unlocode) && (
                 <div className="rounded-xl border border-[#14161a]/10 bg-[#f9fafb] p-3 mb-4">
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-[#7a8290] mb-2">Cargo & packing</div>
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-[#5b6577] mb-2">Cargo & packing</div>
                   <div className="flex flex-wrap gap-2 text-xs">
                     {(coa.packing_name || coa.packing_label) && (
                       <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white border border-[#14161a]/10 text-[#14161a]">
                         <span className="font-semibold">{coa.packing_name || coa.packing_label}</span>
-                        {coa.packing_size_kg && <span className="text-[#7a8290]">· {Number(coa.packing_size_kg)} kg</span>}
-                        {coa.packing_material && <span className="text-[#7a8290]">· {coa.packing_material}</span>}
+                        {coa.packing_size_kg && <span className="text-[#5b6577]">· {Number(coa.packing_size_kg)} kg</span>}
+                        {coa.packing_material && <span className="text-[#5b6577]">· {coa.packing_material}</span>}
                       </span>
                     )}
                     {coa.quantity_mt && (
@@ -309,12 +309,12 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
                       </span>
                     )}
                     {coa.bl_no && (
-                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white border border-[#14161a]/10 text-[#3f4650] font-mono text-[10px]">
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white border border-[#14161a]/10 text-[#3f4650] font-mono text-[11px]">
                         B/L {coa.bl_no}
                       </span>
                     )}
                     {coa.attached_shipments_count > 0 && (
-                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[#e6fbf8] border border-[#0fb5a5]/40 text-[#0b8f84]">
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-[#e6fbf8] border border-[#0fb5a5]/40 text-[#087a70]">
                         ✓ {coa.attached_shipments_count} shipment{coa.attached_shipments_count === 1 ? '' : 's'} attached
                       </span>
                     )}
@@ -326,12 +326,12 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
               {paramKeys.length > 0 && (
                 <div className="rounded-xl border border-[#14161a]/10 overflow-hidden bg-[#f9fafb]">
                   <div className="px-4 py-2 border-b border-[#14161a]/10 bg-[#f9fafb]">
-                    <h4 className="text-[11px] font-bold uppercase tracking-wider text-[#7a8290]">Measured parameters</h4>
+                    <h4 className="text-[11px] font-bold uppercase tracking-wider text-[#5b6577]">Measured parameters</h4>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 divide-[#14161a]/10">
                     {paramKeys.map((k, i) => (
                       <div key={k} className={`flex items-baseline justify-between px-4 py-2.5 ${i % 2 === 0 ? '' : 'sm:bg-white'}`}>
-                        <span className="text-xs text-[#7a8290] font-medium">{paramLabel(k)}</span>
+                        <span className="text-xs text-[#5b6577] font-medium">{paramLabel(k)}</span>
                         <span className="text-sm font-mono font-bold text-[#14161a]">{String(params[k])}</span>
                       </div>
                     ))}
@@ -340,7 +340,7 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
               )}
 
               {coa.batch_ref && (
-                <div className="mt-3 text-[11px] text-[#7a8290]">
+                <div className="mt-3 text-[11px] text-[#5b6577]">
                   Batch ref: <span className="font-mono font-semibold text-[#3f4650]">{coa.batch_ref}</span>
                 </div>
               )}
@@ -354,7 +354,7 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
 
       {/* Footer */}
       <div className="px-5 sm:px-6 py-3 bg-[#f9fafb] border-t border-[#14161a]/10">
-        <p className="text-[11px] text-[#7a8290] leading-relaxed">
+        <p className="text-[11px] text-[#5b6577] leading-relaxed">
           Per-shipment CoAs are issued by our internal Egypt Globe QC Lab.
           Independent third-party verification (SGS Egypt / Intertek Cairo /
           Bureau Veritas / TUV) is available on request, typically at

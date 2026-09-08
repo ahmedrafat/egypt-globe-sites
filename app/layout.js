@@ -184,10 +184,10 @@ export async function generateMetadata() {
       ],
     icons: settings.faviconUrl ? {
       icon: [{ url: settings.faviconUrl }],
-      apple: [{ url: settings.faviconUrl }],
+      apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
     } : {
       icon: [{ url: '/favicon.ico' }],
-      apple: [{ url: '/og-image.png' }],
+      apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
     },
     manifest: '/site.webmanifest',
     // No layout-level canonical. Every route declares its own (the catch-all,

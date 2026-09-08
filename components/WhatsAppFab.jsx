@@ -16,6 +16,7 @@
 export default function WhatsAppFab({ url, label = 'Chat on WhatsApp' }) {
   if (!url) return null
   return (
+    <aside aria-label="WhatsApp chat" className="contents">
     <a
       href={url}
       target="_blank"
@@ -35,5 +36,6 @@ export default function WhatsAppFab({ url, label = 'Chat on WhatsApp' }) {
         {label}
       </span>
     </a>
+    </aside>
   )
 }

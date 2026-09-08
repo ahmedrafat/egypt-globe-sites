@@ -88,13 +88,13 @@ export async function generateMetadata() {
 const C = {
   ink:        '#14161a', // obsidian text
   body:       '#3f4650', // body copy
-  muted:      '#7a8290', // labels / eyebrows
+  muted:      '#5b6577', // labels / eyebrows
   panel:      '#f6f7f9', // ultra-light gray panels
   teal:       '#0fb5a5', // clear turquoise (decorative)
-  tealText:   '#0b8f84', // turquoise for text on white (AA)
+  tealText:   '#087a70', // turquoise for text on white (AA)
   gold:       '#b8862b', // deep gold (text)
   orange:     '#ff6321', // brand CTA
-  orangeText: '#d9501a',
+  orangeText: '#c2410c',
   blue:       '#1d5fa1', // nav blue
   ocean:      '#0284c7', // vivid ocean
   oceanText:  '#0369a1',
@@ -278,7 +278,7 @@ export default async function HomePage() {
   const SUPABASE_ANON = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
 
   return (
-    <main data-egg-scrolly data-active="0" className="egg-sc relative bg-white text-[#14161a] antialiased -mb-16 sm:-mb-24">
+    <div data-egg-scrolly data-active="0" className="egg-sc relative bg-white text-[#14161a] antialiased -mb-16 sm:-mb-24">
       <style>{SCOPED_CSS}</style>
 
       {/* ── 1. HERO ─────────────────────────────────────────────────── */}
@@ -306,7 +306,7 @@ export default async function HomePage() {
 
         <div data-hero-copy className="relative z-10 flex-1 flex flex-col justify-between">
           {/* overline */}
-          <p className="egg-rise text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.32em] text-[#ff7a22]" style={{ animationDelay: '.05s' }}>
+          <p className="egg-rise text-[11px] sm:text-[11px] font-mono uppercase tracking-[0.32em] text-[#ff7a22]" style={{ animationDelay: '.05s' }}>
             Egypt Globe Group
             <span className="text-[#5aa0dc]/60 mx-2">/</span>
             <span className="text-[#a9bfd7]">Est. 2014 · Quality at the Core · Cairo · Damietta · 60+ markets</span>
@@ -327,7 +327,7 @@ export default async function HomePage() {
               cargo from the Siwa salt mines to the buyer&rsquo;s arrival laboratory.
             </p>
             <div className="egg-rise flex flex-wrap items-center gap-6 sm:gap-9 mt-9 sm:mt-11" style={{ animationDelay: '.28s' }}>
-              <a href="#quote" className="egg-btn group relative inline-flex items-center gap-2.5 text-sm font-semibold text-white bg-[#ff6321] px-7 py-3.5 rounded-full overflow-hidden shadow-[0_10px_30px_-10px_rgba(255,99,33,.55)]">
+              <a href="#quote" className="egg-btn group relative inline-flex items-center gap-2.5 text-sm font-semibold text-white bg-[#d0450f] px-7 py-3.5 rounded-full overflow-hidden shadow-[0_10px_30px_-10px_rgba(255,99,33,.55)]">
                 <span className="relative z-10">Request a quote</span>
                 <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1">→</span>
                 <span className="absolute inset-0 bg-[#06294a] translate-y-full group-hover:translate-y-0 transition-transform duration-400" />
@@ -349,12 +349,12 @@ export default async function HomePage() {
                 <p className={`${display.className} text-[2.2rem] sm:text-[2.7rem] leading-none tracking-tight text-[#ff7a22]`}>
                   <span data-count={m.value} data-suffix={m.suffix}>{m.value}{m.suffix}</span>
                 </p>
-                <p className="text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.18em] text-[#a9bfd7] mt-3 leading-snug">{m.label}</p>
+                <p className="text-[11px] sm:text-[11px] font-mono uppercase tracking-[0.18em] text-[#a9bfd7] mt-3 leading-snug">{m.label}</p>
               </div>
             ))}
           </div>
           <div className="egg-rise mt-6 flex flex-wrap items-center justify-between gap-x-5 gap-y-2" style={{ animationDelay: '.46s' }}>
-            <div className="flex flex-wrap gap-x-5 gap-y-1.5 text-[10px] sm:text-[11px] font-mono tracking-[0.14em] text-[#8fa9c4]">
+            <div className="flex flex-wrap gap-x-5 gap-y-1.5 text-[11px] sm:text-[11px] font-mono tracking-[0.14em] text-[#8fa9c4]">
               {CERTS.map(c => <span key={c} className="whitespace-nowrap hover:text-[#ff7a22] transition-colors">{c}</span>)}
             </div>
             <a href="#story" className="hidden sm:inline-flex items-center gap-2 text-[11px] font-mono uppercase tracking-[0.2em] text-[#a9bfd7] hover:text-white transition-colors">
@@ -371,7 +371,7 @@ export default async function HomePage() {
             <div key={dup} className="flex shrink-0">
               {TICKER.map((t, i) => (
                 <span key={`${dup}-${i}`} className="flex items-center text-[11px] font-mono tracking-[0.2em] text-[#5b6472] px-6">
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#ff6321] mr-6" />{t}
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#d0450f] mr-6" />{t}
                 </span>
               ))}
             </div>
@@ -385,12 +385,12 @@ export default async function HomePage() {
       <section className="bg-white border-b border-[#14161a]/10">
         <div className="max-w-7xl mx-auto px-5 sm:px-10 lg:px-16 py-14 lg:py-20 grid lg:grid-cols-12 gap-10 lg:gap-14">
           <div className="lg:col-span-5" data-reveal>
-            <p className="flex items-center gap-3 text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.26em] text-[#7a8290]">
+            <p className="flex items-center gap-3 text-[11px] sm:text-[11px] font-mono uppercase tracking-[0.26em] text-[#5b6577]">
               <span className="h-px w-8 bg-[#b8862b]/60" />
-              <span className="text-[#b8862b]">Quality at the Core · since 2014</span>
+              <span className="text-[#8a6d3b]">Quality at the Core · since 2014</span>
             </p>
             <h2 className={`${display.className} mt-5 text-[clamp(1.8rem,3.6vw,2.9rem)] leading-[1.06] tracking-[-0.015em] text-[#14161a]`}>
-              Most regional exporters sell a specification. <span className="italic text-[#0b8f84]">We certify one.</span>
+              Most regional exporters sell a specification. <span className="italic text-[#087a70]">We certify one.</span>
             </h2>
             <p className="mt-6 text-[15.5px] leading-[1.75] text-[#3f4650]">
               Consistency is the industry&rsquo;s chronic failure: a first lot that meets the tender
@@ -460,7 +460,7 @@ export default async function HomePage() {
             <article data-step="0" className="egg-step">
               <Eyebrow n="01" tone={C.tealText}>Source · Siwa Oasis &amp; Qattara Depression</Eyebrow>
               <h2 data-rise className={`${display.className} egg-h2`}>
-                Siwa Oasis crystalline rock salt — <span className="italic text-[#0b8f84]">certified at the mine</span>, not at the negotiating table.
+                Siwa Oasis crystalline rock salt — <span className="italic text-[#087a70]">certified at the mine</span>, not at the negotiating table.
               </h2>
               <p data-rise className="egg-p">
                 Our rock salt is mined from halite beds in the Siwa Oasis and the Qattara Depression —
@@ -530,7 +530,7 @@ export default async function HomePage() {
             <article data-step="2" className="egg-step">
               <Eyebrow n="03" tone={C.orangeText}>Logistics · mitigating global supply-chain risk</Eyebrow>
               <h2 data-rise className={`${display.className} egg-h2`}>
-                Every source sits within a day of a berth <span className="italic text-[#d9501a]">our own teams control</span>.
+                Every source sits within a day of a berth <span className="italic text-[#c2410c]">our own teams control</span>.
               </h2>
               <p data-rise className="egg-p">
                 Supply-chain risk in Egyptian bulk export is rarely the commodity — it is the handover:
@@ -628,8 +628,8 @@ export default async function HomePage() {
               {/* Seven divisions — supply-chain nodes (exact nav naming) */}
               <div data-rise className="mt-9">
                 <div className="flex items-center justify-between mb-3">
-                  <p className="text-[10px] font-mono uppercase tracking-[0.28em] text-[#7a8290]">Seven commodity divisions · one QA system</p>
-                  <Link href="/products" className="group inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-[0.18em] text-[#5b6472] hover:text-[#b8862b] transition-colors">
+                  <p className="text-[11px] font-mono uppercase tracking-[0.28em] text-[#5b6577]">Seven commodity divisions · one QA system</p>
+                  <Link href="/products" className="group inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-[0.18em] text-[#5b6472] hover:text-[#8a6d3b] transition-colors">
                     All products <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                   </Link>
                 </div>
@@ -643,7 +643,7 @@ export default async function HomePage() {
             <article data-step="5" id="quote" className="egg-step scroll-mt-24">
               <Eyebrow n="05" tone={C.orangeText}>Request a quote · your verified, long-term supply-chain ally</Eyebrow>
               <h2 data-rise className={`${display.className} egg-h2`}>
-                Tell us the tonnage and the specification. <span className="italic text-[#d9501a]">We price it, and certify it, by tomorrow.</span>
+                Tell us the tonnage and the specification. <span className="italic text-[#c2410c]">We price it, and certify it, by tomorrow.</span>
               </h2>
               <p data-rise className="egg-p">
                 Our export desk sits in Damietta and Cairo. A structured request receives a priced FOB /
@@ -698,14 +698,14 @@ export default async function HomePage() {
                 <p data-rfq-status className="hidden mt-3 rounded-xl border border-red-200 bg-red-50 text-red-800 px-4 py-2.5 text-sm" role="alert" />
 
                 <div data-rfq-actions className="flex flex-col sm:flex-row sm:items-center gap-4 mt-5">
-                  <button type="submit" className="egg-btn group relative inline-flex items-center justify-center gap-2.5 text-sm font-semibold text-white bg-[#ff6321] px-8 py-4 rounded-full overflow-hidden shadow-[0_10px_30px_-10px_rgba(255,99,33,.55)] disabled:opacity-60 disabled:cursor-not-allowed">
+                  <button type="submit" className="egg-btn group relative inline-flex items-center justify-center gap-2.5 text-sm font-semibold text-white bg-[#d0450f] px-8 py-4 rounded-full overflow-hidden shadow-[0_10px_30px_-10px_rgba(255,99,33,.55)] disabled:opacity-60 disabled:cursor-not-allowed">
                     <span className="relative z-10">Send my request</span>
                     <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1">→</span>
                     <span className="absolute inset-0 bg-[#06294a] translate-y-full group-hover:translate-y-0 transition-transform duration-400" />
                   </button>
-                  <p className="text-xs text-[#7a8290] leading-relaxed max-w-sm">
+                  <p className="text-xs text-[#5b6577] leading-relaxed max-w-sm">
                     Need specs, packing and Incoterm detail?{' '}
-                    <Link href="/rfq" className="text-[#14161a] hover:text-[#ff6321] underline decoration-[#14161a]/30 underline-offset-4">Use the full RFQ form →</Link>
+                    <Link href="/rfq" className="text-[#14161a] hover:text-[#c2410c] underline decoration-[#14161a]/30 underline-offset-4">Use the full RFQ form →</Link>
                   </p>
                 </div>
 
@@ -719,19 +719,19 @@ export default async function HomePage() {
                     The export desk reviews every request within an hour and replies with a priced, certified offer within 24 hours.
                   </p>
                   <div className="inline-block mt-4 rounded-xl border border-[#14161a]/10 bg-white px-5 py-3">
-                    <div className="text-[10px] uppercase tracking-wider font-mono text-[#7a8290]">Reference</div>
+                    <div className="text-[11px] uppercase tracking-wider font-mono text-[#5b6577]">Reference</div>
                     <div data-rfq-ref className="font-mono font-bold text-lg text-[#14161a]">—</div>
                   </div>
-                  <p className="text-xs text-[#7a8290] mt-4">
-                    Add specs or packing detail any time via the <Link href="/rfq" className="text-[#14161a] hover:text-[#ff6321] underline underline-offset-4">full RFQ form</Link>.
+                  <p className="text-xs text-[#5b6577] mt-4">
+                    Add specs or packing detail any time via the <Link href="/rfq" className="text-[#14161a] hover:text-[#c2410c] underline underline-offset-4">full RFQ form</Link>.
                   </p>
                 </div>
               </form>
 
-              <div data-rise className="mt-8 text-sm font-mono text-[#7a8290] leading-relaxed">
-                <a href={`mailto:${email}`} className="text-[#14161a] hover:text-[#ff6321] transition-colors">{email}</a><br />
+              <div data-rise className="mt-8 text-sm font-mono text-[#5b6577] leading-relaxed">
+                <a href={`mailto:${email}`} className="text-[#14161a] hover:text-[#c2410c] transition-colors">{email}</a><br />
                 <a href={`tel:${phoneE164}`} className="hover:text-[#14161a] transition-colors">{phone}</a>
-                <span className="text-[#a3aab5]"> · WhatsApp available</span>
+                <span className="text-[#67707f]"> · WhatsApp available</span>
               </div>
             </article>
           </div>
@@ -745,8 +745,8 @@ export default async function HomePage() {
           {PILLARS.map((p, i) => (
             <div key={p.tag} data-reveal className={`group px-6 sm:px-10 lg:px-10 py-12 border-t border-[#14161a]/10 ${i > 0 ? 'lg:border-l' : ''} ${i % 2 === 1 ? 'md:border-l' : ''} hover:bg-[#f6f7f9] transition-colors duration-500`}>
               <div className="flex items-baseline gap-4 mb-6">
-                <span className={`${display.className} text-2xl text-[#c9ced6] group-hover:text-[#b8862b] transition-colors duration-500`}>{p.n}</span>
-                <p className="text-[11px] font-mono uppercase tracking-[0.22em] text-[#d9501a]">{p.tag}</p>
+                <span className={`${display.className} text-2xl text-[#67707f] group-hover:text-[#8a6d3b] transition-colors duration-500`}>{p.n}</span>
+                <p className="text-[11px] font-mono uppercase tracking-[0.22em] text-[#c2410c]">{p.tag}</p>
               </div>
               <p className="text-[14.5px] text-[#3f4650] leading-relaxed mb-8">{p.body}</p>
               <Link href={p.href} className="group/l inline-flex items-center gap-2 text-sm text-[#3f4650] hover:text-[#14161a] transition-colors">
@@ -762,8 +762,8 @@ export default async function HomePage() {
       {caseStudies.length > 0 && (
         <section className="border-t border-[#14161a]/10 bg-white">
           <div className="flex items-center justify-between px-6 sm:px-10 lg:px-16 pt-12 pb-4">
-            <p className="text-[11px] font-mono uppercase tracking-[0.28em] text-[#7a8290]">Verified deliveries · case studies</p>
-            <Link href="/case-studies" className="group inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-[0.18em] text-[#5b6472] hover:text-[#b8862b] transition-colors">
+            <p className="text-[11px] font-mono uppercase tracking-[0.28em] text-[#5b6577]">Verified deliveries · case studies</p>
+            <Link href="/case-studies" className="group inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-[0.18em] text-[#5b6472] hover:text-[#8a6d3b] transition-colors">
               All <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
             </Link>
           </div>
@@ -776,11 +776,11 @@ export default async function HomePage() {
                   </div>
                 )}
                 <div className="flex-1 min-w-0">
-                  <p className="text-[10px] font-mono uppercase tracking-[0.22em] text-[#b8862b] mb-2">Case study</p>
+                  <p className="text-[11px] font-mono uppercase tracking-[0.22em] text-[#8a6d3b] mb-2">Case study</p>
                   <p className={`${display.className} text-lg sm:text-xl text-[#2a2f38] group-hover:text-[#14161a] leading-snug transition-colors`}>{cs.title}</p>
-                  {cs.description && <p className="text-xs text-[#7a8290] mt-1.5 line-clamp-1 leading-relaxed">{cs.description}</p>}
+                  {cs.description && <p className="text-xs text-[#5b6577] mt-1.5 line-clamp-1 leading-relaxed">{cs.description}</p>}
                 </div>
-                <span className="shrink-0 text-[#c9ced6] group-hover:text-[#ff6321] transition-all duration-400 group-hover:translate-x-1 text-lg">→</span>
+                <span className="shrink-0 text-[#67707f] group-hover:text-[#c2410c] transition-all duration-400 group-hover:translate-x-1 text-lg">→</span>
               </Link>
             ))}
           </div>
@@ -789,7 +789,7 @@ export default async function HomePage() {
 
       {/* ── legal trust line ────────────────────────────────────────── */}
       <div className="border-t border-[#14161a]/10 px-6 sm:px-10 lg:px-16 py-7 bg-white">
-        <p className="text-[10px] font-mono text-[#8a93a3] tracking-[0.14em]">
+        <p className="text-[11px] font-mono text-[#67707f] tracking-[0.14em]">
           Export license {settings?.exportLicense || '600010794'} · Commercial registry {settings?.commercialRegistry || '73418'} · Tax card {settings?.taxCard || '655-527-427'} · GOEIC-registered exporter · Cairo + Damietta, Egypt
         </p>
       </div>
@@ -802,7 +802,7 @@ export default async function HomePage() {
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{ __html: `window.__EGG_ENV=${JSON.stringify({ url: SUPABASE_URL, key: SUPABASE_ANON })};${INIT_SCRIPT}` }}
       />
-    </main>
+    </div>
   )
 }
 
@@ -817,20 +817,20 @@ function DataPanel({ index, kicker, title, tone, icon = 'shield', children, chip
         <div className="egg-panel w-full flex flex-col rounded-xl sm:rounded-2xl ring-1 ring-[#14161a]/10 bg-white shadow-[0_20px_50px_-30px_rgba(20,22,26,.4)] overflow-hidden">
           <div className="flex items-start justify-between gap-3 px-3.5 sm:px-5 pt-9 sm:pt-11 pb-2.5 sm:pb-3 border-b border-[#14161a]/10">
             <div className="min-w-0">
-              <p className="text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.24em] truncate" style={{ color: tone }}>{kicker}</p>
+              <p className="text-[9px] sm:text-[11px] font-mono uppercase tracking-[0.24em] truncate" style={{ color: tone }}>{kicker}</p>
               <p className="text-[13px] sm:text-[15px] text-[#14161a] mt-0.5 leading-tight font-semibold">{title}</p>
             </div>
             <span className="shrink-0 inline-flex w-8 h-8 items-center justify-center rounded-lg ring-1 ring-[#14161a]/12 text-[#14161a]">
               <Icon name={icon} className="w-4 h-4" />
             </span>
           </div>
-          <div className="flex-1 min-h-0 overflow-auto egg-panel-body">
+          <div className="flex-1 min-h-0 overflow-auto egg-panel-body" tabIndex={0}>
             {children}
           </div>
           {chips.length > 0 && (
             <div className="hidden sm:flex flex-wrap gap-1.5 px-5 py-3 border-t border-[#14161a]/10 bg-[#f9fafb]">
               {chips.map(([label, href]) => (
-                <Link key={href + label} href={href} className="text-[10px] font-mono uppercase tracking-[0.12em] px-2 py-1 rounded-md ring-1 ring-[#14161a]/15 text-[#3f4650] hover:text-[#14161a] hover:ring-[#14161a]/40 bg-white transition-colors">
+                <Link key={href + label} href={href} className="text-[11px] font-mono uppercase tracking-[0.12em] px-2 py-1 rounded-md ring-1 ring-[#14161a]/15 text-[#3f4650] hover:text-[#14161a] hover:ring-[#14161a]/40 bg-white transition-colors">
                   {label}
                 </Link>
               ))}
@@ -849,7 +849,7 @@ function SpecTable({ caption, head, rows, mono = [1] }) {
       <thead>
         <tr>
           {head.map((h, i) => (
-            <th key={h} scope="col" className={`px-3.5 sm:px-5 py-2 text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.16em] text-[#7a8290] bg-[#f9fafb] border-b border-[#14161a]/10 ${i === head.length - 1 && head.length > 2 ? 'hidden md:table-cell' : ''}`}>{h}</th>
+            <th key={h} scope="col" className={`px-3.5 sm:px-5 py-2 text-[9px] sm:text-[11px] font-mono uppercase tracking-[0.16em] text-[#5b6577] bg-[#f9fafb] border-b border-[#14161a]/10 ${i === head.length - 1 && head.length > 2 ? 'hidden md:table-cell' : ''}`}>{h}</th>
           ))}
         </tr>
       </thead>
@@ -871,7 +871,7 @@ function PanelSiwa() {
     <DataPanel index={0} kicker="Siwa Oasis · Qattara Depression · rock salt" title="Chemical analysis — guaranteed limits, dry basis" tone={C.tealText} icon="beaker"
       chips={[['Food', SALT_GRADES.food.path], ['Pharma', SALT_GRADES.pharma.path], ['Cosmetic', SALT_GRADES.cosmetic.path], ['CoA centre', '/coa']]}>
       <SpecTable caption="Siwa rock salt chemical analysis" head={['Parameter', 'Limit', 'Test method']} rows={SIWA_ROWS} />
-      <p className="px-3.5 sm:px-5 py-2.5 text-[10px] sm:text-[11px] text-[#7a8290] leading-snug border-t border-[#14161a]/8">
+      <p className="px-3.5 sm:px-5 py-2.5 text-[11px] sm:text-[11px] text-[#5b6577] leading-snug border-t border-[#14161a]/8">
         Values are contractual limits verified per lot at the mine-site laboratory and re-tested at the port of loading. Certificate of Analysis issued before the Bill of Lading.
       </p>
     </DataPanel>
@@ -937,11 +937,11 @@ function PanelLogistics() {
         ))}
       </svg>
       <div className="absolute left-3 right-3 bottom-3 sm:left-5 sm:right-auto sm:bottom-5 z-20 max-w-[92%] rounded-xl sm:rounded-2xl bg-white/92 backdrop-blur ring-1 ring-[#14161a]/10 shadow-[0_12px_30px_-18px_rgba(20,22,26,.45)] px-3.5 py-2.5 sm:px-4 sm:py-3">
-        <p className="text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.24em]" style={{ color: C.orangeText }}>Logistics network · 7 Egyptian seaports · resident EGG teams</p>
+        <p className="text-[9px] sm:text-[11px] font-mono uppercase tracking-[0.24em]" style={{ color: C.orangeText }}>Logistics network · 7 Egyptian seaports · resident EGG teams</p>
         <p className="text-sm sm:text-base text-[#14161a] mt-0.5 leading-tight">Source to berth in under twelve hours</p>
         <div className="hidden sm:flex flex-wrap gap-1.5 mt-2">
           {[['Loading ports', '/services/loading-ports'], [svc('logistics').label, svc('logistics').path], [svc('port-services').label, svc('port-services').path], ['Vessel sizes', '/trade-tools/vessel-sizes']].map(([label, href]) => (
-            <Link key={href + label} href={href} className="text-[10px] font-mono uppercase tracking-[0.12em] px-2 py-1 rounded-md ring-1 ring-[#14161a]/15 text-[#3f4650] hover:text-[#14161a] hover:ring-[#14161a]/40 bg-white transition-colors">
+            <Link key={href + label} href={href} className="text-[11px] font-mono uppercase tracking-[0.12em] px-2 py-1 rounded-md ring-1 ring-[#14161a]/15 text-[#3f4650] hover:text-[#14161a] hover:ring-[#14161a]/40 bg-white transition-colors">
               {label}
             </Link>
           ))}
@@ -998,7 +998,7 @@ function PanelGlobal() {
           <circle cx={HUB.x} cy={HUB.y} r="15" fill="none" stroke="#ff6321" strokeOpacity="0.35" strokeWidth="0.9" />
           <circle cx={HUB.x} cy={HUB.y} r="5.5" fill="#ff6321" />
           <circle cx={HUB.x} cy={HUB.y} r="2" fill="#ffffff" />
-          <text x={HUB.x - 14} y={HUB.y + 28} textAnchor="end" className="egg-maptext" fill="#d9501a">EGYPT · SUEZ CORRIDOR</text>
+          <text x={HUB.x - 14} y={HUB.y + 28} textAnchor="end" className="egg-maptext" fill="#c2410c">EGYPT · SUEZ CORRIDOR</text>
         </g>
 
         {/* destination clusters — each navigates to its application landing */}
@@ -1021,13 +1021,13 @@ function PanelGlobal() {
       </svg>
 
       <div className="absolute left-3 right-3 bottom-3 sm:left-5 sm:right-auto sm:bottom-5 z-20 max-w-[92%] rounded-xl sm:rounded-2xl bg-white/92 backdrop-blur ring-1 ring-[#14161a]/10 shadow-[0_12px_30px_-18px_rgba(20,22,26,.45)] px-3.5 py-2.5 sm:px-4 sm:py-3">
-        <p className="text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.24em]" style={{ color: C.oceanText }}>Global export · 60+ destination markets · FOB / CIF / CFR</p>
+        <p className="text-[9px] sm:text-[11px] font-mono uppercase tracking-[0.24em]" style={{ color: C.oceanText }}>Global export · 60+ destination markets · FOB / CIF / CFR</p>
         <p className="text-sm sm:text-base text-[#14161a] mt-0.5 leading-tight">Chemical · water treatment · road management</p>
         <div className="hidden sm:flex flex-wrap gap-1.5 mt-2">
           {['industrial_chemistry', 'water_treatment', 'deicing', 'food_processing'].map(id => {
             const a = app(id)
             return a ? (
-              <Link key={id} href={a.path} className="text-[10px] font-mono uppercase tracking-[0.12em] px-2 py-1 rounded-md ring-1 ring-[#14161a]/15 text-[#3f4650] hover:text-[#14161a] hover:ring-[#14161a]/40 bg-white transition-colors">
+              <Link key={id} href={a.path} className="text-[11px] font-mono uppercase tracking-[0.12em] px-2 py-1 rounded-md ring-1 ring-[#14161a]/15 text-[#3f4650] hover:text-[#14161a] hover:ring-[#14161a]/40 bg-white transition-colors">
                 {a.label}
               </Link>
             ) : null
@@ -1046,10 +1046,10 @@ function PanelQaChain() {
         <caption className="sr-only">QA verification chain</caption>
         <thead>
           <tr>
-            <th scope="col" className="px-3.5 sm:px-5 py-2 text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.16em] text-[#7a8290] bg-[#f9fafb] border-b border-[#14161a]/10 w-10">Gate</th>
-            <th scope="col" className="px-2 sm:px-3 py-2 text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.16em] text-[#7a8290] bg-[#f9fafb] border-b border-[#14161a]/10">Control</th>
-            <th scope="col" className="hidden md:table-cell px-3 py-2 text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.16em] text-[#7a8290] bg-[#f9fafb] border-b border-[#14161a]/10">Evidence</th>
-            <th scope="col" className="px-3 sm:px-5 py-2 text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.16em] text-[#7a8290] bg-[#f9fafb] border-b border-[#14161a]/10">Who · frequency</th>
+            <th scope="col" className="px-3.5 sm:px-5 py-2 text-[9px] sm:text-[11px] font-mono uppercase tracking-[0.16em] text-[#5b6577] bg-[#f9fafb] border-b border-[#14161a]/10 w-10">Gate</th>
+            <th scope="col" className="px-2 sm:px-3 py-2 text-[9px] sm:text-[11px] font-mono uppercase tracking-[0.16em] text-[#5b6577] bg-[#f9fafb] border-b border-[#14161a]/10">Control</th>
+            <th scope="col" className="hidden md:table-cell px-3 py-2 text-[9px] sm:text-[11px] font-mono uppercase tracking-[0.16em] text-[#5b6577] bg-[#f9fafb] border-b border-[#14161a]/10">Evidence</th>
+            <th scope="col" className="px-3 sm:px-5 py-2 text-[9px] sm:text-[11px] font-mono uppercase tracking-[0.16em] text-[#5b6577] bg-[#f9fafb] border-b border-[#14161a]/10">Who · frequency</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-[#14161a]/8">
@@ -1065,7 +1065,7 @@ function PanelQaChain() {
           ))}
         </tbody>
       </table>
-      <p className="px-3.5 sm:px-5 py-2.5 text-[10px] sm:text-[11px] text-[#7a8290] leading-snug border-t border-[#14161a]/8">
+      <p className="px-3.5 sm:px-5 py-2.5 text-[11px] sm:text-[11px] text-[#5b6577] leading-snug border-t border-[#14161a]/8">
         Retained samples are sealed at gate 4 and held for 90 days to arbitrate any variance at gate 5. Specification is binding at the port of loading under the sales contract.
       </p>
     </DataPanel>
@@ -1085,13 +1085,13 @@ function PanelDesk({ email, phone, phoneE164 }) {
       <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-8">
         <div className="w-full max-w-md rounded-2xl ring-1 ring-[#14161a]/10 bg-white p-4 sm:p-6 shadow-[0_20px_50px_-30px_rgba(20,22,26,.4)]">
           <div className="flex items-center justify-between mb-4">
-            <p className="text-[10px] font-mono uppercase tracking-[0.28em] text-[#d9501a]">Export desk · Cairo + Damietta</p>
-            <span className="flex items-center gap-1.5 text-[10px] font-mono text-emerald-700"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />ONLINE</span>
+            <p className="text-[11px] font-mono uppercase tracking-[0.28em] text-[#c2410c]">Export desk · Cairo + Damietta</p>
+            <span className="flex items-center gap-1.5 text-[11px] font-mono text-emerald-700"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />ONLINE</span>
           </div>
           <ol className="space-y-2.5 sm:space-y-3.5">
             {STAGES.map(([t, h, s], i) => (
               <li key={t} data-pop className="flex gap-3">
-                <span className="shrink-0 w-14 text-[10px] font-mono text-[#7a8290] pt-0.5">{t}</span>
+                <span className="shrink-0 w-14 text-[11px] font-mono text-[#5b6577] pt-0.5">{t}</span>
                 <span className="relative shrink-0 mt-1.5 w-2 h-2 rounded-full" style={{ background: i === 2 ? '#ff6321' : '#14161a', boxShadow: `0 0 0 4px ${i === 2 ? 'rgba(255,99,33,.18)' : 'rgba(20,22,26,.10)'}` }} />
                 <span className="min-w-0">
                   <span className="block text-sm text-[#14161a] leading-tight">{h}</span>
@@ -1100,9 +1100,9 @@ function PanelDesk({ email, phone, phoneE164 }) {
               </li>
             ))}
           </ol>
-          <div className="mt-4 pt-3 border-t border-[#14161a]/10 text-[11px] font-mono text-[#7a8290] hidden sm:flex items-center gap-2">
+          <div className="mt-4 pt-3 border-t border-[#14161a]/10 text-[11px] font-mono text-[#5b6577] hidden sm:flex items-center gap-2">
             <Icon name="pin" className="w-3.5 h-3.5 text-[#14161a]" />
-            <span><a href={`mailto:${email}`} className="text-[#14161a] hover:text-[#ff6321]">{email}</a> · <a href={`tel:${phoneE164}`} className="hover:text-[#14161a]">{phone}</a></span>
+            <span><a href={`mailto:${email}`} className="text-[#14161a] hover:text-[#c2410c]">{email}</a> · <a href={`tel:${phoneE164}`} className="hover:text-[#14161a]">{phone}</a></span>
           </div>
         </div>
       </div>
@@ -1114,7 +1114,7 @@ function PanelDesk({ email, phone, phoneE164 }) {
 
 function Eyebrow({ n, tone, children }) {
   return (
-    <p data-rise className="flex items-center gap-3 text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.26em] text-[#7a8290]">
+    <p data-rise className="flex items-center gap-3 text-[11px] sm:text-[11px] font-mono uppercase tracking-[0.26em] text-[#5b6577]">
       <span className="text-[#14161a]">{n}</span>
       <span className="h-px w-8" style={{ background: tone, opacity: 0.8 }} />
       <span style={{ color: tone }}>{children}</span>
@@ -1172,7 +1172,7 @@ function Facts({ items, ...rest }) {
       {items.map(([v, l]) => (
         <div key={l} className="bg-[#f6f7f9] px-3 sm:px-4 py-3">
           <dt className={`${display.className} text-lg sm:text-xl text-[#14161a] leading-none`}>{v}</dt>
-          <dd className="text-[10px] font-mono uppercase tracking-[0.14em] text-[#7a8290] mt-1.5 leading-snug">{l}</dd>
+          <dd className="text-[11px] font-mono uppercase tracking-[0.14em] text-[#5b6577] mt-1.5 leading-snug">{l}</dd>
         </div>
       ))}
     </dl>
@@ -1182,8 +1182,8 @@ function Facts({ items, ...rest }) {
 function FormField({ label, required, full, children }) {
   return (
     <label className={`block ${full ? 'sm:col-span-2' : ''}`}>
-      <span className="block text-[10px] font-mono uppercase tracking-[0.18em] text-[#5b6472] mb-1.5">
-        {label}{required && <span className="text-[#ff6321]"> *</span>}
+      <span className="block text-[11px] font-mono uppercase tracking-[0.18em] text-[#5b6472] mb-1.5">
+        {label}{required && <span className="text-[#c2410c]"> *</span>}
       </span>
       {children}
     </label>
@@ -1194,7 +1194,7 @@ function SectionLabel({ children }) {
   return (
     <div className="flex items-center gap-4 px-6 sm:px-10 lg:px-16 pt-12 pb-4">
       <span className="h-px w-8 bg-[#b8862b]/60" />
-      <p className="text-[11px] font-mono uppercase tracking-[0.28em] text-[#7a8290]">{children}</p>
+      <p className="text-[11px] font-mono uppercase tracking-[0.28em] text-[#5b6577]">{children}</p>
     </div>
   )
 }
@@ -1230,7 +1230,7 @@ const SCOPED_CSS = `
 .egg-bounce{animation:eggBounce 1.8s ease-in-out infinite}
 @keyframes eggBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
 .egg-inline{color:#14161a;font-weight:600;text-decoration:underline;text-decoration-color:rgba(15,181,165,.55);text-underline-offset:4px;margin:0 .2em;transition:text-decoration-color .2s,color .2s}
-.egg-inline:hover{color:#0b8f84;text-decoration-color:#0fb5a5}
+.egg-inline:hover{color:#087a70;text-decoration-color:#0fb5a5}
 
 /* canvas panels — all hidden except the first until GSAP takes over */
 .egg-scene{position:absolute;inset:0;will-change:opacity,transform;opacity:0;visibility:hidden}
@@ -1265,7 +1265,7 @@ const SCOPED_CSS = `
 /* form */
 .egg-form{position:relative}
 .egg-input{width:100%;padding:.8rem 1rem;border-radius:.75rem;border:1px solid rgba(20,22,26,.15);background:#fff;color:#14161a;font-size:.9rem;outline:none;transition:border-color .2s,box-shadow .2s,background .2s}
-.egg-input::placeholder{color:#9aa2ae}
+.egg-input::placeholder{color:#67707f}
 .egg-input:focus{border-color:#ff6321;box-shadow:0 0 0 3px rgba(255,99,33,.18)}
 .egg-form.is-done [data-rfq-fields],.egg-form.is-done [data-rfq-actions]{display:none}
 .egg-form.is-done [data-rfq-success]{display:block}
