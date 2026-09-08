@@ -15,7 +15,8 @@
  * Destination ports come from the master `globe_ports` registry
  * grouped by region (Mediterranean / North Europe / Far East / etc.).
  */
-import { useState, useMemo, useEffect } from 'react'
+import { trackEvent } from '../../lib/track'
+import { useState, useMemo, useEffect, isValidElement, cloneElement } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import Icon from '../ui/Icon'
 
@@ -133,8 +134,26 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState(null)
+  // Batch 2 (audit UX4) — field-level validation. Native bubbles only
+  // showed one field at a time, were not announced with the field, and
+  // left no summary.
+  const [errors, setErrors] = useState({})
+  const [started, setStarted] = useState(false)
   const [refCode, setRefCode] = useState(null)
   const [showAllSpecs, setShowAllSpecs] = useState(false)
+  // Batch 2 — the spec sheet of the chosen product is fetched on selection
+  // instead of shipping 286 spec objects (~150 KB, serialised twice) with
+  // the page. Anonymous read of a published row; nothing sensitive.
+  const [selectedSpecs, setSelectedSpecs] = useState(null)
+  useEffect(() => {
+    let live = true
+    setSelectedSpecs(null)
+    if (!form.productPath) return
+    supabase.from('egg_corporate_pages').select('specs').eq('path', form.productPath).eq('is_published', true).maybeSingle()
+      .then(({ data }) => { if (live) setSelectedSpecs(data?.specs && Object.keys(data.specs).length ? data.specs : null) })
+      .catch(() => {})
+    return () => { live = false }
+  }, [form.productPath, supabase])
 
   // Sorted category list with icons for the first-step picker
   const CATEGORY_META_LIST = [
@@ -184,7 +203,11 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
     setShowAllSpecs(false)
   }
 
-  function update(k, v) { setForm(f => ({ ...f, [k]: v })) }
+  function update(k, v) {
+    setForm(f => ({ ...f, [k]: v }))
+    setErrors(e => (e[k] ? { ...e, [k]: undefined } : e))
+    if (!started) { setStarted(true); trackEvent(isCoa ? 'coa_start' : 'rfq_start') }
+  }
 
   const selected = useMemo(
     () => (products || []).find(p => p.path === form.productPath) || null,
@@ -193,9 +216,9 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
 
   // Spec entries we can show (only fields with values)
   const specEntries = useMemo(() => {
-    if (!selected?.specs) return []
-    return Object.entries(selected.specs).filter(([, v]) => v != null && v !== '')
-  }, [selected])
+    if (!selectedSpecs) return []
+    return Object.entries(selectedSpecs).filter(([, v]) => v != null && v !== '')
+  }, [selectedSpecs])
 
   const visibleSpecs = showAllSpecs ? specEntries : specEntries.slice(0, 4)
 
@@ -224,6 +247,14 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
   async function onSubmit(e) {
     e.preventDefault()
     setError(null)
+    const errs = validate(form)
+    if (Object.keys(errs).length) {
+      setErrors(errs)
+      const first = Object.keys(errs)[0]
+      setTimeout(() => document.getElementById(`rfq-${first}`)?.focus(), 0)
+      return
+    }
+    setErrors({})
 
     // Drop 173 — honeypot + timing checks. Silently consume so bots
     // think they succeeded but don't write to market_rfqs.
@@ -276,11 +307,11 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
       // Drop 141 — vessel mode lives in the message body since
       // market_rfqs has no dedicated column. Quote-team picks it up
       // via the human-readable summary.
-      message:       buildMessage(form, selected),
+      message:       buildMessage(form, selected ? { ...selected, specs: selectedSpecs } : null),
       status:        'new',
       referenced_page_id: selected?.id || null,
-      requested_specs: selected?.specs
-        ? { product_specs: selected.specs, buyer_notes: form.requested_specs || null }
+      requested_specs: selectedSpecs
+        ? { product_specs: selectedSpecs, buyer_notes: form.requested_specs || null }
         : (form.requested_specs ? { buyer_notes: form.requested_specs } : {}),
     }
 
@@ -300,6 +331,7 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
       setError(insertError.message || 'Could not submit your RFQ. Please email us at export@egyptglobe.com.')
       return
     }
+    trackEvent(isCoa ? 'coa_submit' : 'rfq_submit')
     setRefCode(ref)
     setSubmitted(true)
     if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -329,7 +361,17 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-6">
+    <form onSubmit={onSubmit} className="space-y-6" noValidate>
+      {Object.keys(errors).filter(k => errors[k]).length > 0 && (
+        <div role="alert" className="rounded-2xl bg-[#fbeae8] ring-1 ring-[#a3261c]/30 p-4 text-sm text-[#14161a]">
+          <p className="font-semibold mb-1.5">Please complete the highlighted fields:</p>
+          <ul className="list-disc pl-5 space-y-0.5">
+            {Object.keys(errors).filter(k => errors[k]).map(k => (
+              <li key={k}><a href={`#rfq-${k}`} className="underline underline-offset-2" onClick={ev => { ev.preventDefault(); document.getElementById(`rfq-${k}`)?.focus() }}>{FIELD_LABELS[k] || k}</a>: {errors[k]}</li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {/* Drop 173 — honeypot. Invisible to humans (off-screen + tabindex -1 +
        *  autocomplete=off + aria-hidden). Real users skip it; bots fill it
@@ -357,20 +399,20 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
       {/* Buyer info */}
       <FormSection title="Your details" subtitle="So our export desk can reach back to you.">
         <Grid>
-          <Field label="Company name *" required>
+          <Field label="Company name *" required name="company" error={errors.company}>
             <Input value={form.company} onChange={v => update('company', v)} placeholder="ACME Trading FZE" required autoComplete="organization" />
           </Field>
-          <Field label="Contact name *" required>
+          <Field label="Contact name *" required name="contact" error={errors.contact}>
             <Input value={form.contact} onChange={v => update('contact', v)} placeholder="Your full name" required autoComplete="name" />
           </Field>
-          <Field label="Email *" required>
+          <Field label="Email *" required name="email" error={errors.email}>
             <Input type="email" value={form.email} onChange={v => update('email', v)} placeholder="you@company.com" required autoComplete="email" />
           </Field>
-          <Field label="Phone (optional)">
+          <Field label="Phone (optional)" name="phone" error={errors.phone}>
             <Input type="tel" value={form.phone} onChange={v => update('phone', v)} placeholder="+971 50 …" autoComplete="tel" />
           </Field>
-          <Field label="Country *" required>
-            <Select value={form.country} onChange={v => update('country', v)} options={COUNTRIES} placeholder="Select your country" required />
+          <Field label="Country *" required name="country" error={errors.country}>
+            <Select value={form.country} onChange={v => update('country', v)} options={COUNTRIES} placeholder="Select your country" required autoComplete="country-name" />
           </Field>
         </Grid>
       </FormSection>
@@ -503,25 +545,25 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
             </div>
           )}
 
-          <Field label="Commodity *" full required>
+          <Field label="Commodity *" full required name="commodity" error={errors.commodity}>
             <Input value={form.commodity} onChange={v => update('commodity', v)} placeholder="e.g. Cement OPC 52.5 / Industrial Salt 99% / Urea 46% N" required />
           </Field>
 
-          <Field label="Quantity *" required>
+          <Field label="Quantity *" required name="quantity" error={errors.quantity}>
             <Input type="number" value={form.quantity} onChange={v => update('quantity', v)} placeholder="5000" required min="0" />
           </Field>
-          <Field label="Unit">
+          <Field label="Unit" name="unit" error={errors.unit}>
             <Select value={form.unit} onChange={v => update('unit', v)} options={UNITS} />
           </Field>
 
-          <Field label="Target price (optional)">
+          <Field label="Target price (optional)" name="target_price" error={errors.target_price}>
             <Input type="number" value={form.target_price} onChange={v => update('target_price', v)} placeholder="e.g. 58" min="0" step="0.01" />
           </Field>
-          <Field label="Currency">
+          <Field label="Currency" name="currency" error={errors.currency}>
             <Select value={form.currency} onChange={v => update('currency', v)} options={CURRENCIES} />
           </Field>
 
-          <Field label="Incoterm *" required>
+          <Field label="Incoterm *" required name="incoterm" error={errors.incoterm}>
             <Select value={form.incoterm} onChange={v => update('incoterm', v)} options={INCOTERMS} required />
           </Field>
           <Field label="Destination port (master registry)">
@@ -618,24 +660,24 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
             </span>
           </Field>
 
-          <Field label="Required by (optional)">
+          <Field label="Required by (optional)" name="timeline" error={errors.timeline}>
             <Input value={form.timeline} onChange={v => update('timeline', v)} placeholder="e.g. ASAP / Q2 2026 / by 15 May" />
           </Field>
-          <Field label="Specific certifications">
+          <Field label="Specific certifications" name="certs_needed" error={errors.certs_needed}>
             <Input value={form.certs_needed} onChange={v => update('certs_needed', v)} placeholder="ISO 22000 / TÜV Austria / SGS / EUR1 / Halal" />
           </Field>
         </Grid>
       </FormSection>
 
       <FormSection title="Specs and notes" subtitle="The more detail, the tighter the quote.">
-        <Field label="Custom specs / tender deviations" full>
+        <Field label="Custom specs / tender deviations" full name="requested_specs" error={errors.requested_specs}>
           <Textarea value={form.requested_specs} onChange={v => update('requested_specs', v)}
             placeholder={selected
-              ? `e.g. tighter NaCl threshold than ${(selected.specs?.nacl_min || 'std')}, custom particle range, additional cert. Or paste a tender clause.`
+              ? `e.g. tighter NaCl threshold than ${(selectedSpecs?.nacl_min || 'std')}, custom particle range, additional cert. Or paste a tender clause.`
               : 'e.g. NaCl ≥ 99.5%, moisture ≤ 0.5%, particle 0.5–2 mm. Or paste a tender clause.'}
             rows={3} />
         </Field>
-        <Field label="Anything else?" full>
+        <Field label="Anything else?" full name="message" error={errors.message}>
           <Textarea value={form.message} onChange={v => update('message', v)}
             placeholder="Vessel size, delivery instructions, payment preference (L/C, T/T, D/P), trial-order vs long-term offtake, etc."
             rows={4} />
@@ -673,18 +715,48 @@ function Grid({ children }) {
   return <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{children}</div>
 }
 
-function Field({ label, full = false, required = false, children }) {
+function Field({ label, full = false, required = false, name, error, children }) {
+  // When `name` is given the single child control gets an id, a name,
+  // and aria-invalid / aria-describedby pointing at the inline error.
+  const child = name && isValidElement(children)
+    ? cloneElement(children, {
+        id: `rfq-${name}`,
+        name,
+        'aria-invalid': error ? 'true' : undefined,
+        'aria-describedby': error ? `rfq-${name}-error` : undefined,
+      })
+    : children
   return (
     <label className={`block ${full ? 'sm:col-span-2' : ''}`}>
       <span className="text-xs font-semibold text-[#3f4650] mb-1.5 block">
         {label} {required && <span className="text-[#c2410c]">*</span>}
       </span>
-      {children}
+      {child}
+      {error && <span id={`rfq-${name}-error`} className="block mt-1.5 text-xs font-medium text-[#a3261c]">{error}</span>}
     </label>
   )
 }
 
-const inputCls = 'w-full px-4 py-3 rounded-xl border border-[#14161a]/15 bg-white text-[#14161a] text-sm placeholder:text-[#67707f] focus:outline-none focus:ring-2 focus:ring-[#ff6321]/25 focus:border-[#ff6321] transition-shadow'
+const FIELD_LABELS = {
+  company: 'Company name', contact: 'Contact name', email: 'Email', phone: 'Phone', country: 'Country',
+  commodity: 'Commodity', quantity: 'Quantity', incoterm: 'Incoterm', dest_port: 'Destination port', timeline: 'Timeline',
+}
+
+/** Returns { field: message } for anything that would stop the export desk pricing the request. */
+function validate(f) {
+  const e = {}
+  if (!f.company.trim()) e.company = 'Enter the buying company so we can address the offer.'
+  if (!f.contact.trim()) e.contact = 'Enter the name of the person we should reply to.'
+  if (!f.email.trim()) e.email = 'Enter a work email for the offer.'
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.email.trim())) e.email = 'That email address does not look complete.'
+  if (!f.country) e.country = 'Select the destination country.'
+  if (!f.commodity.trim()) e.commodity = 'Name the commodity or pick a product above.'
+  if (!f.quantity || Number(f.quantity) <= 0) e.quantity = 'Enter the quantity as a number greater than zero.'
+  if (!f.incoterm) e.incoterm = 'Select an Incoterm.'
+  return e
+}
+
+const inputCls = 'w-full px-4 py-3 rounded-xl border border-[#14161a]/15 bg-white text-[#14161a] text-sm placeholder:text-[#67707f] focus:outline-none focus:ring-2 focus:ring-[#ff6321]/25 focus:border-[#ff6321] transition-shadow aria-[invalid=true]:border-[#a3261c] aria-[invalid=true]:ring-2 aria-[invalid=true]:ring-[#a3261c]/20'
 
 function Input({ value, onChange, type = 'text', ...rest }) {
   return <input type={type} value={value} onChange={e => onChange(e.target.value)} className={inputCls} {...rest} />

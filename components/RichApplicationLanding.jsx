@@ -16,7 +16,8 @@ import CardImage from './ui/CardImage'
 import HeroMotif from './HeroMotif'
 import Link from 'next/link'
 import RichPageBody from './RichPageBody'
-import { APPLICATIONS, PRODUCT_DIVISIONS, CATEGORY_META } from '../lib/corporatePages'
+import { APPLICATIONS, PRODUCT_DIVISIONS, CATEGORY_META, heroUrl } from '../lib/corporatePages'
+import { crumbLabel } from '../lib/headings'
 import Icon, { DIVISION_ICON, APPLICATION_ICON } from './ui/Icon'
 
 // Industry accent — violet, the applications colour across the site
@@ -44,7 +45,7 @@ export default function RichApplicationLanding({ page, application, products, si
             <span>›</span>
             <Link href="/applications" className="hover:text-[#14161a] transition-colors">Applications</Link>
             <span>›</span>
-            <span className="text-[#14161a] font-medium">{page.title}</span>
+            <span className="text-[#14161a] font-medium" aria-current="page">{crumbLabel(page)}</span>
           </nav>
 
           <div className="flex items-center gap-2 mb-4 flex-wrap animate-fade-in-up">
@@ -170,8 +171,8 @@ export default function RichApplicationLanding({ page, application, products, si
                           className="egg-card group overflow-hidden">
                           <div className="aspect-[16/9] overflow-hidden rounded-t-2xl"
                             style={{ background: `linear-gradient(135deg, ${d.color}14, #f9fafb)` }}>
-                            {p.hero_photo_url ? (
-                              <CardImage src={p.hero_photo_url} className="group-hover:scale-105 transition-transform duration-500" />
+                            {heroUrl(p) ? (
+                              <CardImage src={heroUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
                             ) : (
                               <div className="w-full h-full flex items-center justify-center text-5xl opacity-40">
                                 <Icon name={DIVISION_ICON[d.id] || 'box'} className="w-5 h-5" />

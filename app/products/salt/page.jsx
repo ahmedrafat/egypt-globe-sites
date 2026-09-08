@@ -18,8 +18,7 @@ import {
   getPageByPath,
   getSaltCatalogueBySource,
   getSaltApplicationsServed,
-  APPLICATIONS,
-} from '../../../lib/corporatePages'
+  APPLICATIONS, heroUrl } from '../../../lib/corporatePages'
 import Icon, { APPLICATION_ICON } from '../../../components/ui/Icon'
 import QualityStrip from '../../../components/QualityStrip'
 import HubFaqs from '../../../components/HubFaqs'
@@ -160,7 +159,7 @@ export default async function SaltMainPage() {
       </section>
 
       {/* Quality at the Core ───────────────────────────────────── */}
-      <QualityStrip division="Salt" />
+      <QualityStrip division="Salt" compact />
 
       {/* Source split — Siwa rock vs Sinai sea ───────────────────── */}
       <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 egg-reveal">
@@ -347,8 +346,9 @@ export default async function SaltMainPage() {
             <Link href="/rfq" className="egg-link text-sm">Quote any combination →</Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 stagger-children">
-            {sea.map(p => <SaltCard key={p.id} p={p} type="sea" />)}
+            {sea.slice(0, CARD_LIMIT).map(p => <SaltCard key={p.id} p={p} type="sea" />)}
           </div>
+          <CompactSkuList items={sea.slice(CARD_LIMIT)} tone="#087a70" />
         </section>
       )}
 
@@ -364,8 +364,9 @@ export default async function SaltMainPage() {
               <Link href="/rfq" className="egg-link text-sm">Quote any combination →</Link>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 stagger-children">
-              {rock.map(p => <SaltCard key={p.id} p={p} type="rock" />)}
+              {rock.slice(0, CARD_LIMIT).map(p => <SaltCard key={p.id} p={p} type="rock" />)}
             </div>
+            <CompactSkuList items={rock.slice(CARD_LIMIT)} tone="#8a6d3b" />
           </div>
         </section>
       )}
@@ -390,14 +391,37 @@ export default async function SaltMainPage() {
 }
 
 /* SKU card — used for both sea and rock catalogues */
+/* Batch 2 — the hub rendered 100 full cards (551 KB of HTML). The first
+   CARD_LIMIT per source keep the card treatment; the rest stay linked from
+   this page (internal-link equity) as a compact list. */
+const CARD_LIMIT = 12
+
+function CompactSkuList({ items, tone }) {
+  if (!items?.length) return null
+  return (
+    <div className="mt-6 rounded-2xl border border-[#14161a]/10 bg-white p-5 sm:p-6">
+      <p className="text-[11px] font-mono uppercase tracking-[0.18em] text-[#5b6577] mb-3">{items.length} more SKUs in this source</p>
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2">
+        {items.map(p => (
+          <li key={p.id} className="flex items-baseline gap-2 text-sm leading-snug">
+            <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full shrink-0 translate-y-[-2px]" style={{ background: tone }} />
+            <Link href={p.path} className="text-[#14161a] hover:text-[#087a70] hover:underline underline-offset-4">{p.title}</Link>
+            {p.specs?.nacl_min && <span className="font-mono text-[11px] text-[#5b6577] shrink-0">NaCl {p.specs.nacl_min}</span>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
 function SaltCard({ p, type }) {
   const isSea = type === 'sea'
   return (
     <Link href={p.path} className="egg-card group overflow-hidden">
       <div className="aspect-[16/9] overflow-hidden rounded-t-2xl"
         style={{ background: isSea ? 'linear-gradient(135deg, #e6fbf8, #f9fafb)' : 'linear-gradient(135deg, #fbf3e3, #f9fafb)' }}>
-        {p.hero_photo_url ? (
-          <CardImage src={p.hero_photo_url} className="group-hover:scale-105 transition-transform duration-500" />
+        {heroUrl(p) ? (
+          <CardImage src={heroUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-[#14161a]/20"><Icon name={isSea ? 'wave' : 'pickaxe'} className="w-10 h-10" strokeWidth={1.25} /></div>
         )}

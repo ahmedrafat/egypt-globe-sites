@@ -21,7 +21,7 @@
 import CardImage from './ui/CardImage'
 import HeroMotif from './HeroMotif'
 import Link from 'next/link'
-import { APPLICATIONS } from '../lib/corporatePages'
+import { APPLICATIONS, heroUrl } from '../lib/corporatePages'
 import RichPageBody from './RichPageBody'
 import HubFaqs from './HubFaqs'
 import Icon, { DIVISION_ICON, APPLICATION_ICON } from './ui/Icon'
@@ -40,12 +40,17 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
   const subCount = subcategories?.length || 0
   const tone     = division.color
   const divIcon  = DIVISION_ICON[division.id] || 'box'
+  // Batch 2 (audit UI4) — division facts only. "7 loading ports" and
+  // "100 % CoA-verified" repeated on every hub; they stay on the homepage
+  // and the Quality page where they belong.
+  const standards = new Set()
+  for (const p of (allDivisionPages || [])) for (const c of (p.certifications || [])) standards.add(c)
   const stats = [
     { big: String(skuCount), label: 'SKUs in catalogue' },
-    { big: String(subCount), label: 'Sub-categories' },
-    { big: '7', label: 'Loading ports' },
-    { big: '100%', label: 'Lots CoA-verified before B/L' },
-  ]
+    subCount > 0 ? { big: String(subCount), label: 'Sub-categories' } : null,
+    standards.size > 0 ? { big: String(standards.size), label: 'Standards & certifications' } : null,
+    apps.length > 0 ? { big: String(apps.length), label: apps.length === 1 ? 'Industry served' : 'Industries served' } : null,
+  ].filter(Boolean)
 
   return (
     <article className="bg-white text-[#14161a]">
@@ -102,7 +107,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
           </div>
 
           {/* Stat strip */}
-          <div className="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-px rounded-2xl overflow-hidden ring-1 ring-[#14161a]/10 bg-[#14161a]/10 stagger-children">
+          <div className={`mt-12 grid grid-cols-2 ${{ 2: 'lg:grid-cols-2', 3: 'lg:grid-cols-3' }[stats.length] || 'lg:grid-cols-4'} gap-px rounded-2xl overflow-hidden ring-1 ring-[#14161a]/10 bg-[#14161a]/10 stagger-children`}>
             {stats.map(s => (
               <div key={s.label} className="bg-white/90 backdrop-blur px-5 py-5">
                 <div className="egg-display text-3xl sm:text-4xl tracking-tight" style={{ color: tone }}>{s.big}</div>
@@ -114,7 +119,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
       </section>
 
       {/* Quality at the Core */}
-      <QualityStrip division={division.label} />
+      <QualityStrip division={division.label} compact />
 
       {/* Division body — technical narrative + specification tables */}
       {page.body_markdown && (
@@ -142,8 +147,8 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
               <Link key={sc.id} href={sc.path} className="egg-card group overflow-hidden">
                 <div className="aspect-[16/9] overflow-hidden relative rounded-t-2xl"
                   style={{ background: `linear-gradient(135deg, ${tone}1a, ${tone}08)` }}>
-                  {sc.hero_photo_url ? (
-                    <CardImage src={sc.hero_photo_url} className="group-hover:scale-105 transition-transform duration-500" />
+                  {heroUrl(sc) ? (
+                    <CardImage src={heroUrl(sc)} className="group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[#14161a]/20">
                       <Icon name={divIcon} className="w-12 h-12" strokeWidth={1.25} />
@@ -241,8 +246,8 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
               <Link key={p.id} href={p.path} className="egg-card group overflow-hidden">
                 <div className="aspect-[16/9] overflow-hidden rounded-t-2xl"
                   style={{ background: `linear-gradient(135deg, ${tone}1a, #f9fafb)` }}>
-                  {p.hero_photo_url ? (
-                    <CardImage src={p.hero_photo_url} className="group-hover:scale-105 transition-transform duration-500" />
+                  {heroUrl(p) ? (
+                    <CardImage src={heroUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[#14161a]/20">
                       <Icon name={divIcon} className="w-10 h-10" strokeWidth={1.25} />

@@ -5,6 +5,8 @@
  * the page has rich product data, gallery, child grid for category
  * landings, related-pages strip, and a CTA banner.
  */
+import { buildBreadcrumb, ancestorPaths } from '../lib/breadcrumbs'
+import { pageHeading } from '../lib/headings'
 import Image from 'next/image'
 import CardImage from './ui/CardImage'
 import HeroMotif from './HeroMotif'
@@ -31,7 +33,7 @@ import {
   CATEGORY_META,
   PRODUCT_DIVISIONS,
   SERVICE_DIVISIONS,
-  APPLICATIONS, APPLICATION_VARIANTS, categoryMetaFor } from '../lib/corporatePages'
+  APPLICATIONS, APPLICATION_VARIANTS, categoryMetaFor, getPageTitles, heroUrl } from '../lib/corporatePages'
 import RichDivisionLanding from './RichDivisionLanding'
 import RichSubcategoryLanding from './RichSubcategoryLanding'
 import RichApplicationLanding from './RichApplicationLanding'
@@ -50,22 +52,6 @@ import Icon, { DIVISION_ICON, APPLICATION_ICON, SERVICE_ICON, CATEGORY_ICON } fr
  *   [{Home,/}, {Products,/products}, {Salt,/products/salt},
  *    {Food grade,/products/salt/food-grade}, {Ultra pure,/...}]
  */
-function buildCrumbs(page) {
-  if (!page?.path || page.path === '/') return [{ name: 'Home', path: '/' }]
-  const segs = page.path.split('/').filter(Boolean)
-  const crumbs = [{ name: 'Home', path: '/' }]
-  let acc = ''
-  for (let i = 0; i < segs.length; i++) {
-    acc += '/' + segs[i]
-    const isLast = i === segs.length - 1
-    const name = isLast
-      ? page.title
-      : segs[i].replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
-    crumbs.push({ name, path: acc })
-  }
-  return crumbs
-}
-
 const PRODUCT_DIVISION_BY_PATH = Object.fromEntries(PRODUCT_DIVISIONS.map(d => [d.path, d]))
 
 /** snake_case enum values (extra_coarse, kiln_dried) → readable chip text. */
@@ -113,6 +99,7 @@ export default async function PageRenderer({ page }) {
     coas,
     packingOptions,
     visibility,
+    ancestorTitles,
   ] = await Promise.all([
     !isProductsHub && !isServicesHub && !isApplicationsHub && !isApplicationLanding && !isDivisionLanding && !isSubcategoryLanding
       ? getDirectChildren(page.path) : [],
@@ -131,6 +118,9 @@ export default async function PageRenderer({ page }) {
     (page.commodity_id || isPackingService)
       ? getPackingOptions(isPackingService ? null : page.category) : [],
     getBuyerVisibility(),
+    // Batch 2 — ancestor titles for the breadcrumb (product sub-category,
+    // blog section, import-guide hub …).
+    getPageTitles(ancestorPaths(page.path)),
   ])
 
   // SKU pages = division pages with commodity_id (excluding sub-cat landings)
@@ -148,9 +138,14 @@ export default async function PageRenderer({ page }) {
     return <AccessRestricted page={page} visibility={visibility} />
   }
 
+  // Batch 2 — one breadcrumb builder feeds the visible trail and the schema on every template.
+  const crumbs = buildBreadcrumb(page, ancestorTitles)
+  const heading = pageHeading(page)
+
   // Division landing — early-return with the Pelot-style rich layout
   if (isDivisionLanding && division) {
-    return (
+    return (<>
+      <BreadcrumbJsonLd crumbs={crumbs} />
       <RichDivisionLanding
         page={page}
         division={division}
@@ -159,7 +154,7 @@ export default async function PageRenderer({ page }) {
         allDivisionPages={filterPagesByVisibility(divisionPages, visibility)}
         visibility={visibility}
       />
-    )
+    </>)
   }
 
   // Sub-category landing — Pelot-style rich layout w/ parent division context
@@ -169,7 +164,8 @@ export default async function PageRenderer({ page }) {
     if (parentDivision) {
       const allSibling = await getDivisionSubcategories(parentDivision.path)
       const siblingSubcats = allSibling.filter(s => s.path !== page.path).slice(0, 8)
-      return (
+      return (<>
+        <BreadcrumbJsonLd crumbs={crumbs} />
         <RichSubcategoryLanding
           page={page}
           division={parentDivision}
@@ -177,14 +173,15 @@ export default async function PageRenderer({ page }) {
           siblingSubcats={siblingSubcats}
           visibility={visibility}
         />
-      )
+      </>)
     }
   }
 
   // Application landing — violet hero + matched products + related apps
   if (isApplicationLanding && application) {
     const siblingApps = APPLICATIONS.filter(a => a.id !== application.id).slice(0, 8)
-    return (
+    return (<>
+      <BreadcrumbJsonLd crumbs={crumbs} />
       <RichApplicationLanding
         page={page}
         application={application}
@@ -192,7 +189,7 @@ export default async function PageRenderer({ page }) {
         siblingApps={siblingApps}
         visibility={visibility}
       />
-    )
+    </>)
   }
 
   // Detect product detail page (has rich data) for the immersive hero
@@ -221,7 +218,6 @@ export default async function PageRenderer({ page }) {
     : (cat.color || '#0284c7')
 
   // Drop 122 — JSON-LD: BreadcrumbList always; Product when this is a SKU page
-  const crumbs = buildCrumbs(page)
   const isSkuPage = !!page.commodity_id || (
     isProductDetail && /^\/(salt|fertilizers|chemicals|construction|agro|minerals|metals|products)\//.test(page.path)
   )
@@ -254,13 +250,13 @@ export default async function PageRenderer({ page }) {
          smudge. On navy at 38% they read as intended, and the band matches
          the homepage hero. The document body below stays light editorial. */}
       <section data-hero className="egg-hero-dark relative overflow-hidden border-b border-[#ff5a18]/60">
-        {page.hero_photo_url && (
+        {heroUrl(page) && (
           <div className="absolute inset-0">
             {/* Hero photos are typically 1200×675 (16:9). The container is
                taller than 16:9 on mobile, so object-cover crops top+bottom —
                object-top favours the top of the frame, where the subject
                usually sits. */}
-            <Image src={page.hero_photo_url} alt="" fill priority sizes="100vw"
+            <Image src={heroUrl(page)} alt="" fill priority sizes="100vw"
               className="object-cover object-top opacity-[0.38]" />
             <div className="absolute inset-0 bg-gradient-to-b from-[#03182d]/70 via-[#03182d]/60 to-[#03182d]/85" />
           </div>
@@ -279,15 +275,25 @@ export default async function PageRenderer({ page }) {
             <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7"/>
             </svg>
-            {!isHomePath && page.category && (
-              <>
-                <span className="text-[#a9bfd7] cursor-default">{cat.label}</span>
-                <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7"/>
-                </svg>
-              </>
-            )}
-            <span className="text-white font-medium truncate max-w-[300px]">{page.title}</span>
+            {crumbs.slice(1).map((c, i, arr) => {
+              const last = i === arr.length - 1
+              return (
+                <span key={c.path} className="contents">
+                  {last ? (
+                    <span className="text-white font-medium truncate max-w-[320px]" aria-current="page">{c.name}</span>
+                  ) : c.href ? (
+                    <Link href={c.href} className="hover:text-white transition-colors">{c.name}</Link>
+                  ) : (
+                    <span className="text-[#a9bfd7] cursor-default">{c.name}</span>
+                  )}
+                  {!last && (
+                    <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7"/>
+                    </svg>
+                  )}
+                </span>
+              )
+            })}
           </nav>
 
           {/* Chip rail — tighter on mobile, hide HS chip on <sm */}
@@ -325,7 +331,7 @@ export default async function PageRenderer({ page }) {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-end">
             <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
               <h1 className="egg-display text-[30px] sm:text-5xl lg:text-6xl text-white mb-3 sm:mb-4 leading-[1.08] sm:leading-[1.02]">
-                {page.title}
+                {heading}
               </h1>
               {page.description && (
                 <p className="text-sm sm:text-lg leading-relaxed max-w-3xl text-[#a9bfd7]">
@@ -467,8 +473,8 @@ export default async function PageRenderer({ page }) {
                 <Link key={p.id} href={p.path}
                   className="egg-card group overflow-hidden">
                   <div className="aspect-[16/9] bg-[#f9fafb] overflow-hidden rounded-t-2xl">
-                    {p.hero_photo_url ? (
-                      <CardImage src={p.hero_photo_url} className="group-hover:scale-105 transition-transform duration-500" />
+                    {heroUrl(p) ? (
+                      <CardImage src={heroUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-[#14161a]/20 bg-gradient-to-br from-[#f2fbfa] to-[#f9fafb]"><Icon name="cube" className="w-10 h-10" strokeWidth={1.25} /></div>
                     )}
@@ -510,8 +516,8 @@ export default async function PageRenderer({ page }) {
               <Link key={p.id} href={p.path}
                 className="egg-card group overflow-hidden">
                 <div className="aspect-[16/9] bg-[#f9fafb] overflow-hidden rounded-t-2xl">
-                  {p.hero_photo_url ? (
-                    <CardImage src={p.hero_photo_url} className="group-hover:scale-105 transition-transform duration-500" />
+                  {heroUrl(p) ? (
+                    <CardImage src={heroUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[#14161a]/20" style={{ background: `linear-gradient(135deg, ${cat.color}14, #f9fafb)` }}><Icon name={CATEGORY_ICON[page.category] || 'grid'} className="w-10 h-10" strokeWidth={1.25} /></div>
                   )}
@@ -643,8 +649,8 @@ export default async function PageRenderer({ page }) {
               <Link key={p.id} href={p.path}
                 className="egg-card group overflow-hidden">
                 <div className="aspect-[16/9] bg-[#f9fafb] overflow-hidden rounded-t-2xl">
-                  {p.hero_photo_url ? (
-                    <CardImage src={p.hero_photo_url} className="group-hover:scale-105 transition-transform duration-500" />
+                  {heroUrl(p) ? (
+                    <CardImage src={heroUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[#14161a]/20"><Icon name={CATEGORY_ICON[p.category] || 'grid'} className="w-8 h-8" strokeWidth={1.25} /></div>
                   )}
@@ -943,7 +949,7 @@ function AccessRestricted({ page, visibility }) {
         <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-60 pointer-events-none" />
         <div className="relative max-w-2xl mx-auto px-5 sm:px-6 lg:px-8 py-20 text-center">
           <div className="text-5xl mb-4"><Icon name="lock" className="w-3.5 h-3.5" /></div>
-          <h1 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-3">{page.title}</h1>
+          <h1 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-3">{heading}</h1>
           <p className="text-[#3f4650] mb-8 leading-relaxed">
             This product is outside the catalogue scope assigned to your buyer
             profile. If you'd like access, contact our export desk and we'll

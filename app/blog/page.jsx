@@ -6,7 +6,7 @@ import { routeOpenGraph } from '../../lib/seo'
 import CardImage from '../../components/ui/CardImage'
 import HeroMotif from '../../components/HeroMotif'
 import Link from 'next/link'
-import { getPagesByCategory, getPageByPath } from '../../lib/corporatePages'
+import { getPagesByCategory, getPageByPath, heroUrl } from '../../lib/corporatePages'
 import RichPageBody from '../../components/RichPageBody'
 import Icon from '../../components/ui/Icon'
 
@@ -89,8 +89,8 @@ export default async function BlogIndex() {
                 <div className="grid grid-cols-1 lg:grid-cols-5 gap-0">
                   <div className="lg:col-span-3 aspect-[16/9] lg:aspect-auto overflow-hidden relative"
                     style={{ background: 'linear-gradient(135deg, #fff4ec 0%, #fbf3e3 100%)' }}>
-                    {posts[0].hero_photo_url ? (
-                      <CardImage src={posts[0].hero_photo_url} className="group-hover:scale-105 transition-transform duration-700" sizes="(max-width: 1024px) 100vw, 60vw" />
+                    {heroUrl(posts[0]) ? (
+                      <CardImage src={heroUrl(posts[0])} className="group-hover:scale-105 transition-transform duration-700" sizes="(max-width: 1024px) 100vw, 60vw" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
                         <Icon name="news" className="w-16 h-16 text-[#14161a]/20" strokeWidth={1} />
@@ -126,8 +126,8 @@ export default async function BlogIndex() {
                     className="egg-card group overflow-hidden">
                     <div className="aspect-[16/9] overflow-hidden relative rounded-t-2xl"
                       style={{ background: 'linear-gradient(135deg, #fff4ec 0%, #fbf3e3 100%)' }}>
-                      {post.hero_photo_url ? (
-                        <CardImage src={post.hero_photo_url} className="group-hover:scale-105 transition-transform duration-500" />
+                      {heroUrl(post) ? (
+                        <CardImage src={heroUrl(post)} className="group-hover:scale-105 transition-transform duration-500" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
                           <Icon name="news" className="w-12 h-12 text-[#14161a]/20" strokeWidth={1} />

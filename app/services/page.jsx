@@ -108,7 +108,7 @@ export default async function ServicesHub() {
       </section>
 
       {/* Quality at the Core */}
-      <QualityStrip division="Supply-chain services" />
+      <QualityStrip division="Supply-chain services" compact />
 
       {/* Service cards grid */}
       <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 egg-reveal">

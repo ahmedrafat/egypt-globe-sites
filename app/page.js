@@ -144,7 +144,7 @@ const SERVICE_ICON = {
 const METRICS = [
   { value: 60,  suffix: '+', label: 'Export markets' },
   { value: 7,   suffix: '',  label: 'Egyptian seaports' },
-  { value: 7,   suffix: '',  label: 'Commodity divisions' },
+  { value: 93,  suffix: '',  label: 'Salt cargoes shipped since 2015' },
   { value: 100, suffix: '%', label: 'Lots CoA-verified before B/L' },
   { value: 24,  suffix: 'h', label: 'RFQ response SLA' },
 ]
@@ -319,13 +319,19 @@ export default async function HomePage() {
               <span className="italic text-[#a9bfd7]">in bulk commodity exporting</span><span className="text-[#ff5a18]">.</span>
             </h1>
             <p className="egg-rise mt-7 sm:mt-9 text-base sm:text-lg lg:text-[1.25rem] max-w-3xl leading-relaxed text-[#a9bfd7]" style={{ animationDelay: '.2s' }}>
-              Egypt Globe Group is an Egyptian B2B commodity house built around an internal
-              Quality Assurance division since its 2014 incorporation. Salt, cement &amp; clinker,
-              fertilizers, chemicals, industrial minerals, agro and metals — every lot
-              laboratory-verified before a Bill of Lading is issued, loaded FOB / CIF / CFR from
-              seven Egyptian seaports to industrial buyers in sixty-plus markets. Scroll to follow one
-              cargo from the Siwa salt mines to the buyer&rsquo;s arrival laboratory.
+              An Egyptian B2B commodity house with an internal Quality Assurance division since 2014.
+              Every lot is laboratory-verified before the Bill of Lading and loaded FOB / CIF / CFR
+              from seven Egyptian seaports to buyers in sixty-plus markets.
             </p>
+            {/* Batch 2 (audit UX1) — what is sold, on the first screen. */}
+            <nav aria-label="Product divisions" className="egg-rise mt-7 sm:mt-8 flex flex-wrap gap-2" style={{ animationDelay: '.24s' }}>
+              {PRODUCT_DIVISIONS.map(d => (
+                <Link key={d.id} href={d.path}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(169,191,215,0.35)] bg-[rgba(4,33,61,0.45)] px-3.5 py-1.5 text-[12px] sm:text-[13px] font-semibold text-[#dbe7f3] hover:border-[#ff7a22] hover:text-white transition-colors">
+                  {d.label}
+                </Link>
+              ))}
+            </nav>
             <div className="egg-rise flex flex-wrap items-center gap-6 sm:gap-9 mt-9 sm:mt-11" style={{ animationDelay: '.28s' }}>
               <a href="#quote" className="egg-btn group relative inline-flex items-center gap-2.5 text-sm font-semibold text-white bg-[#d0450f] px-7 py-3.5 rounded-full overflow-hidden shadow-[0_10px_30px_-10px_rgba(255,99,33,.55)]">
                 <span className="relative z-10">Request a quote</span>

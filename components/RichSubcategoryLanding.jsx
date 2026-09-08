@@ -14,10 +14,11 @@
  *
  * Vector protocol: monochrome micro-icons only — no emoji, no watermarks.
  */
+import { crumbLabel } from '../lib/headings'
 import CardImage from './ui/CardImage'
 import HeroMotif from './HeroMotif'
 import Link from 'next/link'
-import { APPLICATIONS } from '../lib/corporatePages'
+import { APPLICATIONS, heroUrl } from '../lib/corporatePages'
 import RichPageBody from './RichPageBody'
 import HubFaqs from './HubFaqs'
 import Icon, { DIVISION_ICON, APPLICATION_ICON } from './ui/Icon'
@@ -45,7 +46,6 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
     { big: String(n), label: 'SKUs in this sub-category' },
     certList.length > 0 ? { big: String(certList.length), label: 'Certifications & standards' } : null,
     apps.length > 0 ? { big: String(apps.length), label: 'Applications served' } : null,
-    { big: '100%', label: 'Lots CoA-verified before B/L' },
   ].filter(Boolean)
 
   return (
@@ -65,7 +65,7 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
             <span>›</span>
             <Link href={division.path} className="hover:text-[#14161a] transition-colors">{division.label}</Link>
             <span>›</span>
-            <span className="text-[#14161a] font-medium">{page.title}</span>
+            <span className="text-[#14161a] font-medium" aria-current="page">{crumbLabel(page)}</span>
           </nav>
 
           <div className="flex items-center gap-2 mb-4 flex-wrap animate-fade-in-up">
@@ -96,6 +96,7 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
           {/* Stats strip */}
           {/* Batch 1 — a tile only renders when it has a value; a dash in
               display type read as an unfinished page (audit UI3). */}
+          {statTiles.length >= 2 && (
           <div className={`mt-10 grid grid-cols-2 ${STAT_COLS[statTiles.length] || 'lg:grid-cols-4'} gap-px rounded-2xl overflow-hidden ring-1 ring-[#14161a]/10 bg-[#14161a]/10 stagger-children`}>
             {statTiles.map(s => (
               <div key={s.label} className="bg-white/90 backdrop-blur px-5 py-5">
@@ -104,6 +105,7 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
               </div>
             ))}
           </div>
+          )}
         </div>
       </section>
 
@@ -125,8 +127,8 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
               <Link key={p.id} href={p.path} className="egg-card group overflow-hidden">
                 <div className="aspect-[16/9] overflow-hidden rounded-t-2xl"
                   style={{ background: `linear-gradient(135deg, ${tone}1a, #f9fafb)` }}>
-                  {p.hero_photo_url ? (
-                    <CardImage src={p.hero_photo_url} className="group-hover:scale-105 transition-transform duration-500" />
+                  {heroUrl(p) ? (
+                    <CardImage src={heroUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[#14161a]/20">
                       <Icon name={divIcon} className="w-10 h-10" strokeWidth={1.25} />

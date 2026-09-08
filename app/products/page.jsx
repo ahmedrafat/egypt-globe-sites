@@ -134,7 +134,7 @@ export default function ProductsHub() {
       </section>
 
       {/* ── Quality at the Core ──────────────────────────────────── */}
-      <QualityStrip />
+      <QualityStrip compact />
 
       {/* ── Division QA matrix ───────────────────────────────────── */}
       <section className="border-b border-[#14161a]/10 egg-reveal">

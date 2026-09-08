@@ -16,6 +16,32 @@ const POINTS = [
 ]
 
 export default function QualityStrip({ division, compact = false }) {
+  // Batch 2 (audit UI4) — hubs get one band: the statement, the four
+  // non-negotiables as a single line, and the link to the charter. The
+  // four-card version stays on the homepage and the Quality page.
+  if (compact) {
+    return (
+      <section className="bg-[#f9fafb] border-b border-[#14161a]/10">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-7 flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-10">
+          <div className="lg:w-[34%] shrink-0">
+            <h2 className="text-[11px] font-mono uppercase tracking-[0.26em] text-[#8a6d3b] font-normal">Quality at the Core · since 2014</h2>
+            <p className="mt-1.5 text-sm text-[#3f4650] leading-relaxed">
+              Specification guaranteed at the port of loading and binding under the sales contract{division ? ` for every ${division.toLowerCase()} lot` : ''}.{' '}
+              <Link href="/about/quality-compliance" className="egg-link">Read the QA charter →</Link>
+            </p>
+          </div>
+          <ul className="flex-1 grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-3">
+            {POINTS.map(p => (
+              <li key={p.t} className="flex items-start gap-2.5 text-[13px] leading-snug text-[#14161a]">
+                <span className="mt-0.5 inline-flex w-6 h-6 shrink-0 items-center justify-center rounded-md ring-1 ring-[#14161a]/15"><Icon name={p.icon} className="w-3.5 h-3.5" /></span>
+                <span className="font-semibold">{p.t}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
   return (
     <section className="bg-[#f9fafb] border-b border-[#14161a]/10">
       <div className={`max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 ${compact ? 'py-8' : 'py-12 lg:py-14'} grid lg:grid-cols-12 gap-8 lg:gap-12 items-start`}>

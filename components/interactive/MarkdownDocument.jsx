@@ -98,7 +98,26 @@ function dropDuplicateLeadHeading(md, title) {
   if (!md || !title) return md
   const m = md.match(/^\s*#\s+(.+?)\s*(?:\n|$)/)
   if (!m) return md
-  return titleKey(m[1]) === titleKey(title) ? md.slice(m[0].length).replace(/^\s*\n/, '') : md
+  return sameHeading(m[1], title) ? md.slice(m[0].length).replace(/^\s*\n/, '') : md
+}
+
+/**
+ * Batch 2 — a body that opens with "Industrial Salt from Egypt — Bulk NaCl
+ * Supplier Guide" under a title ending "… Supplier Overview" is the same
+ * heading with one word changed; exact match let it through and the page
+ * read as two H1s. Treat headings as duplicates when the shorter one is
+ * a prefix of the other, or when 70 % of the distinctive words overlap.
+ */
+function sameHeading(a, b) {
+  const ka = titleKey(a), kb = titleKey(b)
+  if (!ka || !kb) return false
+  if (ka === kb) return true
+  const [short, long] = ka.length <= kb.length ? [ka, kb] : [kb, ka]
+  if (short.length >= 12 && long.startsWith(short)) return true
+  const wa = new Set(ka.split(' ').filter(w => w.length > 2)), wb = new Set(kb.split(' ').filter(w => w.length > 2))
+  if (wa.size < 3 || wb.size < 3) return false
+  let shared = 0; for (const w of wa) if (wb.has(w)) shared++
+  return shared / Math.min(wa.size, wb.size) >= 0.7
 }
 
 export default function MarkdownDocument({ body, title, leadingWidget = null }) {
