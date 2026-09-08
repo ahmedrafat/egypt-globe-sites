@@ -58,8 +58,8 @@ export default function ProductsHub() {
     <article className="bg-white text-[#14161a]">
 
       {/* ── Hero ─────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden border-b border-[#14161a]/10 px-5 sm:px-8 lg:px-14 pt-14 sm:pt-16 pb-12 sm:pb-14">
-        <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
+      <section data-hero className="egg-hero-dark relative overflow-hidden border-b border-[#ff5a18]/60 px-5 sm:px-8 lg:px-14 pt-14 sm:pt-16 pb-12 sm:pb-14">
+        <div aria-hidden="true" className="absolute inset-0 egg-grid-dark opacity-60 pointer-events-none" />
         {/* catalogue navigation across all divisions */}
         <HeroMotif variant="compass" tone="#0fb5a5" />
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"

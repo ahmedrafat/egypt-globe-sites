@@ -32,8 +32,8 @@ export default function RichApplicationLanding({ page, application, products, si
   return (
     <article className="bg-white text-[#14161a]">
       {/* Hero — white editorial banner with violet glow */}
-      <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10">
-        <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
+      <section data-hero className="egg-hero-dark relative overflow-hidden border-b border-[#ff5a18]/60">
+        <div aria-hidden="true" className="absolute inset-0 egg-grid-dark opacity-60 pointer-events-none" />
         <HeroMotif variant="orbit" tone={TONE} />
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: `radial-gradient(55% 55% at 88% 0%, ${TONE}22, transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.09), transparent 60%)` }} />

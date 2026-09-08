@@ -238,75 +238,77 @@ export default async function PageRenderer({ page }) {
         />
       )}
 
-      {/* Hero — light editorial banner (white, soft accent glow) ──── */}
-      <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10">
+      {/* Hero — dark navy band (Sep 2026). Replaces the white editorial
+         banner. The hero photos are dark, saturated artwork (measured luma
+         62–110 of 255), so the previous treatment — 22% opacity, blur-2xl,
+         under a white scrim — reduced every one of them to a pale grey
+         smudge. On navy at 38% they read as intended, and the band matches
+         the homepage hero. The document body below stays light editorial. */}
+      <section data-hero className="egg-hero-dark relative overflow-hidden border-b border-[#ff5a18]/60">
         {page.hero_photo_url && (
           <div className="absolute inset-0">
-            {/* Drop 140 — hero photos are typically 1200×675 (16:9). Hero
-               container is taller than 16:9 on mobile (portrait-ish), so
-               object-cover crops top + bottom. Use object-top to favor the
-               TOP of the photo (where product labels / branding sit) when
-               the crop is necessary. Light edition: the photo sits as a
-               faint backdrop under a white scrim so the obsidian copy stays
-               perfectly legible. */}
+            {/* Hero photos are typically 1200×675 (16:9). The container is
+               taller than 16:9 on mobile, so object-cover crops top+bottom —
+               object-top favours the top of the frame, where the subject
+               usually sits. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={page.hero_photo_url} alt={page.title}
-              className="absolute inset-0 w-full h-full object-cover object-top opacity-[0.22] blur-2xl scale-110" />
-            <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/70 to-white/95" />
+            <img src={page.hero_photo_url} alt=""
+              className="absolute inset-0 w-full h-full object-cover object-top opacity-[0.38]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#03182d]/70 via-[#03182d]/60 to-[#03182d]/85" />
           </div>
         )}
 
-        {/* Decorative patterns — fine light grid + accent glow + content motif */}
-        <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
-        <HeroMotif category={page.category} path={page.path} sourceType={sourceType} tone={heroTone} />
+        {/* Decorative patterns — technical grid + accent glow + content motif */}
+        <div aria-hidden="true" className="absolute inset-0 egg-grid-dark opacity-60 pointer-events-none" />
+        <HeroMotif category={page.category} path={page.path} sourceType={sourceType} tone="#5aa0dc" />
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
-          style={{ background: `radial-gradient(60% 55% at 88% 0%, ${heroTone}24, transparent 60%), radial-gradient(45% 40% at 0% 100%, ${heroTone}12, transparent 60%)` }} />
+          style={{ background: 'radial-gradient(60% 55% at 88% 0%, rgba(255,90,24,.16), transparent 62%), radial-gradient(45% 40% at 0% 100%, rgba(90,160,220,.14), transparent 60%)' }} />
 
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-20">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-1.5 text-xs text-[#7a8290] mb-5 flex-wrap animate-fade-in">
-            <Link href="/" className="hover:text-[#14161a] transition-colors">Home</Link>
+          <nav className="flex items-center gap-1.5 text-xs text-[#8ba3bd] mb-5 flex-wrap animate-fade-in">
+            <Link href="/" className="hover:text-white transition-colors">Home</Link>
             <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7"/>
             </svg>
             {!isHomePath && page.category && (
               <>
-                <span className="text-[#5b6472] cursor-default">{cat.label}</span>
+                <span className="text-[#a9bfd7] cursor-default">{cat.label}</span>
                 <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7"/>
                 </svg>
               </>
             )}
-            <span className="text-[#14161a] font-medium truncate max-w-[300px]">{page.title}</span>
+            <span className="text-white font-medium truncate max-w-[300px]">{page.title}</span>
           </nav>
 
           {/* Chip rail — tighter on mobile, hide HS chip on <sm */}
           <div className="flex items-center gap-1.5 sm:gap-2 mb-4 flex-wrap animate-fade-in-up">
-            <span className="egg-chip text-[11px] sm:text-xs" style={{ color: heroTone, boxShadow: `inset 0 0 0 1px ${heroTone}55` }}>
+            <span className="egg-chip egg-chip-dark text-[11px] sm:text-xs">
               <Icon name={CATEGORY_ICON[page.category] || 'grid'} className="w-3.5 h-3.5" /> {cat.label}
             </span>
             {isRockSalt && (
-              <span className="egg-chip text-[11px] sm:text-xs" style={{ color: '#8a6d3b', boxShadow: 'inset 0 0 0 1px rgba(184,134,43,.45)' }}>
+              <span className="egg-chip egg-chip-dark text-[11px] sm:text-xs" style={{ color: '#e0b15a' }}>
                 Rock Salt
               </span>
             )}
             {isSeaSalt && (
-              <span className="egg-chip text-[11px] sm:text-xs" style={{ color: '#0b8f84', boxShadow: 'inset 0 0 0 1px rgba(15,181,165,.5)' }}>
+              <span className="egg-chip egg-chip-dark text-[11px] sm:text-xs" style={{ color: '#5fd6c8' }}>
                 Sea Salt
               </span>
             )}
             {page.specs?.nacl_min && (
-              <span className="egg-chip text-[11px] sm:text-xs">
+              <span className="egg-chip egg-chip-dark text-[11px] sm:text-xs">
                 NaCl {page.specs.nacl_min}
               </span>
             )}
             {page.specs?.grain_label && (
-              <span className="egg-chip hidden sm:inline-flex text-xs">
+              <span className="egg-chip egg-chip-dark hidden sm:inline-flex text-xs">
                 {page.specs.grain_label}
               </span>
             )}
             {page.hs_code && (
-              <span className="egg-chip hidden sm:inline-flex font-mono text-[11px] text-[#5b6472]">
+              <span className="egg-chip egg-chip-dark hidden sm:inline-flex font-mono text-[11px]">
                 HS {page.hs_code}
               </span>
             )}
@@ -314,11 +316,11 @@ export default async function PageRenderer({ page }) {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-end">
             <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
-              <h1 className="egg-display text-[30px] sm:text-5xl lg:text-6xl text-[#14161a] mb-3 sm:mb-4 leading-[1.08] sm:leading-[1.02]">
+              <h1 className="egg-display text-[30px] sm:text-5xl lg:text-6xl text-white mb-3 sm:mb-4 leading-[1.08] sm:leading-[1.02]">
                 {page.title}
               </h1>
               {page.description && (
-                <p className="text-sm sm:text-lg leading-relaxed max-w-3xl text-[#3f4650]">
+                <p className="text-sm sm:text-lg leading-relaxed max-w-3xl text-[#a9bfd7]">
                   {page.description}
                 </p>
               )}
@@ -334,11 +336,11 @@ export default async function PageRenderer({ page }) {
                 </Link>
                 <div className="flex gap-2 w-full sm:w-auto">
                   <Link href={`/tds${page.path}`} target="_blank"
-                    className="egg-btn-ghost flex-1 sm:flex-initial">
+                    className="egg-btn-ghost egg-btn-ghost-dark flex-1 sm:flex-initial">
                     TDS
                   </Link>
                   <Link href={`/rfq?product=${encodeURIComponent(page.path)}&type=coa`}
-                    className="egg-btn-ghost flex-1 sm:flex-initial">
+                    className="egg-btn-ghost egg-btn-ghost-dark flex-1 sm:flex-initial">
                     COA
                   </Link>
                 </div>

@@ -33,8 +33,8 @@ export default async function ServicesHub() {
   return (
     <article className="bg-white text-[#14161a]">
       {/* Hero — white editorial banner with teal glow */}
-      <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10">
-        <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
+      <section data-hero className="egg-hero-dark relative overflow-hidden border-b border-[#ff5a18]/60">
+        <div aria-hidden="true" className="absolute inset-0 egg-grid-dark opacity-60 pointer-events-none" />
         {/* freight + inspection = sweep and range */}
         <HeroMotif variant="radar" tone="#0d9488" />
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"

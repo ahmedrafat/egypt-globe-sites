@@ -386,34 +386,85 @@ body.no-scroll {
   .egg-motif-pulse { animation: none !important; }
 }
 
-/* ── Dark-hero pages: the header floats over the hero ──────────────────────
-   Only the homepage renders [data-hero], so :has() scopes this without a
-   client component or prop drilling. Translucent navy glass rather than a
-   transparent→solid scroll swap: it stays legible at every scroll position,
-   including over the light editorial body below, and needs no JS.
-   Selectors deliberately reach only the top-level chrome (direct children of
-   nav and of the actions row) — the mega-menu panels are .absolute and keep
-   their white surface and dark type untouched. */
-body:has([data-hero]) header {
-  background: rgba(3, 24, 45, .62);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom-color: rgba(90, 160, 220, .22);
-  box-shadow: none;
+/* ── Dark hero band ───────────────────────────────────────────────────────
+   Every PageRenderer hero and the homepage hero sit on this navy band; the
+   document body below stays light editorial. Was a white scrim over the photo
+   at 22% opacity + blur, which flattened the (already dark, luma 62-110)
+   artwork to a grey smudge.
+
+   The header stays WHITE on every page and is not made transparent over the
+   band: the logo is white-on-blue, so it needs a light surface to sit on.
+   The boundary is marked instead by a filament in the logo blue running into
+   the accent orange, so the white/navy meeting reads as deliberate. */
+.egg-hero-dark {
+  background: radial-gradient(120% 90% at 50% 0%, #08365f 0%, #06294a 45%, #03182d 100%);
 }
-body:has([data-hero]) header > div > div > nav > div > button,
-body:has([data-hero]) header > div > div > nav > a,
-body:has([data-hero]) header > div > div > div > a,
-body:has([data-hero]) header > div > div > div > button { color: #dce7f3; }
-body:has([data-hero]) header > div > div > nav > div > button:hover,
-body:has([data-hero]) header > div > div > nav > a:hover,
-body:has([data-hero]) header > div > div > div > a:hover,
-body:has([data-hero]) header > div > div > div > button:hover {
+.egg-grid-dark {
+  background-image:
+    linear-gradient(rgba(90,160,220,.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(90,160,220,.10) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+header { position: relative; }
+header::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
+  background: linear-gradient(90deg, #1d5fa1 0%, #3078c0 34%, #ff5a18 78%, transparent 100%);
+}
+
+/* chips and ghost buttons re-tuned for the navy band */
+.egg-chip-dark {
+  background: rgba(3,24,45,.55);
+  color: #dce7f3;
+  box-shadow: inset 0 0 0 1px rgba(90,160,220,.30);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.egg-btn-ghost-dark {
+  background: rgba(3,24,45,.45);
   color: #fff;
-  background-color: rgba(90, 160, 220, .16);
+  box-shadow: inset 0 0 0 1px rgba(90,160,220,.35);
 }
-/* the orange CTA keeps its own treatment */
-body:has([data-hero]) header a[href="/rfq"] { color: #fff; }
+.egg-btn-ghost-dark:hover {
+  background: rgba(90,160,220,.20);
+  box-shadow: inset 0 0 0 1px rgba(90,160,220,.60);
+}
+
+/* Everything inside the band inverts by scope rather than by editing every
+   text node in six hero components. Element+class selectors (0,1,1 / 0,2,0)
+   outrank the Tailwind arbitrary-value classes they override (0,1,0). */
+.egg-hero-dark h1,
+.egg-hero-dark h1 span,
+.egg-hero-dark h2 { color: #fff; }
+.egg-hero-dark p,
+.egg-hero-dark nav,
+.egg-hero-dark nav span { color: #a9bfd7; }
+.egg-hero-dark nav a { color: #8ba3bd; }
+.egg-hero-dark nav a:hover { color: #fff; }
+.egg-hero-dark .egg-chip {
+  background: rgba(3,24,45,.55);
+  color: #dce7f3;
+  box-shadow: inset 0 0 0 1px rgba(90,160,220,.30);
+}
+.egg-hero-dark .egg-btn-ghost {
+  background: rgba(3,24,45,.45);
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(90,160,220,.35);
+}
+.egg-hero-dark .egg-btn-ghost:hover {
+  background: rgba(90,160,220,.20);
+  box-shadow: inset 0 0 0 1px rgba(90,160,220,.60);
+}
+/* stat strips and icon tiles inside the band are white panels by default */
+.egg-hero-dark [class*="bg-white"] {
+  background-color: rgba(4,33,61,.62) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.egg-hero-dark [class*="ring-[#14161a]"] { --tw-ring-color: rgba(90,160,220,.25); }
+.egg-hero-dark [class*="bg-[#14161a]"] { background-color: rgba(90,160,220,.22); }
+.egg-hero-dark [class*="text-[#7a8290]"],
+.egg-hero-dark [class*="text-[#8a93a3]"] { color: #8ba3bd; }
 
 /* ── Division panels — angled editorial strip ─────────────────────────────
    Seven skewed panels over division photography. The panel is skewed and the
