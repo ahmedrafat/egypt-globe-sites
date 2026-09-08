@@ -385,3 +385,46 @@ body.no-scroll {
   .egg-motif-drift,
   .egg-motif-pulse { animation: none !important; }
 }
+
+/* ── Dark-hero pages: the header floats over the hero ──────────────────────
+   Only the homepage renders [data-hero], so :has() scopes this without a
+   client component or prop drilling. Translucent navy glass rather than a
+   transparent→solid scroll swap: it stays legible at every scroll position,
+   including over the light editorial body below, and needs no JS.
+   Selectors deliberately reach only the top-level chrome (direct children of
+   nav and of the actions row) — the mega-menu panels are .absolute and keep
+   their white surface and dark type untouched. */
+body:has([data-hero]) header {
+  background: rgba(3, 24, 45, .62);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom-color: rgba(90, 160, 220, .22);
+  box-shadow: none;
+}
+body:has([data-hero]) header > div > div > nav > div > button,
+body:has([data-hero]) header > div > div > nav > a,
+body:has([data-hero]) header > div > div > div > a,
+body:has([data-hero]) header > div > div > div > button { color: #dce7f3; }
+body:has([data-hero]) header > div > div > nav > div > button:hover,
+body:has([data-hero]) header > div > div > nav > a:hover,
+body:has([data-hero]) header > div > div > div > a:hover,
+body:has([data-hero]) header > div > div > div > button:hover {
+  color: #fff;
+  background-color: rgba(90, 160, 220, .16);
+}
+/* the orange CTA keeps its own treatment */
+body:has([data-hero]) header a[href="/rfq"] { color: #fff; }
+
+/* ── Division panels — angled editorial strip ─────────────────────────────
+   Seven skewed panels over division photography. The panel is skewed and the
+   content counter-skewed so type stays upright. Photos sit below the fold and
+   are lazy-loaded; Next serves AVIF/WebP at panel size. */
+.egg-div-panel { transform: skewX(-7deg); }
+.egg-div-panel > * { transform: skewX(7deg); }
+.egg-div-panel img { transform: skewX(7deg) scale(1.28); transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+.egg-div-panel:hover img { transform: skewX(7deg) scale(1.36); }
+.egg-div-panel .egg-div-rule { transition: width .4s cubic-bezier(.2,.7,.2,1); }
+.egg-div-panel:hover .egg-div-rule { width: 2.5rem; }
+@media (prefers-reduced-motion: reduce) {
+  .egg-div-panel img, .egg-div-panel:hover img { transition: none; transform: skewX(7deg) scale(1.28); }
+}

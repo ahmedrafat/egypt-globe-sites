@@ -633,7 +633,7 @@ export default async function HomePage() {
                     All products <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                   </Link>
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1.5 sm:gap-2">
                   {PRODUCT_DIVISIONS.map(div => <DivisionCard key={div.id} div={div} />)}
                 </div>
               </div>
@@ -1143,15 +1143,25 @@ function DivisionNode({ div }) {
 
 function DivisionCard({ div }) {
   return (
-    <Link href={div.path} className="group relative flex flex-col gap-2.5 rounded-xl p-3.5 ring-1 ring-[#14161a]/10 bg-white hover:bg-[#f6f7f9] hover:ring-[#14161a]/25 hover:shadow-[0_14px_30px_-20px_rgba(20,22,26,.35)] transition-all duration-300 overflow-hidden">
-      <span className="w-9 h-9 rounded-lg flex items-center justify-center text-[#14161a] ring-1 ring-[#14161a]/15 group-hover:ring-[#14161a]/40 transition-colors">
-        <Icon name={DIVISION_ICON[div.id] || 'cube'} className="w-[18px] h-[18px]" />
+    <Link
+      href={div.path}
+      className="egg-div-panel group relative block overflow-hidden rounded-[3px] ring-1 ring-[#14161a]/12 hover:ring-[#5aa0dc]/45 transition-[box-shadow,outline] duration-300 aspect-[3/4] sm:aspect-[4/5]"
+    >
+      {/* division photography — decorative; the label beside it carries the name */}
+      <Image
+        src={`/heroes/products-${div.id}.png`}
+        alt=""
+        fill
+        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 14vw"
+        className="object-cover"
+      />
+      <span className="absolute inset-0 bg-gradient-to-t from-[#03182d] via-[#03182d]/55 to-[#06294a]/10" />
+      <span className="absolute inset-x-0 bottom-0 p-3 sm:p-3.5">
+        <span className="block text-[13px] sm:text-sm font-semibold text-white leading-tight drop-shadow-[0_1px_6px_rgba(0,0,0,.5)]">
+          {div.label}
+        </span>
+        <span className="egg-div-rule mt-2 block h-[2px] w-5 bg-[#ff5a18]" />
       </span>
-      <span>
-        <span className="block text-sm font-semibold text-[#14161a] leading-tight">{div.label}</span>
-        <span className="block text-[11px] text-[#7a8290] leading-snug mt-1 line-clamp-2">{div.blurb}</span>
-      </span>
-      <span className="mt-auto inline-block h-[1.5px] w-0 group-hover:w-8 transition-all duration-400" style={{ background: div.color }} />
     </Link>
   )
 }
