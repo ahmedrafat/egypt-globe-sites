@@ -282,41 +282,43 @@ export default async function HomePage() {
       <style>{SCOPED_CSS}</style>
 
       {/* ── 1. HERO ─────────────────────────────────────────────────── */}
-      <section data-hero className="relative min-h-[92vh] flex flex-col justify-between overflow-hidden px-5 sm:px-10 lg:px-16 pt-20 sm:pt-24 pb-10 bg-white">
-        {/* layered backdrop (parallaxed by GSAP) — photo + hairline grid + compass ring */}
+      <section data-hero className="egg-hero-dark relative min-h-[92vh] flex flex-col justify-between overflow-hidden px-5 sm:px-10 lg:px-16 pt-20 sm:pt-24 pb-10">
+        {/* layered backdrop (parallaxed by GSAP) — photo + technical grid + compass ring */}
         <div data-hero-bg className="absolute inset-[-12%] z-0 pointer-events-none" aria-hidden="true">
           {heroPhoto && (
-            <Image src={heroPhoto} alt="" fill sizes="100vw" preload className="object-cover opacity-[0.16]" />
+            <Image src={heroPhoto} alt="" fill sizes="100vw" preload className="object-cover opacity-[0.38]" />
           )}
-          {heroPhoto && <div className="absolute inset-0 bg-gradient-to-b from-white/85 via-white/70 to-white/95" />}
+          {heroPhoto && <div className="absolute inset-0 bg-gradient-to-b from-[#03182d]/80 via-[#06294a]/70 to-[#03182d]/95" />}
           <div className="absolute inset-0 egg-hero-glow" />
-          <div className="absolute inset-0 egg-grid-light opacity-70" />
+          <div className="absolute inset-0 egg-grid-dark opacity-80" />
           {/* slow compass ring — decorative, rotates once every 3 min */}
           <svg className="egg-compass absolute -right-[12%] top-[8%] w-[min(78vw,760px)] h-[min(78vw,760px)]"
             viewBox="0 0 400 400" fill="none" aria-hidden="true" focusable="false">
-            <circle cx="200" cy="200" r="196" stroke="#0284c7" strokeWidth="0.6" strokeDasharray="2 10" />
-            <circle cx="200" cy="200" r="150" stroke="#b8862b" strokeWidth="0.6" strokeDasharray="1 6" />
-            <circle cx="200" cy="200" r="96" stroke="#0fb5a5" strokeWidth="0.8" />
-            <path d="M200 20 L200 380 M20 200 L380 200 M73 73 L327 327 M327 73 L73 327" stroke="#94a3b8" strokeWidth="0.4" />
+            <circle cx="200" cy="200" r="196" stroke="#5aa0dc" strokeWidth="0.6" strokeDasharray="2 10" />
+            <circle cx="200" cy="200" r="150" stroke="#ff7a22" strokeWidth="0.6" strokeDasharray="1 6" />
+            <circle cx="200" cy="200" r="96" stroke="#5aa0dc" strokeWidth="0.8" />
+            <path d="M200 20 L200 380 M20 200 L380 200 M73 73 L327 327 M327 73 L73 327" stroke="#a9bfd7" strokeWidth="0.4" opacity="0.55" />
           </svg>
         </div>
-        <div className="absolute inset-x-0 bottom-0 h-40 z-[1] bg-gradient-to-b from-transparent to-white" aria-hidden="true" />
+        {/* orange filament along the fold, then a clean hand-off into the light body below */}
+        <div className="absolute inset-x-0 bottom-0 h-px z-[2] bg-gradient-to-r from-transparent via-[#ff5a18]/70 to-transparent" aria-hidden="true" />
+        <div className="absolute inset-x-0 bottom-0 h-40 z-[1] bg-gradient-to-b from-transparent to-[#03182d]" aria-hidden="true" />
 
         <div data-hero-copy className="relative z-10 flex-1 flex flex-col justify-between">
           {/* overline */}
-          <p className="egg-rise text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.32em] text-[#b8862b]" style={{ animationDelay: '.05s' }}>
+          <p className="egg-rise text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.32em] text-[#ff7a22]" style={{ animationDelay: '.05s' }}>
             Egypt Globe Group
-            <span className="text-[#c9ced6] mx-2">/</span>
-            <span className="text-[#7a8290]">Est. 2014 · Quality at the Core · Cairo · Damietta · 60+ markets</span>
+            <span className="text-[#5aa0dc]/60 mx-2">/</span>
+            <span className="text-[#a9bfd7]">Est. 2014 · Quality at the Core · Cairo · Damietta · 60+ markets</span>
           </p>
 
           {/* headline */}
           <div className="max-w-5xl w-full py-12 sm:py-16">
-            <h1 className={`${display.className} egg-rise text-[clamp(2.5rem,7vw,6.4rem)] font-normal leading-[0.98] tracking-[-0.02em] text-[#14161a]`} style={{ animationDelay: '.12s' }}>
+            <h1 className={`${display.className} egg-rise text-[clamp(2.5rem,7vw,6.4rem)] font-normal leading-[0.98] tracking-[-0.02em] text-white`} style={{ animationDelay: '.12s' }}>
               Institutional reliability<br />
-              <span className="italic text-[#3f4650]">in bulk commodity exporting</span><span className="text-[#ff6321]">.</span>
+              <span className="italic text-[#a9bfd7]">in bulk commodity exporting</span><span className="text-[#ff5a18]">.</span>
             </h1>
-            <p className="egg-rise mt-7 sm:mt-9 text-base sm:text-lg lg:text-[1.25rem] max-w-3xl leading-relaxed text-[#3f4650]" style={{ animationDelay: '.2s' }}>
+            <p className="egg-rise mt-7 sm:mt-9 text-base sm:text-lg lg:text-[1.25rem] max-w-3xl leading-relaxed text-[#a9bfd7]" style={{ animationDelay: '.2s' }}>
               Egypt Globe Group is an Egyptian B2B commodity house built around an internal
               Quality Assurance division since its 2014 incorporation. Salt, cement &amp; clinker,
               fertilizers, chemicals, industrial minerals, agro and metals — every lot
@@ -328,34 +330,34 @@ export default async function HomePage() {
               <a href="#quote" className="egg-btn group relative inline-flex items-center gap-2.5 text-sm font-semibold text-white bg-[#ff6321] px-7 py-3.5 rounded-full overflow-hidden shadow-[0_10px_30px_-10px_rgba(255,99,33,.55)]">
                 <span className="relative z-10">Request a quote</span>
                 <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1">→</span>
-                <span className="absolute inset-0 bg-[#14161a] translate-y-full group-hover:translate-y-0 transition-transform duration-400" />
+                <span className="absolute inset-0 bg-[#06294a] translate-y-full group-hover:translate-y-0 transition-transform duration-400" />
               </a>
-              <Link href="/products" className="group inline-flex items-center gap-2 text-sm text-[#3f4650] hover:text-[#14161a] transition-colors">
+              <Link href="/products" className="group inline-flex items-center gap-2 text-sm text-[#a9bfd7] hover:text-white transition-colors">
                 <span className="egg-ul pb-0.5">Explore our operations</span>
               </Link>
-              <Link href="/about/quality-compliance" className="group inline-flex items-center gap-2 text-sm text-[#3f4650] hover:text-[#14161a] transition-colors">
-                <Icon name="shield" className="w-4 h-4 text-[#0b8f84]" />
+              <Link href="/about/quality-compliance" className="group inline-flex items-center gap-2 text-sm text-[#a9bfd7] hover:text-white transition-colors">
+                <Icon name="shield" className="w-4 h-4 text-[#5aa0dc]" />
                 <span className="egg-ul pb-0.5">Read the QA charter</span>
               </Link>
             </div>
           </div>
 
           {/* metrics + certifications */}
-          <div className="egg-rise grid grid-cols-2 md:grid-cols-5 gap-px rounded-2xl overflow-hidden ring-1 ring-[#14161a]/10 bg-[#14161a]/10 shadow-[0_20px_50px_-30px_rgba(20,22,26,.35)]" style={{ animationDelay: '.38s' }}>
+          <div className="egg-rise grid grid-cols-2 md:grid-cols-5 gap-px rounded-2xl overflow-hidden ring-1 ring-[rgba(90,160,220,0.25)] bg-[rgba(90,160,220,0.18)] shadow-[0_24px_60px_-30px_rgba(0,0,0,.6)]" style={{ animationDelay: '.38s' }}>
             {METRICS.map(m => (
-              <div key={m.label} className="bg-white/90 backdrop-blur px-5 py-5 sm:py-6">
-                <p className={`${display.className} text-[2.2rem] sm:text-[2.7rem] leading-none tracking-tight text-[#ff6321]`}>
+              <div key={m.label} className="bg-[rgba(4,33,61,0.70)] backdrop-blur px-5 py-5 sm:py-6">
+                <p className={`${display.className} text-[2.2rem] sm:text-[2.7rem] leading-none tracking-tight text-[#ff7a22]`}>
                   <span data-count={m.value} data-suffix={m.suffix}>{m.value}{m.suffix}</span>
                 </p>
-                <p className="text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.18em] text-[#7a8290] mt-3 leading-snug">{m.label}</p>
+                <p className="text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.18em] text-[#a9bfd7] mt-3 leading-snug">{m.label}</p>
               </div>
             ))}
           </div>
           <div className="egg-rise mt-6 flex flex-wrap items-center justify-between gap-x-5 gap-y-2" style={{ animationDelay: '.46s' }}>
-            <div className="flex flex-wrap gap-x-5 gap-y-1.5 text-[10px] sm:text-[11px] font-mono tracking-[0.14em] text-[#8a93a3]">
-              {CERTS.map(c => <span key={c} className="whitespace-nowrap hover:text-[#b8862b] transition-colors">{c}</span>)}
+            <div className="flex flex-wrap gap-x-5 gap-y-1.5 text-[10px] sm:text-[11px] font-mono tracking-[0.14em] text-[#8fa9c4]">
+              {CERTS.map(c => <span key={c} className="whitespace-nowrap hover:text-[#ff7a22] transition-colors">{c}</span>)}
             </div>
-            <a href="#story" className="hidden sm:inline-flex items-center gap-2 text-[11px] font-mono uppercase tracking-[0.2em] text-[#7a8290] hover:text-[#14161a] transition-colors">
+            <a href="#story" className="hidden sm:inline-flex items-center gap-2 text-[11px] font-mono uppercase tracking-[0.2em] text-[#a9bfd7] hover:text-white transition-colors">
               Follow the cargo <span className="egg-bounce inline-block">↓</span>
             </a>
           </div>
@@ -699,7 +701,7 @@ export default async function HomePage() {
                   <button type="submit" className="egg-btn group relative inline-flex items-center justify-center gap-2.5 text-sm font-semibold text-white bg-[#ff6321] px-8 py-4 rounded-full overflow-hidden shadow-[0_10px_30px_-10px_rgba(255,99,33,.55)] disabled:opacity-60 disabled:cursor-not-allowed">
                     <span className="relative z-10">Send my request</span>
                     <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1">→</span>
-                    <span className="absolute inset-0 bg-[#14161a] translate-y-full group-hover:translate-y-0 transition-transform duration-400" />
+                    <span className="absolute inset-0 bg-[#06294a] translate-y-full group-hover:translate-y-0 transition-transform duration-400" />
                   </button>
                   <p className="text-xs text-[#7a8290] leading-relaxed max-w-sm">
                     Need specs, packing and Incoterm detail?{' '}
@@ -1193,8 +1195,16 @@ const SCOPED_CSS = `
 .egg-sc{--ink:#14161a;--orange:#ff6321;--gold:#b8862b;--teal:#0fb5a5;--ocean:#0284c7}
 .egg-sc .egg-grid-light{background-image:linear-gradient(rgba(20,22,26,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(20,22,26,.055) 1px,transparent 1px);background-size:48px 48px}
 .egg-sc .egg-hero-glow{background:
-  radial-gradient(60% 50% at 85% 10%,rgba(255,99,33,.10),transparent 60%),
-  radial-gradient(55% 45% at 10% 85%,rgba(15,181,165,.12),transparent 60%)}
+  radial-gradient(60% 50% at 85% 10%,rgba(255,90,24,.22),transparent 62%),
+  radial-gradient(55% 45% at 10% 85%,rgba(90,160,220,.20),transparent 62%)}
+/* Hero ground. The body below stays in the light editorial system — the dark
+   band is a deliberate contrast device, not the start of a re-darkened site. */
+.egg-sc .egg-hero-dark{background:
+  radial-gradient(120% 90% at 50% 0%,#08365f 0%,#06294a 45%,#03182d 100%)}
+.egg-sc .egg-grid-dark{background-image:
+  linear-gradient(rgba(90,160,220,.10) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(90,160,220,.10) 1px,transparent 1px);
+  background-size:48px 48px}
 /* Decorative compass ring. Rotates about its own centre; lives inside
    [data-hero-bg], which GSAP parallaxes — parent and child transforms
    compose, so the two never fight. */
