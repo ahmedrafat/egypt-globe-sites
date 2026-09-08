@@ -455,6 +455,14 @@ header::after {
   background: rgba(90,160,220,.20);
   box-shadow: inset 0 0 0 1px rgba(90,160,220,.60);
 }
+/* body-grey links and captions inside the band (e.g. the "Pairing services"
+   link on /products) would otherwise sit at ~1.5:1 on navy */
+.egg-hero-dark [class*="text-[#3f4650]"],
+.egg-hero-dark [class*="text-[#5b6472]"] { color: #a9bfd7; }
+.egg-hero-dark [class*="text-[#3f4650]"]:hover { color: #fff; }
+.egg-hero-dark [class*="border-[#14161a]"] { border-color: rgba(90,160,220,.40); }
+.egg-hero-dark [class*="text-[#3f4650]"]:hover[class*="border"] { border-color: #fff; }
+
 /* stat strips and icon tiles inside the band are white panels by default */
 .egg-hero-dark [class*="bg-white"] {
   background-color: rgba(4,33,61,.62) !important;
@@ -463,6 +471,7 @@ header::after {
 }
 .egg-hero-dark [class*="ring-[#14161a]"] { --tw-ring-color: rgba(90,160,220,.25); }
 .egg-hero-dark [class*="bg-[#14161a]"] { background-color: rgba(90,160,220,.22); }
+.egg-hero-dark [class*="bg-white"] .egg-display { filter: brightness(1.6) saturate(1.05); }
 .egg-hero-dark [class*="text-[#7a8290]"],
 .egg-hero-dark [class*="text-[#8a93a3]"] { color: #8ba3bd; }
 
