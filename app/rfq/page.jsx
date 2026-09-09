@@ -26,7 +26,7 @@ export const metadata = {
   openGraph: routeOpenGraph({ path: '/rfq' }),
   title: 'Request a Quote — Egyptian Salt, Cement & Fertilizers',
   description:
-    'Submit a B2B RFQ for Egyptian salt, cement, fertilizers, chemicals, or minerals. Egypt Globe Group responds within 24 hours with FOB / CIF / CFR pricing from 7 Egyptian seaports.',
+    'Submit a B2B RFQ for Egyptian salt, cement, fertilizers, chemicals, or minerals. Egypt Globe Group responds with FOB / CIF / CFR pricing from 7 Egyptian seaports.',
 }
 
 export default async function RFQPage({ searchParams }) {
@@ -42,17 +42,17 @@ export default async function RFQPage({ searchParams }) {
   ])
 
   const isCoa = requestType === 'coa'
-  const heroLabel    = isCoa ? 'Certificate of Analysis Request' : '24-Hour Response SLA'
+  const heroLabel    = isCoa ? 'Certificate of Analysis Request' : 'Export desk · priced offers'
   const heroTitle    = isCoa ? 'Request a Certificate of Analysis.' : 'Request a Quote.'
   const heroBlurb    = isCoa
-    ? 'Need a recent batch CoA before placing an order? Tell us which product and (optionally) which lot — we\'ll send the latest signed CoA from the production plant within 24 hours.'
-    : 'Tell us what commodity, quantity, destination port and Incoterm you need. Our export desk in Cairo + Damietta will come back within 24 hours with a priced FOB / CIF / CFR offer plus full L/C-bank document set.'
+    ? 'Need a recent batch CoA before placing an order? Tell us which product and (optionally) which lot — we\'ll send the latest signed CoA from the production plant once stock, laycan and freight are confirmed.'
+    : 'Tell us what commodity, quantity, destination port and Incoterm you need. Our export desk in Cairo + Damietta will come back with a priced FOB / CIF / CFR offer plus full L/C-bank document set.'
 
   return (
     <article className="bg-white text-[#14161a]">
       <ServiceJsonLd
         name="B2B Commodity Export Quote — Egypt Globe Group"
-        description="Request a FOB / CIF / CFR price quote for Egyptian salt, cement, fertilizers, chemicals, industrial minerals, or agro commodities. Egypt Globe Group responds within 24 hours with pricing from any of 7 Egyptian seaports."
+        description="Request a FOB / CIF / CFR price quote for Egyptian salt, cement, fertilizers, chemicals, industrial minerals, or agro commodities. Egypt Globe Group responds with pricing from any of 7 Egyptian seaports."
         url="/rfq"
       />
       {/* Hero */}
@@ -98,8 +98,8 @@ export default async function RFQPage({ searchParams }) {
               <h3 className="egg-display text-2xl text-[#14161a] mb-4">What happens next?</h3>
               <ol className="space-y-3 text-sm">
                 {[
-                  ['Within 1 hour', 'Your RFQ is logged + assigned to a commodity owner.'],
-                  ['Within 24 hours', 'You receive a priced FOB / CIF / CFR offer, a sample Certificate of Analysis and the inspection protocol by email.'],
+                  ['On receipt', 'Your RFQ is logged and assigned to a commodity owner.'],
+                  ['Priced offer', 'Once stock, laycan and freight are confirmed you receive a priced FOB / CIF / CFR offer, a sample Certificate of Analysis and the inspection protocol by email.'],
                   ['On acceptance', 'We open a proforma invoice + L/C bank-set process.'],
                   ['Pre-shipment', 'PSI inspection (TÜV Austria / SGS / Intertek / BV) on request.'],
                   ['On loading', 'Port-laboratory CoA issued before the B/L; full L/C document set delivered. Out-of-spec lots never load.'],
@@ -125,7 +125,7 @@ export default async function RFQPage({ searchParams }) {
               <div className="relative">
                 <h3 className="egg-display text-2xl text-[#14161a] mb-3">Prefer to email?</h3>
                 <p className="text-sm text-[#3f4650] mb-4 leading-relaxed">
-                  Send your RFQ directly to our export desk — same 24-hour SLA.
+                  Send your RFQ directly to our export desk — same export desk.
                 </p>
                 <a href={`mailto:${company.email}?subject=RFQ%20-%20Egypt%20Globe%20Group`}
                   className="block bg-white ring-1 ring-[#14161a]/10 hover:ring-[#14161a]/35 transition-all rounded-lg px-4 py-3 text-sm font-mono font-semibold text-[#14161a]">

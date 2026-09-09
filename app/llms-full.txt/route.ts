@@ -17,7 +17,7 @@ export async function GET() {
 
   let body = `# Egypt Globe Group — full content dump
 
-> Egyptian B2B export trading conglomerate. Salt, cement, fertilizers, chemicals, construction materials, agro & food, industrial minerals, metals. FOB / CIF from 7 Egyptian ports to 60+ destination markets. Quote in 24h.
+> Egyptian B2B export trading conglomerate. Salt, cement, fertilizers, chemicals, construction materials, agro & food, industrial minerals, metals. FOB / CIF from 7 Egyptian ports to 60+ destination markets. Priced offers from the export desk.
 
 This file concatenates every published page on egyptglobe.com so AI crawlers and search engines can index the full site in a single fetch. Discovery file: ${BASE}/llms.txt — Sitemap: ${BASE}/sitemap.xml
 

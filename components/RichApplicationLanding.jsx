@@ -276,7 +276,7 @@ export default function RichApplicationLanding({ page, application, products, si
             Have a {page.title.toLowerCase()} requirement?
           </h2>
           <p className="relative text-[#3f4650] text-lg mb-7 max-w-2xl mx-auto">
-            Tell us your tender spec — we'll come back within 24 hours with priced
+            Tell us your tender spec — we'll come back with priced
             FOB / CIF / CFR options matched to your industry's standards.
           </p>
           <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}

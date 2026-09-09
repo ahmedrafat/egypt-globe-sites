@@ -27,7 +27,7 @@ export async function generateMetadata() {
   const brandName = isUmbrella ? settings.name : meta.siteName
   const canonicalBase = `https://${meta.host}`
   const description = isUmbrella
-    ? 'Egyptian salt, cement, fertilizers, chemicals, construction materials & industrial minerals exported to 60+ countries. FOB / CIF / CFR from 7 Egyptian seaports. ISO 22000 · EN 197-1 · GOEIC certified. Quote in 24h.'
+    ? 'Egyptian salt, cement, fertilizers, chemicals, construction materials & industrial minerals exported to 60+ countries. FOB / CIF / CFR from 7 Egyptian seaports. ISO 22000 · EN 197-1 · GOEIC certified. Priced offers from the export desk.'
     : (meta.brandCode === 'SINAI_SALT' ? 'Egyptian sea salt from North Sinai (Bardawil + El-Arish coast). Bulk wholesale FOB Damietta + Port Said East. Sea salt specialist brand of Egypt Globe Group.'
       : meta.brandCode === 'EG_SALT'    ? 'Bulk Egyptian industrial salt — chlor-alkali, deicing, water treatment, oilfield. 50+ SKUs. Min 260 MT FOB Damietta. EG Salt — bulk industrial brand of Egypt Globe Group.'
       : meta.brandCode === 'GLOBE_SALT' ? 'Wholesale Egyptian salt to 60+ countries. 100 SKUs across food, deicing, industrial, pharma, chlor-alkali. FOB / CIF / CFR from 7 Egyptian ports. Globe Salt — wholesale export brand of Egypt Globe Group.'

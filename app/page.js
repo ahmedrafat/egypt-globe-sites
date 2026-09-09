@@ -68,7 +68,7 @@ export async function generateMetadata() {
     : `${m.siteName} — Egyptian Commodity Exporter`
   const description = isUmbrella
     ? 'Verified bulk commodity exporter from Egypt — salt, cement, fertilizers, chemicals, minerals, metals. Every lot lab-verified before B/L. FOB / CIF, 7 ports.'
-    : 'Egyptian commodity exporter. Quote in 24 hours.'
+    : 'Egyptian commodity exporter. Request a priced offer.'
   const canonical = isUmbrella ? BASE : `https://${m.host}`
   return {
     title,
@@ -146,7 +146,7 @@ const METRICS = [
   { value: 7,   suffix: '',  label: 'Egyptian seaports' },
   { value: 93,  suffix: '',  label: 'Salt cargoes shipped since 2015' },
   { value: 100, suffix: '%', label: 'Lots CoA-verified before B/L' },
-  { value: 24,  suffix: 'h', label: 'RFQ response SLA' },
+  { value: 51,  suffix: '',  label: 'Vessels chartered since 2015' },
 ]
 
 // "Quality at the Core" — the four non-negotiables, stated once near the top.
@@ -602,7 +602,7 @@ export default async function HomePage() {
               <Facts data-rise items={[
                 ['60+', 'destination markets served'],
                 ['FOB / CIF / CFR', 'from 7 Egyptian ports'],
-                ['24 h', 'quote turnaround, any lane'],
+                ['93', 'salt cargoes shipped since 2015'],
               ]} />
             </article>
 
@@ -654,7 +654,7 @@ export default async function HomePage() {
               <p data-rise className="egg-p">
                 Our export desk sits in Damietta and Cairo. A structured request receives a priced FOB /
                 CIF / CFR offer, a sample Certificate of Analysis for the grade, the applicable
-                independent-inspection protocol and the available L/C document set within 24 hours.
+                independent-inspection protocol and the available L/C document set once stock, laycan and freight are confirmed.
                 Annual offtake contracts are available across all seven divisions. Your details go to the
                 trade desk only — no marketing email.
               </p>
@@ -722,7 +722,7 @@ export default async function HomePage() {
                   </span>
                   <h3 className={`${display.className} text-2xl text-[#14161a] mb-2`}>Request received — thank you.</h3>
                   <p className="text-sm text-[#3f4650] max-w-md mx-auto leading-relaxed">
-                    The export desk reviews every request within an hour and replies with a priced, certified offer within 24 hours.
+                    The export desk reviews every request and replies with a priced, certified offer once stock, laycan and freight are confirmed.
                   </p>
                   <div className="inline-block mt-4 rounded-xl border border-[#14161a]/10 bg-white px-5 py-3">
                     <div className="text-[11px] uppercase tracking-wider font-mono text-[#5b6577]">Reference</div>
@@ -1080,9 +1080,9 @@ function PanelQaChain() {
 
 function PanelDesk({ email, phone, phoneE164 }) {
   const STAGES = [
-    ['T + 0 h',  'RFQ received',            'Auto-triaged to the commodity desk · reference issued'],
-    ['T + 1 h',  'Reviewed by export desk', 'Spec match · origin port · vessel or container plan'],
-    ['T + 24 h', 'Priced, certified offer', 'FOB / CIF / CFR · sample CoA · inspection protocol · packing'],
+    ['Received', 'RFQ received',            'Auto-triaged to the commodity desk · reference issued'],
+    ['Reviewed', 'Reviewed by export desk', 'Spec match · origin port · vessel or container plan'],
+    ['Offer',    'Priced, certified offer', 'FOB / CIF / CFR · sample CoA · inspection protocol · packing'],
     ['Then',     'Documents & loading',     'L/C-bank set · EUR.1 / COO · SGS / TÜV / Intertek / BV at berth'],
   ]
   return (

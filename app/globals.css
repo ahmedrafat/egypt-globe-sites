@@ -488,3 +488,59 @@ header::after {
 @media (prefers-reduced-motion: reduce) {
   .egg-div-panel img, .egg-div-panel:hover img { transition: none; transform: skewX(7deg) scale(1.28); }
 }
+
+/* ── Verification chain (Sep 2026, "fewer tables") ─────────────────────
+   The five-gate chain is the group's differentiator, so it gets one
+   recognisable visual instead of a data table. Emitted by
+   components/ui/QaChainSteps.jsx and by MarkdownBody for any CMS table
+   whose first header is "Gate" (lib/tableShapes.js). */
+.egg-chain { background: #fff; border: 1px solid rgba(20,22,26,.1); border-radius: 1rem; padding: 1.15rem 1.25rem 1rem; }
+.egg-chain-head { display: flex; justify-content: space-between; align-items: center; gap: .75rem; flex-wrap: wrap; }
+.egg-chain-kicker { display: inline-flex; align-items: center; gap: .4rem; font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #087a70; }
+.egg-chain-meta { font-family: var(--font-geist-mono), ui-monospace, Menlo, monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #5b6577; }
+.egg-chain-title { font-family: var(--font-fraunces), Georgia, serif; font-weight: 500; font-size: 1.25rem; line-height: 1.2; color: #14161a; margin: .5rem 0 .25rem; }
+.egg-chain-list { list-style: none; margin: .5rem 0 0; padding: 0; display: grid; grid-template-columns: 1fr; }
+.egg-gate { position: relative; display: grid; grid-template-columns: 2.25rem minmax(0,1fr); gap: .75rem; padding: .9rem 0; border-top: 1px solid rgba(20,22,26,.08); }
+.egg-gate:first-child { border-top: 0; }
+.egg-gate-n { position: relative; }
+.egg-gate-n span { display: inline-flex; width: 2rem; height: 2rem; align-items: center; justify-content: center; border-radius: 999px; background: #14161a; color: #fff; font-family: var(--font-geist-mono), ui-monospace, Menlo, monospace; font-size: 12px; font-weight: 700; }
+.egg-gate-stage { font-size: .9375rem; font-weight: 600; color: #14161a; margin: .2rem 0 .3rem; line-height: 1.3; }
+.egg-gate-control { font-size: .8125rem; line-height: 1.55; color: #3f4650; margin: 0 0 .4rem; }
+.egg-gate-evidence { font-size: .75rem; color: #3f4650; margin: 0 0 .3rem; line-height: 1.45; }
+.egg-gate-k { display: inline-block; font-family: var(--font-geist-mono), ui-monospace, Menlo, monospace; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #087a70; margin-right: .45rem; }
+.egg-gate-who { font-family: var(--font-geist-mono), ui-monospace, Menlo, monospace; font-size: 11px; color: #5b6577; margin: 0; line-height: 1.45; }
+.egg-chain-note { margin: 1rem 0 0; padding-top: .75rem; border-top: 1px dashed rgba(20,22,26,.14); font-size: 11.5px; color: #5b6577; line-height: 1.5; }
+@media (min-width: 1024px) {
+  .egg-chain-list { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.25rem; margin-top: 1rem; }
+  .egg-gate { grid-template-columns: 1fr; border-top: 0; padding: 0; }
+  .egg-gate-n::after { content: ""; position: absolute; left: 2.35rem; right: -1.25rem; top: 1rem; height: 1px; background: rgba(20,22,26,.16); }
+  .egg-gate:last-child .egg-gate-n::after { display: none; }
+  .egg-gate-body { margin-top: .6rem; }
+}
+
+/* ── Fact grid — label / value cells for MOQ, packing, ports, lead time.
+   Replaces two-column "Parameter | Detail" tables (components/ui/FactGrid
+   and MarkdownBody). */
+.egg-facts { display: grid; grid-template-columns: 1fr; gap: 1px; background: rgba(20,22,26,.1); border: 1px solid rgba(20,22,26,.1); border-radius: .75rem; overflow: hidden; margin: 0; }
+@media (min-width: 640px)  { .egg-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .egg-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.egg-fact { background: #fff; padding: .8rem 1rem; min-width: 0; }
+.egg-fact-k { font-family: var(--font-geist-mono), ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: #5b6577; margin-bottom: .3rem; }
+.egg-fact-v { font-size: .875rem; color: #14161a; line-height: 1.5; margin: 0; overflow-wrap: anywhere; }
+.egg-factbox { background: #fff; border: 1px solid rgba(20,22,26,.1); border-radius: 1rem; overflow: hidden; }
+.egg-factbox .egg-facts { border: 0; border-radius: 0; }
+.egg-factbox-head { display: flex; justify-content: space-between; align-items: center; gap: .75rem; padding: .9rem 1.25rem; border-bottom: 1px solid rgba(20,22,26,.1); background: #f9fafb; }
+.egg-factbox-title { font-size: 1.0625rem; font-weight: 700; color: #14161a; display: flex; align-items: center; gap: .5rem; margin: 0; }
+.egg-factbox-meta { font-size: 12px; color: #5b6577; white-space: nowrap; }
+.egg-factbox-note { padding: .7rem 1.25rem; font-size: 11.5px; color: #5b6577; border-top: 1px solid rgba(20,22,26,.1); background: #f9fafb; margin: 0; line-height: 1.5; }
+
+/* ── Record cards — prose tables (Scope / What EGG does / Evidence) become
+   one card per row with the column headers as captions. */
+.egg-records { list-style: none; margin: 0; padding: 0; display: grid; gap: .75rem; grid-template-columns: 1fr; }
+@media (min-width: 768px) { .egg-records { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.egg-rec { background: #fff; border: 1px solid rgba(20,22,26,.1); border-radius: .75rem; padding: 1rem 1.1rem; min-width: 0; }
+.egg-rec-title { font-size: .9375rem; font-weight: 600; color: #14161a; margin: 0 0 .45rem; line-height: 1.3; }
+.egg-rec-row { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: .6rem; padding: .35rem 0; border-top: 1px solid rgba(20,22,26,.06); font-size: .8125rem; line-height: 1.5; }
+.egg-rec-k { font-family: var(--font-geist-mono), ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: #5b6577; padding-top: .15rem; }
+.egg-rec-v { color: #3f4650; min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 480px) { .egg-rec-row { grid-template-columns: 1fr; gap: .15rem; } }

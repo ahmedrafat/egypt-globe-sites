@@ -372,7 +372,7 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
             onClick={close}
             className="flex items-center justify-center gap-2 w-full bg-[#d0450f] hover:bg-[#14161a] active:bg-[#14161a] text-white font-semibold text-[15px] h-12 rounded-full shadow-[0_10px_30px_-10px_rgba(255,99,33,.55)] transition-colors mb-2.5"
           >
-            Get a Quote in 24 hours
+            Get a priced offer
           </Link>
           <div className={`grid gap-2 ${waNumber ? 'grid-cols-3' : 'grid-cols-2'}`}>
             {s.phoneE164 && (

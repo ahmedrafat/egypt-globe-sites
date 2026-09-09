@@ -628,9 +628,9 @@ export default async function PageRenderer({ page }) {
             <div aria-hidden="true" className="absolute -bottom-10 -right-10 w-56 h-56 rounded-full opacity-30 pointer-events-none"
               style={{ background: 'radial-gradient(circle, #FF6321 0%, transparent 70%)' }} />
             <div className="relative flex-1">
-              <div className="egg-eyebrow text-[#c2410c] mb-3">24-hour SLA</div>
+              <div className="egg-eyebrow text-[#c2410c] mb-3">Priced offers</div>
               <h3 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-1">Ready for a quote?</h3>
-              <p className="text-[#3f4650] leading-relaxed text-sm sm:text-base">FOB / CIF / CFR pricing from 7 Egyptian ports — turnaround within 24 hours.</p>
+              <p className="text-[#3f4650] leading-relaxed text-sm sm:text-base">FOB / CIF / CFR pricing from 7 Egyptian ports — turnaround once stock, laycan and freight are confirmed.</p>
             </div>
             <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
               className="egg-btn-primary relative">
@@ -912,7 +912,7 @@ async function ApplicationsHubByDivision() {
           <p className="relative text-[#3f4650] mb-6 max-w-2xl mx-auto">
             We export to 60+ countries across many sub-industries beyond the
             ones listed here. Submit your sourcing requirement and we'll match
-            it to the right division within 24 hours.
+            it to the right division once stock, laycan and freight are confirmed.
           </p>
           <Link href="/rfq" className="egg-btn-primary relative">
             Request a Quote

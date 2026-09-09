@@ -109,7 +109,7 @@ function buildSvg(page) {
   <text x="130" y="80" font-family="${FONT}" font-size="20" font-weight="700" fill="#ffffff" letter-spacing="1.5">EGYPT GLOBE GROUP</text>
   <text x="130" y="103" font-family="${FONT}" font-size="14" font-weight="500" fill="#ffffff" opacity="0.7" letter-spacing="2">${esc(cat.toUpperCase())}</text>
   ${lines.map((l, i) => `<text x="60" y="${startY + i * lineH}" font-family="${FONT}" font-size="${size}" font-weight="800" fill="#ffffff" letter-spacing="-1">${esc(l)}</text>`).join('\n  ')}
-  <text x="60" y="${H - 48}" font-family="${FONT}" font-size="18" font-weight="600" fill="#ffffff" opacity="0.85">Quote in 24 hours · per-lot Certificate of Analysis · FOB / CIF / CFR from 7 Egyptian ports</text>
+  <text x="60" y="${H - 48}" font-family="${FONT}" font-size="18" font-weight="600" fill="#ffffff" opacity="0.85">Request a priced offer · per-lot Certificate of Analysis · FOB / CIF / CFR from 7 Egyptian ports</text>
   <text x="${W - 60}" y="${H - 48}" font-family="${FONT}" font-size="18" font-weight="500" fill="#ffffff" opacity="0.6" text-anchor="end">egyptglobe.com</text>
 </svg>`
 }

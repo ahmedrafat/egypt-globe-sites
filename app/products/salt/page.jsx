@@ -31,7 +31,7 @@ export const metadata = {
   alternates: { canonical: '/products/salt' },
   openGraph: routeOpenGraph({ path: '/products/salt' }),
   title: 'Bulk Salt Supplier Egypt — Rock, Sea, De-icing & Industrial NaCl',
-  description: 'Bulk Egyptian salt exporter — Siwa Oasis crystalline rock salt (≥ 97 % NaCl, chemical, food and pharma grades) and North Sinai / Red Sea sea salt (industrial and de-icing scale). Per-lot CoA before B/L, TÜV Austria / SGS / Intertek inspection, FOB / CIF / CFR from 7 Egyptian ports. 8 grades, 100+ SKUs. Quote in 24h.',
+  description: 'Bulk Egyptian salt exporter — Siwa Oasis crystalline rock salt (≥ 97 % NaCl, chemical, food and pharma grades) and North Sinai / Red Sea sea salt (industrial and de-icing scale). Per-lot CoA before B/L, TÜV Austria / SGS / Intertek inspection, FOB / CIF / CFR from 7 Egyptian ports. 8 grades, 100+ SKUs. Priced offers from the export desk.',
 }
 
 const GRADES = [
@@ -381,7 +381,7 @@ export default async function SaltMainPage() {
           <h2 className="egg-display relative text-3xl sm:text-4xl text-[#14161a] mb-3">Need a tender match or a custom blend?</h2>
           <p className="relative text-[#3f4650] text-lg mb-7 max-w-2xl mx-auto">
             Send the standard, sieve profile, moisture tolerance and tonnage — a priced FOB / CIF / CFR offer with
-            a sample Certificate of Analysis and the inspection protocol comes back within 24 hours.
+            a sample Certificate of Analysis and the inspection protocol comes back once stock, laycan and freight are confirmed.
           </p>
           <Link href="/rfq?product=%2Fproducts%2Fsalt" className="egg-btn-primary relative px-8 py-4">Request a Quote</Link>
         </div>

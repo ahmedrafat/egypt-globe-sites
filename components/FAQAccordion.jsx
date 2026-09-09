@@ -63,7 +63,7 @@ export default function FAQAccordion({ faqs, title = 'Frequently asked questions
         <a href="mailto:export@egyptglobe.com" className="text-[#087a70] font-semibold hover:underline">
           Email our export desk
         </a>{' '}
-        — we respond within 24 hours.
+        — the export desk replies to every request.
       </p>
     </section>
   )

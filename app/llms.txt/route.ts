@@ -47,7 +47,7 @@ export async function GET() {
 
   let body = `# Egypt Globe Group
 
-> Egyptian B2B export trading conglomerate. Salt, cement, fertilizers, chemicals, construction materials, agro & food, industrial minerals, metals. FOB / CIF from 7 Egyptian ports (Damietta, Alexandria, El Dekheila, Port Said, Port Said East, Ain Sokhna, Adabiya) to 60+ destination markets. Quote in 24h.
+> Egyptian B2B export trading conglomerate. Salt, cement, fertilizers, chemicals, construction materials, agro & food, industrial minerals, metals. FOB / CIF from 7 Egyptian ports (Damietta, Alexandria, El Dekheila, Port Said, Port Said East, Ain Sokhna, Adabiya) to 60+ destination markets. Priced offers from the export desk.
 
 We supply commodities to manufacturers, water utilities, oil & gas operators, fertilizer importers, traders, and downstream blenders globally. Every shipment ships with a Certificate of Analysis, Mill Test Certificate where applicable, and full Letter-of-Credit documentation. Independent third-party inspection (TÜV Austria / SGS / Intertek / Bureau Veritas) is available on request.
 
@@ -60,7 +60,7 @@ We supply commodities to manufacturers, water utilities, oil & gas operators, fe
   body += `- [Services hub](${BASE}/services): logistics, packing, documentation, inspection\n`
   body += `- [Loading ports](${BASE}/services/loading-ports): all 7 Egyptian ports + per-port details\n`
   body += `- [HS-code glossary](${BASE}/trade-tools/hs-codes): canonical HS codes for Egyptian exports\n`
-  body += `- [Request a quote](${BASE}/rfq): 24-hour response RFQ form\n`
+  body += `- [Request a quote](${BASE}/rfq): RFQ form\n`
   body += `- [About / company](${BASE}/about): history, mission, locations, quality, careers\n`
   body += `- [Case studies](${BASE}/case-studies): real shipments + delivered numbers\n`
   body += `- [Market intelligence](${BASE}/markets): commodity market overviews — cement HS 2523.29, caustic soda, palm oil, vegetable oil, industrial salt, mining companies, gypsum, NPK fertilizer\n\n`

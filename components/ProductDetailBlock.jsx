@@ -272,10 +272,10 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
             <div aria-hidden="true" className="absolute -bottom-12 -right-12 w-40 h-40 rounded-full opacity-30 pointer-events-none"
               style={{ background: 'radial-gradient(circle, #FF6321 0%, transparent 70%)' }} />
             <div className="relative">
-              <div className="egg-eyebrow text-[#c2410c] mb-2">24-hour SLA</div>
+              <div className="egg-eyebrow text-[#c2410c] mb-2">Priced offers</div>
               <h3 className="egg-display text-2xl text-[#14161a] mb-2">Request a Quote</h3>
               <p className="text-[#3f4650] text-sm leading-relaxed mb-4">
-                Get pricing, availability and a proforma invoice within 24 hours.
+                Get pricing, availability and a proforma invoice once stock, laycan and freight are confirmed.
               </p>
               <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
                 className="egg-btn-primary w-full">
@@ -291,7 +291,7 @@ export default function ProductDetailBlock({ page, commodity, packingOptions = [
                   <Icon name="beaker" className="w-3.5 h-3.5" /> Request COA
                 </Link>
               </div>
-              <p className="text-[#5b6577] text-xs text-center mt-3">24-hour response · No spam</p>
+              <p className="text-[#5b6577] text-xs text-center mt-3">Handled by the export desk · No spam</p>
             </div>
           </div>
 

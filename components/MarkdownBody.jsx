@@ -1,4 +1,5 @@
 
+import { classifyTable, qaChainHtml, factsHtml, recordsHtml } from '../lib/tableShapes'
 import Icon, { iconSvg, keywordIconName } from './ui/Icon'
 /**
  * MarkdownBody — clean business prose with smart visual blocks.
@@ -172,6 +173,20 @@ export function parseMarkdown(content) {
   function flushTable() {
     if (!inTable) return
     if (tableRows.length === 0) { inTable = false; return }
+    // Sep 2026 — show a table only when it is one. The verification chain
+    // becomes the five-step visual, two-column fact lists become a fact
+    // grid, prose tables become record cards (lib/tableShapes.js).
+    {
+      const [hdr, ...body] = tableRows
+      const shape = classifyTable(hdr || [], body)
+      if (shape !== 'table') {
+        body.forEach(row => row.forEach(countWords))
+        const build = shape === 'qa-chain' ? qaChainHtml : shape === 'facts' ? factsHtml : recordsHtml
+        blocks.push(build(hdr, body, renderInline))
+        inTable = false; tableRows = []
+        return
+      }
+    }
     let html = '<div class="my-7 overflow-x-auto rounded-xl border border-[#14161a]/10 bg-white shadow-sm" tabindex="0">'
     html += '<table class="w-full text-sm">'
     const [header, ...rest] = tableRows

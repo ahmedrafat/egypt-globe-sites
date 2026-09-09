@@ -89,7 +89,7 @@ export default async function SearchPage({ searchParams }) {
             <p className="text-sm">
               Try broader keywords, or{' '}
               <Link className="egg-link" href="/rfq">request a quote</Link>{' '}
-              and we'll respond within 24 hours.
+              and the export desk will reply.
             </p>
           </div>
         )}

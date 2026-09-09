@@ -240,7 +240,7 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
           </h2>
           <p className="relative text-[#3f4650] text-lg mb-7 max-w-2xl mx-auto">
             Send the specification, tonnage and destination — a priced FOB / CIF / CFR offer with a sample
-            Certificate of Analysis and inspection protocol comes back within 24 hours.
+            Certificate of Analysis and inspection protocol comes back once stock, laycan and freight are confirmed.
           </p>
           <Link href={`/rfq?product=${encodeURIComponent(page.path)}`} className="egg-btn-primary relative px-8 py-4">Request a Quote</Link>
         </div>

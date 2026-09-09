@@ -204,7 +204,7 @@ export default async function CoaCenter() {
           </h2>
           <p className="relative text-[#3f4650] mb-6 max-w-2xl mx-auto">
             Per-shipment Certificate of Analysis issued from independent TÜV Austria / SGS / Intertek / Bureau Veritas labs,
-            attesting compliance with your destination market's standard. Available within 24h of dispatch.
+            attesting compliance with your destination market's standard. Available on dispatch.
           </p>
           <Link href="/rfq?type=coa"
             className="egg-btn-primary relative">

@@ -4,7 +4,7 @@
  * InlineQuoteCard — Drop 132 interactive widget.
  *
  * Pre-filled mini RFQ form that POSTs to market_rfqs directly from the
- * product page — replaces the static "Quote in 24 hours" markdown section
+ * product page — replaces the static "Request a priced offer" markdown section
  * with a one-click capture surface.
  *
  * Pre-fills:
@@ -99,7 +99,7 @@ export default function InlineQuoteCard({ page, prefill = {} }) {
           Ref <span className="font-mono font-bold text-[#087a70]">{refCode}</span>
         </p>
         <p className="text-sm text-[#3f4650] mb-5">
-          Our export desk will respond to <strong>{email}</strong> within 24 hours with FOB / CIF / CFR pricing, available origin port, packing options + a sample CoA.
+          Our export desk will respond to <strong>{email}</strong> with FOB / CIF / CFR pricing, available origin port, packing options + a sample CoA.
         </p>
         <a href={`/rfq?product=${encodeURIComponent(page.path)}&ref=${refCode}`}
           className="egg-btn-primary text-sm py-2.5">
@@ -114,7 +114,7 @@ export default function InlineQuoteCard({ page, prefill = {} }) {
       <div className="px-6 py-4 border-b border-[#ff6321]/15 bg-white/60">
         <div className="flex items-center gap-2">
           <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-[#d0450f] text-white shadow-sm"><Icon name="doc" className="w-4 h-4" /></span>
-          <h3 className="egg-display text-2xl text-[#14161a]">Get a quote in 24 hours</h3>
+          <h3 className="egg-display text-2xl text-[#14161a]">Get a priced offer</h3>
         </div>
         <p className="text-xs text-[#5b6577] mt-1">Pre-filled with <strong className="text-[#3f4650]">{page.title}</strong>. Add quantity + email and we'll do the rest.</p>
       </div>
@@ -160,7 +160,7 @@ export default function InlineQuoteCard({ page, prefill = {} }) {
 
         <button type="submit" disabled={submitting}
           className="egg-btn-primary w-full py-3.5 disabled:opacity-60 disabled:cursor-not-allowed">
-          {submitting ? '⏳ Sending…' : 'Get my quote in 24 hours'}
+          {submitting ? '⏳ Sending…' : 'Send my request'}
         </button>
         <p className="text-[11px] text-[#5b6577] text-center leading-relaxed">
           Your details go to our Cairo export desk only. No marketing email. Need a richer RFQ form? <a href={`/rfq?product=${encodeURIComponent(page.path)}`} className="text-[#087a70] font-semibold hover:underline">Use the full form →</a>

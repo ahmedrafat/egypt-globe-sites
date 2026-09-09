@@ -76,7 +76,7 @@ export default async function LoginPage() {
             <h3 className="font-semibold text-[#14161a] mb-2">Approval process</h3>
             <p className="text-sm text-[#3f4650] leading-relaxed">
               New accounts go through a quick verification by our export desk
-              (typically within 24h). Until approved, you'll see the catalogue
+             . Until approved, you'll see the catalogue
               but prices stay hidden — RFQs still work normally.
             </p>
           </div>

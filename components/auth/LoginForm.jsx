@@ -141,7 +141,7 @@ export default function LoginForm() {
             </button>
             <p className="text-xs text-[#5b6577] text-center leading-relaxed">
               By creating an account you agree we may contact you about quotes.
-              Approval (typically &lt; 24 h) unlocks prices and your scoped
+              Approval unlocks prices and your scoped
               catalogue.
             </p>
           </form>

@@ -70,7 +70,7 @@ export default async function BuyerDashboard() {
         {v.status === 'pending' && (
           <div className="rounded-2xl bg-[#fbf7ee] border border-[#b8862b]/35 px-5 py-4 text-sm text-[#5c4a25] mb-6">
             Your account is awaiting approval. Catalogue and RFQ form are usable now;
-            <strong> prices unlock once our export desk verifies your company</strong> (usually within 24h).
+            <strong> prices unlock once our export desk verifies your company</strong>.
           </div>
         )}
         {v.status === 'approved' && !v.visibleAll && (
@@ -123,7 +123,7 @@ export default async function BuyerDashboard() {
             <div className="shrink-0 w-12 h-12 rounded-xl bg-[#d0450f] text-white flex items-center justify-center text-2xl">＋</div>
             <div className="flex-1 min-w-0">
               <div className="font-semibold text-[#14161a] group-hover:text-[#c2410c]">New RFQ</div>
-              <div className="text-xs text-[#5b6577]">Submit a new quotation request — 24h response</div>
+              <div className="text-xs text-[#5b6577]">Submit a new quotation request to the export desk</div>
             </div>
             <span className="text-[#c2410c] font-bold">→</span>
           </Link>

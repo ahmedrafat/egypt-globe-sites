@@ -217,7 +217,7 @@ export default async function ServicesHub() {
           </h2>
           <p className="relative text-[#3f4650] text-lg mb-7 max-w-2xl mx-auto">
             Most quotes are for the full chain — product + freight + packing + inspection + documentation —
-            in one priced offer. Tell us what you need and we'll come back within 24 hours.
+            in one priced offer. Tell us what you need and the export desk will come back with a priced offer.
           </p>
           <Link href="/rfq"
             className="egg-btn-primary relative px-8 py-4">

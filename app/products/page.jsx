@@ -224,7 +224,7 @@ export default function ProductsHub() {
           </h2>
           <p className="text-[#3f4650] text-base mb-10 leading-relaxed">
             Submit an RFQ with your commodity, specification, quantity, destination port and preferred
-            Incoterm. We respond within 24 hours with a priced offer, a sample Certificate of Analysis,
+            Incoterm. We respond with a priced offer, a sample Certificate of Analysis,
             the applicable inspection protocol and the L/C document set.
           </p>
           <div className="flex flex-col sm:flex-row gap-5 items-start">

@@ -71,7 +71,7 @@ export default function StickyRfqBar({ pageTitle, pagePath }) {
 
         <div className="flex-1 min-w-0">
           <div className="text-[11px] font-bold uppercase tracking-wider text-[#c2410c] leading-none mb-0.5">
-            24-hour SLA
+            Export desk
           </div>
           <div className="text-sm font-bold text-[#14161a] truncate leading-tight">
             {pageTitle ? `Quote ${pageTitle}` : 'Request a Quote'}

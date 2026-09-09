@@ -4,6 +4,9 @@
  * the salt pillar; SKU pages carry their own copy inside ProductTabs.
  */
 import Icon from './ui/Icon'
+import QaChainSteps from './ui/QaChainSteps'
+import FactGrid from './ui/FactGrid'
+import { classifyTable } from '../lib/tableShapes'
 
 const DEFAULT_ROWS = [
   ['1', 'Extraction / source',    'Source sampling on every production lot — mine face, solar pan, plant or packhouse', 'Source laboratory · per lot'],
@@ -14,42 +17,17 @@ const DEFAULT_ROWS = [
 ]
 
 export default function QaChainTable({ rows = DEFAULT_ROWS, title = 'QA verification chain — extraction to destination port', note }) {
-  return (
-    <div className="bg-white border border-[#14161a]/10 rounded-2xl overflow-hidden shadow-sm">
-      <div className="px-5 sm:px-6 py-4 border-b border-[#14161a]/10 bg-[#f9fafb] flex items-center justify-between gap-3">
-        <h3 className="font-semibold text-lg text-[#14161a] flex items-center gap-2">
-          <Icon name="shield" className="w-5 h-5 text-[#087a70]" /> {title}
-        </h3>
-        <span className="text-xs font-medium text-[#5b6577] hidden sm:inline">5 gates · every consignment</span>
-      </div>
-      <div className="overflow-x-auto" tabIndex={0}>
-        <table className="w-full text-sm">
-          <thead className="bg-white border-b border-[#14161a]/10">
-            <tr>
-              {['Gate', 'Control', 'Evidence', 'Who · frequency'].map((h, i) => (
-                <th key={h} className={`text-left text-[11px] uppercase tracking-wider font-semibold text-[#5b6577] px-4 py-2 ${i === 2 ? 'hidden md:table-cell' : ''}`}>{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-[#14161a]/10">
-            {rows.map(([n, stage, evidence, who]) => (
-              <tr key={n} className="hover:bg-[#f9fafb]">
-                <td className="px-4 py-2.5 align-top"><span className="inline-flex w-6 h-6 items-center justify-center rounded-md ring-1 ring-[#14161a]/15 text-[#14161a] text-[11px] font-mono font-bold">{n}</span></td>
-                <td className="px-4 py-2.5 align-top text-[#14161a] text-xs font-semibold">{stage}</td>
-                <td className="px-4 py-2.5 align-top text-[#3f4650] text-xs hidden md:table-cell">{evidence}</td>
-                <td className="px-4 py-2.5 align-top text-[#3f4650] text-xs font-mono">{who}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      {note && <p className="px-5 py-3 text-[11px] text-[#5b6577] bg-[#f9fafb] border-t border-[#14161a]/10 leading-relaxed">{note}</p>}
-    </div>
-  )
+  // Sep 2026 — rendered as the five-step visual, not a table.
+  const gates = rows.map(([n, stage, control, who]) => ({ n, stage, control, who }))
+  return <QaChainSteps gates={gates} title={title} note={note} />
 }
 
 /** Generic two- or multi-column spec table used by the hub pages. */
 export function DataTable({ title, icon = 'beaker', head, rows, note, mono = [] }) {
+  // Two-column parameter lists read better as a fact grid than a table.
+  if (head?.length === 2 && classifyTable(head, rows) === 'facts') {
+    return <FactGrid title={title} icon={icon} items={rows} note={note} />
+  }
   return (
     <div className="bg-white border border-[#14161a]/10 rounded-2xl overflow-hidden shadow-sm">
       {title && (

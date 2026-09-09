@@ -36,6 +36,8 @@ import PriceDisplay from '../PriceDisplay'
 import PackingMatrix from '../PackingMatrix'
 import CoaCenter from './CoaCenter'
 import Icon, { APPLICATION_ICON } from '../ui/Icon'
+import QaChainSteps from '../ui/QaChainSteps'
+import FactGrid from '../ui/FactGrid'
 import SectionIndex, { SECTION_ANCHOR } from '../ui/SectionIndex'
 
 /* ─── spec vocabulary ─────────────────────────────────────────────────── */
@@ -339,35 +341,9 @@ function KeyStatsStrip({ page, specs }) {
 }
 
 function QaChainStrip() {
-  return (
-    <div className="bg-white border border-[#14161a]/10 rounded-2xl overflow-hidden shadow-sm">
-      <div className="px-5 sm:px-6 py-4 border-b border-[#14161a]/10 bg-[#f9fafb] flex items-center justify-between gap-3">
-        <h3 className="font-bold text-lg text-[#14161a] flex items-center gap-2">
-          <Icon name="shield" className="w-5 h-5 text-[#087a70]" /> QA verification chain — extraction to destination port
-        </h3>
-        <span className="text-xs font-medium text-[#5b6577] hidden sm:inline">5 gates · every consignment</span>
-      </div>
-      <div className="overflow-x-auto" tabIndex={0}>
-        <table className="w-full text-sm">
-          <thead className="bg-[#f9fafb] border-b border-[#14161a]/10">
-            <tr>
-              <Th className="w-12">Gate</Th><Th>Control</Th><Th className="hidden md:table-cell">Evidence</Th><Th>Who · frequency</Th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-[#14161a]/10">
-            {QA_CHAIN.map(([n, stage, evidence, who]) => (
-              <tr key={n} className="hover:bg-[#f9fafb]">
-                <td className="px-4 py-2.5 align-top"><span className="inline-flex w-6 h-6 items-center justify-center rounded-md ring-1 ring-[#14161a]/15 text-[#14161a] text-[11px] font-mono font-bold">{n}</span></td>
-                <td className="px-4 py-2.5 align-top text-[#14161a] text-xs font-semibold">{stage}</td>
-                <td className="px-4 py-2.5 align-top text-[#3f4650] text-xs hidden md:table-cell">{evidence}</td>
-                <td className="px-4 py-2.5 align-top text-[#3f4650] text-xs font-mono">{who}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  )
+  // Sep 2026 — the same five-step visual the hubs and CMS bodies use.
+  const gates = QA_CHAIN.map(([n, stage, control, who]) => ({ n, stage, control, who }))
+  return <QaChainSteps gates={gates} />
 }
 
 function Th({ children, className = '' }) {
@@ -497,14 +473,7 @@ function SpecSheet({ page, specs, commodity, qualitySpecs }) {
         </Table>
       )}
 
-      <Table title="Logistical & QA parameters" icon="anchor" cols={['Parameter', 'Detail']}>
-        {logistics.map(([k, v]) => (
-          <tr key={k} className="hover:bg-[#f9fafb]">
-            <td className="px-4 py-2.5 align-top text-[#14161a] text-xs font-semibold w-[38%]">{k}</td>
-            <td className="px-4 py-2.5 align-top text-[#3f4650] text-xs">{v}</td>
-          </tr>
-        ))}
-      </Table>
+      <FactGrid title="Logistical & QA parameters" icon="anchor" items={logistics} />
 
       <p className="px-1 text-[11px] text-[#5b6577] leading-relaxed">
         ● Required parameter — tested on every shipment before the Bill of Lading. Values are contractual limits guaranteed at the port of loading.
@@ -646,7 +615,7 @@ function QuoteCta({ page }) {
     <div className="relative overflow-hidden egg-panel p-5">
       <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-60 pointer-events-none" />
       <div className="relative">
-        <h3 className="egg-display text-xl text-[#14161a] mb-1.5">Quote in 24 hours</h3>
+        <h3 className="egg-display text-xl text-[#14161a] mb-1.5">Request a priced offer</h3>
         <p className="text-[#3f4650] text-xs mb-4">Priced offer, sample CoA and inspection protocol. Direct to the export desk.</p>
         <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
           className="egg-btn-primary w-full text-sm py-2.5">

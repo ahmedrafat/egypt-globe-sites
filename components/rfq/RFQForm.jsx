@@ -346,8 +346,8 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
         </h2>
         <p className="text-[#3f4650] max-w-xl mx-auto leading-relaxed mb-5">
           {isCoa
-            ? 'Your Certificate of Analysis request is in our queue. The QC team will email the latest signed CoA from the production plant within 24 hours.'
-            : 'Your request is in our queue. Our export desk reviews every RFQ within 1 hour and replies with a priced offer within 24 hours.'}
+            ? 'Your Certificate of Analysis request is in our queue. The QC team will email the latest signed CoA from the production plant once stock, laycan and freight are confirmed.'
+            : 'Your request is in our queue. Our export desk reviews every RFQ and replies with a priced offer once stock, laycan and freight are confirmed.'}
         </p>
         <div className="inline-block bg-white border border-[#14161a]/15 rounded-xl px-5 py-3 mb-6">
           <div className="text-[11px] uppercase tracking-wider font-bold text-[#67707f]">Reference</div>

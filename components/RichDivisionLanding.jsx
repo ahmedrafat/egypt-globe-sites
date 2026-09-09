@@ -215,7 +215,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
               { ico: 'pin',    t: 'Egyptian-origin, traceable',  b: 'Direct producer relationships across Egypt — a short, audited supply chain with EUR.1 / PAFTA / COMESA Certificate of Origin on every shipment.' },
               { ico: 'anchor', t: '7-port loading, own teams',    b: 'Damietta · Port Said East · Alexandria · El Dekheila · Ain Sokhna · Safaga · Al-Arish — closest-to-source routing with resident EGG stevedoring, agency and port-QC teams.' },
               { ico: 'shield', t: 'Per-lot QA before B/L',        b: 'Port-laboratory analysis and Certificate of Analysis on every lot before the Bill of Lading; TÜV Austria / SGS / Intertek / Bureau Veritas pre-shipment inspection on request.' },
-              { ico: 'clock',  t: '24-hour quote SLA',            b: 'Submit an RFQ today, receive a priced FOB / CIF / CFR offer, sample CoA and inspection protocol tomorrow. Standardised L/C-bank document set on order.' },
+              { ico: 'clock',  t: 'Written, priced offers',            b: 'Submit an RFQ today, receive a priced FOB / CIF / CFR offer, sample CoA and inspection protocol tomorrow. Standardised L/C-bank document set on order.' },
             ].map(c => (
               <div key={c.t} className="egg-panel p-6">
                 <span className="inline-flex w-10 h-10 items-center justify-center rounded-lg ring-1 ring-[#14161a]/15 text-[#14161a] mb-4">
@@ -283,7 +283,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
           </h2>
           <p className="relative text-[#3f4650] text-lg mb-7 max-w-2xl mx-auto">
             Send the specification, tonnage and destination — a priced FOB / CIF / CFR offer with a sample
-            Certificate of Analysis and the applicable inspection protocol comes back within 24 hours.
+            Certificate of Analysis and the applicable inspection protocol comes back once stock, laycan and freight are confirmed.
           </p>
           <Link href={`/rfq?product=${encodeURIComponent(page.path)}`} className="egg-btn-primary relative px-8 py-4">
             Request a Quote
