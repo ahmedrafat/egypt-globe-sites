@@ -142,11 +142,11 @@ const SERVICE_ICON = {
 /* ─── static data ─────────────────────────────────────────────────────── */
 
 const METRICS = [
-  { value: 60,  suffix: '+', label: 'Export markets' },
-  { value: 7,   suffix: '',  label: 'Egyptian seaports' },
-  { value: 93,  suffix: '',  label: 'Salt cargoes shipped since 2015' },
-  { value: 100, suffix: '%', label: 'Lots CoA-verified before B/L' },
-  { value: 51,  suffix: '',  label: 'Vessels chartered since 2015' },
+  { value: 60,  suffix: '+',  label: 'Export markets' },
+  { value: 2,   suffix: 'M+', label: 'Tonnes of salt exported' },
+  { value: 7,   suffix: '',   label: 'Egyptian seaports' },
+  { value: 100, suffix: '%',  label: 'Lots CoA-verified before B/L' },
+  { value: 7,   suffix: '',   label: 'Commodity divisions' },
 ]
 
 // "Quality at the Core" — the four non-negotiables, stated once near the top.
@@ -602,7 +602,7 @@ export default async function HomePage() {
               <Facts data-rise items={[
                 ['60+', 'destination markets served'],
                 ['FOB / CIF / CFR', 'from 7 Egyptian ports'],
-                ['93', 'salt cargoes shipped since 2015'],
+                ['2M+', 'tonnes of salt shipped since 2015'],
               ]} />
             </article>
 

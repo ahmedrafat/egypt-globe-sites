@@ -521,10 +521,13 @@ header::after {
 /* ── Fact grid — label / value cells for MOQ, packing, ports, lead time.
    Replaces two-column "Parameter | Detail" tables (components/ui/FactGrid
    and MarkdownBody). */
-.egg-facts { display: grid; grid-template-columns: 1fr; gap: 1px; background: rgba(20,22,26,.1); border: 1px solid rgba(20,22,26,.1); border-radius: .75rem; overflow: hidden; margin: 0; }
+/* Hairlines are drawn as per-cell shadows, not a gap over a grey ground:
+   a 7-item list in a 3-column grid leaves two empty cells in the last row,
+   and the gap trick painted those grey. */
+.egg-facts { display: grid; grid-template-columns: 1fr; background: #fff; border: 1px solid rgba(20,22,26,.1); border-radius: .75rem; overflow: hidden; margin: 0; }
 @media (min-width: 640px)  { .egg-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1024px) { .egg-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.egg-fact { background: #fff; padding: .8rem 1rem; min-width: 0; }
+.egg-fact { background: #fff; padding: .8rem 1rem; min-width: 0; box-shadow: 1px 0 0 rgba(20,22,26,.1), 0 1px 0 rgba(20,22,26,.1); }
 .egg-fact-k { font-family: var(--font-geist-mono), ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: #5b6577; margin-bottom: .3rem; }
 .egg-fact-v { font-size: .875rem; color: #14161a; line-height: 1.5; margin: 0; overflow-wrap: anywhere; }
 .egg-factbox { background: #fff; border: 1px solid rgba(20,22,26,.1); border-radius: 1rem; overflow: hidden; }
