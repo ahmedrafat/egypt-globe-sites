@@ -13,6 +13,7 @@
 import { routeOpenGraph } from '../../../lib/seo'
 import CardImage from '../../../components/ui/CardImage'
 import HeroMotif from '../../../components/HeroMotif'
+import HeroBackdrop, { isBanner } from '../../../components/HeroBackdrop'
 import Link from 'next/link'
 import {
   getPageByPath,
@@ -99,9 +100,10 @@ export default async function SaltMainPage() {
     <article className="bg-white text-[#14161a]">
       {/* Hero ─────────────────────────────────────────────────── */}
       <section data-hero className="egg-hero-dark relative overflow-hidden border-b border-[#ff5a18]/60">
+        {isBanner(page?.hero_photo_url) && <HeroBackdrop src={page.hero_photo_url} />}
         <div aria-hidden="true" className="absolute inset-0 egg-grid-dark opacity-60 pointer-events-none" />
         {/* halite is cubic — the crystal habit of salt */}
-        <HeroMotif variant="lattice" tone="#0fb5a5" />
+        {!isBanner(page?.hero_photo_url) && <HeroMotif variant="lattice" tone="#0fb5a5" />}
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: `radial-gradient(55% 55% at 88% 0%, ${TEAL}2b, transparent 60%), radial-gradient(40% 45% at 0% 100%, ${GOLD}22, transparent 60%)` }} />
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-24">

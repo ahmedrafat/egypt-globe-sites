@@ -22,6 +22,7 @@ import CardImage from './ui/CardImage'
 import HeroMotif from './HeroMotif'
 import Link from 'next/link'
 import { APPLICATIONS, heroUrl } from '../lib/corporatePages'
+import HeroBackdrop, { isBanner } from './HeroBackdrop'
 import RichPageBody from './RichPageBody'
 import HubFaqs from './HubFaqs'
 import Icon, { DIVISION_ICON, APPLICATION_ICON } from './ui/Icon'
@@ -56,8 +57,9 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
     <article className="bg-white text-[#14161a]">
       {/* Hero */}
       <section data-hero className="egg-hero-dark relative overflow-hidden border-b border-[#ff5a18]/60">
+        {isBanner(page.hero_photo_url) && <HeroBackdrop src={page.hero_photo_url} />}
         <div aria-hidden="true" className="absolute inset-0 egg-grid-dark opacity-60 pointer-events-none" />
-        <HeroMotif category={page.category} path={page.path} tone={tone} />
+        {!isBanner(page.hero_photo_url) && <HeroMotif category={page.category} path={page.path} tone={tone} />}
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: `radial-gradient(60% 55% at 88% 0%, ${tone}26, transparent 60%), radial-gradient(45% 45% at 0% 100%, rgba(255,99,33,.10), transparent 60%)` }} />
 

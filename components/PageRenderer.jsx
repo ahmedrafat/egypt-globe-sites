@@ -7,9 +7,9 @@
  */
 import { buildBreadcrumb, ancestorPaths } from '../lib/breadcrumbs'
 import { pageHeading } from '../lib/headings'
-import Image from 'next/image'
 import CardImage from './ui/CardImage'
 import HeroMotif from './HeroMotif'
+import HeroBackdrop, { isBanner } from './HeroBackdrop'
 import Link from 'next/link'
 import MarkdownBody from './MarkdownBody'
 import RichPageBody from './RichPageBody'
@@ -250,21 +250,14 @@ export default async function PageRenderer({ page }) {
          smudge. On navy at 38% they read as intended, and the band matches
          the homepage hero. The document body below stays light editorial. */}
       <section data-hero className="egg-hero-dark relative overflow-hidden border-b border-[#ff5a18]/60">
-        {heroUrl(page) && (
-          <div className="absolute inset-0">
-            {/* Hero photos are typically 1200×675 (16:9). The container is
-               taller than 16:9 on mobile, so object-cover crops top+bottom —
-               object-top favours the top of the frame, where the subject
-               usually sits. */}
-            <Image src={heroUrl(page)} alt="" fill priority sizes="100vw"
-              className="object-cover object-top opacity-[0.38]" />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#03182d]/70 via-[#03182d]/60 to-[#03182d]/85" />
-          </div>
-        )}
+        <HeroBackdrop src={heroUrl(page)} />
 
         {/* Decorative patterns — technical grid + accent glow + content motif */}
         <div aria-hidden="true" className="absolute inset-0 egg-grid-dark opacity-60 pointer-events-none" />
-        <HeroMotif category={page.category} path={page.path} sourceType={sourceType} tone="#5aa0dc" />
+        {/* a commissioned banner carries its own composition — no motif over it */}
+        {!isBanner(heroUrl(page)) && (
+          <HeroMotif category={page.category} path={page.path} sourceType={sourceType} tone="#5aa0dc" />
+        )}
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: 'radial-gradient(60% 55% at 88% 0%, rgba(255,90,24,.16), transparent 62%), radial-gradient(45% 40% at 0% 100%, rgba(90,160,220,.14), transparent 60%)' }} />
 

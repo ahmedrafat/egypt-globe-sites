@@ -4,7 +4,7 @@
  * tokens + utilities in app/globals.css). Responsive throughout.
  */
 import { routeOpenGraph } from '../../lib/seo'
-import HeroMotif from '../../components/HeroMotif'
+import HeroBackdrop from '../../components/HeroBackdrop'
 import Link from 'next/link'
 import { PRODUCT_DIVISIONS } from '../../lib/corporatePages'
 import Icon, { DIVISION_ICON } from '../../components/ui/Icon'
@@ -55,15 +55,20 @@ const CERTS = [
   'GOEIC', 'TÜV Austria', 'SGS / Intertek', 'ASTM D632', 'EN 16811-1',
 ]
 
+// Static route (no CMS read) — the banner is referenced directly, like the
+// metadata above. Keep egg_corporate_pages.hero_photo_url for /products in step.
+const HERO_BANNER = '/banners/products.jpg'
+
 export default function ProductsHub() {
   return (
     <article className="bg-white text-[#14161a]">
 
       {/* ── Hero ─────────────────────────────────────────────────── */}
       <section data-hero className="egg-hero-dark relative overflow-hidden border-b border-[#ff5a18]/60 px-5 sm:px-8 lg:px-14 pt-14 sm:pt-16 pb-12 sm:pb-14">
+        <HeroBackdrop src={HERO_BANNER} />
         <div aria-hidden="true" className="absolute inset-0 egg-grid-dark opacity-60 pointer-events-none" />
         {/* catalogue navigation across all divisions */}
-        <HeroMotif variant="compass" tone="#0fb5a5" />
+        {/* motif retired here: the commissioned banner carries its own composition */}
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: 'radial-gradient(55% 55% at 88% 0%, rgba(15,181,165,.16), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.08), transparent 60%)' }} />
         <nav className="relative flex items-center gap-2 text-[11px] text-[#67707f] mb-8 font-mono uppercase tracking-wider">
