@@ -144,9 +144,9 @@ const SERVICE_ICON = {
 const METRICS = [
   { value: 60,  suffix: '+',  label: 'Export markets' },
   { value: 2,   suffix: 'M+', label: 'Tonnes of salt exported' },
+  { value: 100, suffix: '+',  label: 'Vessels chartered' },
   { value: 7,   suffix: '',   label: 'Egyptian seaports' },
   { value: 100, suffix: '%',  label: 'Lots CoA-verified before B/L' },
-  { value: 7,   suffix: '',   label: 'Commodity divisions' },
 ]
 
 // "Quality at the Core" — the four non-negotiables, stated once near the top.
