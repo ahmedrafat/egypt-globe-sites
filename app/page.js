@@ -652,7 +652,7 @@ export default async function HomePage() {
                     All products <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                   </Link>
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-4 min-[1700px]:grid-cols-7 gap-1.5 sm:gap-2">
+                <div className="egg-div-strip grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2">
                   {PRODUCT_DIVISIONS.map(div => <DivisionCard key={div.id} div={div} />)}
                 </div>
               </div>
@@ -1164,7 +1164,7 @@ function DivisionCard({ div }) {
   return (
     <Link
       href={div.path}
-      className="egg-div-panel group relative block overflow-hidden rounded-[3px] ring-1 ring-[#14161a]/12 hover:ring-[#5aa0dc]/45 transition-[box-shadow,outline] duration-300 aspect-[3/4] sm:aspect-[4/5] lg:aspect-[4/3] min-[1700px]:aspect-[4/5]"
+      className="egg-div-panel group relative block overflow-hidden rounded-[3px] ring-1 ring-[#14161a]/12 hover:ring-[#5aa0dc]/45 transition-[box-shadow,outline] duration-300 aspect-[3/4] sm:aspect-[4/5] lg:aspect-[4/3]"
     >
       {/* division photography — decorative; the label beside it carries the name */}
       <Image

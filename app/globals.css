@@ -483,6 +483,15 @@ header::after {
 .egg-div-panel > * { transform: skewX(7deg); }
 .egg-div-panel img { transform: skewX(7deg) scale(1.28); transition: transform .5s cubic-bezier(.2,.7,.2,1); }
 .egg-div-panel:hover img { transform: skewX(7deg) scale(1.36); }
+/* Seven across only where the panels measure wide enough (>=110px) for the
+   labels -- the strip sits in the narrow scrolly column. Plain CSS on purpose:
+   Tailwind v4 emits an arbitrary min-[1700px] variant BEFORE its sm: block, so
+   sm:grid-cols-4 silently won at every width. Unlayered CSS outranks the
+   utilities layer regardless of source order. */
+@media (min-width: 1700px) {
+  .egg-div-strip { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  .egg-div-strip .egg-div-panel { aspect-ratio: 4 / 5; }
+}
 .egg-div-panel .egg-div-rule { transition: width .4s cubic-bezier(.2,.7,.2,1); }
 .egg-div-panel:hover .egg-div-rule { width: 2.5rem; }
 @media (prefers-reduced-motion: reduce) {
