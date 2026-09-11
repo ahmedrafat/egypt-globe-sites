@@ -180,7 +180,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
                     </dl>
                   )}
                   <div className="mt-4 inline-flex items-center text-sm font-semibold text-[#087a70] group-hover:gap-2 gap-1 transition-all">
-                    Explore {lineLabel(sc).toLowerCase()} <span>→</span>
+                    Explore {lineLabel(sc)} <span>→</span>
                   </div>
                 </div>
               </Link>

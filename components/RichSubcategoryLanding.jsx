@@ -123,6 +123,17 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
             />
           </div>
           <aside className="lg:col-span-5 space-y-6">
+            {apps.length === 1 && (
+              <div className="egg-card p-6">
+                <div className="egg-eyebrow text-[#7c3aed] mb-3">Industry served</div>
+                <Link href={apps[0].path} className="group flex items-center gap-3">
+                  <span className="inline-flex w-10 h-10 shrink-0 items-center justify-center rounded-xl ring-1 ring-[#14161a]/15 text-[#14161a] group-hover:ring-[#7c3aed]/60 transition-colors">
+                    <Icon name={APPLICATION_ICON[apps[0].id] || 'factory'} className="w-5 h-5" />
+                  </span>
+                  <span className="font-semibold text-sm text-[#14161a] group-hover:text-[#087a70] transition-colors">{apps[0].label} →</span>
+                </Link>
+              </div>
+            )}
             {s.ports.length > 0 && (
               <div className="egg-card p-6">
                 <div className="egg-eyebrow mb-3">Loading ports</div>
@@ -217,13 +228,13 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
       )}
 
       {/* Applications */}
-      {apps.length > 0 && (
+      {apps.length > 1 && (
         <section className="bg-[#f9fafb] py-16 sm:py-20 border-y border-[#14161a]/10">
           <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
             <div className="max-w-3xl mb-10">
               <div className="egg-eyebrow text-[#7c3aed] mb-3">{label} by industry</div>
               <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-3">
-                {apps.length === 1 ? `One industry served by ${label.toLowerCase()}` : `${apps.length} industries served by ${label.toLowerCase()}`}
+                {apps.length} industries served
               </h2>
               <p className="text-[#3f4650]">Each industry page carries its own specification window, standards and the matching SKUs.</p>
             </div>
@@ -276,7 +287,7 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
           <h2 className="egg-display relative text-3xl sm:text-4xl text-[#14161a] mb-3">Send the specification and the tonnage.</h2>
           <p className="relative text-[#3f4650] text-lg mb-7 max-w-2xl mx-auto">
             Grade, packing, destination and quantity — the export desk comes back with a priced FOB / CIF / CFR offer
-            for {label.toLowerCase()} once stock, laycan and freight are confirmed.
+            for {label} once stock, laycan and freight are confirmed.
           </p>
           <Link href={quote} className="egg-btn-primary relative px-8 py-4">Request a Quote</Link>
         </div>
