@@ -23,6 +23,7 @@ import {
   getDirectChildren,
   getPagesInCategory,
   getDivisionSubcategories,
+  getCommodityFacts,
   getCommodityById,
   getQualitySpecsForCommodity,
   getCommodityCoas,
@@ -100,6 +101,8 @@ export default async function PageRenderer({ page }) {
     packingOptions,
     visibility,
     ancestorTitles,
+    productFacts,
+    lineSiblings,
   ] = await Promise.all([
     !isProductsHub && !isServicesHub && !isApplicationsHub && !isApplicationLanding && !isDivisionLanding && !isSubcategoryLanding
       ? getDirectChildren(page.path) : [],
@@ -121,6 +124,11 @@ export default async function PageRenderer({ page }) {
     // Batch 2 — ancestor titles for the breadcrumb (product sub-category,
     // blog section, import-guide hub …).
     getPageTitles(ancestorPaths(page.path)),
+    // Sep 2026 — commodity facts behind the SKUs, for the division /
+    // product-line "at a glance" tables; and the line's siblings (was a
+    // second sequential await after this batch).
+    (isDivisionLanding || isSubcategoryLanding) ? getCommodityFacts(page.path) : [],
+    isSubcategoryLanding ? getDivisionSubcategories('/' + page.path.split('/').slice(1, 3).join('/')) : [],
   ])
 
   // SKU pages = division pages with commodity_id (excluding sub-cat landings)
@@ -152,6 +160,7 @@ export default async function PageRenderer({ page }) {
         subcategories={filterPagesByVisibility(divisionSubcats, visibility)}
         featured={filterPagesByVisibility(divisionSkus, visibility)}
         allDivisionPages={filterPagesByVisibility(divisionPages, visibility)}
+        facts={productFacts}
         visibility={visibility}
       />
     </>)
@@ -162,8 +171,7 @@ export default async function PageRenderer({ page }) {
     const parentDivisionPath = '/' + page.path.split('/').slice(1, 3).join('/')
     const parentDivision = PRODUCT_DIVISIONS.find(d => d.path === parentDivisionPath)
     if (parentDivision) {
-      const allSibling = await getDivisionSubcategories(parentDivision.path)
-      const siblingSubcats = allSibling.filter(s => s.path !== page.path).slice(0, 8)
+      const siblingSubcats = (lineSiblings || []).filter(s => s.path !== page.path)
       return (<>
         <BreadcrumbJsonLd crumbs={crumbs} />
         <RichSubcategoryLanding
@@ -171,6 +179,7 @@ export default async function PageRenderer({ page }) {
           division={parentDivision}
           skus={filterPagesByVisibility(subcategoryProducts, visibility)}
           siblingSubcats={siblingSubcats}
+          facts={productFacts}
           visibility={visibility}
         />
       </>)

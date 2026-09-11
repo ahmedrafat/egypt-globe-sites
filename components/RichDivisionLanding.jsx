@@ -21,21 +21,38 @@
 import CardImage from './ui/CardImage'
 import HeroMotif from './HeroMotif'
 import Link from 'next/link'
-import { APPLICATIONS, cardUrl } from '../lib/corporatePages'
+import { cardUrl } from '../lib/corporatePages'
 import HeroBackdrop, { isBanner } from './HeroBackdrop'
 import RichPageBody from './RichPageBody'
 import HubFaqs from './HubFaqs'
 import Icon, { DIVISION_ICON, APPLICATION_ICON } from './ui/Icon'
 import QualityStrip from './QualityStrip'
+import { DataTable } from './QaChainTable'
+import { summarizeFacts, factsByLine, applicationsForTags, withoutQuoteSection, fmtMoq, fmtHs, lineLabel } from '../lib/productLines'
 
-const APP_BY_ID = Object.fromEntries(APPLICATIONS.map(a => [a.id, a]))
-
-export default function RichDivisionLanding({ page, division, subcategories, featured, allDivisionPages, visibility }) {
-  const appIds = new Set()
-  for (const p of (allDivisionPages || [])) {
-    for (const a of (p.applications || [])) appIds.add(a)
-  }
-  const apps = [...appIds].map(id => APP_BY_ID[id]).filter(Boolean)
+export default function RichDivisionLanding({ page, division, subcategories, featured, allDivisionPages, facts, visibility }) {
+  // Facts only for SKUs published and visible to this visitor.
+  const visible = new Set((allDivisionPages || []).map(p => p.path))
+  const divFacts = (facts || []).filter(f => visible.has(f.page_path))
+  const byLine = factsByLine(divFacts)
+  const lineSummary = Object.fromEntries(Object.entries(byLine).map(([k, v]) => [k, summarizeFacts(v)]))
+  // Application tags roll up to the APPLICATIONS taxonomy through `matches`
+  // (an exact-id lookup found one industry per division).
+  const apps = applicationsForTags([
+    ...divFacts.flatMap(f => f.applications || []),
+    ...(allDivisionPages || []).flatMap(p => p.applications || []),
+  ])
+  const overviewRows = (subcategories || []).filter(sc => lineSummary[sc.path]).map(sc => {
+    const ls = lineSummary[sc.path]
+    return [
+      <Link key={sc.path} href={sc.path} className="text-[#14161a] hover:text-[#087a70] underline-offset-4 hover:underline">{lineLabel(sc)}</Link>,
+      String(ls.skus),
+      fmtHs(ls.hs, 2) || '—',
+      ls.origins.length > 2 ? `${ls.origins.slice(0, 2).join(' · ')} +${ls.origins.length - 2}` : (ls.origins.join(' · ') || '—'),
+      fmtMoq(ls.moq) || '—',
+      ls.ports.join(' · ') || '—',
+    ]
+  })
 
   const skuCount = (allDivisionPages || []).filter(p => /\/products\/[a-z-]+\/[a-z0-9-]+\/[a-z0-9-]+$/.test(p.path)).length
   const subCount = subcategories?.length || 0
@@ -48,7 +65,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
   for (const p of (allDivisionPages || [])) for (const c of (p.certifications || [])) standards.add(c)
   const stats = [
     { big: String(skuCount), label: 'SKUs in catalogue' },
-    subCount > 0 ? { big: String(subCount), label: 'Sub-categories' } : null,
+    subCount > 0 ? { big: String(subCount), label: 'Product lines' } : null,
     standards.size > 0 ? { big: String(standards.size), label: 'Standards & certifications' } : null,
     apps.length > 0 ? { big: String(apps.length), label: apps.length === 1 ? 'Industry served' : 'Industries served' } : null,
   ].filter(Boolean)
@@ -77,7 +94,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
               <Icon name={divIcon} className="w-3.5 h-3.5" /> {division.label}
             </span>
             <span className="egg-chip text-xs">{skuCount} SKUs</span>
-            <span className="egg-chip text-xs">{subCount} sub-categories</span>
+            <span className="egg-chip text-xs">{subCount} product lines</span>
             <span className="egg-chip text-xs font-mono tracking-[0.08em]">FOB · CIF · CFR</span>
             <span className="egg-chip text-xs text-[#087a70]" style={{ boxShadow: 'inset 0 0 0 1px rgba(15,181,165,.45)' }}>
               <Icon name="shield" className="w-3.5 h-3.5" /> Per-lot CoA
@@ -127,11 +144,11 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
           <div className="text-center mb-10">
             <div className="egg-eyebrow text-[#087a70] justify-center mb-3">Browse the catalogue</div>
             <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-3">
-              {subCount} sub-categories — pick your commodity
+              {subCount} product lines — pick your commodity
             </h2>
             <p className="text-[#3f4650] max-w-3xl mx-auto">
-              Each sub-category carries its own specification window, certifications and tender language,
-              and every SKU inside it ships on a per-lot Certificate of Analysis.
+              Each line has its own page: specification window, loading ports, the industries it serves and
+              every SKU in it — each lot analysed before the Bill of Lading.
             </p>
           </div>
 
@@ -152,16 +169,43 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
                   </div>
                 </div>
                 <div className="p-5">
-                  <h3 className="text-lg font-semibold text-[#14161a] group-hover:text-[#087a70] transition-colors">{sc.title}</h3>
+                  <h3 className="text-lg font-semibold text-[#14161a] group-hover:text-[#087a70] transition-colors">{lineLabel(sc)}</h3>
                   {sc.description && (
                     <p className="text-sm text-[#3f4650] mt-1.5 line-clamp-2 leading-relaxed">{sc.description}</p>
                   )}
-                  <div className="mt-3 inline-flex items-center text-sm font-semibold text-[#087a70] group-hover:gap-2 gap-1 transition-all">
-                    Browse {sc.title.toLowerCase()} <span>→</span>
+                  {lineSummary[sc.path] && (
+                    <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 border-t border-[#14161a]/10 pt-3 text-xs">
+                      {fmtHs(lineSummary[sc.path].hs, 2) && (<div><dt className="font-mono uppercase tracking-[0.14em] text-[10px] text-[#5b6577]">HS</dt><dd className="font-mono text-[#14161a] mt-0.5">{fmtHs(lineSummary[sc.path].hs, 2)}</dd></div>)}
+                      {fmtMoq(lineSummary[sc.path].moq) && (<div><dt className="font-mono uppercase tracking-[0.14em] text-[10px] text-[#5b6577]">MOQ</dt><dd className="text-[#14161a] mt-0.5">{fmtMoq(lineSummary[sc.path].moq)}</dd></div>)}
+                    </dl>
+                  )}
+                  <div className="mt-4 inline-flex items-center text-sm font-semibold text-[#087a70] group-hover:gap-2 gap-1 transition-all">
+                    Explore {lineLabel(sc).toLowerCase()} <span>→</span>
                   </div>
                 </div>
               </Link>
             ))}
+          </div>
+        </section>
+      )}
+
+      {/* Division at a glance — one row per product line, from the SKU records */}
+      {overviewRows.length > 1 && (
+        <section className="bg-[#f9fafb] py-16 sm:py-20 border-y border-[#14161a]/10">
+          <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+            <div className="max-w-3xl mb-8">
+              <div className="egg-eyebrow text-[#087a70] mb-3">{division.label} at a glance</div>
+              <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-3">Every line, side by side.</h2>
+              <p className="text-[#3f4650]">Origin, HS code, minimum order and loading ports for each product line — taken from the SKU records, so it matches every product page.</p>
+            </div>
+            <DataTable
+              title={`${division.label} — product lines`}
+              icon="layers"
+              head={['Product line', 'SKUs', 'HS', 'Origin', 'MOQ', 'Loading ports']}
+              rows={overviewRows}
+              mono={[2]}
+              note="Incoterms FOB · CFR · CIF on every line. Grade-level specifications and test methods are on each line and SKU page."
+            />
           </div>
         </section>
       )}
@@ -172,7 +216,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
       {/* Division body — technical narrative + specification tables */}
       {page.body_markdown && (
         <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20 egg-reveal">
-          <RichPageBody content={page.body_markdown} title={page.title} />
+          <RichPageBody content={withoutQuoteSection(page.body_markdown)} title={page.title} />
         </section>
       )}
 
@@ -183,11 +227,10 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
             <div className="text-center mb-10">
               <div className="egg-eyebrow text-[#7c3aed] justify-center mb-3">{division.label} by industry</div>
               <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-3">
-                {apps.length} application{apps.length === 1 ? '' : 's'} served from this division.
+                {apps.length === 1 ? 'One industry served from this division.' : `${apps.length} industries served from this division.`}
               </h2>
               <p className="text-[#3f4650] max-w-3xl mx-auto">
-                Each industry has its own specification window, certifications and tender language.
-                Select one to see the SKUs matched to it.
+                Each industry page carries its own specification window, standards and the SKUs matched to it.
               </p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 stagger-children">
