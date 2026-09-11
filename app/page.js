@@ -652,7 +652,7 @@ export default async function HomePage() {
                     All products <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                   </Link>
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1.5 sm:gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-4 min-[1700px]:grid-cols-7 gap-1.5 sm:gap-2">
                   {PRODUCT_DIVISIONS.map(div => <DivisionCard key={div.id} div={div} />)}
                 </div>
               </div>
@@ -1164,7 +1164,7 @@ function DivisionCard({ div }) {
   return (
     <Link
       href={div.path}
-      className="egg-div-panel group relative block overflow-hidden rounded-[3px] ring-1 ring-[#14161a]/12 hover:ring-[#5aa0dc]/45 transition-[box-shadow,outline] duration-300 aspect-[3/4] sm:aspect-[4/5]"
+      className="egg-div-panel group relative block overflow-hidden rounded-[3px] ring-1 ring-[#14161a]/12 hover:ring-[#5aa0dc]/45 transition-[box-shadow,outline] duration-300 aspect-[3/4] sm:aspect-[4/5] lg:aspect-[4/3] min-[1700px]:aspect-[4/5]"
     >
       {/* division photography — decorative; the label beside it carries the name */}
       <Image
@@ -1176,7 +1176,9 @@ function DivisionCard({ div }) {
       />
       <span className="absolute inset-0 bg-gradient-to-t from-[#03182d] via-[#03182d]/55 to-[#06294a]/10" />
       <span className="absolute inset-x-0 bottom-0 p-3 sm:p-3.5 lg:px-2.5">
-        {/* 12px at seven-across: "Construction" is one unbreakable word in a ~115px skewed panel */}
+        {/* the strip sits in the narrow scrolly column: measured panels are 62-95px at
+           1024-1440 if seven across, so it runs four across below 1700px and the
+           labels step down to 12px -- "Construction" is one unbreakable word */}
         <span className="block text-[13px] sm:text-sm lg:text-[12px] lg:tracking-[-0.01em] font-semibold text-white leading-tight drop-shadow-[0_1px_6px_rgba(0,0,0,.5)]">
           {div.label}
         </span>
