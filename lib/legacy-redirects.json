@@ -1015,28 +1015,18 @@
     "permanent": true
   },
   {
-    "source": "/products/salt/rock-salt",
-    "destination": "/products/salt",
-    "permanent": true
-  },
-  {
-    "source": "/products/salt/sea-salt",
-    "destination": "/products/salt",
-    "permanent": true
-  },
-  {
     "source": "/products/salt/sea-salt/double-washed",
-    "destination": "/products/salt",
+    "destination": "/products/salt/sea-salt",
     "permanent": true
   },
   {
     "source": "/products/salt/sea-salt/raw",
-    "destination": "/products/salt",
+    "destination": "/products/salt/sea-salt",
     "permanent": true
   },
   {
     "source": "/products/salt/sea-salt/washed",
-    "destination": "/products/salt",
+    "destination": "/products/salt/sea-salt",
     "permanent": true
   },
   {

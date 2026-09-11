@@ -19,11 +19,6 @@
       "permanent": true
     },
     {
-      "source": "/products/salt/sea-salt",
-      "destination": "/products/salt",
-      "permanent": true
-    },
-    {
       "source": "/products/salt/tablet-salt/:rest*",
       "destination": "/products/salt",
       "permanent": true

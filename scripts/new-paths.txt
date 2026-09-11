@@ -101,7 +101,9 @@
 /products/salt/industrial-grade
 /products/salt/pharmaceutical-grade
 /products/salt/pool-grade
+/products/salt/rock-salt
 /products/salt/salt
+/products/salt/sea-salt
 /rfq
 /services
 /services/added-value
