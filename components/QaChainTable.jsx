@@ -23,7 +23,7 @@ export default function QaChainTable({ rows = DEFAULT_ROWS, title = 'QA verifica
 }
 
 /** Generic two- or multi-column spec table used by the hub pages. */
-export function DataTable({ title, icon = 'beaker', head, rows, note, mono = [] }) {
+export function DataTable({ title, icon = 'beaker', head, rows, note, mono = [], minWidth }) {
   // Two-column parameter lists read better as a fact grid than a table.
   if (head?.length === 2 && classifyTable(head, rows) === 'facts') {
     return <FactGrid title={title} icon={icon} items={rows} note={note} />
@@ -36,7 +36,7 @@ export function DataTable({ title, icon = 'beaker', head, rows, note, mono = [] 
         </div>
       )}
       <div className="overflow-x-auto" tabIndex={0}>
-        <table className="w-full text-sm">
+        <table className="w-full text-sm" style={minWidth ? { minWidth } : undefined}>
           <thead className="bg-white border-b border-[#14161a]/10">
             <tr>{head.map(h => <th key={h} className="text-left text-[11px] uppercase tracking-wider font-semibold text-[#5b6577] px-4 py-2">{h}</th>)}</tr>
           </thead>

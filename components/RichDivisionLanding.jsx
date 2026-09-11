@@ -193,6 +193,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
               head={['Product line', 'SKUs', 'HS', 'Origin', 'MOQ', 'Loading ports']}
               rows={overviewRows}
               mono={[2]}
+              minWidth={820}
               note="Incoterms FOB · CFR · CIF on every line. Grade-level specifications and test methods are on each line and SKU page."
             />
           </div>
