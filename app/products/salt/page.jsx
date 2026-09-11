@@ -182,7 +182,7 @@ export default async function SaltMainPage() {
                 <li className="flex items-start gap-2"><span className="text-[#0fb5a5] font-bold">›</span> Aquaculture and fish curing / food preservation</li>
                 <li className="flex items-start gap-2"><span className="text-[#0fb5a5] font-bold">›</span> Food-grade washed sea salt (ISO 22000 / HACCP / Halal)</li>
               </ul>
-              <Link href="{SOURCES.sea.path}" className="egg-btn-ghost mt-6 inline-flex">Explore sea salt — {sea.length} SKUs →</Link>
+              <Link href={SOURCES.sea.path} className="egg-btn-ghost mt-6 inline-flex">Explore sea salt — {sea.length} SKUs →</Link>
             </div>
           </div>
 
@@ -231,7 +231,7 @@ export default async function SaltMainPage() {
                 <li className="flex items-start gap-2"><span className="text-[#8a6d3b] font-bold">›</span> Drilling-mud weighting, oil &amp; gas completion brines</li>
                 <li className="flex items-start gap-2"><span className="text-[#8a6d3b] font-bold">›</span> Leather tanning, textile dyeing (low iron) and livestock lick blocks</li>
               </ul>
-              <Link href="{SOURCES.rock.path}" className="egg-btn-ghost mt-6 inline-flex">Explore rock salt — {rock.length} SKUs →</Link>
+              <Link href={SOURCES.rock.path} className="egg-btn-ghost mt-6 inline-flex">Explore rock salt — {rock.length} SKUs →</Link>
             </div>
           </div>
         </div>
