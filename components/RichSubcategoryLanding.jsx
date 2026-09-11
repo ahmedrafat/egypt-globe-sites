@@ -40,7 +40,10 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
   const lineFacts = (facts || []).filter(f => visible.has(f.page_path))
   const factByPath = Object.fromEntries(lineFacts.map(f => [f.page_path, f]))
   const s = summarizeFacts(lineFacts)
-  const apps = applicationsForTags(s.tags)
+  // Industries come from the page-level tags — the same ones the
+  // /applications pages match on, so every card leads to a page that lists
+  // these SKUs. (commodities.applications holds generic placeholders.)
+  const apps = applicationsForTags(list.flatMap(p => p.applications || []))
   const tone = division.color
   const divIcon = DIVISION_ICON[division.id] || 'box'
   const n = list.length
@@ -264,14 +267,15 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {siblingSubcats.map(sc => (
-              <Link key={sc.id} href={sc.path} className="egg-card group overflow-hidden">
-                <div className="aspect-[21/9] overflow-hidden rounded-t-2xl" style={{ background: `linear-gradient(135deg, ${tone}1a, ${tone}08)` }}>
-                  {cardUrl(sc) && <CardImage src={cardUrl(sc)} className="group-hover:scale-105 transition-transform duration-500" />}
-                </div>
-                <div className="p-4">
-                  <h3 className="font-semibold text-[#14161a] group-hover:text-[#087a70] transition-colors text-sm line-clamp-2">{lineLabel(sc)}</h3>
-                  {sc.sku_count > 0 && <div className="text-xs font-mono text-[#5b6577] mt-1">{sc.sku_count} {sc.sku_count === 1 ? 'SKU' : 'SKUs'}</div>}
-                </div>
+              <Link key={sc.id} href={sc.path} className="egg-card group p-4 flex items-center gap-3">
+                <span className="inline-flex w-9 h-9 shrink-0 items-center justify-center rounded-lg ring-1 ring-[#14161a]/15 text-[#14161a] group-hover:ring-[#087a70]/50 transition-colors">
+                  <Icon name={divIcon} className="w-4 h-4" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block font-semibold text-[#14161a] group-hover:text-[#087a70] transition-colors text-sm leading-snug">{lineLabel(sc)}</span>
+                  {sc.sku_count > 0 && <span className="block text-[11px] font-mono text-[#5b6577] mt-0.5">{sc.sku_count} {sc.sku_count === 1 ? 'SKU' : 'SKUs'}</span>}
+                </span>
+                <span className="ml-auto text-[#087a70] opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true">→</span>
               </Link>
             ))}
           </div>

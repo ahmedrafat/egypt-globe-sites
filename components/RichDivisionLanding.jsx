@@ -18,10 +18,8 @@
  * Vector protocol: monochrome micro-icons only (components/ui/Icon) —
  * no emoji, no watermark glyphs.
  */
-import CardImage from './ui/CardImage'
 import HeroMotif from './HeroMotif'
 import Link from 'next/link'
-import { cardUrl } from '../lib/corporatePages'
 import HeroBackdrop, { isBanner } from './HeroBackdrop'
 import RichPageBody from './RichPageBody'
 import HubFaqs from './HubFaqs'
@@ -38,10 +36,8 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
   const lineSummary = Object.fromEntries(Object.entries(byLine).map(([k, v]) => [k, summarizeFacts(v)]))
   // Application tags roll up to the APPLICATIONS taxonomy through `matches`
   // (an exact-id lookup found one industry per division).
-  const apps = applicationsForTags([
-    ...divFacts.flatMap(f => f.applications || []),
-    ...(allDivisionPages || []).flatMap(p => p.applications || []),
-  ])
+  // Page-level tags — the same ones /applications/* match on.
+  const apps = applicationsForTags((allDivisionPages || []).flatMap(p => p.applications || []))
   const overviewRows = (subcategories || []).filter(sc => lineSummary[sc.path]).map(sc => {
     const ls = lineSummary[sc.path]
     return [
@@ -154,21 +150,14 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
             {subcategories.map(sc => (
-              <Link key={sc.id} href={sc.path} className="egg-card group overflow-hidden">
-                <div className="aspect-[16/9] overflow-hidden relative rounded-t-2xl"
-                  style={{ background: `linear-gradient(135deg, ${tone}1a, ${tone}08)` }}>
-                  {cardUrl(sc) ? (
-                    <CardImage src={cardUrl(sc)} className="group-hover:scale-105 transition-transform duration-500" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-[#14161a]/20">
-                      <Icon name={divIcon} className="w-12 h-12" strokeWidth={1.25} />
-                    </div>
-                  )}
-                  <div className="absolute top-3 right-3 egg-chip bg-white/95 backdrop-blur text-[#14161a] text-xs shadow-sm">
-                    {sc.sku_count} {sc.sku_count === 1 ? 'SKU' : 'SKUs'}
-                  </div>
+              <Link key={sc.id} href={sc.path} className="egg-card group overflow-hidden flex flex-col">
+                <div className="flex items-center justify-between gap-3 px-5 pt-5">
+                  <span className="inline-flex w-10 h-10 items-center justify-center rounded-xl ring-1 ring-[#14161a]/15 text-[#14161a] group-hover:ring-[#087a70]/50 transition-colors">
+                    <Icon name={divIcon} className="w-5 h-5" />
+                  </span>
+                  <span className="egg-chip text-xs">{sc.sku_count} {sc.sku_count === 1 ? 'SKU' : 'SKUs'}</span>
                 </div>
-                <div className="p-5">
+                <div className="p-5 pt-4 flex-1 flex flex-col">
                   <h3 className="text-lg font-semibold text-[#14161a] group-hover:text-[#087a70] transition-colors">{lineLabel(sc)}</h3>
                   {sc.description && (
                     <p className="text-sm text-[#3f4650] mt-1.5 line-clamp-2 leading-relaxed">{sc.description}</p>
@@ -179,7 +168,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
                       {fmtMoq(lineSummary[sc.path].moq) && (<div><dt className="font-mono uppercase tracking-[0.14em] text-[10px] text-[#5b6577]">MOQ</dt><dd className="text-[#14161a] mt-0.5">{fmtMoq(lineSummary[sc.path].moq)}</dd></div>)}
                     </dl>
                   )}
-                  <div className="mt-4 inline-flex items-center text-sm font-semibold text-[#087a70] group-hover:gap-2 gap-1 transition-all">
+                  <div className="mt-auto pt-4 inline-flex items-center text-sm font-semibold text-[#087a70] group-hover:gap-2 gap-1 transition-all">
                     Explore {lineLabel(sc)} <span>→</span>
                   </div>
                 </div>
