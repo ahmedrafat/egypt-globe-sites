@@ -1175,8 +1175,9 @@ function DivisionCard({ div }) {
         className="object-cover object-[74%_50%]"
       />
       <span className="absolute inset-0 bg-gradient-to-t from-[#03182d] via-[#03182d]/55 to-[#06294a]/10" />
-      <span className="absolute inset-x-0 bottom-0 p-3 sm:p-3.5">
-        <span className="block text-[13px] sm:text-sm font-semibold text-white leading-tight drop-shadow-[0_1px_6px_rgba(0,0,0,.5)]">
+      <span className="absolute inset-x-0 bottom-0 p-3 sm:p-3.5 lg:px-2.5">
+        {/* 12px at seven-across: "Construction" is one unbreakable word in a ~115px skewed panel */}
+        <span className="block text-[13px] sm:text-sm lg:text-[12px] lg:tracking-[-0.01em] font-semibold text-white leading-tight drop-shadow-[0_1px_6px_rgba(0,0,0,.5)]">
           {div.label}
         </span>
         <span className="egg-div-rule mt-2 block h-[2px] w-5 bg-[#ff5a18]" />
