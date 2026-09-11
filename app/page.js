@@ -147,9 +147,9 @@ const METRICS = [
   { value: 60,  suffix: '+',  label: 'Export markets' },
   // track record first (Ahmed, Sep 11 2026): 2M+ t shipped under the group's own
   // name; 10M+ t produced and supplied counting added-value processing and supply
-  // to other exporters. Replaces the certification-led "100% lots CoA-verified".
+  // to other exporters -- all salt. Replaces the certification-led "100% lots CoA-verified".
   { value: 2,   suffix: 'M+', label: 'Tonnes of salt exported' },
-  { value: 10,  suffix: 'M+', label: 'Tonnes produced & supplied' },
+  { value: 10,  suffix: 'M+', label: 'Tonnes of salt produced & supplied' },
   { value: 100, suffix: '+',  label: 'Vessels chartered' },
   { value: 7,   suffix: '',   label: 'Egyptian seaports' },
 ]
@@ -166,7 +166,7 @@ const PILLARS = [
   // Export operations lead: the track record is the headline, QA is how it holds.
   { n: '01', tag: 'Export Operations', body: 'Commodity sourcing, vessel chartering, stevedoring, freight forwarding and the full L/C bank document set — extraction point to buyer warehouse across salt, cement & clinker, fertilizers, chemicals, industrial minerals, agro and metals. One counterparty, seven divisions, seven ports; the salt programme alone has moved more than 2 million tonnes on 100+ chartered vessels since 2015.', href: '/about/export-record', cta: 'Our export record' },
   { n: '02', tag: 'Quality Assurance', body: 'What keeps that record consistent: an internal QA division at the nucleus of the group since its 2014 incorporation, with on-site laboratories at the Siwa Oasis and Qattara Depression mines, port-side QC teams at all seven loading ports, and ISO 9001 / ISO 22000 / HACCP systems across every division. Specification is guaranteed at the port of loading and binding under the sales contract.', href: '/about/quality-compliance', cta: 'Our QA charter' },
-  { n: '03', tag: 'Industrial Development', body: 'Processing capacity alongside trading: washing, screening, kiln-drying and blending lines, Egyptian industrial-zone development and greenfield partnerships that build durable, audited supply rather than brokerage spread. Counting added-value processing and supply to other exporters, the group has produced and supplied more than 10 million tonnes.', href: '/about', cta: 'About the group' },
+  { n: '03', tag: 'Industrial Development', body: 'Processing capacity alongside trading: washing, screening, kiln-drying and blending lines, Egyptian industrial-zone development and greenfield partnerships that build durable, audited supply rather than brokerage spread. Counting added-value processing and supply to other exporters, the group has produced and supplied more than 10 million tonnes of salt.', href: '/about', cta: 'About the group' },
   { n: '04', tag: 'Technical Services', body: 'Application testing, new-grade qualification, tender-specification matching and process optimisation — executed with buyers’ technical teams. Every specification is validated in Egyptian facilities before the first container is loaded.', href: '/services', cta: 'Our services' },
 ]
 
