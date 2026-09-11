@@ -9,6 +9,7 @@
  */
 import { routeOpenGraph } from '../../lib/seo'
 import HeroMotif from '../../components/HeroMotif'
+import HeroBackdrop, { isBanner } from '../../components/HeroBackdrop'
 import {
   getPageByPath,
   getRfqProductOptions,
@@ -56,10 +57,11 @@ export default async function RFQPage({ searchParams }) {
         url="/rfq"
       />
       {/* Hero */}
-      <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10">
-        <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
+      <section data-hero className="egg-hero-dark relative overflow-hidden border-b border-[#ff5a18]/60">
+        {isBanner(page?.hero_photo_url) && <HeroBackdrop src={page.hero_photo_url} />}
+        <div aria-hidden="true" className="absolute inset-0 egg-grid-dark opacity-60 pointer-events-none" />
         {/* entry point — matches the orange CTA */}
-        <HeroMotif variant="compass" tone="#ff6321" />
+        {!isBanner(page?.hero_photo_url) && <HeroMotif variant="compass" tone="#ff6321" />}
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: isCoa
             ? 'radial-gradient(55% 55% at 88% 0%, rgba(15,181,165,.2), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(184,134,43,.1), transparent 60%)'

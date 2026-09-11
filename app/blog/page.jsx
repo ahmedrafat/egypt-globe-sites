@@ -5,6 +5,7 @@
 import { routeOpenGraph } from '../../lib/seo'
 import CardImage from '../../components/ui/CardImage'
 import HeroMotif from '../../components/HeroMotif'
+import HeroBackdrop, { isBanner } from '../../components/HeroBackdrop'
 import Link from 'next/link'
 import { getPagesByCategory, getPageByPath, heroUrl } from '../../lib/corporatePages'
 import RichPageBody from '../../components/RichPageBody'
@@ -32,10 +33,11 @@ export default async function BlogIndex() {
   return (
     <article className="bg-white text-[#14161a]">
       {/* Hero — white editorial banner with warm glow */}
-      <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10">
-        <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
+      <section data-hero className="egg-hero-dark relative overflow-hidden border-b border-[#ff5a18]/60">
+        {isBanner(hubPage?.hero_photo_url) && <HeroBackdrop src={hubPage.hero_photo_url} />}
+        <div aria-hidden="true" className="absolute inset-0 egg-grid-dark opacity-60 pointer-events-none" />
         {/* editorial wayfinding */}
-        <HeroMotif variant="compass" tone="#b8862b" />
+        {!isBanner(hubPage?.hero_photo_url) && <HeroMotif variant="compass" tone="#b8862b" />}
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: 'radial-gradient(55% 55% at 88% 0%, rgba(255,99,33,.16), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(184,134,43,.14), transparent 60%)' }} />
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20">
