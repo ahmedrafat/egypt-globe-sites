@@ -7,7 +7,7 @@ import CardImage from '../../components/ui/CardImage'
 import HeroMotif from '../../components/HeroMotif'
 import HeroBackdrop, { isBanner } from '../../components/HeroBackdrop'
 import Link from 'next/link'
-import { getPagesByCategory, getPageByPath, heroUrl } from '../../lib/corporatePages'
+import { getPagesByCategory, getPageByPath, cardUrl } from '../../lib/corporatePages'
 import RichPageBody from '../../components/RichPageBody'
 import Icon from '../../components/ui/Icon'
 
@@ -91,8 +91,8 @@ export default async function BlogIndex() {
                 <div className="grid grid-cols-1 lg:grid-cols-5 gap-0">
                   <div className="lg:col-span-3 aspect-[16/9] lg:aspect-auto overflow-hidden relative"
                     style={{ background: 'linear-gradient(135deg, #fff4ec 0%, #fbf3e3 100%)' }}>
-                    {heroUrl(posts[0]) ? (
-                      <CardImage src={heroUrl(posts[0])} className="group-hover:scale-105 transition-transform duration-700" sizes="(max-width: 1024px) 100vw, 60vw" />
+                    {cardUrl(posts[0]) ? (
+                      <CardImage src={cardUrl(posts[0])} className="group-hover:scale-105 transition-transform duration-700" sizes="(max-width: 1024px) 100vw, 60vw" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
                         <Icon name="news" className="w-16 h-16 text-[#14161a]/20" strokeWidth={1} />
@@ -128,8 +128,8 @@ export default async function BlogIndex() {
                     className="egg-card group overflow-hidden">
                     <div className="aspect-[16/9] overflow-hidden relative rounded-t-2xl"
                       style={{ background: 'linear-gradient(135deg, #fff4ec 0%, #fbf3e3 100%)' }}>
-                      {heroUrl(post) ? (
-                        <CardImage src={heroUrl(post)} className="group-hover:scale-105 transition-transform duration-500" />
+                      {cardUrl(post) ? (
+                        <CardImage src={cardUrl(post)} className="group-hover:scale-105 transition-transform duration-500" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
                           <Icon name="news" className="w-12 h-12 text-[#14161a]/20" strokeWidth={1} />

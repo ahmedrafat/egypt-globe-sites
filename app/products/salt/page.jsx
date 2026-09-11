@@ -19,7 +19,7 @@ import {
   getPageByPath,
   getSaltCatalogueBySource,
   getSaltApplicationsServed,
-  APPLICATIONS, heroUrl } from '../../../lib/corporatePages'
+  APPLICATIONS, cardUrl } from '../../../lib/corporatePages'
 import Icon, { APPLICATION_ICON } from '../../../components/ui/Icon'
 import QualityStrip from '../../../components/QualityStrip'
 import HubFaqs from '../../../components/HubFaqs'
@@ -422,8 +422,8 @@ function SaltCard({ p, type }) {
     <Link href={p.path} className="egg-card group overflow-hidden">
       <div className="aspect-[16/9] overflow-hidden rounded-t-2xl"
         style={{ background: isSea ? 'linear-gradient(135deg, #e6fbf8, #f9fafb)' : 'linear-gradient(135deg, #fbf3e3, #f9fafb)' }}>
-        {heroUrl(p) ? (
-          <CardImage src={heroUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
+        {cardUrl(p) ? (
+          <CardImage src={cardUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-[#14161a]/20"><Icon name={isSea ? 'wave' : 'pickaxe'} className="w-10 h-10" strokeWidth={1.25} /></div>
         )}

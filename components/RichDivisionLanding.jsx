@@ -21,7 +21,7 @@
 import CardImage from './ui/CardImage'
 import HeroMotif from './HeroMotif'
 import Link from 'next/link'
-import { APPLICATIONS, heroUrl } from '../lib/corporatePages'
+import { APPLICATIONS, cardUrl } from '../lib/corporatePages'
 import HeroBackdrop, { isBanner } from './HeroBackdrop'
 import RichPageBody from './RichPageBody'
 import HubFaqs from './HubFaqs'
@@ -149,8 +149,8 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
               <Link key={sc.id} href={sc.path} className="egg-card group overflow-hidden">
                 <div className="aspect-[16/9] overflow-hidden relative rounded-t-2xl"
                   style={{ background: `linear-gradient(135deg, ${tone}1a, ${tone}08)` }}>
-                  {heroUrl(sc) ? (
-                    <CardImage src={heroUrl(sc)} className="group-hover:scale-105 transition-transform duration-500" />
+                  {cardUrl(sc) ? (
+                    <CardImage src={cardUrl(sc)} className="group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[#14161a]/20">
                       <Icon name={divIcon} className="w-12 h-12" strokeWidth={1.25} />
@@ -248,8 +248,8 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
               <Link key={p.id} href={p.path} className="egg-card group overflow-hidden">
                 <div className="aspect-[16/9] overflow-hidden rounded-t-2xl"
                   style={{ background: `linear-gradient(135deg, ${tone}1a, #f9fafb)` }}>
-                  {heroUrl(p) ? (
-                    <CardImage src={heroUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
+                  {cardUrl(p) ? (
+                    <CardImage src={cardUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[#14161a]/20">
                       <Icon name={divIcon} className="w-10 h-10" strokeWidth={1.25} />

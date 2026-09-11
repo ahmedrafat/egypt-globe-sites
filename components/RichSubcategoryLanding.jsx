@@ -18,7 +18,7 @@ import { crumbLabel } from '../lib/headings'
 import CardImage from './ui/CardImage'
 import HeroMotif from './HeroMotif'
 import Link from 'next/link'
-import { APPLICATIONS, heroUrl } from '../lib/corporatePages'
+import { APPLICATIONS, cardUrl } from '../lib/corporatePages'
 import RichPageBody from './RichPageBody'
 import HubFaqs from './HubFaqs'
 import Icon, { DIVISION_ICON, APPLICATION_ICON } from './ui/Icon'
@@ -127,8 +127,8 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
               <Link key={p.id} href={p.path} className="egg-card group overflow-hidden">
                 <div className="aspect-[16/9] overflow-hidden rounded-t-2xl"
                   style={{ background: `linear-gradient(135deg, ${tone}1a, #f9fafb)` }}>
-                  {heroUrl(p) ? (
-                    <CardImage src={heroUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
+                  {cardUrl(p) ? (
+                    <CardImage src={cardUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[#14161a]/20">
                       <Icon name={divIcon} className="w-10 h-10" strokeWidth={1.25} />

@@ -14,9 +14,10 @@
  */
 import CardImage from './ui/CardImage'
 import HeroMotif from './HeroMotif'
+import HeroBackdrop, { isBanner } from './HeroBackdrop'
 import Link from 'next/link'
 import RichPageBody from './RichPageBody'
-import { APPLICATIONS, PRODUCT_DIVISIONS, CATEGORY_META, heroUrl } from '../lib/corporatePages'
+import { APPLICATIONS, PRODUCT_DIVISIONS, CATEGORY_META, cardUrl } from '../lib/corporatePages'
 import { crumbLabel } from '../lib/headings'
 import Icon, { DIVISION_ICON, APPLICATION_ICON } from './ui/Icon'
 
@@ -33,10 +34,11 @@ export default function RichApplicationLanding({ page, application, products, si
 
   return (
     <article className="bg-white text-[#14161a]">
-      {/* Hero — white editorial banner with violet glow */}
+      {/* Hero — dark band; a topic banner when the page has one */}
       <section data-hero className="egg-hero-dark relative overflow-hidden border-b border-[#ff5a18]/60">
+        {isBanner(page.hero_photo_url) && <HeroBackdrop src={page.hero_photo_url} />}
         <div aria-hidden="true" className="absolute inset-0 egg-grid-dark opacity-60 pointer-events-none" />
-        <HeroMotif variant="orbit" tone={TONE} />
+        {!isBanner(page.hero_photo_url) && <HeroMotif variant="orbit" tone={TONE} />}
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: `radial-gradient(55% 55% at 88% 0%, ${TONE}22, transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.09), transparent 60%)` }} />
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20">
@@ -171,8 +173,8 @@ export default function RichApplicationLanding({ page, application, products, si
                           className="egg-card group overflow-hidden">
                           <div className="aspect-[16/9] overflow-hidden rounded-t-2xl"
                             style={{ background: `linear-gradient(135deg, ${d.color}14, #f9fafb)` }}>
-                            {heroUrl(p) ? (
-                              <CardImage src={heroUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
+                            {cardUrl(p) ? (
+                              <CardImage src={cardUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
                             ) : (
                               <div className="w-full h-full flex items-center justify-center text-5xl opacity-40">
                                 <Icon name={DIVISION_ICON[d.id] || 'box'} className="w-5 h-5" />

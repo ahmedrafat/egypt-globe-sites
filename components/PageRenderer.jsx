@@ -33,7 +33,7 @@ import {
   CATEGORY_META,
   PRODUCT_DIVISIONS,
   SERVICE_DIVISIONS,
-  APPLICATIONS, APPLICATION_VARIANTS, categoryMetaFor, getPageTitles, heroUrl } from '../lib/corporatePages'
+  APPLICATIONS, APPLICATION_VARIANTS, categoryMetaFor, getPageTitles, heroUrl, cardUrl } from '../lib/corporatePages'
 import RichDivisionLanding from './RichDivisionLanding'
 import RichSubcategoryLanding from './RichSubcategoryLanding'
 import RichApplicationLanding from './RichApplicationLanding'
@@ -466,8 +466,8 @@ export default async function PageRenderer({ page }) {
                 <Link key={p.id} href={p.path}
                   className="egg-card group overflow-hidden">
                   <div className="aspect-[16/9] bg-[#f9fafb] overflow-hidden rounded-t-2xl">
-                    {heroUrl(p) ? (
-                      <CardImage src={heroUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
+                    {cardUrl(p) ? (
+                      <CardImage src={cardUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-[#14161a]/20 bg-gradient-to-br from-[#f2fbfa] to-[#f9fafb]"><Icon name="cube" className="w-10 h-10" strokeWidth={1.25} /></div>
                     )}
@@ -509,8 +509,8 @@ export default async function PageRenderer({ page }) {
               <Link key={p.id} href={p.path}
                 className="egg-card group overflow-hidden">
                 <div className="aspect-[16/9] bg-[#f9fafb] overflow-hidden rounded-t-2xl">
-                  {heroUrl(p) ? (
-                    <CardImage src={heroUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
+                  {cardUrl(p) ? (
+                    <CardImage src={cardUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[#14161a]/20" style={{ background: `linear-gradient(135deg, ${cat.color}14, #f9fafb)` }}><Icon name={CATEGORY_ICON[page.category] || 'grid'} className="w-10 h-10" strokeWidth={1.25} /></div>
                   )}
@@ -642,8 +642,8 @@ export default async function PageRenderer({ page }) {
               <Link key={p.id} href={p.path}
                 className="egg-card group overflow-hidden">
                 <div className="aspect-[16/9] bg-[#f9fafb] overflow-hidden rounded-t-2xl">
-                  {heroUrl(p) ? (
-                    <CardImage src={heroUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
+                  {cardUrl(p) ? (
+                    <CardImage src={cardUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[#14161a]/20"><Icon name={CATEGORY_ICON[p.category] || 'grid'} className="w-8 h-8" strokeWidth={1.25} /></div>
                   )}

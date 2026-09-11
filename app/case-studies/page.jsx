@@ -6,7 +6,7 @@ import { routeOpenGraph } from '../../lib/seo'
 import CardImage from '../../components/ui/CardImage'
 import HeroMotif from '../../components/HeroMotif'
 import Link from 'next/link'
-import { getCaseStudies, getPageByPath, heroUrl } from '../../lib/corporatePages'
+import { getCaseStudies, getPageByPath, cardUrl } from '../../lib/corporatePages'
 import RichPageBody from '../../components/RichPageBody'
 import Icon from '../../components/ui/Icon'
 
@@ -95,8 +95,8 @@ export default async function CaseStudiesIndex() {
                 <div className="grid grid-cols-1 lg:grid-cols-5 gap-0">
                   <div className="lg:col-span-3 aspect-[16/9] lg:aspect-auto overflow-hidden relative"
                     style={{ background: 'linear-gradient(135deg, #e6fbf8 0%, #f2fbfa 100%)' }}>
-                    {heroUrl(posts[0]) ? (
-                      <CardImage src={heroUrl(posts[0])} className="group-hover:scale-105 transition-transform duration-700" sizes="(max-width: 1024px) 100vw, 60vw" />
+                    {cardUrl(posts[0]) ? (
+                      <CardImage src={cardUrl(posts[0])} className="group-hover:scale-105 transition-transform duration-700" sizes="(max-width: 1024px) 100vw, 60vw" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
                         <Icon name="book" className="w-16 h-16 text-[#14161a]/20" strokeWidth={1} />
@@ -132,8 +132,8 @@ export default async function CaseStudiesIndex() {
                     className="egg-card group overflow-hidden">
                     <div className="aspect-[16/9] overflow-hidden relative rounded-t-2xl"
                       style={{ background: 'linear-gradient(135deg, #e6fbf8 0%, #f2fbfa 100%)' }}>
-                      {heroUrl(cs) ? (
-                        <CardImage src={heroUrl(cs)} className="group-hover:scale-105 transition-transform duration-500" />
+                      {cardUrl(cs) ? (
+                        <CardImage src={cardUrl(cs)} className="group-hover:scale-105 transition-transform duration-500" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
                           <Icon name="book" className="w-12 h-12 text-[#14161a]/20" strokeWidth={1} />
