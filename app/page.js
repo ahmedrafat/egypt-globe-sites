@@ -158,8 +158,9 @@ const QA_PROTOCOL = [
 ]
 
 const PILLARS = [
-  { n: '01', tag: 'Quality Assurance', body: 'An internal QA division has sat at the nucleus of the group since its 2014 incorporation: on-site laboratories at the Siwa Oasis and Qattara Depression mines, port-side QC teams at all seven loading ports, and ISO 9001 / ISO 22000 / HACCP systems across every division. Specification is guaranteed at the port of loading and binding under the sales contract.', href: '/about/quality-compliance', cta: 'Our QA charter' },
-  { n: '02', tag: 'Export Operations', body: 'Commodity sourcing, vessel chartering, stevedoring, freight forwarding and the full L/C bank document set — extraction point to buyer warehouse across salt, cement & clinker, fertilizers, chemicals, industrial minerals, agro and metals. One counterparty, seven divisions, seven ports.', href: '/products', cta: 'Our operations' },
+  // Export operations lead: the track record is the headline, QA is how it holds.
+  { n: '01', tag: 'Export Operations', body: 'Commodity sourcing, vessel chartering, stevedoring, freight forwarding and the full L/C bank document set — extraction point to buyer warehouse across salt, cement & clinker, fertilizers, chemicals, industrial minerals, agro and metals. One counterparty, seven divisions, seven ports; the salt programme alone has moved more than 2 million tonnes on 100+ chartered vessels since 2015.', href: '/about/export-record', cta: 'Our export record' },
+  { n: '02', tag: 'Quality Assurance', body: 'What keeps that record consistent: an internal QA division at the nucleus of the group since its 2014 incorporation, with on-site laboratories at the Siwa Oasis and Qattara Depression mines, port-side QC teams at all seven loading ports, and ISO 9001 / ISO 22000 / HACCP systems across every division. Specification is guaranteed at the port of loading and binding under the sales contract.', href: '/about/quality-compliance', cta: 'Our QA charter' },
   { n: '03', tag: 'Industrial Development', body: 'Processing capacity alongside trading: washing, screening, kiln-drying and blending lines, Egyptian industrial-zone development and greenfield partnerships that build durable, audited supply rather than brokerage spread.', href: '/about', cta: 'About the group' },
   { n: '04', tag: 'Technical Services', body: 'Application testing, new-grade qualification, tender-specification matching and process optimisation — executed with buyers’ technical teams. Every specification is validated in Egyptian facilities before the first container is loaded.', href: '/services', cta: 'Our services' },
 ]
@@ -309,7 +310,7 @@ export default async function HomePage() {
           <p className="egg-rise text-[11px] sm:text-[11px] font-mono uppercase tracking-[0.32em] text-[#ff7a22]" style={{ animationDelay: '.05s' }}>
             Egypt Globe Group
             <span className="text-[#5aa0dc]/60 mx-2">/</span>
-            <span className="text-[#a9bfd7]">Est. 2014 · Quality at the Core · Cairo · Damietta · 60+ markets</span>
+            <span className="text-[#a9bfd7]">Est. 2014 · Shipping since 2015 · Cairo · Damietta · 60+ markets</span>
           </p>
 
           {/* headline */}
@@ -393,7 +394,7 @@ export default async function HomePage() {
           <div className="lg:col-span-5" data-reveal>
             <p className="flex items-center gap-3 text-[11px] sm:text-[11px] font-mono uppercase tracking-[0.26em] text-[#5b6577]">
               <span className="h-px w-8 bg-[#b8862b]/60" />
-              <span className="text-[#8a6d3b]">Quality at the Core · since 2014</span>
+              <span className="text-[#8a6d3b]">Reliability · since 2014</span>
             </p>
             <h2 className={`${display.className} mt-5 text-[clamp(1.8rem,3.6vw,2.9rem)] leading-[1.06] tracking-[-0.015em] text-[#14161a]`}>
               Most regional exporters sell a specification. <span className="italic text-[#087a70]">We load the one we sold.</span>
@@ -722,7 +723,7 @@ export default async function HomePage() {
                   </span>
                   <h3 className={`${display.className} text-2xl text-[#14161a] mb-2`}>Request received — thank you.</h3>
                   <p className="text-sm text-[#3f4650] max-w-md mx-auto leading-relaxed">
-                    The export desk reviews every request and replies with a priced, certified offer once stock, laycan and freight are confirmed.
+                    The export desk reviews every request and replies with a priced offer once stock, laycan and freight are confirmed.
                   </p>
                   <div className="inline-block mt-4 rounded-xl border border-[#14161a]/10 bg-white px-5 py-3">
                     <div className="text-[11px] uppercase tracking-wider font-mono text-[#5b6577]">Reference</div>
@@ -1082,7 +1083,7 @@ function PanelDesk({ email, phone, phoneE164 }) {
   const STAGES = [
     ['Received', 'RFQ received',            'Auto-triaged to the commodity desk · reference issued'],
     ['Reviewed', 'Reviewed by export desk', 'Spec match · origin port · vessel or container plan'],
-    ['Offer',    'Priced, certified offer', 'FOB / CIF / CFR · sample CoA · inspection protocol · packing'],
+    ['Offer',    'Priced offer',            'FOB / CIF / CFR · sample CoA · inspection protocol · packing'],
     ['Then',     'Documents & loading',     'L/C-bank set · EUR.1 / COO · SGS / TÜV / Intertek / BV at berth'],
   ]
   return (
