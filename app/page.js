@@ -319,8 +319,8 @@ export default async function HomePage() {
               <span className="italic text-[#a9bfd7]">in bulk commodity exporting</span><span className="text-[#ff5a18]">.</span>
             </h1>
             <p className="egg-rise mt-7 sm:mt-9 text-base sm:text-lg lg:text-[1.25rem] max-w-3xl leading-relaxed text-[#a9bfd7]" style={{ animationDelay: '.2s' }}>
-              An Egyptian B2B commodity house with an internal Quality Assurance division since 2014.
-              Every lot is laboratory-verified before the Bill of Lading and loaded FOB / CIF / CFR
+              An Egyptian B2B commodity house trading since 2014 that loads what it agrees to, season after season.
+              Every lot is laboratory-verified before the Bill of Lading and ships FOB / CIF / CFR
               from seven Egyptian seaports to buyers in sixty-plus markets.
             </p>
             {/* Batch 2 (audit UX1) — what is sold, on the first screen. */}
@@ -396,7 +396,7 @@ export default async function HomePage() {
               <span className="text-[#8a6d3b]">Quality at the Core · since 2014</span>
             </p>
             <h2 className={`${display.className} mt-5 text-[clamp(1.8rem,3.6vw,2.9rem)] leading-[1.06] tracking-[-0.015em] text-[#14161a]`}>
-              Most regional exporters sell a specification. <span className="italic text-[#087a70]">We certify one.</span>
+              Most regional exporters sell a specification. <span className="italic text-[#087a70]">We load the one we sold.</span>
             </h2>
             <p className="mt-6 text-[15.5px] leading-[1.75] text-[#3f4650]">
               Consistency is the industry&rsquo;s chronic failure: a first lot that meets the tender
@@ -466,7 +466,7 @@ export default async function HomePage() {
             <article data-step="0" className="egg-step">
               <Eyebrow n="01" tone={C.tealText}>Source · Siwa Oasis &amp; Qattara Depression</Eyebrow>
               <h2 data-rise className={`${display.className} egg-h2`}>
-                Siwa Oasis crystalline rock salt — <span className="italic text-[#087a70]">certified at the mine</span>, not at the negotiating table.
+                Siwa Oasis crystalline rock salt — <span className="italic text-[#087a70]">graded at the mine</span>, not at the negotiating table.
               </h2>
               <p data-rise className="egg-p">
                 Our rock salt is mined from halite beds in the Siwa Oasis and the Qattara Depression —
@@ -649,7 +649,7 @@ export default async function HomePage() {
             <article data-step="5" id="quote" className="egg-step scroll-mt-24">
               <Eyebrow n="05" tone={C.orangeText}>Request a quote · your verified, long-term supply-chain ally</Eyebrow>
               <h2 data-rise className={`${display.className} egg-h2`}>
-                Tell us the tonnage and the specification. <span className="italic text-[#c2410c]">We price it, and certify it, by tomorrow.</span>
+                Tell us the tonnage and the specification. <span className="italic text-[#c2410c]">The export desk comes back with a priced offer.</span>
               </h2>
               <p data-rise className="egg-p">
                 Our export desk sits in Damietta and Cairo. A structured request receives a priced FOB /
