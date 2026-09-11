@@ -1,17 +1,15 @@
 /**
- * /products/salt — salt division pillar ("Quality at the Core" edition,
- * 2026-08-23). Wins over the catch-all `[...path]` route.
+ * /products/salt — salt division overview (Sep 2026 restructure).
+ * Wins over the catch-all `[...path]` route.
  *
- * Structure: white editorial hero → stats → Quality strip → two-source
- * split (Siwa Oasis crystalline rock salt vs Sinai sea salt) with the
- * differentiation table → division Logistical & QA table → QA chain →
- * applications served → grade hubs → sea catalogue → rock catalogue → CTA.
- *
- * Every link present before this edition is preserved. Vector protocol:
- * monochrome micro-icons only.
+ * The hub is an overview of the salt business, not a catalogue: hero → the
+ * two sources as the primary way in (each links to its own page) with the
+ * track record → rock-vs-sea tender table, logistics and QA chain → Quality
+ * strip → applications served → grade hubs → FAQs → CTA. The SKU catalogues
+ * moved to /products/salt/rock-salt and /products/salt/sea-salt; every SKU is
+ * linked from one source page and its grade hub.
  */
 import { routeOpenGraph } from '../../../lib/seo'
-import CardImage from '../../../components/ui/CardImage'
 import HeroMotif from '../../../components/HeroMotif'
 import HeroBackdrop, { isBanner } from '../../../components/HeroBackdrop'
 import Link from 'next/link'
@@ -19,11 +17,13 @@ import {
   getPageByPath,
   getSaltCatalogueBySource,
   getSaltApplicationsServed,
-  APPLICATIONS, cardUrl } from '../../../lib/corporatePages'
+  APPLICATIONS } from '../../../lib/corporatePages'
 import Icon, { APPLICATION_ICON } from '../../../components/ui/Icon'
 import QualityStrip from '../../../components/QualityStrip'
 import HubFaqs from '../../../components/HubFaqs'
 import QaChainTable, { DataTable } from '../../../components/QaChainTable'
+import Image from 'next/image'
+import { GRADES, COMPARE, LOGISTICS, SOURCES, TEAL, TEAL_TEXT, GOLD, GOLD_TEXT } from '../../../lib/salt'
 
 // Drop 139c — render on demand (multi-query salt catalogue page)
 export const dynamic = 'force-dynamic'
@@ -35,50 +35,7 @@ export const metadata = {
   description: 'Bulk Egyptian salt exporter — Siwa Oasis crystalline rock salt (≥ 97 % NaCl, chemical, food and pharma grades) and North Sinai / Red Sea sea salt (industrial and de-icing scale). Per-lot CoA before B/L, TÜV Austria / SGS / Intertek inspection, FOB / CIF / CFR from 7 Egyptian ports. 8 grades, 100+ SKUs. Priced offers from the export desk.',
 }
 
-const GRADES = [
-  { label: 'Bulk De-icing / Road Salt', href: '/products/salt/de-icing-grade', icon: 'snow' },
-  { label: 'Industrial / Chlor-Alkali', href: '/products/salt/industrial-grade', icon: 'factory' },
-  { label: 'Food Grade Salt', href: '/products/salt/food-grade', icon: 'leaf' },
-  { label: 'Pharmaceutical Salt', href: '/products/salt/pharmaceutical-grade', icon: 'pill' },
-  { label: 'Water Treatment & Pool', href: '/products/salt/pool-grade', icon: 'drop' },
-  { label: 'Cosmetic & Spa Salt', href: '/products/salt/cosmetic-grade', icon: 'sparkle' },
-  { label: 'Aquaculture Salt', href: '/products/salt/aquaculture-grade', icon: 'wave' },
-  { label: 'Agricultural Salt', href: '/products/salt/agricultural-grade', icon: 'wheat' },
-]
-
 const APPS_BY_ID = Object.fromEntries(APPLICATIONS.map(a => [a.id, a]))
-
-const TEAL = '#0fb5a5'
-const TEAL_TEXT = '#087a70'
-const GOLD = '#b8862b'
-const GOLD_TEXT = '#8a6d3b'
-
-// Siwa Oasis crystalline rock salt vs Sinai sea salt — the differentiation
-// buyers tender against. Values are contractual limits from the SKU catalogue.
-const COMPARE = [
-  ['Source',               'Siwa Oasis & Qattara Depression halite beds (mined)', 'North Sinai (Bardawil lagoon, El-Arish) & Red Sea pans at Ain Sokhna (solar-evaporated)'],
-  ['NaCl, dry basis',      '≥ 97.00 % guaranteed on every grade; ≥ 99.5 % double-washed / vacuum for pharma', 'Raw 94–97 % · washed 97.5–98 % · double-washed ≥ 99 %'],
-  ['Ca²⁺ / Mg²⁺ / SO₄²⁻',  '≤ 0.40 % / ≤ 0.40 % / ≤ 0.80 %', '≤ 0.40 % / ≤ 0.40 % / ≤ 0.80 % (washed); higher on raw industrial'],
-  ['Water insolubles',     '≤ 0.50 %', '≤ 0.50 % washed · ≤ 1.0 % raw'],
-  ['Moisture',             '≤ 1.5 % natural · ≤ 0.5 % kiln-dried (0.25 % on request)', 'Type 1 kiln-dried ≤ 1.5 % · Type 2 natural 3–4 %'],
-  ['Sieve profiles',       '0/2 · 0/4 · 0/6.3 · 2/8 · 10/40 mm (ISO 13320 / sieve, per lot)', '0/2 · 0/4 · 0/6.3 · 2/8 · 0.5/10 mm (per lot)'],
-  ['Governing standards',  'EN 16811-1 Grades A/B/C · ASTM D632 · BS 3247 · GOST 13830 · Codex STAN 150 · USP / BP / EP', 'EN 16811-1 Type 1 / Type 2 · ASTM D632 / AASHTO M-143 · SS-EN 16811-1 · NSF/ANSI 60 · ISO 22000'],
-  ['Primary grades',       'Food · pharmaceutical · cosmetic · chlor-alkali · drilling · de-icing', 'De-icing · industrial · water treatment · pool · aquaculture · agricultural'],
-  ['Loading ports',        'El Dekheila (EGEDK) · Alexandria (EGALY) · Damietta (EGDAM) · Ain Sokhna (EGSOK)', 'Al-Arish (EGEAR) · Port Said East (EGPSE) · Damietta (EGDAM) · Ain Sokhna (EGSOK)'],
-  ['Source-to-berth',      '< 12 hours by road', '< 12 hours by road'],
-]
-
-const LOGISTICS = [
-  ['MOQ — containerised (FCL)',      '240 MT (10 × 20′ FCL, ~24 MT per box) · 25 MT trial lots for food, pharma and cosmetic grades'],
-  ['MOQ — break-bulk vessel',        '2,000 MT Handysize part-cargo · up to 65,000 MT Panamax; annual offtake contracts available'],
-  ['Packing',                        'Loose bulk · 1 / 1.25 / 1.5 MT FIBC (PE liner for food, pharma and kiln-dried grades) · 50 kg / 25 kg PP, PE or kraft bags · bag-in-jumbo for bulk vessels · OEM print'],
-  ['Incoterms',                      'FOB · CFR · CIF (DAP / DDP on request)'],
-  ['Lead time',                      '1–2 weeks from L/C or advance for stock grades; 3–4 weeks for kiln-dried or custom gradings'],
-  ['Independent inspection protocol','TÜV Austria (EU / GCC) · SGS · Intertek (ASTM / BS) · Bureau Veritas — pre-shipment sampling per ISO 2479 / EN 16811-1 Annex B, NaCl, moisture and sieve witness tests, draft survey on bulk vessels, sealed retained samples held 90 days'],
-  ['Internal QA gate',               'Mine-site or saltworks lab on every production lot; port laboratory re-test (NaCl, Ca, Mg, SO₄, insolubles, moisture, sieve) on every shipment; Certificate of Analysis issued before the Bill of Lading; any out-of-spec lot rejected at the port'],
-  ['Documents',                      'Commercial Invoice · Packing List · B/L · Certificate of Origin (EUR.1 / PAFTA / COMESA / AfCFTA) · CoA · Halal / ISO 22000 certificates for food grades · SDS'],
-  ['HS code',                        '2501.00 (2501.00.91 food / 2501.00.99 industrial per destination tariff)'],
-]
 
 export default async function SaltMainPage() {
   const [page, catalogue, servedApps] = await Promise.all([
@@ -93,7 +50,7 @@ export default async function SaltMainPage() {
     { big: String(all.length),  label: 'SKUs in catalogue' },
     { big: '8',   label: 'Quality grades' },
     { big: '7',   label: 'Loading ports' },
-    { big: '100%', label: 'Lots CoA-verified before B/L' },
+    { big: '10M+', label: 'Tonnes of salt produced & supplied' },
   ]
 
   return (
@@ -160,9 +117,6 @@ export default async function SaltMainPage() {
         </div>
       </section>
 
-      {/* Quality at the Core ───────────────────────────────────── */}
-      <QualityStrip division="Salt" compact />
-
       {/* Source split — Siwa rock vs Sinai sea ───────────────────── */}
       <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 egg-reveal">
         <div className="text-center mb-10 animate-fade-in-up">
@@ -176,11 +130,20 @@ export default async function SaltMainPage() {
             de-icing, industrial and water-treatment tenders. Pick by application, grade and sieve profile —
             we load from the closest port and certify the lot either way.
           </p>
+          <p className="mt-5 text-sm text-[#5b6577] max-w-3xl mx-auto">
+            <Link href="/about/export-record" className="egg-link">More than 2 million tonnes exported under our own name on 100+ chartered vessels since 2015</Link>
+            {' '}— and, counting added-value processing and supply to other exporters, more than 10 million tonnes of salt produced and supplied.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Sea salt card */}
           <div className="egg-card rounded-3xl overflow-hidden animate-fade-in-up">
+            <Link href={SOURCES.sea.path} className="block relative aspect-[21/9] overflow-hidden rounded-t-3xl group" aria-label={`Explore ${SOURCES.sea.label.toLowerCase()}`}>
+              <Image src={SOURCES.sea.banner} alt="" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover object-[72%_50%] group-hover:scale-[1.03] transition-transform duration-700" />
+              <span className="absolute inset-0 bg-gradient-to-t from-[#03182d]/70 via-[#03182d]/10 to-transparent" />
+              <span className="absolute left-5 bottom-4 text-white egg-display text-2xl drop-shadow-[0_1px_8px_rgba(0,0,0,.5)]">{SOURCES.sea.label}</span>
+            </Link>
             <div className="relative overflow-hidden p-7" style={{ background: 'linear-gradient(160deg, #e6fbf8 0%, #c9f3ee 100%)' }}>
               <div className="relative flex items-center gap-3 mb-3">
                 <span className="inline-flex w-11 h-11 items-center justify-center rounded-xl bg-white/70 ring-1 ring-[#0fb5a5]/40 text-[#087a70]"><Icon name="wave" className="w-5 h-5" /></span>
@@ -219,12 +182,17 @@ export default async function SaltMainPage() {
                 <li className="flex items-start gap-2"><span className="text-[#0fb5a5] font-bold">›</span> Aquaculture and fish curing / food preservation</li>
                 <li className="flex items-start gap-2"><span className="text-[#0fb5a5] font-bold">›</span> Food-grade washed sea salt (ISO 22000 / HACCP / Halal)</li>
               </ul>
-              <Link href="#sea-catalogue" className="egg-link mt-5 inline-flex items-center gap-1 text-sm">Browse {sea.length} sea-salt SKUs →</Link>
+              <Link href="{SOURCES.sea.path}" className="egg-btn-ghost mt-6 inline-flex">Explore sea salt — {sea.length} SKUs →</Link>
             </div>
           </div>
 
           {/* Rock salt card */}
           <div className="egg-card rounded-3xl overflow-hidden animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+            <Link href={SOURCES.rock.path} className="block relative aspect-[21/9] overflow-hidden rounded-t-3xl group" aria-label={`Explore ${SOURCES.rock.label.toLowerCase()}`}>
+              <Image src={SOURCES.rock.banner} alt="" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover object-[72%_50%] group-hover:scale-[1.03] transition-transform duration-700" />
+              <span className="absolute inset-0 bg-gradient-to-t from-[#03182d]/70 via-[#03182d]/10 to-transparent" />
+              <span className="absolute left-5 bottom-4 text-white egg-display text-2xl drop-shadow-[0_1px_8px_rgba(0,0,0,.5)]">{SOURCES.rock.label}</span>
+            </Link>
             <div className="relative overflow-hidden p-7" style={{ background: 'linear-gradient(160deg, #fbf3e3 0%, #f3e3c0 100%)' }}>
               <div className="relative flex items-center gap-3 mb-3">
                 <span className="inline-flex w-11 h-11 items-center justify-center rounded-xl bg-white/70 ring-1 ring-[#b8862b]/40 text-[#8a6d3b]"><Icon name="pickaxe" className="w-5 h-5" /></span>
@@ -263,7 +231,7 @@ export default async function SaltMainPage() {
                 <li className="flex items-start gap-2"><span className="text-[#8a6d3b] font-bold">›</span> Drilling-mud weighting, oil &amp; gas completion brines</li>
                 <li className="flex items-start gap-2"><span className="text-[#8a6d3b] font-bold">›</span> Leather tanning, textile dyeing (low iron) and livestock lick blocks</li>
               </ul>
-              <Link href="#rock-catalogue" className="egg-link mt-5 inline-flex items-center gap-1 text-sm">Browse {rock.length || 'rock'} rock-salt SKUs →</Link>
+              <Link href="{SOURCES.rock.path}" className="egg-btn-ghost mt-6 inline-flex">Explore rock salt — {rock.length} SKUs →</Link>
             </div>
           </div>
         </div>
@@ -288,6 +256,9 @@ export default async function SaltMainPage() {
           />
         </div>
       </section>
+
+      {/* Quality at the Core ───────────────────────────────────── */}
+      <QualityStrip division="Salt" compact />
 
       {/* Applications served ──────────────────────────────────── */}
       {apps.length > 0 && (
@@ -337,42 +308,6 @@ export default async function SaltMainPage() {
         </p>
       </section>
 
-      {/* Sea salt catalogue ──────────────────────────────────── */}
-      {sea.length > 0 && (
-        <section id="sea-catalogue" className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 scroll-mt-20 egg-reveal">
-          <div className="flex items-end justify-between gap-4 mb-8 flex-wrap animate-fade-in-up">
-            <div>
-              <div className="egg-eyebrow text-[#087a70] mb-2"><Icon name="wave" className="w-3.5 h-3.5" /> Sea Salt</div>
-              <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a]">{sea.length} sea-salt SKUs</h2>
-            </div>
-            <Link href="/rfq" className="egg-link text-sm">Quote any combination →</Link>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 stagger-children">
-            {sea.slice(0, CARD_LIMIT).map(p => <SaltCard key={p.id} p={p} type="sea" />)}
-          </div>
-          <CompactSkuList items={sea.slice(CARD_LIMIT)} tone="#087a70" />
-        </section>
-      )}
-
-      {/* Rock salt catalogue ─────────────────────────────────── */}
-      {rock.length > 0 && (
-        <section id="rock-catalogue" className="bg-[#f9fafb] py-16 border-y border-[#14161a]/10 scroll-mt-20 egg-reveal">
-          <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-            <div className="flex items-end justify-between gap-4 mb-8 flex-wrap animate-fade-in-up">
-              <div>
-                <div className="egg-eyebrow text-[#8a6d3b] mb-2"><Icon name="pickaxe" className="w-3.5 h-3.5" /> Rock Salt</div>
-                <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a]">{rock.length} rock-salt SKUs</h2>
-              </div>
-              <Link href="/rfq" className="egg-link text-sm">Quote any combination →</Link>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 stagger-children">
-              {rock.slice(0, CARD_LIMIT).map(p => <SaltCard key={p.id} p={p} type="rock" />)}
-            </div>
-            <CompactSkuList items={rock.slice(CARD_LIMIT)} tone="#8a6d3b" />
-          </div>
-        </section>
-      )}
-
       {/* Per-page FAQs from the CMS row (seo.faqs) — FAQPage schema + accordion */}
       <HubFaqs page={page} />
 
@@ -389,58 +324,5 @@ export default async function SaltMainPage() {
         </div>
       </section>
     </article>
-  )
-}
-
-/* SKU card — used for both sea and rock catalogues */
-/* Batch 2 — the hub rendered 100 full cards (551 KB of HTML). The first
-   CARD_LIMIT per source keep the card treatment; the rest stay linked from
-   this page (internal-link equity) as a compact list. */
-const CARD_LIMIT = 12
-
-function CompactSkuList({ items, tone }) {
-  if (!items?.length) return null
-  return (
-    <div className="mt-6 rounded-2xl border border-[#14161a]/10 bg-white p-5 sm:p-6">
-      <p className="text-[11px] font-mono uppercase tracking-[0.18em] text-[#5b6577] mb-3">{items.length} more SKUs in this source</p>
-      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2">
-        {items.map(p => (
-          <li key={p.id} className="flex items-baseline gap-2 text-sm leading-snug">
-            <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full shrink-0 translate-y-[-2px]" style={{ background: tone }} />
-            <Link href={p.path} className="text-[#14161a] hover:text-[#087a70] hover:underline underline-offset-4">{p.title}</Link>
-            {p.specs?.nacl_min && <span className="font-mono text-[11px] text-[#5b6577] shrink-0">NaCl {p.specs.nacl_min}</span>}
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
-}
-
-function SaltCard({ p, type }) {
-  const isSea = type === 'sea'
-  return (
-    <Link href={p.path} className="egg-card group overflow-hidden">
-      <div className="aspect-[16/9] overflow-hidden rounded-t-2xl"
-        style={{ background: isSea ? 'linear-gradient(135deg, #e6fbf8, #f9fafb)' : 'linear-gradient(135deg, #fbf3e3, #f9fafb)' }}>
-        {cardUrl(p) ? (
-          <CardImage src={cardUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-[#14161a]/20"><Icon name={isSea ? 'wave' : 'pickaxe'} className="w-10 h-10" strokeWidth={1.25} /></div>
-        )}
-      </div>
-      <div className="p-4">
-        {p.hs_code && <div className="text-[11px] font-mono uppercase tracking-[0.14em] text-[#67707f] mb-1">HS {p.hs_code}</div>}
-        <h3 className="text-sm font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#087a70] transition-colors min-h-[2.5em]">{p.title}</h3>
-        {p.specs?.nacl_min && <div className="text-xs font-mono text-[#5b6472] mt-1.5">NaCl {p.specs.nacl_min}</div>}
-        {p.applications?.length > 0 && (
-          <div className="flex flex-wrap gap-1 mt-2">
-            {p.applications.slice(0, 2).map(a => (
-              <span key={a} className="text-[11px] font-semibold bg-[#f3f0ff] text-[#6d28d9] ring-1 ring-[#7c3aed]/25 px-2 py-0.5 rounded-full">{a.replace(/_/g, ' ')}</span>
-            ))}
-            {p.applications.length > 2 && <span className="text-[11px] text-[#67707f]">+{p.applications.length - 2}</span>}
-          </div>
-        )}
-      </div>
-    </Link>
   )
 }

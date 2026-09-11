@@ -120,19 +120,10 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
         </div>
       </section>
 
-      {/* Quality at the Core */}
-      <QualityStrip division={division.label} compact />
-
-      {/* Division body — technical narrative + specification tables */}
-      {page.body_markdown && (
-        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20 egg-reveal">
-          <RichPageBody content={page.body_markdown} title={page.title} />
-        </section>
-      )}
-
-      {/* Sub-categories grid */}
+      {/* Sub-categories — the primary way into the division (Sep 2026: moved
+         up from below the technical body; the page opens with its categories) */}
       {subCount > 0 && (
-        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 border-t border-[#14161a]/10 egg-reveal">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 egg-reveal">
           <div className="text-center mb-10">
             <div className="egg-eyebrow text-[#087a70] justify-center mb-3">Browse the catalogue</div>
             <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-3">
@@ -172,6 +163,16 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
               </Link>
             ))}
           </div>
+        </section>
+      )}
+
+      {/* Quality at the Core */}
+      <QualityStrip division={division.label} compact />
+
+      {/* Division body — technical narrative + specification tables */}
+      {page.body_markdown && (
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-20 egg-reveal">
+          <RichPageBody content={page.body_markdown} title={page.title} />
         </section>
       )}
 
@@ -230,48 +231,6 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
           </div>
         </div>
       </section>
-
-      {/* Featured catalogue */}
-      {(featured || []).length > 0 && (
-        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 egg-reveal">
-          <div className="flex items-end justify-between gap-4 mb-10 flex-wrap">
-            <div>
-              <div className="egg-eyebrow text-[#087a70] mb-3">Featured products</div>
-              <h2 className="egg-display text-3xl sm:text-4xl text-[#14161a]">Recently shipped from this division.</h2>
-            </div>
-            <Link href={`/rfq?product=${encodeURIComponent(page.path)}`} className="egg-link text-sm">
-              Quote any combination →
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 stagger-children">
-            {featured.slice(0, 8).map(p => (
-              <Link key={p.id} href={p.path} className="egg-card group overflow-hidden">
-                <div className="aspect-[16/9] overflow-hidden rounded-t-2xl"
-                  style={{ background: `linear-gradient(135deg, ${tone}1a, #f9fafb)` }}>
-                  {cardUrl(p) ? (
-                    <CardImage src={cardUrl(p)} className="group-hover:scale-105 transition-transform duration-500" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-[#14161a]/20">
-                      <Icon name={divIcon} className="w-10 h-10" strokeWidth={1.25} />
-                    </div>
-                  )}
-                </div>
-                <div className="p-4">
-                  {p.hs_code && (
-                    <div className="text-[11px] font-mono uppercase tracking-[0.14em] text-[#67707f] mb-1">HS {p.hs_code}</div>
-                  )}
-                  <h3 className="text-sm font-semibold text-[#14161a] line-clamp-2 group-hover:text-[#087a70] transition-colors min-h-[2.5em]">
-                    {p.title}
-                  </h3>
-                  {p.price_indication && visibility?.showPrices && (
-                    <p className="text-xs text-[#c2410c] font-semibold mt-1.5 line-clamp-1">{p.price_indication}</p>
-                  )}
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
 
       {/* Per-page FAQs from the CMS (seo.faqs) — FAQPage schema + accordion */}
       <HubFaqs page={page} />

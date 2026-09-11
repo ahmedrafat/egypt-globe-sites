@@ -32,13 +32,21 @@ function appLanding(name) {
   return null
 }
 
+// Every salt SKU links to its source page (Sep 2026: the rock / sea source
+// pages replaced /wholesale/rock-salt and /wholesale/sea-salt, which now 308
+// to them). Kept separate from wholesaleHub so a de-icing or chlor-alkali SKU
+// still reaches its source page as well as its wholesale hub.
+function sourcePage(sourceType) {
+  if (sourceType === 'Rock Salt') return { path: '/products/salt/rock-salt', label: 'Egyptian Rock Salt — Siwa & Qattara' }
+  if (sourceType === 'Sea Salt')  return { path: '/products/salt/sea-salt',  label: 'Egyptian Sea Salt — North Sinai & Red Sea' }
+  return null
+}
+
 // Match SKU name to wholesale hub
 function wholesaleHub(name, sourceType) {
   const n = (name || '').toLowerCase()
   if (n.includes('deicing'))  return { path: '/wholesale/deicing-salt', label: 'Bulk Deicing Salt Suppliers' }
   if (n.includes('chlor') || n.includes('chemical') || n.includes('pvc')) return { path: '/wholesale/sodium-chloride', label: 'Bulk Sodium Chloride Suppliers' }
-  if (sourceType === 'Sea Salt')  return { path: '/wholesale/sea-salt',  label: 'Bulk Sea Salt Wholesale' }
-  if (sourceType === 'Rock Salt') return { path: '/wholesale/rock-salt', label: 'Bulk Rock Salt Wholesale' }
   return null
 }
 
@@ -87,6 +95,7 @@ export default function SkuRelatedLinks({ page, commodity }) {
   const loadingPorts = page.loading_ports || commodity?.loading_ports || []
 
   const links = [
+    sourcePage(sourceType),
     appLanding(name),
     wholesaleHub(name, sourceType),
     standardsPage(name),

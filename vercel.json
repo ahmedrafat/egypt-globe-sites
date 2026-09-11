@@ -465,7 +465,7 @@
     },
     {
       "source": "/wholesale/sea-salt1",
-      "destination": "/wholesale/sea-salt",
+      "destination": "/products/salt/sea-salt",
       "permanent": true
     },
     {
@@ -813,6 +813,16 @@
     {
       "source": "/request-for-quote/:rest+",
       "destination": "/rfq",
+      "permanent": true
+    },
+    {
+      "source": "/wholesale/rock-salt",
+      "destination": "/products/salt/rock-salt",
+      "permanent": true
+    },
+    {
+      "source": "/wholesale/sea-salt",
+      "destination": "/products/salt/sea-salt",
       "permanent": true
     }
   ]
