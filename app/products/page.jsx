@@ -83,14 +83,15 @@ export default function ProductsHub() {
           </p>
           <h1 className="egg-display text-[clamp(2.2rem,5.5vw,4.4rem)] leading-[1.02] mb-5 text-[#14161a]">
             Egyptian commodities,<br />
-            <span className="italic text-[#087a70]">certified before they ship.</span>
+            <span className="italic text-[#087a70]">from an exporter shipping since 2015.</span>
           </h1>
           <p className="text-base sm:text-lg text-[#3f4650] leading-relaxed mb-8">
             Salt, cement &amp; clinker, fertilizers, chemicals, industrial minerals, agro &amp; food
-            and metals — sourced from Egyptian capacity under one QA system and shipped FOB / CIF /
-            CFR from 7 Egyptian seaports. Every lot is tested at the port laboratory and released
-            on a Certificate of Analysis or Mill Test Certificate before the Bill of Lading; a lot
-            outside specification is rejected at the port, never renegotiated.
+            and metals — sourced from Egyptian capacity and shipped FOB / CIF / CFR from 7 Egyptian
+            seaports. The salt programme alone has moved 
+            <Link href="/about/export-record" className="text-white underline decoration-[#ff5a18]/70 underline-offset-4 hover:decoration-[#ff5a18] transition-colors">more than 2 million tonnes on 100+ chartered
+            vessels since 2015</Link>. Every division works to one rule: the specification agreed is
+            the specification loaded — a lot that misses it is rejected at the port, never renegotiated.
           </p>
           <div className="flex flex-wrap items-center gap-4">
             <Link href="/rfq"
@@ -225,7 +226,7 @@ export default function ProductsHub() {
         <div className="relative max-w-2xl">
           <p className="egg-eyebrow text-[#c2410c] mb-8">Get a price</p>
           <h2 className="egg-display text-3xl sm:text-4xl lg:text-5xl mb-4 text-[#14161a]">
-            Know your specification. Need a certified price?
+            Know your specification. Need a firm price?
           </h2>
           <p className="text-[#3f4650] text-base mb-10 leading-relaxed">
             Submit an RFQ with your commodity, specification, quantity, destination port and preferred
