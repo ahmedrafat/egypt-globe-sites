@@ -24,7 +24,7 @@ export const isBanner = src => typeof src === 'string' && src.startsWith('/banne
 // runs to ~62% of the width at lg, and the first version (.86 at 48% -> .46
 // at 72%) measured 3.4-4.0:1 behind its last words on three pages. These stops
 // were re-measured pixel-by-pixel against the live art -- keep it >= 4.5:1.
-const BANNER_SCRIM_LG =
+export const BANNER_SCRIM_LG =
   'linear-gradient(90deg, rgba(3,24,45,.94) 0%, rgba(3,24,45,.90) 50%, rgba(3,24,45,.80) 62%, rgba(3,24,45,.42) 78%, rgba(3,24,45,.14) 100%)'
 
 export default function HeroBackdrop({ src }) {

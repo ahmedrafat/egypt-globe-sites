@@ -11,6 +11,7 @@ import {
   APPLICATIONS,
 } from '../lib/corporatePages'
 import { getCurrentBrand, brandMeta } from '../lib/brand'
+import { isBanner, BANNER_SCRIM_LG } from '../components/HeroBackdrop'
 
 /**
  * egyptglobe.com landing — "Quality at the Core" edition (2026-08-23).
@@ -271,6 +272,7 @@ export default async function HomePage() {
   ])
 
   const heroPhoto = cmsHome?.hero_photo_url || null
+  const heroIsBanner = isBanner(heroPhoto)
   const email = settings?.email || 'export@egyptglobe.com'
   const phone = settings?.phone || '+20 100 772 9844'
   const phoneE164 = settings?.phoneE164 || '+201007729844'
@@ -287,12 +289,21 @@ export default async function HomePage() {
         {/* layered backdrop (parallaxed by GSAP) — photo + technical grid + compass ring */}
         <div data-hero-bg className="absolute inset-[-12%] z-0 pointer-events-none" aria-hidden="true">
           {heroPhoto && (
-            <Image src={heroPhoto} alt="" fill sizes="100vw" preload className="object-cover opacity-[0.38]" />
+            <Image src={heroPhoto} alt="" fill sizes="100vw" preload
+              className={heroIsBanner ? 'object-cover object-[72%_50%] opacity-90' : 'object-cover opacity-[0.38]'} />
           )}
-          {heroPhoto && <div className="absolute inset-0 bg-gradient-to-b from-[#03182d]/80 via-[#06294a]/70 to-[#03182d]/95" />}
+          {heroPhoto && !heroIsBanner && <div className="absolute inset-0 bg-gradient-to-b from-[#03182d]/80 via-[#06294a]/70 to-[#03182d]/95" />}
+          {/* commissioned banner: same measured scrim as every other hero, plus a
+             fade at the fold so the stat cards read over the art */}
+          {heroIsBanner && (<>
+            <div className="absolute inset-0 lg:hidden bg-gradient-to-b from-[#03182d]/88 via-[#03182d]/78 to-[#03182d]/92" />
+            <div className="absolute inset-0 hidden lg:block" style={{ background: BANNER_SCRIM_LG }} />
+            <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-[#03182d]/90 to-transparent" />
+          </>)}
           <div className="absolute inset-0 egg-hero-glow" />
           <div className="absolute inset-0 egg-grid-dark opacity-80" />
           {/* slow compass ring — decorative, rotates once every 3 min */}
+          {!heroIsBanner && (
           <svg className="egg-compass absolute -right-[12%] top-[8%] w-[min(78vw,760px)] h-[min(78vw,760px)]"
             viewBox="0 0 400 400" fill="none" aria-hidden="true" focusable="false">
             <circle cx="200" cy="200" r="196" stroke="#5aa0dc" strokeWidth="0.6" strokeDasharray="2 10" />
@@ -300,6 +311,7 @@ export default async function HomePage() {
             <circle cx="200" cy="200" r="96" stroke="#5aa0dc" strokeWidth="0.8" />
             <path d="M200 20 L200 380 M20 200 L380 200 M73 73 L327 327 M327 73 L73 327" stroke="#a9bfd7" strokeWidth="0.4" opacity="0.55" />
           </svg>
+          )}
         </div>
         {/* orange filament along the fold, then a clean hand-off into the light body below */}
         <div className="absolute inset-x-0 bottom-0 h-px z-[2] bg-gradient-to-r from-transparent via-[#ff5a18]/70 to-transparent" aria-hidden="true" />
@@ -1156,11 +1168,11 @@ function DivisionCard({ div }) {
     >
       {/* division photography — decorative; the label beside it carries the name */}
       <Image
-        src={`/heroes/products-${div.id}.png`}
+        src={`/banners/products-${div.id}.jpg`}
         alt=""
         fill
         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 14vw"
-        className="object-cover"
+        className="object-cover object-[74%_50%]"
       />
       <span className="absolute inset-0 bg-gradient-to-t from-[#03182d] via-[#03182d]/55 to-[#06294a]/10" />
       <span className="absolute inset-x-0 bottom-0 p-3 sm:p-3.5">
