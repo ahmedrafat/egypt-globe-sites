@@ -1,3 +1,4 @@
+import { heroCopy as cmsHeroCopy } from '../lib/heroCopy'
 import Link from 'next/link'
 import Image from 'next/image'
 import Script from 'next/script'
@@ -275,6 +276,7 @@ export default async function HomePage() {
     getPageByPath('/').catch(() => null),
   ])
 
+  const hero = cmsHeroCopy(cmsHome)
   const heroPhoto = cmsHome?.hero_photo_url || null
   const heroIsBanner = isBanner(heroPhoto)
   const email = settings?.email || 'export@egyptglobe.com'
@@ -332,14 +334,14 @@ export default async function HomePage() {
           {/* headline */}
           <div className="max-w-5xl w-full py-12 sm:py-16">
             <h1 className={`${display.className} egg-rise text-[clamp(2.5rem,7vw,6.4rem)] font-normal leading-[0.98] tracking-[-0.02em] text-white`} style={{ animationDelay: '.12s' }}>
-              Institutional reliability<br />
-              <span className="italic text-[#a9bfd7]">in bulk commodity exporting</span><span className="text-[#ff5a18]">.</span>
+              {hero.heading || 'Institutional reliability'}<br />
+              <span className="italic text-[#a9bfd7]">{hero.sub || 'in bulk commodity exporting'}</span><span className="text-[#ff5a18]">.</span>
             </h1>
             <p className="egg-rise mt-7 sm:mt-9 text-base sm:text-lg lg:text-[1.25rem] max-w-3xl leading-relaxed text-[#a9bfd7]" style={{ animationDelay: '.2s' }}>
-              An Egyptian B2B commodity house trading since 2014 that loads what it agrees to, season after season.
+              {hero.lede || <>An Egyptian B2B commodity house trading since 2014 that loads what it agrees to, season after season.
               Every lot is laboratory-verified before the Bill of Lading and ships FOB / CIF / CFR
-              from seven Egyptian seaports to buyers in sixty-plus markets.
-            </p>
+              from seven Egyptian seaports to buyers in sixty-plus markets.</>}
+</p>
             {/* Batch 2 (audit UX1) — what is sold, on the first screen. */}
             <nav aria-label="Product divisions" className="egg-rise mt-7 sm:mt-8 flex flex-wrap gap-2" style={{ animationDelay: '.24s' }}>
               {PRODUCT_DIVISIONS.map(d => (

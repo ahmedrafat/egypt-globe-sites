@@ -2,6 +2,7 @@
  * /case-studies — magazine index of real Egypt Globe export shipments.
  * Light editorial edition — tokens + utilities (.egg-*) in app/globals.css.
  */
+import { heroCopy } from '../../lib/heroCopy'
 import { routeOpenGraph } from '../../lib/seo'
 import CardImage from '../../components/ui/CardImage'
 import HeroMotif from '../../components/HeroMotif'
@@ -32,6 +33,7 @@ export default async function CaseStudiesIndex() {
     getCaseStudies({ limit: 50 }),
     getPageByPath('/case-studies'),
   ])
+  const hero = heroCopy(hubPage)
 
   return (
     <article className="bg-white text-[#14161a]">
@@ -63,17 +65,17 @@ export default async function CaseStudiesIndex() {
           </div>
 
           <h1 className="egg-display text-4xl sm:text-5xl lg:text-6xl text-[#14161a] mb-4 leading-[1.02] animate-fade-in-up">
-            Real Egypt Globe shipments,
+            {hero.heading || 'Real Egypt Globe shipments,'}
             <span className="block text-[#3f4650] italic text-2xl sm:text-3xl lg:text-4xl mt-3 leading-[1.15]">
-              full process and delivered numbers.
+              {hero.sub || 'full process and delivered numbers.'}
             </span>
           </h1>
           <p className="text-base sm:text-lg leading-relaxed max-w-3xl text-[#3f4650] animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
-            B2B export trade is built on verifiable execution, not promises.
+            {hero.lede || <>B2B export trade is built on verifiable execution, not promises.
             Each case study below walks through a real shipment — sourcing,
             loading, documentation, distribution and the lab-tested numbers
-            that came out the other end.
-          </p>
+            that came out the other end.</>}
+</p>
         </div>
       </section>
 

@@ -9,6 +9,7 @@
  * moved to /products/salt/rock-salt and /products/salt/sea-salt; every SKU is
  * linked from one source page and its grade hub.
  */
+import { heroCopy } from '../../../lib/heroCopy'
 import { routeOpenGraph } from '../../../lib/seo'
 import HeroMotif from '../../../components/HeroMotif'
 import HeroBackdrop, { isBanner } from '../../../components/HeroBackdrop'
@@ -44,6 +45,7 @@ export default async function SaltMainPage() {
     getSaltApplicationsServed(),
   ])
   const { sea, rock, all } = catalogue
+  const hero = heroCopy(page)
   const apps = servedApps.map(id => APPS_BY_ID[id]).filter(Boolean)
 
   const STATS = [
@@ -89,15 +91,15 @@ export default async function SaltMainPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-end">
             <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
               <h1 className="egg-display text-4xl sm:text-5xl lg:text-6xl text-[#14161a] mb-4 leading-[1.02]">
-                Bulk Egyptian salt — sea &amp; rock,<br /><span className="italic text-[#087a70]">over 2 million tonnes shipped since 2015.</span>
+                {hero.heading || <>Bulk Egyptian salt — sea &amp; rock,</>}<br /><span className="italic text-[#087a70]">{hero.sub || 'over 2 million tonnes shipped since 2015.'}</span>
               </h1>
               <p className="text-base sm:text-lg leading-relaxed max-w-3xl text-[#3f4650]">
-                {all.length} SKUs across 8 grades from two Egyptian sources: Siwa Oasis crystalline rock salt
+                {hero.lede || <>{all.length} SKUs across 8 grades from two Egyptian sources: Siwa Oasis crystalline rock salt
                 for chemical, food and pharmaceutical purity, and North Sinai sea salt at industrial and de-icing
                 scale. <Link href="/about/export-record" className="text-white underline decoration-[#ff5a18]/70 underline-offset-4 hover:decoration-[#ff5a18] transition-colors">More than 100 chartered vessels</Link> have
                 carried it FOB / CIF / CFR from Egyptian ports since 2015 — the same specification season after
-                season, with a Certificate of Analysis on every lot.
-              </p>
+                season, with a Certificate of Analysis on every lot.</>}
+</p>
             </div>
             <div className="flex flex-wrap gap-2 lg:justify-end animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
               <Link href="/rfq?product=%2Fproducts%2Fsalt" className="egg-btn-primary">Get Quote</Link>

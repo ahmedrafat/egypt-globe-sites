@@ -6,6 +6,7 @@
  *
  * Design tokens + utilities (.egg-*) live in app/globals.css.
  */
+import { heroCopy } from '../../lib/heroCopy'
 import { routeOpenGraph } from '../../lib/seo'
 import HeroMotif from '../../components/HeroMotif'
 import HeroBackdrop, { isBanner } from '../../components/HeroBackdrop'
@@ -32,6 +33,7 @@ const TONE = '#0d9488'
 
 export default async function ServicesHub() {
   const page = await getPageByPath('/services')
+  const hero = heroCopy(page)
 
   return (
     <article className="bg-white text-[#14161a]">
@@ -68,17 +70,17 @@ export default async function ServicesHub() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-end">
             <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
               <h1 className="egg-display text-4xl sm:text-5xl lg:text-6xl text-[#14161a] mb-4 leading-[1.02]">
-                Beyond commodities —
+                {hero.heading || 'Beyond commodities —'}
                 <span className="block text-[#3f4650] italic text-2xl sm:text-3xl lg:text-4xl mt-3 leading-[1.15]">
-                  full supply-chain coverage in-house.
+                  {hero.sub || 'full supply-chain coverage in-house.'}
                 </span>
               </h1>
               <p className="text-base sm:text-lg leading-relaxed max-w-3xl text-[#3f4650]">
-                Supply-chain risk in bulk export is rarely the commodity — it is the handover between
+                {hero.lede || <>Supply-chain risk in bulk export is rarely the commodity — it is the handover between
                 contractors. Egypt Globe Group removes the handovers: resident stevedoring, vessel-agency,
                 port-QC, packing, inspection and documentation teams at all seven Egyptian ports, one
-                accountable desk, documented Notice of Readiness and Statement of Facts on every vessel.
-              </p>
+                accountable desk, documented Notice of Readiness and Statement of Facts on every vessel.</>}
+</p>
             </div>
             <div className="flex flex-wrap gap-2 lg:justify-end animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
               <Link href="/rfq"

@@ -25,11 +25,13 @@ import RichPageBody from './RichPageBody'
 import HubFaqs from './HubFaqs'
 import Icon, { DIVISION_ICON, APPLICATION_ICON } from './ui/Icon'
 import QualityStrip from './QualityStrip'
+import { heroCopy } from '../lib/heroCopy'
 import { DataTable } from './QaChainTable'
 import { summarizeFacts, factsByLine, applicationsForTags, withoutQuoteSection, fmtMoq, fmtHs, lineLabel } from '../lib/productLines'
 
 export default function RichDivisionLanding({ page, division, subcategories, featured, allDivisionPages, facts, visibility }) {
   // Facts only for SKUs published and visible to this visitor.
+  const hero = heroCopy(page)
   const visible = new Set((allDivisionPages || []).map(p => p.path))
   const divFacts = (facts || []).filter(f => visible.has(f.page_path))
   const byLine = factsByLine(divFacts)
@@ -100,9 +102,9 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-end">
             <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
               <h1 className="egg-display text-4xl sm:text-5xl lg:text-6xl text-[#14161a] mb-4 leading-[1.02]">
-                {division.label}
+                {hero.heading || division.label}
                 <span className="block text-[#3f4650] text-2xl sm:text-3xl lg:text-4xl italic mt-3 leading-[1.15]">
-                  {division.blurb}
+                  {hero.sub || division.blurb}
                 </span>
               </h1>
               {page.description && (

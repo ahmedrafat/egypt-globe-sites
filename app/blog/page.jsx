@@ -2,6 +2,7 @@
  * /blog — magazine index of all blog articles.
  * Light editorial edition — tokens + utilities (.egg-*) in app/globals.css.
  */
+import { heroCopy } from '../../lib/heroCopy'
 import { routeOpenGraph } from '../../lib/seo'
 import CardImage from '../../components/ui/CardImage'
 import HeroMotif from '../../components/HeroMotif'
@@ -28,6 +29,7 @@ export default async function BlogIndex() {
     getPagesByCategory(),
     getPageByPath('/blog'),
   ])
+  const hero = heroCopy(hubPage)
   const posts = (grouped.blog || []).filter(p => p.path !== '/blog')
 
   return (
@@ -57,16 +59,16 @@ export default async function BlogIndex() {
           </div>
 
           <h1 className="egg-display text-4xl sm:text-5xl lg:text-6xl text-[#14161a] mb-4 leading-[1.02] animate-fade-in-up">
-            News, market commentary &
+            {hero.heading || <>News, market commentary &amp;</>}
             <span className="block text-[#3f4650] italic text-2xl sm:text-3xl lg:text-4xl mt-3 leading-[1.15]">
-              Egyptian B2B export trade insights.
+              {hero.sub || 'Egyptian B2B export trade insights.'}
             </span>
           </h1>
           <p className="text-base sm:text-lg leading-relaxed max-w-3xl text-[#3f4650] animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
-            Company updates, Egyptian commodity-market dynamics, port economics, regulatory
+            {hero.lede || <>Company updates, Egyptian commodity-market dynamics, port economics, regulatory
             shifts (CBAM, PVoC, VOC, CIQ) and emerging tech in the salt / cement / fertilizer
-            / chemicals supply chain.
-          </p>
+            / chemicals supply chain.</>}
+</p>
         </div>
       </section>
 

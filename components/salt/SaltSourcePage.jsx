@@ -14,6 +14,7 @@ import HeroMotif from '../HeroMotif'
 import Icon, { APPLICATION_ICON } from '../ui/Icon'
 import RichPageBody from '../RichPageBody'
 import HubFaqs from '../HubFaqs'
+import { heroCopy } from '../../lib/heroCopy'
 import { DataTable } from '../QaChainTable'
 import { BreadcrumbJsonLd } from '../StructuredData'
 import SaltCatalogue from './SaltCatalogue'
@@ -25,6 +26,7 @@ export default function SaltSourcePage({ source, page, items }) {
   const apps = applicationsFor(items)
   const grades = gradesFor(items)
   const glance = COMPARE.map(r => [r[0], r[s.col]])
+  const hero = heroCopy(page)
   const crumbs = [
     { name: 'Home', path: '/' }, { name: 'Products', path: '/products' },
     { name: 'Salt', path: '/products/salt' }, { name: s.label, path: s.path },
@@ -64,7 +66,7 @@ export default function SaltSourcePage({ source, page, items }) {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-end">
             <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
               <h1 className="egg-display text-4xl sm:text-5xl lg:text-6xl mb-4 leading-[1.02]">
-                {s.headline}<br /><span className="italic">{s.headlineTail}</span>
+                {hero.heading || s.headline}<br /><span className="italic">{hero.sub || s.headlineTail}</span>
               </h1>
               {page?.description && (
                 <p className="text-base sm:text-lg leading-relaxed max-w-3xl">{page.description}</p>

@@ -28,6 +28,7 @@ import { cardUrl } from '../lib/corporatePages'
 import { summarizeFacts, glanceRows, applicationsForTags, portPage, withoutQuoteSection, fmtMoq, lineLabel } from '../lib/productLines'
 import RichPageBody from './RichPageBody'
 import HubFaqs from './HubFaqs'
+import { heroCopy } from '../lib/heroCopy'
 import { DataTable } from './QaChainTable'
 import Icon, { DIVISION_ICON, APPLICATION_ICON } from './ui/Icon'
 
@@ -48,6 +49,7 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
   const divIcon = DIVISION_ICON[division.id] || 'box'
   const n = list.length
   const label = lineLabel(page)
+  const hero = heroCopy(page)
   const quote = `/rfq?product=${encodeURIComponent(page.path)}`
   const banner = isBanner(page.hero_photo_url)
 
@@ -83,7 +85,7 @@ export default function RichSubcategoryLanding({ page, division, skus, siblingSu
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-end">
             <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
-              <h1 className="egg-display text-4xl sm:text-5xl lg:text-6xl mb-4 leading-[1.02]">{page.title}</h1>
+              <h1 className="egg-display text-4xl sm:text-5xl lg:text-6xl mb-4 leading-[1.02]">{hero.heading || page.title}</h1>
               {page.description && (
                 <p className="text-base sm:text-lg leading-relaxed max-w-3xl">{page.description}</p>
               )}

@@ -3,10 +3,11 @@
  * White theme, consistent with homepage (light editorial system —
  * tokens + utilities in app/globals.css). Responsive throughout.
  */
+import { heroCopy } from '../../lib/heroCopy'
 import { routeOpenGraph } from '../../lib/seo'
 import HeroBackdrop from '../../components/HeroBackdrop'
 import Link from 'next/link'
-import { PRODUCT_DIVISIONS } from '../../lib/corporatePages'
+import { PRODUCT_DIVISIONS, getPageByPath } from '../../lib/corporatePages'
 import Icon, { DIVISION_ICON } from '../../components/ui/Icon'
 import QualityStrip from '../../components/QualityStrip'
 import QaChainTable, { DataTable } from '../../components/QaChainTable'
@@ -59,7 +60,9 @@ const CERTS = [
 // metadata above. Keep egg_corporate_pages.hero_photo_url for /products in step.
 const HERO_BANNER = '/banners/products.jpg'
 
-export default function ProductsHub() {
+export default async function ProductsHub() {
+  const page = await getPageByPath('/products')
+  const hero = heroCopy(page)
   return (
     <article className="bg-white text-[#14161a]">
 
@@ -82,17 +85,17 @@ export default function ProductsHub() {
             7 commodity divisions · 60+ destination markets
           </p>
           <h1 className="egg-display text-[clamp(2.2rem,5.5vw,4.4rem)] leading-[1.02] mb-5 text-[#14161a]">
-            Egyptian commodities,<br />
-            <span className="italic text-[#087a70]">from an exporter shipping since 2015.</span>
+            {hero.heading || 'Egyptian commodities,'}<br />
+            <span className="italic text-[#087a70]">{hero.sub || 'from an exporter shipping since 2015.'}</span>
           </h1>
           <p className="text-base sm:text-lg text-[#3f4650] leading-relaxed mb-8">
-            Salt, cement &amp; clinker, fertilizers, chemicals, industrial minerals, agro &amp; food
+            {hero.lede || <>Salt, cement &amp; clinker, fertilizers, chemicals, industrial minerals, agro &amp; food
             and metals — sourced from Egyptian capacity and shipped FOB / CIF / CFR from 7 Egyptian
             seaports. The salt programme alone has moved 
             <Link href="/about/export-record" className="text-white underline decoration-[#ff5a18]/70 underline-offset-4 hover:decoration-[#ff5a18] transition-colors">more than 2 million tonnes on 100+ chartered
             vessels since 2015</Link>. Every division works to one rule: the specification agreed is
-            the specification loaded — a lot that misses it is rejected at the port, never renegotiated.
-          </p>
+            the specification loaded — a lot that misses it is rejected at the port, never renegotiated.</>}
+</p>
           <div className="flex flex-wrap items-center gap-4">
             <Link href="/rfq"
               className="egg-btn-primary">
