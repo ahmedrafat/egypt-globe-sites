@@ -668,7 +668,9 @@ export default async function PageRenderer({ page }) {
                 </div>
                 <div className="p-3">
                   <h3 className="text-sm font-semibold text-[#14161a] line-clamp-1 group-hover:text-[#087a70]">{p.title}</h3>
-                  {p.description && <p className="text-xs text-[#5b6577] mt-1 line-clamp-2">{p.description}</p>}
+                  {skuDifferentiator(p)
+                    ? <p className="text-xs font-mono text-[#5b6472] mt-1 line-clamp-2">{skuDifferentiator(p)}</p>
+                    : p.description && <p className="text-xs text-[#5b6577] mt-1 line-clamp-2">{p.description}</p>}
                 </div>
               </Link>
             ))}

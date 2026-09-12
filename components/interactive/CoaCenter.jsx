@@ -12,6 +12,7 @@
  *
  * Falls back to GLOBAL CoA when no region-specific cert exists yet.
  */
+import { fmtSpecValue } from '../../lib/specs'
 import { useMemo, useState } from 'react'
 import { printCoa } from '../../lib/coaPrint'
 import Icon from '../ui/Icon'
@@ -332,7 +333,7 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
                     {paramKeys.map((k, i) => (
                       <div key={k} className={`flex items-baseline justify-between px-4 py-2.5 ${i % 2 === 0 ? '' : 'sm:bg-white'}`}>
                         <span className="text-xs text-[#5b6577] font-medium">{paramLabel(k)}</span>
-                        <span className="text-sm font-mono font-bold text-[#14161a]">{String(params[k])}</span>
+                        <span className="text-sm font-mono font-bold text-[#14161a]">{fmtSpecValue(params[k])}</span>
                       </div>
                     ))}
                   </div>
