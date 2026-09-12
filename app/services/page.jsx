@@ -17,6 +17,7 @@ import {
   getPageByPath,
 } from '../../lib/corporatePages'
 import RichPageBody from '../../components/RichPageBody'
+import HubFaqs from '../../components/HubFaqs'
 import QualityStrip from '../../components/QualityStrip'
 import Icon, { SERVICE_ICON } from '../../components/ui/Icon'
 
@@ -209,6 +210,8 @@ export default async function ServicesHub() {
           </div>
         </div>
       </section>
+
+      <HubFaqs page={page} />
 
       {/* Bottom CTA */}
       <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 overflow-hidden egg-reveal">
