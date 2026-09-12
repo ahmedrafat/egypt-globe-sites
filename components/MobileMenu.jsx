@@ -180,11 +180,16 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
 
       {/* ── Drawer panel — slides from the right ─────────────────── */}
       <div
+        /* Closed, the panel is only translated off-screen, so without
+           aria-hidden + inert it kept ~40 focusable links in the tab order
+           and announced itself to screen readers as an open dialog. */
         ref={panelRef}
         role="dialog"
         aria-label="Navigation menu"
         aria-modal="true"
         tabIndex={-1}
+        aria-hidden={!open}
+        inert={!open}
         className="lg:hidden fixed inset-y-0 right-0 z-50 w-[min(20rem,88vw)] bg-white shadow-[0_24px_60px_-28px_rgba(20,22,26,.35)] flex flex-col outline-none transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none"
         style={{ transform: open ? 'translateX(0)' : 'translateX(100%)' }}
       >
