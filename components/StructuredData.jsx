@@ -10,6 +10,7 @@
  * children inside the layout's <body> or via `dangerouslySetInnerHTML`
  * in metadata.other field — we use the simpler in-body approach).
  */
+import { prettySpecKey, fmtSpecValue } from '../lib/specs'
 
 const BASE = 'https://egyptglobe.com'
 
@@ -348,8 +349,8 @@ export function ProductJsonLd({ page, commodity, visibility, brand }) {
     .slice(0, 20)
     .map(([name, value]) => ({
       '@type': 'PropertyValue',
-      name: name.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
-      value: String(value),
+      name: prettySpecKey(name),
+      value: fmtSpecValue(value),
     }))
 
   const additionalProperty = [...hsCodeProperty, ...specProperties]

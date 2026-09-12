@@ -5,6 +5,7 @@
  * the page has rich product data, gallery, child grid for category
  * landings, related-pages strip, and a CTA banner.
  */
+import { skuDifferentiator } from '../lib/specs'
 import { heroCopy } from '../lib/heroCopy'
 import { buildBreadcrumb, ancestorPaths } from '../lib/breadcrumbs'
 import { pageHeading } from '../lib/headings'
@@ -536,6 +537,11 @@ export default async function PageRenderer({ page }) {
                   </h3>
                   {p.price_indication && visibility.showPrices ? (
                     <p className="text-xs text-[#c2410c] font-semibold mt-1.5 line-clamp-1">{p.price_indication}</p>
+                  ) : skuDifferentiator(p) ? (
+                    /* Every SKU in a grade opens its description with the same
+                       boilerplate sentence, so a 2-line clamp showed the same
+                       words on every card. Lead with what differs instead. */
+                    <p className="text-xs font-mono text-[#5b6472] mt-1.5 line-clamp-2">{skuDifferentiator(p)}</p>
                   ) : p.description ? (
                     <p className="text-xs text-[#5b6577] mt-1 line-clamp-2">{p.description}</p>
                   ) : null}
