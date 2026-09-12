@@ -35,12 +35,14 @@ export function OrganizationJsonLd({ settings }) {
   // entity of these (independently-ranking) brand sites, so their
   // topical authority consolidates to the umbrella. Each brand site
   // reciprocally declares parentOrganization / sameAs back to us.
+  // Each URL must be the host that answers 200: these four apexes 308 to www,
+  // and an entity node should not name a redirecting host.
   const BRAND_SITES = [
     { name: 'Pelot Salt', url: 'https://www.pelotsalt.com', desc: 'Egyptian sea & rock salt exporter' },
-    { name: 'EG Salt',    url: 'https://egsalt.com',        desc: 'Bulk industrial & de-icing salt' },
-    { name: 'Globe Salt', url: 'https://globesalt.com',     desc: 'Wholesale bulk salt export' },
-    { name: 'Sinai Salt', url: 'https://sinaisalt.com',     desc: 'North Sinai sea salt' },
-    { name: 'Salt Siwa',  url: 'https://saltsiwa.com',      desc: 'Siwa & Qattara rock salt' },
+    { name: 'EG Salt',    url: 'https://www.egsalt.com',    desc: 'Bulk industrial & de-icing salt' },
+    { name: 'Globe Salt', url: 'https://www.globesalt.com', desc: 'Wholesale bulk salt export' },
+    { name: 'Sinai Salt', url: 'https://www.sinaisalt.com', desc: 'North Sinai sea salt' },
+    { name: 'Salt Siwa',  url: 'https://www.saltsiwa.com',  desc: 'Siwa & Qattara rock salt' },
     { name: 'Egypt Globe Cement', url: 'https://cement.egyptglobe.com', desc: 'Egyptian cement & clinker export' },
   ]
   const subOrganization = BRAND_SITES.map(b => ({
