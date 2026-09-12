@@ -853,7 +853,7 @@ async function ApplicationsHubByDivision() {
                           {a._count > 0 && (
                             <span
                               className="flex-shrink-0 inline-flex items-center justify-center min-w-[26px] h-[20px] px-1.5 rounded-full text-[11px] font-bold tabular-nums"
-                              style={{ background: `${d.color}15`, color: d.color }}
+                              style={{ background: `${d.color}15`, color: d.textColor || d.color }}
                               title={`${a._count} ${d.label} SKU${a._count === 1 ? '' : 's'} match this application`}>
                               {a._count}
                             </span>
@@ -885,7 +885,7 @@ async function ApplicationsHubByDivision() {
                                 const otherCount = matrix?.[a.id]?.[otherId] || 0
                                 return (
                                   <span key={otherId} className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-[#f3f4f6]"
-                                    style={{ color: other.color }}>
+                                    style={{ color: other.textColor || other.color }}>
                                     <Icon name={DIVISION_ICON[other.id] || APPLICATION_ICON[other.id] || 'box'} className="w-3 h-3" />{other.label}
                                     {otherCount > 0 && <span className="text-[#67707f]">·{otherCount}</span>}
                                   </span>

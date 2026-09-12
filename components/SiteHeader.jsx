@@ -30,7 +30,7 @@ export default async function SiteHeader({ settings }) {
       {/* ── Top info strip ───────────────────────────────────────── */}
       <div className="hidden md:block bg-[#1d5fa1]">
         <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-1.5 flex items-center justify-between text-xs">
-          <div className="flex items-center gap-4 text-blue-100">
+          <div className="flex items-center gap-4 text-[#eaf2fd]">
             <span className="hidden lg:flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-300 animate-pulse" />
               Cairo HQ · Damietta Operations
@@ -44,8 +44,8 @@ export default async function SiteHeader({ settings }) {
               <Icon name="mail" className="w-3.5 h-3.5" /> {s.email}
             </a>
           </div>
-          <div className="flex items-center gap-3 text-blue-200">
-            <span className="hidden lg:inline text-xs text-blue-300/80">60+ destination markets worldwide</span>
+          <div className="flex items-center gap-3 text-blue-100">
+            <span className="hidden lg:inline text-xs text-blue-100">60+ destination markets worldwide</span>
             {s.linkedin && (
               <a href={s.linkedin} target="_blank" rel="noopener noreferrer"
                 className="flex items-center gap-1 bg-white/10 hover:bg-white/20 px-2 py-0.5 rounded-md transition-colors text-white">
