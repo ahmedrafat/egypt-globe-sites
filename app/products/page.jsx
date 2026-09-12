@@ -81,14 +81,14 @@ export default async function ProductsHub() {
         </nav>
 
         <div className="relative max-w-3xl">
-          <p className="egg-eyebrow text-[#8a6d3b] mb-4">
+          <p className="egg-eyebrow text-[#8a6d3b] mb-4 animate-fade-in" style={{ animationDelay: '.05s' }}>
             7 commodity divisions · 60+ destination markets
           </p>
-          <h1 className="egg-display text-[clamp(2.2rem,5.5vw,4.4rem)] leading-[1.02] mb-5 text-[#14161a]">
+          <h1 className="egg-display text-[clamp(2.2rem,5.5vw,4.4rem)] leading-[1.02] mb-5 text-[#14161a] animate-fade-in-up" style={{ animationDelay: '.12s' }}>
             {hero.heading || 'Egyptian commodities,'}<br />
             <span className="italic text-[#087a70]">{hero.sub || 'from an exporter shipping since 2015.'}</span>
           </h1>
-          <p className="text-base sm:text-lg text-[#3f4650] leading-relaxed mb-8">
+          <p className="text-base sm:text-lg text-[#3f4650] leading-relaxed mb-8 animate-fade-in-up" style={{ animationDelay: '.2s' }}>
             {hero.lede || <>Salt, cement &amp; clinker, fertilizers, chemicals, industrial minerals, agro &amp; food
             and metals — sourced from Egyptian capacity and shipped FOB / CIF / CFR from 7 Egyptian
             seaports. The salt programme alone has moved 
@@ -96,7 +96,7 @@ export default async function ProductsHub() {
             vessels since 2015</Link>. Every division works to one rule: the specification agreed is
             the specification loaded — a lot that misses it is rejected at the port, never renegotiated.</>}
 </p>
-          <div className="flex flex-wrap items-center gap-4">
+          <div className="flex flex-wrap items-center gap-4 animate-fade-in-up" style={{ animationDelay: '.28s' }}>
             <Link href="/rfq"
               className="egg-btn-primary">
               Request a quote →
