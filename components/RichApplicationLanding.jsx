@@ -17,6 +17,7 @@ import HeroMotif from './HeroMotif'
 import HeroBackdrop, { isBanner } from './HeroBackdrop'
 import Link from 'next/link'
 import RichPageBody from './RichPageBody'
+import HubFaqs from './HubFaqs'
 import { APPLICATIONS, PRODUCT_DIVISIONS, CATEGORY_META, cardUrl } from '../lib/corporatePages'
 import { crumbLabel } from '../lib/headings'
 import Icon, { DIVISION_ICON, APPLICATION_ICON } from './ui/Icon'
@@ -267,6 +268,8 @@ export default function RichApplicationLanding({ page, application, products, si
           </div>
         </section>
       )}
+
+      <HubFaqs page={page} />
 
       {/* Bottom CTA */}
       <section className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-20 egg-reveal">
