@@ -68,8 +68,8 @@ export default function SaltSourcePage({ source, page, items }) {
               <h1 className="egg-display text-4xl sm:text-5xl lg:text-6xl mb-4 leading-[1.02]">
                 {hero.heading || s.headline}<br /><span className="italic">{hero.sub || s.headlineTail}</span>
               </h1>
-              {page?.description && (
-                <p className="text-base sm:text-lg leading-relaxed max-w-3xl">{page.description}</p>
+              {(hero.lede || page?.description) && (
+                <p className="text-base sm:text-lg leading-relaxed max-w-3xl">{hero.lede || page.description}</p>
               )}
             </div>
             <div className="flex flex-wrap gap-2 lg:justify-end animate-fade-in-up" style={{ animationDelay: '0.1s' }}>

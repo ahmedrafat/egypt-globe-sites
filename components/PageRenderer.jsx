@@ -5,6 +5,7 @@
  * the page has rich product data, gallery, child grid for category
  * landings, related-pages strip, and a CTA banner.
  */
+import { heroCopy } from '../lib/heroCopy'
 import { buildBreadcrumb, ancestorPaths } from '../lib/breadcrumbs'
 import { pageHeading } from '../lib/headings'
 import CardImage from './ui/CardImage'
@@ -149,6 +150,7 @@ export default async function PageRenderer({ page }) {
   // Batch 2 — one breadcrumb builder feeds the visible trail and the schema on every template.
   const crumbs = buildBreadcrumb(page, ancestorTitles)
   const heading = pageHeading(page)
+  const heroText = heroCopy(page)
 
   // Division landing — early-return with the Pelot-style rich layout
   if (isDivisionLanding && division) {
@@ -334,10 +336,11 @@ export default async function PageRenderer({ page }) {
             <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
               <h1 className="egg-display text-[30px] sm:text-5xl lg:text-6xl text-white mb-3 sm:mb-4 leading-[1.08] sm:leading-[1.02]">
                 {heading}
+                {heroText.sub && <span className="block italic text-xl sm:text-3xl lg:text-4xl mt-3 leading-[1.15]">{heroText.sub}</span>}
               </h1>
-              {page.description && (
+              {(heroText.lede || page.description) && (
                 <p className="text-sm sm:text-lg leading-relaxed max-w-3xl text-[#a9bfd7]">
-                  {page.description}
+                  {heroText.lede || page.description}
                 </p>
               )}
             </div>

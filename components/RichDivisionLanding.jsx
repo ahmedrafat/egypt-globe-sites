@@ -107,9 +107,9 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
                   {hero.sub || division.blurb}
                 </span>
               </h1>
-              {page.description && (
+              {(hero.lede || page.description) && (
                 <p className="text-base sm:text-lg leading-relaxed max-w-3xl text-[#3f4650] mt-5">
-                  {page.description}
+                  {hero.lede || page.description}
                 </p>
               )}
             </div>
