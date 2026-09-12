@@ -556,3 +556,33 @@ header::after {
 .egg-rec-k { font-family: var(--font-geist-mono), ui-monospace, Menlo, monospace; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: #5b6577; padding-top: .15rem; }
 .egg-rec-v { color: #3f4650; min-width: 0; overflow-wrap: anywhere; }
 @media (max-width: 480px) { .egg-rec-row { grid-template-columns: 1fr; gap: .15rem; } }
+
+/* ── Hero motion ──────────────────────────────────────────────────────────
+   Every hero now enters the way the landing hero does: the same eggRise
+   curve, offset and duration, mapped onto the entrance classes the hero
+   templates already carry. The scroll parallax that goes with it lives in
+   components/HeroMotion.jsx (no GSAP — that stays on the landing).
+   Both are off under prefers-reduced-motion.                             */
+@keyframes eggRise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.egg-rise { opacity: 0; transform: translateY(18px); animation: eggRise .9s cubic-bezier(.2,.7,.2,1) forwards; }
+
+[data-hero] .animate-fade-in,
+[data-hero] .animate-fade-in-up {
+  animation: eggRise .9s cubic-bezier(.2,.7,.2,1) both;
+}
+
+/* The backdrop is scaled slightly so the parallax shift can never expose
+   an edge inside the hero's overflow-hidden band. */
+[data-hero] [data-hero-bg] { will-change: transform; transform: scale(1.14); }
+[data-hero] [data-hero-copy] { will-change: transform, opacity; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-hero] .animate-fade-in,
+  [data-hero] .animate-fade-in-up,
+  .egg-rise { animation: none !important; opacity: 1; transform: none; }
+  [data-hero] [data-hero-bg] { transform: none !important; }
+  [data-hero] [data-hero-copy] { transform: none !important; opacity: 1 !important; }
+}

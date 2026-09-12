@@ -1,3 +1,4 @@
+import HeroMotion from '../components/HeroMotion'
 import { Geist, Geist_Mono, Fraunces } from 'next/font/google'
 import './globals.css'
 import SiteHeader from '../components/SiteHeader'
@@ -232,6 +233,7 @@ export default async function RootLayout({ children }) {
         <WebVitalsReporter />
         <SiteHeader settings={settings} />
         <main id="main-content" className="flex-1">{children}</main>
+        <HeroMotion />
         <SiteFooter settings={settings} />
         <WhatsAppFab url={settings.whatsappUrl} label={`Chat with ${settings.name} on WhatsApp`} />
       </body>

@@ -32,7 +32,7 @@ export default function HeroBackdrop({ src }) {
 
   if (isBanner(src)) {
     return (
-      <div className="absolute inset-0" aria-hidden="true">
+      <div data-hero-bg className="absolute inset-0" aria-hidden="true">
         <Image src={src} alt="" fill priority sizes="100vw"
           className="object-cover object-[72%_50%] opacity-90" />
         {/* phones and tablets: the headline spans the full width */}
@@ -43,7 +43,7 @@ export default function HeroBackdrop({ src }) {
   }
 
   return (
-    <div className="absolute inset-0" aria-hidden="true">
+    <div data-hero-bg className="absolute inset-0" aria-hidden="true">
       {/* 1200×675 art in a band taller than 16:9 on mobile — object-top keeps
          the top of the frame, where the subject usually sits */}
       <Image src={src} alt="" fill priority sizes="100vw"
