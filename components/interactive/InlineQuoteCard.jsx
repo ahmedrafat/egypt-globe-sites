@@ -19,10 +19,9 @@
  * add more detail. No anti-spam beyond the existing market_rfqs RLS.
  */
 import { useState, useEffect } from 'react'
-import { createBrowserClient } from '@supabase/ssr'
 import Icon from '../ui/Icon'
 
-export default function InlineQuoteCard({ page, prefill = {} }) {
+export default function InlineQuoteCard({ page, prefill = {}, buyerUserId = null }) {
   const [email, setEmail]     = useState('')
   const [company, setCompany] = useState('')
   const [quantity, setQuantity] = useState('')
@@ -45,17 +44,6 @@ export default function InlineQuoteCard({ page, prefill = {} }) {
       return
     }
     setSubmitting(true); setError(null)
-
-    const supabase = createBrowserClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-    )
-
-    let buyerUserId = null
-    try {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (user?.id) buyerUserId = user.id
-    } catch { /* anon */ }
 
     const ref = `EGG-RFQ-${Date.now().toString(36).toUpperCase()}`
     const payload = {
@@ -80,11 +68,32 @@ export default function InlineQuoteCard({ page, prefill = {} }) {
       referenced_page_id: page.id,
     }
 
-    const { error: insertError } = await supabase.from('market_rfqs').insert(payload)
-    setSubmitting(false)
-
-    if (insertError) {
-      setError(insertError.message)
+    // Posted straight to PostgREST with the publishable key — the same call
+    // the homepage quick form makes. Importing the Supabase client here put
+    // 217 KB of auth/storage/realtime JS on every page rendering this card
+    // (about 490 of them) to perform one INSERT.
+    try {
+      const base = (process.env.NEXT_PUBLIC_SUPABASE_URL || '').replace(/\/+$/, '')
+      const key  = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+      const res = await fetch(`${base}/rest/v1/market_rfqs`, {
+        method: 'POST',
+        headers: {
+          apikey: key,
+          Authorization: `Bearer ${key}`,
+          'Content-Type': 'application/json',
+          Prefer: 'return=minimal',
+        },
+        body: JSON.stringify(payload),
+      })
+      setSubmitting(false)
+      if (!res.ok) {
+        const detail = await res.text().catch(() => '')
+        setError(detail ? detail.slice(0, 160) : `Could not submit (HTTP ${res.status}). Please email export@egyptglobe.com.`)
+        return
+      }
+    } catch (err) {
+      setSubmitting(false)
+      setError(err?.message || 'Could not submit. Please email export@egyptglobe.com.')
       return
     }
     setRefCode(ref)

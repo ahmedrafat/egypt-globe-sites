@@ -275,7 +275,7 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
               </div>
               <h2 className="egg-display text-2xl sm:text-3xl leading-tight text-[#14161a]">Request a quote</h2>
             </header>
-            <InlineQuoteCard page={page} prefill={transitSelection} />
+            <InlineQuoteCard page={page} prefill={transitSelection} buyerUserId={visibility?.user?.id || null} />
           </section>
         </div>
 
