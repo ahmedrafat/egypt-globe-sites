@@ -1,0 +1,330 @@
+{
+  "generated": "2026-09-12T00:23:21.944Z",
+  "count": 54,
+  "banners": [
+    {
+      "url": "/banners/about-careers.jpg",
+      "label": "About Careers",
+      "group": "Section banners",
+      "bytes": 229951
+    },
+    {
+      "url": "/banners/about-export-record.jpg",
+      "label": "About Export Record",
+      "group": "Section banners",
+      "bytes": 234205
+    },
+    {
+      "url": "/banners/about-history.jpg",
+      "label": "About History",
+      "group": "Section banners",
+      "bytes": 296795
+    },
+    {
+      "url": "/banners/about-locations.jpg",
+      "label": "About Locations",
+      "group": "Section banners",
+      "bytes": 178015
+    },
+    {
+      "url": "/banners/about-mission-vision.jpg",
+      "label": "About Mission Vision",
+      "group": "Section banners",
+      "bytes": 228072
+    },
+    {
+      "url": "/banners/about-pelot-logistika.jpg",
+      "label": "About Pelot Logistika",
+      "group": "Section banners",
+      "bytes": 271657
+    },
+    {
+      "url": "/banners/about-quality-compliance.jpg",
+      "label": "About Quality Compliance",
+      "group": "Section banners",
+      "bytes": 233495
+    },
+    {
+      "url": "/banners/about.jpg",
+      "label": "About",
+      "group": "Section banners",
+      "bytes": 272749
+    },
+    {
+      "url": "/banners/applications.jpg",
+      "label": "Applications",
+      "group": "Section banners",
+      "bytes": 222739
+    },
+    {
+      "url": "/banners/blog.jpg",
+      "label": "Blog",
+      "group": "Section banners",
+      "bytes": 192207
+    },
+    {
+      "url": "/banners/case-studies.jpg",
+      "label": "Case Studies",
+      "group": "Section banners",
+      "bytes": 297983
+    },
+    {
+      "url": "/banners/contact.jpg",
+      "label": "Contact",
+      "group": "Section banners",
+      "bytes": 263400
+    },
+    {
+      "url": "/banners/global-presence.jpg",
+      "label": "Global Presence",
+      "group": "Section banners",
+      "bytes": 242430
+    },
+    {
+      "url": "/banners/markets.jpg",
+      "label": "Markets",
+      "group": "Section banners",
+      "bytes": 238019
+    },
+    {
+      "url": "/banners/partners.jpg",
+      "label": "Partners",
+      "group": "Section banners",
+      "bytes": 254035
+    },
+    {
+      "url": "/banners/products-agro.jpg",
+      "label": "Products Agro",
+      "group": "Section banners",
+      "bytes": 251448
+    },
+    {
+      "url": "/banners/products-chemicals.jpg",
+      "label": "Products Chemicals",
+      "group": "Section banners",
+      "bytes": 268355
+    },
+    {
+      "url": "/banners/products-construction.jpg",
+      "label": "Products Construction",
+      "group": "Section banners",
+      "bytes": 242324
+    },
+    {
+      "url": "/banners/products-fertilizers.jpg",
+      "label": "Products Fertilizers",
+      "group": "Section banners",
+      "bytes": 252427
+    },
+    {
+      "url": "/banners/products-metals.jpg",
+      "label": "Products Metals",
+      "group": "Section banners",
+      "bytes": 282433
+    },
+    {
+      "url": "/banners/products-minerals.jpg",
+      "label": "Products Minerals",
+      "group": "Section banners",
+      "bytes": 326261
+    },
+    {
+      "url": "/banners/products-salt.jpg",
+      "label": "Products Salt",
+      "group": "Section banners",
+      "bytes": 295682
+    },
+    {
+      "url": "/banners/products.jpg",
+      "label": "Products",
+      "group": "Section banners",
+      "bytes": 275047
+    },
+    {
+      "url": "/banners/rfq.jpg",
+      "label": "RFQ",
+      "group": "Section banners",
+      "bytes": 193746
+    },
+    {
+      "url": "/banners/salt-rock.jpg",
+      "label": "Salt Rock",
+      "group": "Section banners",
+      "bytes": 287975
+    },
+    {
+      "url": "/banners/salt-sea.jpg",
+      "label": "Salt Sea",
+      "group": "Section banners",
+      "bytes": 260595
+    },
+    {
+      "url": "/banners/services-added-value.jpg",
+      "label": "Services Added Value",
+      "group": "Section banners",
+      "bytes": 286786
+    },
+    {
+      "url": "/banners/services-distribution.jpg",
+      "label": "Services Distribution",
+      "group": "Section banners",
+      "bytes": 221528
+    },
+    {
+      "url": "/banners/services-documentation.jpg",
+      "label": "Services Documentation",
+      "group": "Section banners",
+      "bytes": 196887
+    },
+    {
+      "url": "/banners/services-inspection.jpg",
+      "label": "Services Inspection",
+      "group": "Section banners",
+      "bytes": 250478
+    },
+    {
+      "url": "/banners/services-loading-ports.jpg",
+      "label": "Services Loading Ports",
+      "group": "Section banners",
+      "bytes": 348208
+    },
+    {
+      "url": "/banners/services-logistics.jpg",
+      "label": "Services Logistics",
+      "group": "Section banners",
+      "bytes": 257854
+    },
+    {
+      "url": "/banners/services-packing-branded.jpg",
+      "label": "Services Packing Branded",
+      "group": "Section banners",
+      "bytes": 253931
+    },
+    {
+      "url": "/banners/services-packing.jpg",
+      "label": "Services Packing",
+      "group": "Section banners",
+      "bytes": 266865
+    },
+    {
+      "url": "/banners/services-port-services.jpg",
+      "label": "Services Port Services",
+      "group": "Section banners",
+      "bytes": 289598
+    },
+    {
+      "url": "/banners/services.jpg",
+      "label": "Services",
+      "group": "Section banners",
+      "bytes": 320675
+    },
+    {
+      "url": "/banners/trade-tools-import-guides.jpg",
+      "label": "Trade Tools Import Guides",
+      "group": "Section banners",
+      "bytes": 272002
+    },
+    {
+      "url": "/banners/topics/agri-aqua.jpg",
+      "label": "Agri Aqua",
+      "group": "Topic banners",
+      "bytes": 286105
+    },
+    {
+      "url": "/banners/topics/building-materials.jpg",
+      "label": "Building Materials",
+      "group": "Topic banners",
+      "bytes": 295196
+    },
+    {
+      "url": "/banners/topics/cement.jpg",
+      "label": "Cement",
+      "group": "Topic banners",
+      "bytes": 242324
+    },
+    {
+      "url": "/banners/topics/chemical-process.jpg",
+      "label": "Chemical Process",
+      "group": "Topic banners",
+      "bytes": 305904
+    },
+    {
+      "url": "/banners/topics/deicing.jpg",
+      "label": "Deicing",
+      "group": "Topic banners",
+      "bytes": 266291
+    },
+    {
+      "url": "/banners/topics/documentation.jpg",
+      "label": "Documentation",
+      "group": "Topic banners",
+      "bytes": 196887
+    },
+    {
+      "url": "/banners/topics/edible-oils.jpg",
+      "label": "Edible Oils",
+      "group": "Topic banners",
+      "bytes": 310948
+    },
+    {
+      "url": "/banners/topics/fertilizers.jpg",
+      "label": "Fertilizers",
+      "group": "Topic banners",
+      "bytes": 252427
+    },
+    {
+      "url": "/banners/topics/food.jpg",
+      "label": "Food",
+      "group": "Topic banners",
+      "bytes": 258162
+    },
+    {
+      "url": "/banners/topics/metals.jpg",
+      "label": "Metals",
+      "group": "Topic banners",
+      "bytes": 282433
+    },
+    {
+      "url": "/banners/topics/minerals.jpg",
+      "label": "Minerals",
+      "group": "Topic banners",
+      "bytes": 326261
+    },
+    {
+      "url": "/banners/topics/oil-gas.jpg",
+      "label": "Oil Gas",
+      "group": "Topic banners",
+      "bytes": 259910
+    },
+    {
+      "url": "/banners/topics/pharma-cosmetic.jpg",
+      "label": "Pharma Cosmetic",
+      "group": "Topic banners",
+      "bytes": 256547
+    },
+    {
+      "url": "/banners/topics/ports.jpg",
+      "label": "Ports",
+      "group": "Topic banners",
+      "bytes": 348208
+    },
+    {
+      "url": "/banners/topics/salt.jpg",
+      "label": "Salt",
+      "group": "Topic banners",
+      "bytes": 295682
+    },
+    {
+      "url": "/banners/topics/textile-leather.jpg",
+      "label": "Textile Leather",
+      "group": "Topic banners",
+      "bytes": 317903
+    },
+    {
+      "url": "/banners/topics/water.jpg",
+      "label": "Water",
+      "group": "Topic banners",
+      "bytes": 288972
+    }
+  ]
+}
