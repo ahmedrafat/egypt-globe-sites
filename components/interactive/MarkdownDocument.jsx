@@ -1,3 +1,4 @@
+'use client'
 
 /**
  * MarkdownDocument — editorial body layout (supersedes the Drop 133 tabs).
@@ -15,9 +16,9 @@
  * deep-link and quote.
  *
  * Sections carry ids + scroll-mt so the sticky header never covers a
- * heading landed on from the rail. Renders on the server; only the
- * scrollspy rail (ui/SectionIndex) runs in the browser.
+ * heading landed on from the rail.
  */
+import { useMemo } from 'react'
 import RichPageBody from '../RichPageBody'
 import SectionIndex, { SECTION_ANCHOR } from '../ui/SectionIndex'
 import Icon from '../ui/Icon'
@@ -120,20 +121,17 @@ function sameHeading(a, b) {
 }
 
 export default function MarkdownDocument({ body, title, leadingWidget = null }) {
-  // Server component (Sep 2026): this used to be a client component whose
-  // only client API was useMemo, so every page shipped its whole markdown
-  // body twice — once as rendered markup, once as a raw string prop for the
-  // browser to render again. Parsing here keeps the body out of the payload.
-  const clean = dropDuplicateLeadHeading(body, title)
-  const { intro, sections } = splitMarkdown(clean)
+  const clean = useMemo(() => dropDuplicateLeadHeading(body, title), [body, title])
+  const { intro, sections } = useMemo(() => splitMarkdown(clean), [clean])
 
-  const parts = []
-  if (intro) parts.push({ id: 'overview', label: 'Overview', icon: 'book', content: intro })
-  for (const s of sections) {
-    parts.push({ id: slugify(s.title), label: s.title, icon: s.icon, content: s.content })
-  }
-  // The rail is the one client component here; it needs ids and labels only.
-  const railSections = parts.map(({ id, label }) => ({ id, label }))
+  const parts = useMemo(() => {
+    const out = []
+    if (intro) out.push({ id: 'overview', label: 'Overview', icon: 'book', content: intro })
+    for (const s of sections) {
+      out.push({ id: slugify(s.title), label: s.title, icon: s.icon, content: s.content })
+    }
+    return out
+  }, [intro, sections])
 
   // Nothing to structure — render the body plainly.
   if (parts.length < 2) {
@@ -179,7 +177,7 @@ export default function MarkdownDocument({ body, title, leadingWidget = null }) 
         </div>
 
         <div className="order-1 lg:order-2">
-          <SectionIndex sections={railSections} />
+          <SectionIndex sections={parts} />
         </div>
       </div>
     </section>
