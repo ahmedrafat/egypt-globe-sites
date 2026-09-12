@@ -56,7 +56,7 @@ function standardsPage(name) {
   if (n.includes('en 16811') || n.includes('en-16811') || n.includes('grade a') || n.includes('grade b') || n.includes('grade c')) return { path: '/standards/en-16811-1', label: 'EN 16811-1 (EU Deicing)' }
   if (n.includes('bs 3247') || n.includes('uk highway')) return { path: '/standards/bs-3247', label: 'BS 3247:2011 (UK Highway)' }
   if (n.includes('astm d632') || n.includes('us/canada') || n.includes('aashto')) return { path: '/standards/astm-d632', label: 'ASTM D632 / AASHTO M-143 (US/Canada)' }
-  if (n.includes('ss-en') || n.includes('nordic')) return { path: '/standards/ss-en-16811', label: 'SS-EN 16811-1 (Nordic)' }
+  if (n.includes('ss-en') || n.includes('nordic')) return { path: '/standards/ss-en-16811-1', label: 'SS-EN 16811-1 (Nordic)' }
   if (n.includes('gost') || n.includes('cis')) return { path: '/standards/gost-13830', label: 'GOST 13830 (CIS)' }
   return null
 }
@@ -84,7 +84,7 @@ function blogGuide(name, sourceType) {
   if (n.includes('deicing')) return { path: '/blog/bulk-rock-salt-deicing-eu-vs-us-vs-nordic-vs-cis', label: 'Deicing Salt — EU / US / Nordic / CIS Compared' }
   if (n.includes('pre-wetted')) return { path: '/blog/pre-wetted-deicing-salt-when-needed-when-bulk-dry-wins', label: 'Pre-Wetted vs Dry Deicing Salt — When Each Wins' }
   if (sourceType === 'Sea Salt') return { path: '/blog/bulk-egyptian-sea-salt-buyers-guide-2026', label: "Bulk Egyptian Sea Salt — 2026 Buyer's Guide" }
-  return { path: '/blog/bulk-egyptian-salt-price-2026-fob-guide', label: 'Bulk Egyptian Salt — 2026 FOB Price Guide' }
+  return { path: '/blog/2026-buyers-guide-egyptian-bulk-salt', label: "Egyptian Bulk Salt — 2026 Buyer's Guide" }
 }
 
 export default function SkuRelatedLinks({ page, commodity }) {
