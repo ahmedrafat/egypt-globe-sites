@@ -7,6 +7,7 @@
  *
  * Light editorial edition — tokens + utilities (.egg-*) in app/globals.css.
  */
+import { getBuyerVisibility } from '../../lib/supabaseServer'
 import { routeOpenGraph } from '../../lib/seo'
 import HeroMotif from '../../components/HeroMotif'
 import HeroBackdrop, { isBanner } from '../../components/HeroBackdrop'
@@ -35,8 +36,9 @@ export default async function RFQPage({ searchParams }) {
   const preselectPath = typeof params.product === 'string' ? params.product : null
   const requestType = params.type === 'coa' ? 'coa' : 'quote'
 
-  const [page, products, company, destPorts] = await Promise.all([
+  const [page, visibility, products, company, destPorts] = await Promise.all([
     getPageByPath('/rfq'),
+    getBuyerVisibility().catch(() => null),
     getRfqProductOptions(),
     getSiteSettings(),
     getMasterDestPorts(),
@@ -91,6 +93,7 @@ export default async function RFQPage({ searchParams }) {
               requestType={requestType}
               supabaseUrl={process.env.NEXT_PUBLIC_SUPABASE_URL}
               supabaseAnon={process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}
+              buyerUserId={visibility?.user?.id || null}
             />
           </div>
 

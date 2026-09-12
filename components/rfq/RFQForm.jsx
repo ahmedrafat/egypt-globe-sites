@@ -17,7 +17,6 @@
  */
 import { trackEvent } from '../../lib/track'
 import { useState, useMemo, useEffect, isValidElement, cloneElement } from 'react'
-import { createClient } from '@supabase/supabase-js'
 import Icon from '../ui/Icon'
 
 const INCOTERMS = ['FOB', 'CIF', 'CFR', 'CPT', 'CIP', 'EXW', 'DAP', 'DDP', 'DPU', 'FCA', 'FAS']
@@ -70,12 +69,16 @@ const SPEC_LABELS = {
 }
 const prettyKey = k => SPEC_LABELS[k] || k.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
 
-export default function RFQForm({ products, destPorts, preselectPath, requestType = 'quote', supabaseUrl, supabaseAnon }) {
+export default function RFQForm({ products, destPorts, preselectPath, requestType = 'quote', supabaseUrl, supabaseAnon, buyerUserId = null }) {
+  // PostgREST directly rather than the Supabase client: this form is one
+  // SELECT and one INSERT, and importing the client shipped 217 KB of
+  // auth/storage/realtime JS with the page.
+  const rest = useMemo(() => {
+    const base = (supabaseUrl || '').replace(/\/+$/, '')
+    const headers = { apikey: supabaseAnon || '', Authorization: `Bearer ${supabaseAnon || ''}`, 'Content-Type': 'application/json' }
+    return { base, headers }
+  }, [supabaseUrl, supabaseAnon])
   const isCoa = requestType === 'coa'
-  const supabase = useMemo(
-    () => createClient(supabaseUrl, supabaseAnon),
-    [supabaseUrl, supabaseAnon]
-  )
 
   // Group products by category for the dropdown
   const productGroups = useMemo(() => {
@@ -149,11 +152,16 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
     let live = true
     setSelectedSpecs(null)
     if (!form.productPath) return
-    supabase.from('egg_corporate_pages').select('specs').eq('path', form.productPath).eq('is_published', true).maybeSingle()
-      .then(({ data }) => { if (live) setSelectedSpecs(data?.specs && Object.keys(data.specs).length ? data.specs : null) })
+    const url = `${rest.base}/rest/v1/egg_corporate_pages?select=specs&path=eq.${encodeURIComponent(form.productPath)}&is_published=is.true&limit=1`
+    fetch(url, { headers: rest.headers })
+      .then(r => (r.ok ? r.json() : []))
+      .then(rows => {
+        const specs = rows?.[0]?.specs
+        if (live) setSelectedSpecs(specs && Object.keys(specs).length ? specs : null)
+      })
       .catch(() => {})
     return () => { live = false }
-  }, [form.productPath, supabase])
+  }, [form.productPath, rest])
 
   // Sorted category list with icons for the first-step picker
   const CATEGORY_META_LIST = [
@@ -271,12 +279,6 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
 
     // Drop 129 — if the buyer is signed in (egyptglobe.com /buyer flow),
     // stamp buyer_user_id so the RFQ shows up in their dashboard.
-    let buyerUserId = null
-    try {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (user?.id) buyerUserId = user.id
-    } catch { /* anon — leave null */ }
-
     const refPrefix = isCoa ? 'EGG-COA' : 'EGG-RFQ'
     const ref = `${refPrefix}-${Date.now().toString(36).toUpperCase()}`
     const payload = {
@@ -324,11 +326,21 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
       payload.notes = `Auto-flagged on submission: ${spamReason}`
     }
 
-    const { error: insertError } = await supabase.from('market_rfqs').insert(payload)
-    setSubmitting(false)
-
-    if (insertError) {
-      setError(insertError.message || 'Could not submit your RFQ. Please email us at export@egyptglobe.com.')
+    try {
+      const res = await fetch(`${rest.base}/rest/v1/market_rfqs`, {
+        method: 'POST',
+        headers: { ...rest.headers, Prefer: 'return=minimal' },
+        body: JSON.stringify(payload),
+      })
+      setSubmitting(false)
+      if (!res.ok) {
+        const detail = await res.text().catch(() => '')
+        setError((detail && detail.slice(0, 160)) || 'Could not submit your RFQ. Please email us at export@egyptglobe.com.')
+        return
+      }
+    } catch (err) {
+      setSubmitting(false)
+      setError(err?.message || 'Could not submit your RFQ. Please email us at export@egyptglobe.com.')
       return
     }
     trackEvent(isCoa ? 'coa_submit' : 'rfq_submit')
