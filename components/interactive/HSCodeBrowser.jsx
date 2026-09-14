@@ -16,9 +16,14 @@ import Icon from '../ui/Icon'
 
 const CODES = [
   // Salt
-  { code: '2501.00.10', desc: 'Salt for human consumption — sea or rock salt (table salt, pharma-grade NaCl)', div: 'salt', chapter: 'Ch 25 — Mineral products' },
-  { code: '2501.00.91', desc: 'Industrial salt — sea or rock salt (chlor-alkali, water-treatment, de-icing)', div: 'salt', chapter: 'Ch 25 — Mineral products' },
-  { code: '2501.00.99', desc: 'Other salt (ultra-pure, specialty grades)', div: 'salt', chapter: 'Ch 25 — Mineral products' },
+  // 2501.00 is the only international (6-digit) code. The 8-digit lines are
+  // the EU Combined Nomenclature / UK Global Tariff split; other destinations
+  // differ. The old .10 food / .91 industrial / .99 other split matched no tariff.
+  { code: '2501.00',    desc: 'Salt — sea salt and rock salt alike (international heading)', div: 'salt', chapter: 'Ch 25 — Mineral products' },
+  { code: '2501.00.31', desc: 'EU / UK: salt for chemical transformation (chlor-alkali)', div: 'salt', chapter: 'Ch 25 — Mineral products' },
+  { code: '2501.00.51', desc: 'EU / UK: denatured salt or salt for other industrial uses', div: 'salt', chapter: 'Ch 25 — Mineral products' },
+  { code: '2501.00.91', desc: 'EU / UK: salt suitable for human consumption', div: 'salt', chapter: 'Ch 25 — Mineral products' },
+  { code: '2501.00.99', desc: 'EU / UK: other salt', div: 'salt', chapter: 'Ch 25 — Mineral products' },
   // Cement / clinker
   { code: '2523.10.00', desc: 'Cement clinker (intermediate, exported to grinding mills)', div: 'construction', chapter: 'Ch 25 — Mineral products' },
   { code: '2523.21.00', desc: 'White Portland cement', div: 'construction', chapter: 'Ch 25 — Mineral products' },
