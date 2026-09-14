@@ -23,12 +23,21 @@ import Icon from '../../components/ui/Icon'
 
 export const revalidate = 60
 
-export const metadata = {
-  alternates: { canonical: '/rfq' },
-  openGraph: routeOpenGraph({ path: '/rfq' }),
-  title: 'Request a Quote — Egyptian Salt, Cement & Fertilizers',
-  description:
-    'Submit a B2B RFQ for Egyptian salt, cement, fertilizers, chemicals, or minerals. Egypt Globe Group responds with FOB / CIF / CFR pricing from 7 Egyptian seaports.',
+// ?product= / ?type= variants render a different SKU list and heading, so
+// Google overrode the /rfq canonical and indexed 231 of them (1,183 impr,
+// 2 clicks). Keep the canonical, but mark every parameterised variant
+// noindex so only /rfq itself is indexed; follow stays on for the links.
+export async function generateMetadata({ searchParams }) {
+  const params = (await searchParams) || {}
+  const hasParams = Object.keys(params).length > 0
+  return {
+    alternates: { canonical: '/rfq' },
+    openGraph: routeOpenGraph({ path: '/rfq' }),
+    title: 'Request a Quote — Egyptian Salt, Cement & Fertilizers',
+    description:
+      'Submit a B2B RFQ for Egyptian salt, cement, fertilizers, chemicals, or minerals. Egypt Globe Group responds with FOB / CIF / CFR pricing from 7 Egyptian seaports.',
+    ...(hasParams ? { robots: { index: false, follow: true } } : {}),
+  }
 }
 
 export default async function RFQPage({ searchParams }) {
