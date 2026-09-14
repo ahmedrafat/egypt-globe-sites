@@ -28,7 +28,9 @@ const CODES = [
   // Fertilizers
   { code: '3102.10.00', desc: 'Urea (46% N)', div: 'fertilizers', chapter: 'Ch 31 — Fertilizers' },
   { code: '3102.21.00', desc: 'Ammonium sulphate', div: 'fertilizers', chapter: 'Ch 31 — Fertilizers' },
-  { code: '3103.10.00', desc: 'Single super phosphate (SSP)', div: 'fertilizers', chapter: 'Ch 31 — Fertilizers' },
+  // HS 2017 split 3103.10 by phosphorus content
+  { code: '3103.11.00', desc: 'Superphosphates ≥ 35% P₂O₅ — triple super phosphate (TSP)', div: 'fertilizers', chapter: 'Ch 31 — Fertilizers' },
+  { code: '3103.19.00', desc: 'Other superphosphates — single super phosphate (SSP)', div: 'fertilizers', chapter: 'Ch 31 — Fertilizers' },
   { code: '3103.90.00', desc: 'Other mineral phosphate fertilizers', div: 'fertilizers', chapter: 'Ch 31 — Fertilizers' },
   { code: '3105.20.00', desc: 'NPK fertilizers (containing N, P, K)', div: 'fertilizers', chapter: 'Ch 31 — Fertilizers' },
   { code: '3105.30.00', desc: 'DAP (diammonium phosphate)', div: 'fertilizers', chapter: 'Ch 31 — Fertilizers' },
