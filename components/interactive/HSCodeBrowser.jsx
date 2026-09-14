@@ -81,9 +81,14 @@ const CODES = [
   { code: '6802.21.00', desc: 'Marble slabs and tiles, simply cut or sawn', div: 'construction', chapter: 'Ch 68 — Articles of stone' },
   { code: '6802.91.00', desc: 'Marble, polished or further worked', div: 'construction', chapter: 'Ch 68 — Articles of stone' },
   // Metals
-  { code: '7204.10.00', desc: 'Iron + steel scrap', div: 'metals', chapter: 'Ch 72 — Iron & steel' },
+  // 7204.10 is cast-iron scrap and 7208.10 is patterned coil — neither fits
+  // HMS steel scrap or plain HRC (checked against the HS 2022 nomenclature)
+  { code: '7204.49.00', desc: 'Ferrous waste and scrap — steel (e.g. HMS 1&2)', div: 'metals', chapter: 'Ch 72 — Iron & steel' },
   { code: '7214.20.00', desc: 'Hot-rolled rebar', div: 'metals', chapter: 'Ch 72 — Iron & steel' },
-  { code: '7208.10.00', desc: 'Hot-rolled coil (HRC)', div: 'metals', chapter: 'Ch 72 — Iron & steel' },
+  { code: '7208.36.00', desc: 'Hot-rolled coil (HRC), not pickled, > 10 mm', div: 'metals', chapter: 'Ch 72 — Iron & steel' },
+  { code: '7208.37.00', desc: 'Hot-rolled coil (HRC), not pickled, 4.75–10 mm', div: 'metals', chapter: 'Ch 72 — Iron & steel' },
+  { code: '7208.38.00', desc: 'Hot-rolled coil (HRC), not pickled, 3–4.75 mm', div: 'metals', chapter: 'Ch 72 — Iron & steel' },
+  { code: '7208.39.00', desc: 'Hot-rolled coil (HRC), not pickled, < 3 mm', div: 'metals', chapter: 'Ch 72 — Iron & steel' },
   { code: '7209.15.00', desc: 'Cold-rolled coil (CRC)', div: 'metals', chapter: 'Ch 72 — Iron & steel' },
   { code: '7601.10.00', desc: 'Aluminium ingot (unalloyed)', div: 'metals', chapter: 'Ch 76 — Aluminium' },
   { code: '7403.11.00', desc: 'Refined copper cathode', div: 'metals', chapter: 'Ch 74 — Copper' },
