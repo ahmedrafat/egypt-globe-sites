@@ -24,8 +24,10 @@ const COMMODITIES = {
   urea:          { label: 'Urea fertilizer (46% N)',         hs: '3102.10.00' },
   dap:           { label: 'DAP (18-46-0)',                   hs: '3105.30.00' },
   phosphate:     { label: 'Phosphate rock',                  hs: '2510.20.10' },
-  salt_industrial: { label: 'Industrial salt',               hs: '2501.00.91' },
-  salt_food:     { label: 'Food-grade salt',                 hs: '2501.00.10' },
+  // Salt: only the 6-digit heading is international (the lookup trims to 6
+  // digits anyway). The old .91 industrial / .10 food labels matched no tariff.
+  salt_industrial: { label: 'Industrial salt',               hs: '2501.00.00' },
+  salt_food:     { label: 'Food-grade salt',                 hs: '2501.00.00' },
   caustic_soda:  { label: 'Caustic soda (NaOH)',             hs: '2815.12.00' },
   soda_ash:      { label: 'Soda ash (Na₂CO₃)',               hs: '2836.20.00' },
   sulphuric_acid: { label: 'Sulphuric acid',                 hs: '2807.00.00' },
