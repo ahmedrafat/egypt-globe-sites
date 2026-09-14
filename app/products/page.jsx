@@ -37,7 +37,7 @@ const PORTS = [
   { name: 'El Dekheila',    code: 'EGEDK', note: 'Bulk minerals & rock salt' },
   { name: 'Port Said East', code: 'EGPSE', note: 'Container & sea salt' },
   { name: 'Ain Sokhna',     code: 'EGSOK', note: 'Minerals & fertilizers' },
-  { name: 'Al-Arish',       code: 'EGEAR', note: 'Sinai sea salt' },
+  { name: 'Al-Arish',       code: 'EGAAC', note: 'Sinai sea salt' },
   { name: 'Suez',           code: 'EGPSD', note: 'Red Sea lane entry' },
 ]
 

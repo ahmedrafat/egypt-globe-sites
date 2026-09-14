@@ -197,7 +197,7 @@ const PORTS = [
   { id: 'el-dekheila',    code: 'EGEDK', name: 'El Dekheila',    path: '/ports/el-dekheila-salt',    x: 282, y: 46,  lx: -8,  ly: 18,  anchor: 'end'   },
   { id: 'damietta',       code: 'EGDAM', name: 'Damietta',       path: '/ports/damietta-salt',       x: 390, y: 29,  lx: 0,   ly: -14, anchor: 'middle'},
   { id: 'port-said-east', code: 'EGPSE', name: 'Port Said East', path: '/ports/port-said-east-salt', x: 418, y: 38,  lx: 10,  ly: 22,  anchor: 'start' },
-  { id: 'al-arish',       code: 'EGEAR', name: 'Al-Arish',       path: '/ports/al-arish-salt',       x: 490, y: 43,  lx: 10,  ly: -12, anchor: 'start' },
+  { id: 'al-arish',       code: 'EGAAC', name: 'Al-Arish',       path: '/ports/al-arish-salt',       x: 490, y: 43,  lx: 10,  ly: -12, anchor: 'start' },
   { id: 'ain-sokhna',     code: 'EGSOK', name: 'Ain Sokhna',     path: '/ports/ain-sokhna-salt',     x: 417, y: 120, lx: -10, ly: 4,   anchor: 'end'   },
 ]
 
