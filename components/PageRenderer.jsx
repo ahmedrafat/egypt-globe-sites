@@ -391,11 +391,16 @@ export default async function PageRenderer({ page }) {
           visibility={visibility}
         />
       ) : page.path === '/trade-tools/hs-codes' ? (
-        // HS-code glossary becomes a fully interactive searchable browser —
-        // markdown body suppressed entirely (browser carries every code).
-        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10">
-          <HSCodeBrowser />
-        </section>
+        // Searchable browser first, then the glossary prose. Only the body's
+        // long code list is dropped from the rendered document, because the
+        // browser carries every code; the DB body keeps it for /llms-full.txt.
+        // Suppressing the whole body hid the explanatory sections (what an HS
+        // code is, building materials, sea vs rock salt) from readers and crawlers.
+        <MarkdownDocument
+          body={(page.body_markdown || '').replace(/## HS codes for the most-asked Egyptian export commodities\n[\s\S]*?(?=\n## )/, '')}
+          title={page.title}
+          leadingWidget={<HSCodeBrowser />}
+        />
       ) : page.path?.startsWith('/trade-tools/import-guides/') && page.path !== '/trade-tools/import-guides' ? (
         // Country import guide — TariffCalculator above the document.
         <MarkdownDocument body={page.body_markdown} title={page.title}

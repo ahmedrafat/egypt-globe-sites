@@ -16,8 +16,8 @@ import Icon from '../ui/Icon'
 
 const CODES = [
   // Salt
-  { code: '2501.00.10', desc: 'Salt for human consumption (table salt, pharma-grade NaCl)', div: 'salt', chapter: 'Ch 25 — Mineral products' },
-  { code: '2501.00.91', desc: 'Industrial salt (chlor-alkali, water-treatment, de-icing)', div: 'salt', chapter: 'Ch 25 — Mineral products' },
+  { code: '2501.00.10', desc: 'Salt for human consumption — sea or rock salt (table salt, pharma-grade NaCl)', div: 'salt', chapter: 'Ch 25 — Mineral products' },
+  { code: '2501.00.91', desc: 'Industrial salt — sea or rock salt (chlor-alkali, water-treatment, de-icing)', div: 'salt', chapter: 'Ch 25 — Mineral products' },
   { code: '2501.00.99', desc: 'Other salt (ultra-pure, specialty grades)', div: 'salt', chapter: 'Ch 25 — Mineral products' },
   // Cement / clinker
   { code: '2523.10.00', desc: 'Cement clinker (intermediate, exported to grinding mills)', div: 'construction', chapter: 'Ch 25 — Mineral products' },
@@ -68,6 +68,11 @@ const CODES = [
   { code: '2517.10.00', desc: 'Aggregates (pebbles, gravel, broken stone)', div: 'construction', chapter: 'Ch 25 — Mineral products' },
   { code: '2520.10.00', desc: 'Gypsum (natural)', div: 'construction', chapter: 'Ch 25 — Mineral products' },
   { code: '2521.00.00', desc: 'Limestone flux', div: 'construction', chapter: 'Ch 25 — Mineral products' },
+  { code: '2518.10.00', desc: 'Dolomite, not calcined', div: 'construction', chapter: 'Ch 25 — Mineral products' },
+  { code: '2520.20.00', desc: 'Plasters (calcined gypsum, plaster of Paris)', div: 'construction', chapter: 'Ch 25 — Mineral products' },
+  // Worked stone — building materials once cut or finished
+  { code: '6802.21.00', desc: 'Marble slabs and tiles, simply cut or sawn', div: 'construction', chapter: 'Ch 68 — Articles of stone' },
+  { code: '6802.91.00', desc: 'Marble, polished or further worked', div: 'construction', chapter: 'Ch 68 — Articles of stone' },
   // Metals
   { code: '7204.10.00', desc: 'Iron + steel scrap', div: 'metals', chapter: 'Ch 72 — Iron & steel' },
   { code: '7214.20.00', desc: 'Hot-rolled rebar', div: 'metals', chapter: 'Ch 72 — Iron & steel' },
