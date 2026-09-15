@@ -403,7 +403,11 @@ function SpecSheet({ page, specs, commodity, qualitySpecs }) {
     const k = q.parameter_key
     if (!k) continue
     if (!rows[k]) {
-      const val = [q.target_value, q.unit && !String(q.target_value || '').includes(q.unit) ? q.unit : ''].filter(Boolean).join(' ')
+      // Append the unit column only when the value carries no unit of its own —
+      // "≥235 N/mm²" with unit "%" used to render as "≥235 N/mm² %".
+      const tv = String(q.target_value || '')
+      const hasOwnUnit = /\d\s*(%|°|[A-Za-zµ])/.test(tv)
+      const val = [q.target_value, q.unit && !hasOwnUnit && !tv.includes(q.unit) ? q.unit : ''].filter(Boolean).join(' ')
       rows[k] = { key: k, label: q.parameter_name || pretty(k), value: val, group: classify(k) }
     }
     rows[k].method = q.test_method && q.test_method !== 'Per applicable standard' ? q.test_method : rows[k].method
