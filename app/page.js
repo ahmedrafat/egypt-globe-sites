@@ -220,14 +220,14 @@ const SIWA_ROWS = [
   ['Sulphate (SO₄²⁻)',  '≤ 0.80 %',          'Gravimetric, ISO 2480'],
   ['Water insolubles',  '≤ 0.50 %',          'ISO 2479 (gravimetric)'],
   ['Moisture, natural', '≤ 1.5 % (typ. 1.0–1.5)', 'ISO 2483 (loss on drying, 110 °C)'],
-  ['Moisture, kiln-dried', '≤ 0.5 % (0.25 % on request)', 'ISO 2483 (loss on drying, 110 °C)'],
+  ['Moisture, kiln-dried', '≤ 1.0 % or ≤ 0.5 % on request', 'ISO 2483 (loss on drying, 110 °C)'],
   ['Bulk density',      '950 – 1,200 kg/m³', 'EN 1097-3 (loose bulk density)'],
 ]
 
 // Step 02 panel — Siwa rock vs Sinai sea salt, the differentiation buyers tender against.
 const COMPARE_ROWS = [
   ['NaCl floor',        '≥ 97 % (all grades)',           'raw 94–97 % · washed 97.5–98 % · double-washed ≥ 99 %'],
-  ['Moisture',          '≤ 1.5 % natural · ≤ 0.5 % kiln', '≤ 3–4 % natural (Type 2) · ≤ 1.5 % kiln (Type 1)'],
+  ['Moisture',          '≤ 1.5 % natural · ≤ 1.0 / 0.5 % kiln', '≤ 3–4 % natural (Type 2) · ≤ 1.0 / 0.5 % kiln (Type 1)'],
   ['Sieve profiles',    '0/2 · 0/4 · 0/6.3 · 2/8 · 10/40 mm', '0/2 · 0/4 · 0/6.3 · 2/8 · 0.5/10 mm'],
   ['Standards',         'EN 16811-1 A/B/C · ASTM D632 · BS 3247 · GOST 13830', 'EN 16811-1 Type 1/2 · ASTM D632 · AASHTO M-143 · SS-EN 16811-1'],
   ['Primary use',       'Food · pharma · cosmetic · chlor-alkali · de-icing', 'De-icing · industrial · water treatment · pool'],
@@ -495,7 +495,7 @@ export default async function HomePage() {
                 <strong>97.00 % NaCl</strong> on a dry basis, with calcium and magnesium each held at
                 ≤ 0.40 %, sulphate ≤ 0.80 % and water-insolubles ≤ 0.50 %. Sieve profiles from 0/2 mm
                 fine to 10/40 mm lump are verified by ISO 13320 laser diffraction, and moisture is
-                controlled to ≤ 1.5 % natural or ≤ 0.5 % kiln-dried (0.25 % on request).
+                controlled to ≤ 1.5 % natural, with kiln drying to ≤ 1.0 % or ≤ 0.5 % on request.
               </p>
               <p data-rise className="egg-p">
                 That chemistry is the feedstock behind our food, pharmaceutical, cosmetic and

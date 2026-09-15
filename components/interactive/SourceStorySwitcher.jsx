@@ -34,7 +34,7 @@ const SOURCES = {
     bullets: [
       'Underground rock-salt mines, ancient deposits formed by paleoenvironmental seas',
       'Crusher → washer → screen → dryer → packing line',
-      'Naturally low moisture (typically < 0.5%) — kiln-drying optional',
+      'Natural moisture 1.0–1.5% — kiln-dried to ≤ 1.0% or ≤ 0.5% on request',
       'Ideal for de-icing, chlor-alkali, drilling fluids, water softening',
     ],
     portsHint: 'El Dekheila · Alexandria · Damietta · Ain Sokhna',

@@ -159,7 +159,7 @@ export default async function SaltMainPage() {
                 {' '}and the <strong className="text-[#14161a]">Red Sea coast</strong> at Ain Sokhna. ~2,700 kWh/m² annual
                 irradiance delivers raw 94–97 % NaCl, washed 97.5–98 % and double-washed ≥ 99 %, screened per lot
                 to EN 16811-1 Type 1 / Type 2, ASTM D632 and BS 3247 gradings with moisture held to the tender
-                tolerance (kiln-dried ≤ 1.5 %, natural 3–4 %).
+                tolerance (natural 3–4 %, kiln-dried to ≤ 1.0 % or ≤ 0.5 %).
               </p>
               <div className="relative mt-4 grid grid-cols-3 gap-2 text-center">
                 <div><div className="egg-display text-3xl text-[#087a70]">{sea.length}</div><div className="text-[11px] font-mono tracking-[0.14em] text-[#5b6472] uppercase">SKUs</div></div>
