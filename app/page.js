@@ -214,14 +214,14 @@ const ROUTES = [
 
 // Step 01 panel — Siwa Oasis crystalline rock salt: chemical analysis (PS-ROCK-DEIC-A / industrial floor).
 const SIWA_ROWS = [
-  ['NaCl (dry basis)',  '≥ 97.00 %',         'AOAC 920.179 / ISO 27053'],
+  ['NaCl (dry basis)',  '≥ 97.00 %',         'ISO 2481 (halogens as Cl)'],
   ['Calcium (Ca²⁺)',    '≤ 0.40 %',          'Per EN 16811-1 / ISO 2482'],
   ['Magnesium (Mg²⁺)',  '≤ 0.40 %',          'Per EN 16811-1 / ISO 2482'],
   ['Sulphate (SO₄²⁻)',  '≤ 0.80 %',          'Gravimetric, ISO 2480'],
-  ['Water insolubles',  '≤ 0.50 %',          'AOAC 925.45 / EN 1936'],
-  ['Moisture, natural', '≤ 1.5 % (typ. 1.0–1.5)', 'ISO 27053'],
-  ['Moisture, kiln-dried', '≤ 0.5 % (0.25 % on request)', 'ISO 27053'],
-  ['Bulk density',      '950 – 1,200 kg/m³', 'ASTM D7263 / EN 1097-3'],
+  ['Water insolubles',  '≤ 0.50 %',          'ISO 2479 (gravimetric)'],
+  ['Moisture, natural', '≤ 1.5 % (typ. 1.0–1.5)', 'ISO 2483 (loss on drying, 110 °C)'],
+  ['Moisture, kiln-dried', '≤ 0.5 % (0.25 % on request)', 'ISO 2483 (loss on drying, 110 °C)'],
+  ['Bulk density',      '950 – 1,200 kg/m³', 'EN 1097-3 (loose bulk density)'],
 ]
 
 // Step 02 panel — Siwa rock vs Sinai sea salt, the differentiation buyers tender against.

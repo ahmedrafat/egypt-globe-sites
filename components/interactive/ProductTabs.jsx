@@ -108,11 +108,11 @@ function fmt(v) {
 /* ─── per-division QA / inspection protocol ───────────────────────────── */
 
 const INSPECTION = {
-  salt:         { bodies: 'TÜV Austria · SGS · Intertek · Bureau Veritas', scope: 'Pre-shipment sampling per ISO 2479 / EN 16811-1 Annex B; NaCl, moisture and sieve witness tests; draft survey on bulk vessels; sealed retained samples', lab: 'Port laboratory — NaCl, Ca, Mg, SO₄, insolubles, moisture and sieve analysis on every lot; CoA issued before B/L' },
+  salt:         { bodies: 'TÜV Austria · SGS · Intertek · Bureau Veritas', scope: 'Pre-shipment sampling per ISO 11648-2; NaCl, moisture and sieve witness tests; draft survey on bulk vessels; sealed retained samples', lab: 'Port laboratory — NaCl, Ca, Mg, SO₄, insolubles, moisture and sieve analysis on every lot; CoA issued before B/L' },
   construction: { bodies: 'TÜV Austria · SGS · Bureau Veritas', scope: 'EN 197-2 / ASTM C183 conformity sampling; Mill Test Certificate witness (Blaine, SO₃, LOI, strength); draft survey or tally', lab: 'Plant and port laboratory — chemical analysis and strength class on every lot; Mill Test Certificate issued before B/L' },
   fertilizers:  { bodies: 'SGS · Intertek · Bureau Veritas', scope: 'Sampling per ISO 8633 / ISO 7742; N, P₂O₅, K₂O, biuret, moisture and granulometry witness tests; draft survey or bag tally', lab: 'Port laboratory — nutrient assay, moisture and sizing on every lot; CoA issued before B/L' },
   chemicals:    { bodies: 'SGS · Intertek · Bureau Veritas', scope: 'Sampling per the product standard; assay and impurity witness tests; SDS / REACH dossier and UN packaging check', lab: 'Port laboratory — assay and impurity profile on every lot; CoA issued before B/L' },
-  minerals:     { bodies: 'SGS · Bureau Veritas · Intertek', scope: 'ISO 3082 / ISO 12743 sampling and sample preparation; assay and moisture witness tests; draft survey for freight weight', lab: 'Mine and port laboratory — assay, moisture and sizing on every lot; CoA issued before B/L' },
+  minerals:     { bodies: 'SGS · Bureau Veritas · Intertek', scope: 'ISO 3082 (iron ore) / ISO 11648-2 (other minerals) sampling and sample preparation; assay and moisture witness tests; draft survey for freight weight', lab: 'Mine and port laboratory — assay, moisture and sizing on every lot; CoA issued before B/L' },
   metals:       { bodies: 'SGS · Bureau Veritas · TÜV Austria', scope: 'EN 10204 3.1 mill-certificate verification; dimensional, tensile and chemistry witness tests; tally and bundle check', lab: 'Mill certificate reviewed and counter-checked at the port; heat-number traceability per bundle' },
   agro:         { bodies: 'SGS · Intertek · Egyptian CAPQ phytosanitary inspection', scope: 'MRL and contaminant laboratory test; phytosanitary inspection and certificate; cold-chain data-logger; GlobalG.A.P. chain of custody where applicable', lab: 'Packhouse and port cold-store QC — sizing, Brix / dry-matter, defects and pulp temperature on every lot; CoA and phytosanitary certificate issued before B/L' },
 }
@@ -350,15 +350,18 @@ function Th({ children, className = '' }) {
   return <th className={`text-left text-[11px] uppercase tracking-wider font-bold text-[#5b6577] px-4 py-2 ${className}`}>{children}</th>
 }
 
+// ISO 248x = the ISO TC 47 methods for sodium chloride for industrial use.
+// Replaced AOAC 920.179 / ISO 27053 (untraceable), EN 1936 (natural-stone
+// density) and ASTM D7263 (soil specimens) — none of them test salt.
 const DEFAULT_SALT_METHODS = [
-  [/nacl/, 'AOAC 920.179 / ISO 27053'],
+  [/nacl/, 'ISO 2481 (halogens as Cl)'],
   [/calcium|\bca\b|ca_max/, 'Per EN 16811-1 / ISO 2482'],
   [/magnesium|\bmg\b|mg_max/, 'Per EN 16811-1 / ISO 2482'],
   [/sulph|sulf|so4/, 'Gravimetric, ISO 2480'],
-  [/insolub/, 'AOAC 925.45 / EN 1936'],
-  [/moisture/, 'ISO 27053'],
+  [/insolub/, 'ISO 2479 (gravimetric)'],
+  [/moisture/, 'ISO 2483 (loss on drying, 110 °C)'],
   [/particle|sieve|grain|granulom/, 'ISO 13320 (laser diffraction) / sieve'],
-  [/bulk density/, 'ASTM D7263 / EN 1097-3'],
+  [/bulk density/, 'EN 1097-3 (loose bulk density)'],
 ]
 
 /**
