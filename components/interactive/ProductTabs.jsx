@@ -136,7 +136,9 @@ const QA_CHAIN = [
    Sinai origin, ASTM / EN / GOST grading) that makes sibling SKUs distinct. */
 function bodyIntro(page) {
   const body = page?.body_markdown || ''
-  const m = body.match(/^## [^\n]*specification-certified[^\n]*\n([\s\S]*?)(?=\n## |$)/m)
+  // No `m` flag: `^`/`$` must mean start/end of the whole body, otherwise
+  // `$` matches the blank line right after the heading and captures nothing.
+  const m = body.match(/(?:^|\n)## [^\n]*specification-certified[^\n]*\n([\s\S]*?)(?=\n## |$)/)
   if (!m) return []
   const desc = (page.description || '').trim()
   return m[1].split(/\n{2,}/).map(s => s.trim()).filter(s =>
