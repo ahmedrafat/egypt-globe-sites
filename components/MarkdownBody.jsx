@@ -33,8 +33,11 @@ function keywordIcon(text, cls = 'w-5 h-5') { return iconSvg(keywordIconName(tex
 
 function renderInline(text) {
   let out = escapeHtml(text)
-  out = out.replaceAll(/\[([^\]]+)\]\(([^)]+)\)/g,
-    '<a href="$2" class="text-[#087a70] hover:text-[#14161a] underline underline-offset-2 decoration-1 hover:decoration-2 transition-all font-medium" target="_blank" rel="noopener noreferrer">$1</a>')
+  out = out.replaceAll(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, href) => {
+    // Internal links navigate in place; only off-site links open a new tab.
+    const ext = /^https?:\/\//i.test(href) && !/^https?:\/\/(www\.)?egyptglobe\.com(\/|$)/i.test(href)
+    return `<a href="${href}" class="text-[#087a70] hover:text-[#14161a] underline underline-offset-2 decoration-1 hover:decoration-2 transition-all font-medium"${ext ? ' target="_blank" rel="noopener noreferrer"' : ''}>${label}</a>`
+  })
   out = out.replaceAll(/\*\*([^*]+)\*\*/g, '<strong class="text-[#14161a] font-semibold">$1</strong>')
   out = out.replaceAll(/(^|[^*])\*([^*\n]+)\*/g, '$1<em class="text-[#3f4650] italic">$2</em>')
   out = out.replaceAll(/`([^`]+)`/g, '<code class="bg-[#f3f4f6] text-[#14161a] px-1.5 py-0.5 rounded text-[0.9em] font-mono border border-[#14161a]/10">$1</code>')
@@ -62,7 +65,7 @@ function renderFeatureCardGrid(items) {
       <div class="flex items-start gap-3">
         <div class="flex-shrink-0 w-10 h-10 rounded-xl ring-1 ring-[#14161a]/15 text-[#14161a] flex items-center justify-center">${ico}</div>
         <div class="flex-1 min-w-0">
-          <div class="font-bold text-[#14161a] text-[0.95rem] leading-tight">${escapeHtml(it.title)}</div>
+          <div class="font-bold text-[#14161a] text-[0.95rem] leading-tight">${renderInline(it.title)}</div>
           ${it.body ? `<div class="text-sm text-[#3f4650] mt-1.5 leading-relaxed">${renderInline(it.body)}</div>` : ''}
         </div>
       </div>
@@ -248,6 +251,15 @@ export function parseMarkdown(content) {
     if (/^---+$/.test(line)) {
       flushAll()
       blocks.push('<hr class="my-10 border-0 h-px bg-[#e5e7eb]" />')
+      continue
+    }
+
+    // H4 — sub-sections inside an H3 (Incoterm terms, per-region standard tables)
+    if (line.startsWith('#### ')) {
+      flushAll()
+      const text = line.slice(5)
+      countWords(text)
+      blocks.push(`<h4 class="font-semibold text-[1.0625rem] mt-7 mb-2 text-[#14161a]">${renderInline(text)}</h4>`)
       continue
     }
 
