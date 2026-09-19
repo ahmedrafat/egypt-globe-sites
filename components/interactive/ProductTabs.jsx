@@ -173,7 +173,10 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
   // finding. The overview now opens with a sentence built from the
   // specification, and falls back to the description only when no spec
   // fields exist.
-  const overviewLead = specSummary(page, specs, commodity) || page.description
+  // When no spec sentence can be built the hero's description would repeat
+  // verbatim as the first Overview paragraph (cement, steel, water-treatment
+  // SKUs) — leave the lead empty in that case.
+  const overviewLead = specSummary(page, specs, commodity)
   const intro = bodyIntro(page)
 
   return (
