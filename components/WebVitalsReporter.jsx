@@ -64,7 +64,35 @@ export default function WebVitalsReporter() {
     const device = detectDevice()
     const rfq_visitor = window.location.pathname.startsWith('/rfq')
 
+    // Sep 2026: 882 "sessions" from one Windows Chrome/148 user-agent each
+    // beaconed exactly TTFB + FCP and never LCP / CLS / INP — a JS-executing
+    // crawler that loads the page and leaves without ever scrolling, clicking
+    // or hiding the tab. It was 37 % of all TTFB samples and pushed desktop
+    // p75 from 1.2 s to 3.2 s. UA rules rot, so instead nothing is sent until
+    // the visit shows a human signal: any pointer / key / scroll / touch
+    // event, or the tab being hidden (navigation, tab switch, close). Metrics
+    // that finalise before that are buffered and flushed on the first signal.
+    let armed = false
+    const buffer = []
+    function flush() {
+      while (buffer.length) post(buffer.shift())
+    }
+    function arm() {
+      if (armed) return
+      armed = true
+      flush()
+    }
+    const ARM_EVENTS = ['pointermove', 'pointerdown', 'keydown', 'scroll', 'touchstart', 'wheel']
+    for (const ev of ARM_EVENTS) window.addEventListener(ev, arm, { once: true, passive: true })
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') arm() })
+    window.addEventListener('pagehide', arm)
+
     function send(metric) {
+      if (!armed) { buffer.push(metric); return }
+      post(metric)
+    }
+
+    function post(metric) {
       const payload = {
         metric: metric.name,
         value: metric.value,
