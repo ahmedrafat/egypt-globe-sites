@@ -6,16 +6,35 @@
  * recreation of the corporate "EGYPT / GLOBE / GROUP" wordmark + globe
  * icon. Solid blue (#1d5fa1) so it sits well on a white background.
  */
+import Image from 'next/image'
+
+/* The uploaded logo (site_settings.logo_url) is a 400×204 PNG on Supabase
+   storage served with `cache-control: no-cache` — 52 KB re-fetched from a
+   third-party origin on every page and preloaded ahead of the hero banner.
+   Routing it through next/image serves a ~70 px AVIF/WebP from our own
+   origin with a 1-year cache; the header instance loads eagerly (it is above the fold on every page)
+   without a <link preload>, so the hero banner keeps fetch priority. */
+const LOGO_W = 400
+const LOGO_H = 204
+
 export default function Logo({
   className = 'h-9',
   imageUrl = null,
   monochrome = false,
   ariaLabel = 'Egypt Globe Group',
+  priority = false,
 }) {
   if (imageUrl) {
     return (
-      /* eslint-disable-next-line @next/next/no-img-element */
-      <img src={imageUrl} alt={ariaLabel} className={className + ' w-auto'} />
+      <Image
+        src={imageUrl}
+        alt={ariaLabel}
+        width={LOGO_W}
+        height={LOGO_H}
+        sizes="140px"
+        loading={priority ? 'eager' : 'lazy'}
+        className={className + ' w-auto'}
+      />
     )
   }
   const blue = monochrome ? 'currentColor' : '#1d5fa1'

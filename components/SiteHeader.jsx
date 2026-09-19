@@ -65,7 +65,7 @@ export default async function SiteHeader({ settings }) {
 
           {/* Logo — slightly smaller on mobile to leave room for CTAs */}
           <Link href="/" className="flex items-center gap-2 group flex-shrink-0 min-w-0">
-            <Logo imageUrl={s.logoUrl} className="h-8 sm:h-9 w-auto transition-transform group-hover:scale-105" />
+            <Logo imageUrl={s.logoUrl} priority className="h-8 sm:h-9 w-auto transition-transform group-hover:scale-105" />
           </Link>
 
           {/* Desktop nav */}
