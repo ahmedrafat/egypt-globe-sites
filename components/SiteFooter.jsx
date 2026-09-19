@@ -200,6 +200,7 @@ export default function SiteFooter({ settings }) {
             <Link href="/rfq" className="hover:text-[#14161a] transition-colors">RFQ</Link>
             <Link href="/about/quality-compliance" className="hover:text-[#14161a] transition-colors">Quality</Link>
             <Link href="/cookies-policy" className="hover:text-[#14161a] transition-colors">Cookies</Link>
+            <Link href="/ar" lang="ar" hrefLang="ar" className="hover:text-[#14161a] transition-colors">العربية</Link>
             {s.linkedin && (
               <a href={s.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-[#14161a] transition-colors">
                 LinkedIn
