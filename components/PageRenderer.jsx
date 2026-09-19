@@ -45,7 +45,7 @@ import SkuRelatedLinks from './SkuRelatedLinks'
 import { BreadcrumbJsonLd, ProductJsonLd, WebPageJsonLd, FAQJsonLd } from './StructuredData'
 import FAQAccordion from './FAQAccordion'
 import StickyRfqBar from './StickyRfqBar'
-import { faqsForPage } from '../lib/faqs'
+import { faqsForPage, productName } from '../lib/faqs'
 import { getBuyerVisibility, filterPagesByVisibility, isPageVisible } from '../lib/supabaseServer'
 import Icon, { DIVISION_ICON, APPLICATION_ICON, SERVICE_ICON, CATEGORY_ICON } from './ui/Icon'
 
@@ -685,13 +685,13 @@ export default async function PageRenderer({ page }) {
 
       {/* Drop 127 — FAQ accordion + FAQPage JSON-LD (CRO + rich SERP cards) */}
       {(() => {
-        const faqs = faqsForPage(page, commodity)
+        const faqs = faqsForPage(page, commodity, qualitySpecs)
         return faqs.length > 0 ? (
           <div className="bg-[#f9fafb] border-t border-[#14161a]/10">
             <FAQJsonLd qas={faqs.map(f => ({ question: f.question, answer: f.answer }))} />
             <FAQAccordion
               faqs={faqs}
-              title={isSkuPage ? `Frequently asked about ${page.title}` : 'Frequently asked questions'}
+              title={isSkuPage ? `Frequently asked about ${productName(page, commodity)}` : 'Frequently asked questions'}
               subtitle={isSkuPage
                 ? 'Common procurement questions for this product. Other questions? Email export@egyptglobe.com.'
                 : null}
