@@ -329,6 +329,21 @@ function absUrl(u) {
  * @param {object} visibility — buyer access flags
  * @param {object} brand — egg_letterheads row (optional, from PageRenderer.brand)
  */
+const FOREIGN_RE = /\b(Ukraine|EU|Europe|Australia|Morocco|Saudi Arabia|KSA|Russia|Iran|UAE|United Arab Emirates|South Africa|Kazakhstan|Uzbekistan|Iraq|Sudan|Burkina Faso|Malaysia|Indonesia|China|India|Brazil|Argentina|USA|Turkey|Chile|Belarus|Canada|Germany|Uruguay|Ghana|Ivory Coast|Vietnam|Thailand|Pakistan|Oman|Qatar|Kuwait|Bahrain|Jordan|Spain|Italy|Netherlands|France|Poland|Romania|Bulgaria|Kenya|Tanzania|Ethiopia|Nigeria|South Korea|Korea|Japan|Scandinavia|Finland|Sweden|Norway|Mexico|Peru|Zambia|Mozambique|Madagascar|Sri Lanka|Bangladesh|Philippines|New Zealand|Colombia|Guinea|CIS)\b/g
+const ORIGIN_ALIAS = { KSA: 'Saudi Arabia', UAE: 'United Arab Emirates', EU: 'European Union', CIS: 'Commonwealth of Independent States', Korea: 'South Korea' }
+
+/** countryOfOrigin (+ manufacturer when the group makes it) from specs.origin / commodity.origin. */
+function originFields(page, commodity) {
+  const raw = String(page?.specs?.origin || commodity?.origin || '')
+  const foreign = [...new Set((raw.match(FOREIGN_RE) || []).map(n => ORIGIN_ALIAS[n] || n))]
+  const egyptian = !raw || /egypt/i.test(raw) || foreign.length === 0   // Siwa, Sinai, Eastern Desert … are Egyptian places
+  const countries = [...(egyptian ? ['Egypt'] : []), ...foreign].map(name => ({ '@type': 'Country', name }))
+  return {
+    ...(egyptian && foreign.length === 0 ? { manufacturer: { '@id': `${BASE}#org` } } : {}),
+    countryOfOrigin: countries.length === 1 ? countries[0] : countries,
+  }
+}
+
 export function ProductJsonLd({ page, commodity, visibility, brand }) {
   if (!page) return null
   const specs = page.specs || {}
@@ -421,8 +436,11 @@ export function ProductJsonLd({ page, commodity, visibility, brand }) {
     ...(commodity?.code ? { productID: commodity.code, sku: commodity.code }
        : commodity?.sku  ? { productID: commodity.sku,  sku: commodity.sku  } : {}),
     brand: brandEntity,
-    manufacturer: { '@id': `${BASE}#org` },
-    countryOfOrigin: { '@type': 'Country', name: 'Egypt' },
+    // Origin comes from the product record. ~95 SKUs are traded goods (sulphur
+    // from Uzbekistan / Russia / the Gulf, Ukrainian barley, Moroccan DAP …):
+    // hard-coding Egypt told Google the wrong country, and naming the group as
+    // manufacturer was only true for what it actually produces.
+    ...originFields(page, commodity),
     // Certifications → hasCertification + Certification entities (Google
     // added Certification markup April 2025). Replaces the wrong `award` field.
     ...(certs.length ? {
