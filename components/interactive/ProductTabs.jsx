@@ -129,6 +129,21 @@ const QA_CHAIN = [
   ['5', 'Destination acceptance', 'CoA cross-referenced with the buyer’s arrival laboratory; retained samples arbitrate any variance', 'Buyer lab · on discharge'],
 ]
 
+/* Source / grade prose from the CMS body: the paragraphs between the body's
+   generated lead heading and the first data section. The description and the
+   generic QA paragraph are skipped — the hero and QaPromise already print
+   them — so what remains is the per-source and per-standard copy (Siwa vs
+   Sinai origin, ASTM / EN / GOST grading) that makes sibling SKUs distinct. */
+function bodyIntro(page) {
+  const body = page?.body_markdown || ''
+  const m = body.match(/^## [^\n]*specification-certified[^\n]*\n([\s\S]*?)(?=\n## |$)/m)
+  if (!m) return []
+  const desc = (page.description || '').trim()
+  return m[1].split(/\n{2,}/).map(s => s.trim()).filter(s =>
+    s && !s.startsWith('|') && !s.startsWith('#') && !s.startsWith('[') && !s.startsWith('-') &&
+    s !== desc && !s.startsWith('Egypt Globe Group has operated'))
+}
+
 /* Section order of the spec document; labels match the rendered <h2>s. */
 const SECTIONS = [
   { id: 'overview',     label: 'Overview',                 icon: 'book' },
@@ -157,6 +172,7 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
   // specification, and falls back to the description only when no spec
   // fields exist.
   const overviewLead = specSummary(page, specs, commodity) || page.description
+  const intro = bodyIntro(page)
 
   return (
     <section id="product-tabs" className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10">
@@ -169,6 +185,9 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
             {overviewLead && (
               <p className="text-lg text-[#3f4650] leading-relaxed font-medium">{overviewLead}</p>
             )}
+            {intro.map((para, i) => (
+              <p key={i} className="text-[15px] text-[#3f4650] leading-relaxed">{para}</p>
+            ))}
             <QaPromise page={page} />
             {isSalt && <SourceStorySwitcher pageSourceType={specs.source_type} />}
             {!isSalt && (
