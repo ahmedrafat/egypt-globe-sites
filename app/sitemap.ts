@@ -81,6 +81,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     seenUrls.add(url)
   }
 
+  // Dedicated routes outside the CMS
+  out.push({ url: `${BASE}/ar`, lastModified: new Date('2026-09-19'), changeFrequency: 'monthly', priority: 0.6 })
+
   return out
 }
 

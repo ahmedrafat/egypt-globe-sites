@@ -76,7 +76,9 @@ export async function generateMetadata() {
   return {
     title,
     description,
-    alternates: { canonical },
+    alternates: isUmbrella
+      ? { canonical, languages: { en: `${BASE}/`, ar: `${BASE}/ar`, 'x-default': `${BASE}/` } }
+      : { canonical },
     openGraph: {
       type: 'website', title, description, url: canonical,
       siteName: isUmbrella ? 'Egypt Globe Group' : m.siteName, locale: 'en_US',
