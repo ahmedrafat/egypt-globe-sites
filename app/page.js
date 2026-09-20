@@ -700,18 +700,40 @@ export default async function HomePage() {
                       <span className="inline-flex items-center px-3.5 rounded-r-xl border border-l-0 border-[#14161a]/15 bg-[#f6f7f9] text-xs font-mono text-[#5b6472]">MT</span>
                     </div>
                   </FormField>
-                  <FormField label="Salt type" required>
+                  {/* Sep 2026: 50 of 55 website RFQs were for non-salt lines (sulphur 19,
+                      urea 6, SOP, soda ash, cement, rebar …) and this salt-only picker was
+                      used once in 120 days. The field name stays `salt_type` because the
+                      submit script reads it; the value still lands in commodity_name. */}
+                  <FormField label="Commodity" required>
                     <select name="salt_type" required defaultValue="" className="egg-input">
-                      <option value="" disabled>Select a grade</option>
-                      <option>Rock salt — De-icing grade (EN 16811-1 / ASTM D632)</option>
-                      <option>Sea salt — De-icing grade (EN 16811-1 Type 2, natural moisture)</option>
-                      <option>Industrial grade — chlor-alkali / PVC / oilfield</option>
-                      <option>Pool &amp; water-treatment grade (softener, ion-exchange)</option>
-                      <option>Food grade (ISO 22000 / HACCP / Halal)</option>
-                      <option>Pharmaceutical grade (USP / BP / EP)</option>
-                      <option>Cosmetic &amp; spa grade</option>
-                      <option>Agricultural / animal-feed grade</option>
-                      <option>Other commodity — cement, fertilizers, chemicals, minerals, metals, agro</option>
+                      <option value="" disabled>Select a commodity</option>
+                      <optgroup label="Fertilizers &amp; sulphur">
+                        <option>Sulphur — granular / prilled / lump</option>
+                        <option>Urea 46% N — granular / prilled</option>
+                        <option>Nitrogen fertilizers — AN / CAN / UAN / ammonium sulphate</option>
+                        <option>Potash &amp; phosphates — SOP / MOP / DAP / MAP / TSP / rock phosphate</option>
+                        <option>NPK compound fertilizers</option>
+                      </optgroup>
+                      <optgroup label="Salt">
+                        <option>Rock salt — De-icing grade (EN 16811-1 / ASTM D632)</option>
+                        <option>Sea salt — De-icing grade (EN 16811-1 Type 2, natural moisture)</option>
+                        <option>Industrial salt — chlor-alkali / PVC / oilfield / water treatment</option>
+                        <option>Food, pharmaceutical or cosmetic grade salt</option>
+                        <option>Agricultural / animal-feed salt</option>
+                      </optgroup>
+                      <optgroup label="Construction &amp; metals">
+                        <option>Cement &amp; clinker — CEM I / CEM II / SRC / white</option>
+                        <option>Steel — rebar, coil, wire rod, sections</option>
+                        <option>Gypsum, limestone, marble &amp; granite</option>
+                      </optgroup>
+                      <optgroup label="Chemicals &amp; minerals">
+                        <option>Caustic soda, soda ash &amp; water-treatment chemicals</option>
+                        <option>Industrial minerals — silica sand, barite, bentonite, kaolin, feldspar</option>
+                      </optgroup>
+                      <optgroup label="Other">
+                        <option>Agro &amp; food commodities</option>
+                        <option>Other commodity</option>
+                      </optgroup>
                     </select>
                   </FormField>
                   <FormField label="Destination (port or country)" required full>
