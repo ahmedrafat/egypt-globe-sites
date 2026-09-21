@@ -20,12 +20,15 @@ export async function generateMetadata({ searchParams }) {
   const sp = await searchParams
   const q = (sp?.q || '').toString().slice(0, 80)
   return {
-    title: q ? `${q} — Egypt Globe Group search` : 'Search — Egypt Globe Group',
+    title: q ? `${q} — search` : 'Search',
     description: q
       ? `Search results for "${q}" on Egypt Globe Group — Egyptian B2B commodity export trader.`
       : 'Search Egypt Globe Group — Egyptian B2B commodity export trader covering salt, cement, fertilizers, chemicals, gypsum, agro across 60+ destination markets.',
     alternates: { canonical: 'https://egyptglobe.com/search' },
-    robots: q ? { index: false, follow: true } : { index: true, follow: true },
+    // An empty search box has nothing to rank for. While it was indexable Google
+    // used it as a brand sitelink (40 impressions, 0 clicks in 28 days) in a slot
+    // a product or contact page could hold. The SearchAction target works unindexed.
+    robots: { index: false, follow: true },
   }
 }
 
