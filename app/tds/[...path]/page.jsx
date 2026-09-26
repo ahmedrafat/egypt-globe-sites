@@ -23,6 +23,7 @@ export const revalidate = 60
 
 const SPEC_LABELS = {
   nacl_min: 'NaCl min',  moisture_max: 'Moisture max',  particle_size: 'Particle size',
+  moisture_typical: 'Moisture grades', kiln_drying_options: 'Drying options', purity_options: 'NaCl purity', processing: 'Processing',
   bulk_density: 'Bulk density', ca_max: 'Ca max', mg_max: 'Mg max', so4_max: 'SO₄ max',
   water_insolubles: 'Water insolubles',
   pb_max: 'Lead (Pb)', as_max: 'Arsenic (As)', cd_max: 'Cadmium (Cd)', hg_max: 'Mercury (Hg)',

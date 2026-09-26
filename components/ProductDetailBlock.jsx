@@ -22,6 +22,9 @@ const SPEC_LABELS = {
   // Salt
   nacl_min: 'NaCl min',
   moisture_max: 'Moisture max',
+  moisture_typical: 'Moisture grades',
+  kiln_drying_options: 'Drying options',
+  purity_options: 'NaCl purity',
   particle_size: 'Particle size',
   bulk_density: 'Bulk density',
   ca_max: 'Ca max',
