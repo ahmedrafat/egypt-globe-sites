@@ -1,6 +1,6 @@
 {
-  "generated": "2026-09-12T00:23:21.944Z",
-  "count": 54,
+  "generated": "2026-09-26T22:13:10.384Z",
+  "count": 62,
   "banners": [
     {
       "url": "/banners/about-careers.jpg",
@@ -279,6 +279,12 @@
       "bytes": 258162
     },
     {
+      "url": "/banners/topics/import-guide.jpg",
+      "label": "Import Guide",
+      "group": "Topic banners",
+      "bytes": 361042
+    },
+    {
       "url": "/banners/topics/metals.jpg",
       "label": "Metals",
       "group": "Topic banners",
@@ -297,10 +303,28 @@
       "bytes": 259910
     },
     {
+      "url": "/banners/topics/partners.jpg",
+      "label": "Partners",
+      "group": "Topic banners",
+      "bytes": 254035
+    },
+    {
       "url": "/banners/topics/pharma-cosmetic.jpg",
       "label": "Pharma Cosmetic",
       "group": "Topic banners",
       "bytes": 256547
+    },
+    {
+      "url": "/banners/topics/port-mediterranean.jpg",
+      "label": "Port Mediterranean",
+      "group": "Topic banners",
+      "bytes": 354896
+    },
+    {
+      "url": "/banners/topics/port-red-sea.jpg",
+      "label": "Port Red Sea",
+      "group": "Topic banners",
+      "bytes": 322074
     },
     {
       "url": "/banners/topics/ports.jpg",
@@ -309,16 +333,40 @@
       "bytes": 348208
     },
     {
+      "url": "/banners/topics/press.jpg",
+      "label": "Press",
+      "group": "Topic banners",
+      "bytes": 221531
+    },
+    {
       "url": "/banners/topics/salt.jpg",
       "label": "Salt",
       "group": "Topic banners",
       "bytes": 295682
     },
     {
+      "url": "/banners/topics/standards.jpg",
+      "label": "Standards",
+      "group": "Topic banners",
+      "bytes": 249487
+    },
+    {
       "url": "/banners/topics/textile-leather.jpg",
       "label": "Textile Leather",
       "group": "Topic banners",
       "bytes": 317903
+    },
+    {
+      "url": "/banners/topics/trade-tools.jpg",
+      "label": "Trade Tools",
+      "group": "Topic banners",
+      "bytes": 229212
+    },
+    {
+      "url": "/banners/topics/vessel-sizes.jpg",
+      "label": "Vessel Sizes",
+      "group": "Topic banners",
+      "bytes": 219984
     },
     {
       "url": "/banners/topics/water.jpg",
