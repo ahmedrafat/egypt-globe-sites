@@ -24,8 +24,12 @@ export const isBanner = src => typeof src === 'string' && src.startsWith('/banne
 // runs to ~62% of the width at lg, and the first version (.86 at 48% -> .46
 // at 72%) measured 3.4-4.0:1 behind its last words on three pages. These stops
 // were re-measured pixel-by-pixel against the live art -- keep it >= 4.5:1.
+// Sep 27 2026: the art was reading darker than commissioned because the scrim
+// still sat at .42 over the subject and .14 at the edge, over a 90% image. The
+// left stops are unchanged (the lede ends by ~62%); from there it now clears to
+// nothing by 82%, and the image shows at full opacity.
 export const BANNER_SCRIM_LG =
-  'linear-gradient(90deg, rgba(3,24,45,.94) 0%, rgba(3,24,45,.90) 50%, rgba(3,24,45,.80) 62%, rgba(3,24,45,.42) 78%, rgba(3,24,45,.14) 100%)'
+  'linear-gradient(90deg, rgba(3,24,45,.94) 0%, rgba(3,24,45,.90) 48%, rgba(3,24,45,.80) 62%, rgba(3,24,45,.28) 70%, rgba(3,24,45,.06) 80%, rgba(3,24,45,0) 88%)'
 
 export default function HeroBackdrop({ src }) {
   if (!src) return null
@@ -34,9 +38,9 @@ export default function HeroBackdrop({ src }) {
     return (
       <div data-hero-bg className="absolute inset-0" aria-hidden="true">
         <Image src={src} alt="" fill priority sizes="100vw"
-          className="object-cover object-[72%_50%] opacity-90" />
+          className="object-cover object-[72%_50%]" />
         {/* phones and tablets: the headline spans the full width */}
-        <div className="absolute inset-0 lg:hidden bg-gradient-to-b from-[#03182d]/88 via-[#03182d]/78 to-[#03182d]/92" />
+        <div className="absolute inset-0 lg:hidden bg-gradient-to-b from-[#03182d]/84 via-[#03182d]/68 to-[#03182d]/90" />
         <div className="absolute inset-0 hidden lg:block" style={{ background: BANNER_SCRIM_LG }} />
       </div>
     )
