@@ -221,15 +221,15 @@ const SIWA_ROWS = [
   ['Magnesium (Mg²⁺)',  '≤ 0.40 %',          'Per EN 16811-1 / ISO 2482'],
   ['Sulphate (SO₄²⁻)',  '≤ 0.80 %',          'Gravimetric, ISO 2480'],
   ['Water insolubles',  '≤ 0.50 %',          'ISO 2479 (gravimetric)'],
-  ['Moisture, natural', '≤ 1.0 % or ≤ 1.5 % grades', 'ISO 2483 (loss on drying, 110 °C)'],
-  ['Moisture, kiln-dried', '≤ 0.25 %, ≤ 0.5 % or ≤ 1.0 % (winter) on request', 'ISO 2483 (loss on drying, 110 °C)'],
+  ['Moisture grades',   '0.3 %, 0.5 %, 1.0 %, 1.5 % or 2.0 % — to the client’s specification', 'ISO 2483 (loss on drying, 110 °C)'],
+  ['Washed grades',     'same moisture grades as crude; NaCl purity customised per contract', 'ISO 2483 (loss on drying, 110 °C)'],
   ['Bulk density',      '950 – 1,200 kg/m³', 'EN 1097-3 (loose bulk density)'],
 ]
 
 // Step 02 panel — Siwa rock vs Sinai sea salt, the differentiation buyers tender against.
 const COMPARE_ROWS = [
   ['NaCl floor',        '≥ 97 % (all grades)',           'raw 94–97 % · washed 97.5–98 % · double-washed ≥ 99 %'],
-  ['Moisture',          'natural 1.0 / 1.5 % grades · ≤ 0.25–1.0 % kiln', '≤ 3–4 % natural (Type 2) · ≤ 0.25–1.0 % kiln (Type 1)'],
+  ['Moisture',          '0.3 / 0.5 / 1.0 / 1.5 / 2.0 % grades to specification', 'natural 2.5 / 3.0 / 3.5 / 4.0 / 4.5 % (Type 2) · kiln-dried 2.0 / 1.0 / 0.5 % (Type 1)'],
   ['Sieve profiles',    '0/2 · 0/4 · 0/6.3 · 2/8 · 10/40 mm', '0/2 · 0/4 · 0/6.3 · 2/8 · 0.5/10 mm'],
   ['Standards',         'EN 16811-1 A/B/C · ASTM D632 · BS 3247 · GOST 13830', 'EN 16811-1 Type 1/2 · ASTM D632 · AASHTO M-143 · SS-EN 16811-1'],
   ['Primary use',       'Food · pharma · cosmetic · chlor-alkali · de-icing', 'De-icing · industrial · water treatment · pool'],
@@ -497,7 +497,7 @@ export default async function HomePage() {
                 <strong>97.00 % NaCl</strong> on a dry basis, with calcium and magnesium each held at
                 ≤ 0.40 %, sulphate ≤ 0.80 % and water-insolubles ≤ 0.50 %. Sieve profiles from 0/2 mm
                 fine to 10/40 mm lump are verified by ISO 13320 laser diffraction, and moisture is
-                controlled to natural grades of ≤ 1.0 % or ≤ 1.5 %, with kiln drying to ≤ 0.25 %, ≤ 0.5 % or ≤ 1.0 % (winter) on request.
+                graded at 0.3 %, 0.5 %, 1.0 %, 1.5 % or 2.0 % to the client’s specification, crude or washed, with NaCl purity customised per contract.
               </p>
               <p data-rise className="egg-p">
                 That chemistry is the feedstock behind our food, pharmaceutical, cosmetic and
@@ -532,8 +532,8 @@ export default async function HomePage() {
                 industrial, water-treatment and pool grades. It is supplied in three verified purity
                 tiers — raw 94–97 % NaCl, washed 97.5–98 % and double-washed ≥ 99 % — and screened to{' '}
                 <Link href="/standards/en-16811-1" className="egg-inline">EN 16811-1</Link> Type 1
-                (kiln-dried, ≤ 1.5 % moisture, anti-caking E535 ≤ 80 ppm on request) or Type 2
-                (natural moisture 3–4 %, no additive) gradings; to ASTM D632 / AASHTO M-143 for North
+                (kiln-dried to 2.0 %, 1.0 % or 0.5 % moisture, anti-caking E535 ≤ 80 ppm on request) or Type 2
+                (natural moisture 2.5–4.5 %, no additive) gradings; to ASTM D632 / AASHTO M-143 for North
                 America; BS 3247 for the UK; SS-EN 16811-1 for the Nordics; and GOST 13830 for CIS
                 tenders. Grading is re-verified at the port laboratory on every shipment, because a
                 spreader calibrated for 0/6.3 mm cannot tolerate a lot that arrives at 2/8.
