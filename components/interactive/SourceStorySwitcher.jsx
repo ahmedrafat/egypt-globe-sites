@@ -34,7 +34,7 @@ const SOURCES = {
     bullets: [
       'Underground rock-salt mines, ancient deposits formed by paleoenvironmental seas',
       'Crusher → washer → screen → dryer → packing line',
-      'Moisture grades 0.3 / 0.5 / 1.0 / 1.5 / 2.0 % to the client’s specification — NaCl purity customised per contract',
+      'Natural moisture 1.0 / 1.5 / 2.0 %, kiln-dried to 0.5 / 0.3 % on request — NaCl purity customised per contract',
       'Ideal for de-icing, chlor-alkali, drilling fluids, water softening',
     ],
     portsHint: 'El Dekheila · Alexandria · Damietta · Ain Sokhna',

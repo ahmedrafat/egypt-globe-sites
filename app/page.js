@@ -221,7 +221,7 @@ const SIWA_ROWS = [
   ['Magnesium (Mg²⁺)',  '≤ 0.40 %',          'Per EN 16811-1 / ISO 2482'],
   ['Sulphate (SO₄²⁻)',  '≤ 0.80 %',          'Gravimetric, ISO 2480'],
   ['Water insolubles',  '≤ 0.50 %',          'ISO 2479 (gravimetric)'],
-  ['Moisture grades',   '0.3 %, 0.5 %, 1.0 %, 1.5 % or 2.0 % — to the client’s specification', 'ISO 2483 (loss on drying, 110 °C)'],
+  ['Moisture grades',   'natural 1.0 %, 1.5 % or 2.0 %, kiln-dried to 0.5 % or 0.3 % — to the client’s specification', 'ISO 2483 (loss on drying, 110 °C)'],
   ['Washed grades',     'same moisture grades as crude; NaCl purity customised per contract', 'ISO 2483 (loss on drying, 110 °C)'],
   ['Bulk density',      '950 – 1,200 kg/m³', 'EN 1097-3 (loose bulk density)'],
 ]
@@ -229,7 +229,7 @@ const SIWA_ROWS = [
 // Step 02 panel — Siwa rock vs Sinai sea salt, the differentiation buyers tender against.
 const COMPARE_ROWS = [
   ['NaCl floor',        '≥ 97 % (all grades)',           'raw 94–97 % · washed 97.5–98 % · double-washed ≥ 99 %'],
-  ['Moisture',          '0.3 / 0.5 / 1.0 / 1.5 / 2.0 % grades to specification', 'natural 2.5 / 3.0 / 3.5 / 4.0 / 4.5 % (Type 2) · kiln-dried 2.0 / 1.0 / 0.5 % (Type 1)'],
+  ['Moisture',          'natural 1.0 / 1.5 / 2.0 % · kiln-dried 0.5 / 0.3 %', 'natural 2.5 / 3.0 / 3.5 / 4.0 / 4.5 % (Type 2) · kiln-dried 2.0 / 1.0 / 0.5 % (Type 1)'],
   ['Sieve profiles',    '0/2 · 0/4 · 0/6.3 · 2/8 · 10/40 mm', '0/2 · 0/4 · 0/6.3 · 2/8 · 0.5/10 mm'],
   ['Standards',         'EN 16811-1 A/B/C · ASTM D632 · BS 3247 · GOST 13830', 'EN 16811-1 Type 1/2 · ASTM D632 · AASHTO M-143 · SS-EN 16811-1'],
   ['Primary use',       'Food · pharma · cosmetic · chlor-alkali · de-icing', 'De-icing · industrial · water treatment · pool'],
@@ -497,7 +497,7 @@ export default async function HomePage() {
                 <strong>97.00 % NaCl</strong> on a dry basis, with calcium and magnesium each held at
                 ≤ 0.40 %, sulphate ≤ 0.80 % and water-insolubles ≤ 0.50 %. Sieve profiles from 0/2 mm
                 fine to 10/40 mm lump are verified by ISO 13320 laser diffraction, and moisture is
-                graded at 0.3 %, 0.5 %, 1.0 %, 1.5 % or 2.0 % to the client’s specification, crude or washed, with NaCl purity customised per contract.
+                held at natural grades of 1.0 %, 1.5 % or 2.0 %, or kiln-dried to 0.5 % or 0.3 % on request, crude or washed, with NaCl purity customised per contract.
               </p>
               <p data-rise className="egg-p">
                 That chemistry is the feedstock behind our food, pharmaceutical, cosmetic and
