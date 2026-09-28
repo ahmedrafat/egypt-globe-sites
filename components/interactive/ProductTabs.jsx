@@ -162,14 +162,22 @@ const SECTIONS = [
 // re-exported goods (sulphur from Uzbekistan / Russia / KSA, imported potash…),
 // which do not have Egyptian preferential origin.
 const EGYPT_PLACE = /egypt|sinai|aswan|nile|eastern desert|western desert|red sea|siwa|qattara|el-?arish|bardawil|fayoum|delta|beheira|ismailia|qalyubia|sharqia|new valley|bahariya|beni suef|minya|zafarana|abu tartur|suez|safaga|alexandria|galala|wadi natrun|quarun|abu qir|dakahlia|gharbia|menoufia|kafr|damietta|port said|matrouh|asyut|sohag|qena|luxor/i
+function isEgyptianOrigin(origin) {
+  const o = String(origin || '').trim()
+  const parts = o.split(/[\/+]/).map(x => x.trim()).filter(Boolean)
+  return parts.length > 0 && parts.every(x => EGYPT_PLACE.test(x)) && !/re-?export|imported/i.test(o)
+}
+function certificateOfOrigin(origin) {
+  return isEgyptianOrigin(origin)
+    ? 'Certificate of Origin (Egyptian Chamber of Commerce; EUR.1 / PAFTA / COMESA / AfCFTA where the destination applies them)'
+    : "Certificate of Origin (producing country; Egyptian chamber forms only for Egyptian-origin lots)"
+}
 function originStatement(origin) {
   const tail = 'Every lot is sampled at source and re-tested at the port of loading before the Bill of Lading is issued.'
   const o = String(origin || '').trim().replace(/[.\s]+$/, '')
   if (!o) return `The origin of each lot is stated on the offer and documented on its Certificate of Origin. ${tail}`
   // '/' and '+' separate origins; a comma qualifies one place ("Egypt, Eastern Desert", "Suez, Egypt")
-  const parts = o.split(/[\/+]/).map(x => x.trim()).filter(Boolean)
-  const egyptOnly = parts.length > 0 && parts.every(x => EGYPT_PLACE.test(x)) && !/re-?export/i.test(o)
-  if (egyptOnly) {
+  if (isEgyptianOrigin(o)) {
     return `${o}. Egyptian origin is documented on a Certificate of Origin issued through the Egyptian chamber of commerce and qualifies for preferential treatment under Egypt's trade agreements (COMESA, PAFTA, the EU–Egypt Association Agreement, AfCFTA) where the destination applies them. ${tail}`
   }
   return `Origins: ${o}. The origin of each lot is stated on the offer and documented on the producing country's Certificate of Origin; goods of non-Egyptian origin do not qualify for Egyptian preferential tariff treatment. ${tail}`
@@ -491,7 +499,7 @@ function SpecSheet({ page, specs, commodity, qualitySpecs }) {
     ['Processing', specs.processing_options || specs.processing],
     ['Independent inspection protocol', `${insp.bodies} — ${insp.scope}`],
     ['Internal QA gate', `${insp.lab}. Lot rejected if any parameter falls outside specification.`],
-    ['Documents', 'Commercial Invoice · Packing List · B/L · Certificate of Origin (Egyptian Chamber of Commerce; EUR.1 / PAFTA / COMESA / AfCFTA) · CoA' + (page.category === 'agro' ? ' · Phytosanitary certificate' : '')],
+    ['Documents', `Commercial Invoice · Packing List · B/L · ${certificateOfOrigin(specs.origin)} · CoA` + (page.category === 'agro' ? ' · Phytosanitary certificate' : '')],
     ['HS code', page.hs_code],
   ].filter(([, v]) => v)
 
