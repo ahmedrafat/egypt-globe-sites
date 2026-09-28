@@ -115,13 +115,13 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
     quantity: '', unit: 'MT',
     target_price: '', currency: 'USD',
     incoterm: 'CIF', dest_port: '',
-    packaging: (initialProduct?.packing_options?.[0]) || '',
+    packaging: '',
     // Drop 141 — vessel_mode lets the buyer specify Bulk vessel vs Container,
     // including the common "any inner bag stacked inside a 1MT FIBC and
     // loaded on a bulk vessel" pattern (= packaging set to 'Bag-in-Jumbo'
     // + vessel_mode='Bulk').
     vessel_mode: 'either',
-    certs_needed: (initialProduct?.certifications || []).slice(0, 3).join(', '),
+    certs_needed: '',
     timeline: '',
     message: '',
     requested_specs: '',
@@ -148,16 +148,31 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
   // instead of shipping 286 spec objects (~150 KB, serialised twice) with
   // the page. Anonymous read of a published row; nothing sensitive.
   const [selectedSpecs, setSelectedSpecs] = useState(null)
+  // Sep 28 2026 — packing, certifications, MOQ, lead time, price note and
+  // applications come with the spec sheet too, so the page no longer ships
+  // them for every SKU. Packing and certifications prefill the form when
+  // they arrive, unless the buyer has already typed something.
+  const [selectedDetail, setSelectedDetail] = useState(null)
   useEffect(() => {
     let live = true
     setSelectedSpecs(null)
+    setSelectedDetail(null)
     if (!form.productPath) return
-    const url = `${rest.base}/rest/v1/egg_corporate_pages?select=specs&path=eq.${encodeURIComponent(form.productPath)}&is_published=is.true&limit=1`
+    const cols = 'specs,packing_options,certifications,applications,moq_mt,lead_time_min_weeks,lead_time_max_weeks,price_indication'
+    const url = `${rest.base}/rest/v1/egg_corporate_pages?select=${cols}&path=eq.${encodeURIComponent(form.productPath)}&is_published=is.true&limit=1`
     fetch(url, { headers: rest.headers })
       .then(r => (r.ok ? r.json() : []))
       .then(rows => {
-        const specs = rows?.[0]?.specs
-        if (live) setSelectedSpecs(specs && Object.keys(specs).length ? specs : null)
+        const row = rows?.[0]
+        if (!live || !row) return
+        const { specs, ...detail } = row
+        setSelectedSpecs(specs && Object.keys(specs).length ? specs : null)
+        setSelectedDetail(detail)
+        setForm(f => ({
+          ...f,
+          packaging: f.packaging || detail.packing_options?.[0] || '',
+          certs_needed: f.certs_needed || (detail.certifications || []).slice(0, 3).join(', '),
+        }))
       })
       .catch(() => {})
     return () => { live = false }
@@ -205,8 +220,9 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
       productPath: path,
       productCategory: p?.category || f.productCategory,
       commodity: p?.title || '',
-      packaging: p?.packing_options?.[0] || f.packaging,
-      certs_needed: (p?.certifications || []).slice(0, 3).join(', ') || f.certs_needed,
+      // refilled from the product's own packing / certifications once its detail loads
+      packaging: '',
+      certs_needed: '',
     }))
     setShowAllSpecs(false)
   }
@@ -217,10 +233,10 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
     if (!started) { setStarted(true); trackEvent(isCoa ? 'coa_start' : 'rfq_start') }
   }
 
-  const selected = useMemo(
-    () => (products || []).find(p => p.path === form.productPath) || null,
-    [products, form.productPath]
-  )
+  const selected = useMemo(() => {
+    const base = (products || []).find(p => p.path === form.productPath) || null
+    return base ? { ...base, ...(selectedDetail || {}) } : null
+  }, [products, form.productPath, selectedDetail])
 
   // Spec entries we can show (only fields with values)
   const specEntries = useMemo(() => {
@@ -585,7 +601,7 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
               {Object.entries(portGroups).map(([region, ports]) => (
                 <optgroup key={region} label={`${region} (${ports.length} ports)`}>
                   {ports.map(p => (
-                    <option key={p.id} value={`${p.name}, ${p.country}`}>
+                    <option key={p.unlocode || `${p.name}-${p.country}`} value={`${p.name}, ${p.country}`}>
                       {p.name}{p.unlocode ? ` (${p.unlocode})` : ''} — {p.country}
                     </option>
                   ))}
