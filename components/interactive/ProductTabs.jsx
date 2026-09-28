@@ -157,6 +157,24 @@ const SECTIONS = [
   { id: 'quote',        label: 'Request a quote',          icon: 'mail' },
 ]
 
+// Sep 28 2026 — the panel used to promise an Egyptian Certificate of Origin and
+// COMESA / PAFTA / EU / AfCFTA preferences for every product, including
+// re-exported goods (sulphur from Uzbekistan / Russia / KSA, imported potash…),
+// which do not have Egyptian preferential origin.
+const EGYPT_PLACE = /egypt|sinai|aswan|nile|eastern desert|western desert|red sea|siwa|qattara|el-?arish|bardawil|fayoum|delta|beheira|ismailia|qalyubia|sharqia|new valley|bahariya|beni suef|minya|zafarana|abu tartur|suez|safaga|alexandria|galala|wadi natrun|quarun|abu qir|dakahlia|gharbia|menoufia|kafr|damietta|port said|matrouh|asyut|sohag|qena|luxor/i
+function originStatement(origin) {
+  const tail = 'Every lot is sampled at source and re-tested at the port of loading before the Bill of Lading is issued.'
+  const o = String(origin || '').trim().replace(/[.\s]+$/, '')
+  if (!o) return `The origin of each lot is stated on the offer and documented on its Certificate of Origin. ${tail}`
+  // '/' and '+' separate origins; a comma qualifies one place ("Egypt, Eastern Desert", "Suez, Egypt")
+  const parts = o.split(/[\/+]/).map(x => x.trim()).filter(Boolean)
+  const egyptOnly = parts.length > 0 && parts.every(x => EGYPT_PLACE.test(x)) && !/re-?export/i.test(o)
+  if (egyptOnly) {
+    return `${o}. Egyptian origin is documented on a Certificate of Origin issued through the Egyptian chamber of commerce and qualifies for preferential treatment under Egypt's trade agreements (COMESA, PAFTA, the EU–Egypt Association Agreement, AfCFTA) where the destination applies them. ${tail}`
+  }
+  return `Origins: ${o}. The origin of each lot is stated on the offer and documented on the producing country's Certificate of Origin; goods of non-Egyptian origin do not qualify for Egyptian preferential tariff treatment. ${tail}`
+}
+
 export default function ProductTabs({ page, commodity, applications: matchedApps, qualitySpecs, packingOptions, coas, brand, visibility }) {
   const [transitSelection, setTransitSelection] = useState({})
   const sectionList = SECTIONS
@@ -198,12 +216,7 @@ export default function ProductTabs({ page, commodity, applications: matchedApps
             {!isSalt && (
               <div className="rounded-2xl border border-[#14161a]/10 bg-white p-6">
                 <h3 className="text-lg font-bold text-[#14161a] mb-3 flex items-center gap-2"><Icon name="pin" className="w-4 h-4 text-[#087a70]" /> Origin &amp; sourcing</h3>
-                <p className="text-sm text-[#3f4650] leading-relaxed">
-                  {specs.origin || 'Sourced from Egypt Globe Group operations.'}
-                  {' '}Provenance is documented on an Egyptian Chamber of Commerce Certificate of Origin and
-                  qualifies for COMESA / PAFTA / EU-Med / AfCFTA preferential treatment where applicable.
-                  Every lot is sampled at source and re-tested at the port of loading before the Bill of Lading is issued.
-                </p>
+                <p className="text-sm text-[#3f4650] leading-relaxed">{originStatement(specs.origin)}</p>
               </div>
             )}
             <KeyStatsStrip page={page} specs={specs} />
