@@ -5,6 +5,7 @@
  * (`/products/salt/sodium-chloride`). Next.js 16 changed `params` to
  * a Promise — we MUST `await` it before destructuring.
  */
+import ogSlugs from '../../lib/ogsManifest.json'
 import { notFound } from 'next/navigation'
 import { getPageByPath, getAllPaths } from '../../lib/corporatePages'
 import PageRenderer from '../../components/PageRenderer'
@@ -23,6 +24,8 @@ export async function generateStaticParams() {
   return []
 }
 
+const OG_SLUGS = new Set(ogSlugs)
+
 /** Per-page <head> via Next 16 metadata API. */
 export async function generateMetadata({ params }) {
   const { path } = await params
@@ -34,7 +37,8 @@ export async function generateMetadata({ params }) {
   // Slug derivation matches scripts/generate-page-ogs.mjs::pathToSlug exactly.
   const slug = (page.path || '/').replace(/^\//, '').replace(/\//g, '-')
     .replace(/[^a-z0-9-]/gi, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') || 'home'
-  const ogImage = `/ogs/${slug}.png`
+  // Only advertise a card that exists; a page newer than the last `npm run ogs` shares the site card.
+  const ogImage = OG_SLUGS.has(slug) ? `/ogs/${slug}.png` : '/og-image.png'
 
   return {
     title: page.title,

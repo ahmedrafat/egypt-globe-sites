@@ -122,7 +122,11 @@ async function main() {
   const { data: pages, error } = await supabase.from('egg_corporate_pages').select('id, path, title, category').eq('is_published', true).order('path').limit(1000)
   if (error) throw error
   const limitArg = process.argv.indexOf('--limit')
-  const targets = limitArg > -1 ? pages.filter((_, i) => i % 97 === 0).slice(0, Number(process.argv[limitArg + 1]) || 4) : pages
+  // --missing: only pages that have no card yet (new pages since the last run)
+  const onlyMissing = process.argv.includes('--missing')
+  const exists = p => { try { statSync(join(OGS_DIR, `${pathToSlug(p.path)}.png`)); return true } catch { return false } }
+  const targets = limitArg > -1 ? pages.filter((_, i) => i % 97 === 0).slice(0, Number(process.argv[limitArg + 1]) || 4)
+    : onlyMissing ? pages.filter(p => !exists(p)) : pages
   console.log(`→ Generating OG cards for ${targets.length} pages`)
   let made = 0, failed = 0, total = 0
   for (const p of targets) {
