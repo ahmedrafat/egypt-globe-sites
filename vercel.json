@@ -819,6 +819,16 @@
       "source": "/wholesale/sea-salt",
       "destination": "/products/salt/sea-salt",
       "permanent": true
+    },
+    {
+      "source": "/company",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/officialsite",
+      "destination": "/",
+      "permanent": true
     }
   ]
 }
