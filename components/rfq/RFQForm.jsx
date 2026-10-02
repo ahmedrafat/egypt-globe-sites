@@ -726,7 +726,7 @@ export default function RFQForm({ products, preselectPath, requestType = 'quote'
         </Field>
         <Field label="Anything else?" full name="message" error={errors.message}>
           <Textarea value={form.message} onChange={v => update('message', v)}
-            placeholder="Vessel size, delivery instructions, payment preference (L/C, T/T, D/P), trial-order vs long-term offtake, etc."
+            placeholder="Target specification (NaCl %, moisture, grading or sieve table, packing) — every grade is made to order. Also vessel size, delivery instructions, payment preference (L/C, T/T, D/P), trial order vs long-term offtake."
             rows={4} />
         </Field>
       </FormSection>
