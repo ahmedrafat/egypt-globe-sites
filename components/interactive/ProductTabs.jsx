@@ -44,7 +44,7 @@ import SectionIndex, { SECTION_ANCHOR } from '../ui/SectionIndex'
 
 const SPEC_LABELS = {
   nacl_min: 'NaCl (dry basis)', moisture_max: 'Moisture, max', moisture_typical: 'Moisture grades',
-  moisture_kiln_dried: 'Moisture, kiln-dried', kiln_drying_options: 'Drying options', purity_options: 'NaCl purity', processing: 'Processing',
+  moisture_kiln_dried: 'Moisture, kiln-dried', kiln_drying_options: 'Drying options', purity_options: 'NaCl purity', grading_options: 'Grading options', processing: 'Processing',
   particle_size: 'Particle size', bulk_density: 'Bulk density', ca_max: 'Calcium (Ca²⁺), max',
   mg_max: 'Magnesium (Mg²⁺), max', so4_max: 'Sulphate (SO₄²⁻), max', water_insolubles: 'Water insolubles, max',
   pb_max: 'Lead (Pb), max', as_max: 'Arsenic (As), max', cd_max: 'Cadmium (Cd), max', hg_max: 'Mercury (Hg), max',

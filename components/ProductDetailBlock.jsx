@@ -25,6 +25,7 @@ const SPEC_LABELS = {
   moisture_typical: 'Moisture grades',
   kiln_drying_options: 'Drying options',
   purity_options: 'NaCl purity',
+  grading_options: 'Grading options',
   particle_size: 'Particle size',
   bulk_density: 'Bulk density',
   ca_max: 'Ca max',
