@@ -829,6 +829,26 @@
       "source": "/officialsite",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/request-for-quote",
+      "destination": "/rfq",
+      "permanent": true
+    },
+    {
+      "source": "/industrial",
+      "destination": "/products/salt/industrial-grade",
+      "permanent": true
+    },
+    {
+      "source": "/applications/null",
+      "destination": "/applications",
+      "permanent": true
+    },
+    {
+      "source": "/heroes/markets-egypt-urea.png",
+      "destination": "/banners/topics/fertilizers.jpg",
+      "permanent": true
     }
   ]
 }

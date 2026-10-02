@@ -7,7 +7,7 @@
  */
 import ogSlugs from '../../lib/ogsManifest.json'
 import { notFound } from 'next/navigation'
-import { getPageByPath, getAllPaths } from '../../lib/corporatePages'
+import { getPageByPathStrict as getPageByPath, getAllPaths } from '../../lib/corporatePages'
 import PageRenderer from '../../components/PageRenderer'
 
 // Drop 139c — render on demand. Layout uses cookies() (via
