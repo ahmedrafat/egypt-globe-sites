@@ -193,6 +193,19 @@ export function WebPageJsonLd({ page, type = 'WebPage' }) {
     } : {}),
     inLanguage: 'en',
   }
+  if (type === 'Article') {
+    // Google's Article markup requires `headline` (≤ 110 chars) and wants
+    // `author` + `image`; `name` alone leaves the block ineligible.
+    const img = page.hero_photo_url
+      ? (page.hero_photo_url.startsWith('/') ? `${BASE}${page.hero_photo_url}` : page.hero_photo_url)
+      : `${BASE}/og-image.png`
+    Object.assign(json, {
+      headline: String(page.title || '').slice(0, 110),
+      author: { '@id': `${BASE}#org` },
+      image: [img],
+      mainEntityOfPage: `${BASE}${page.path}`,
+    })
+  }
   return (
     <script
       type="application/ld+json"
