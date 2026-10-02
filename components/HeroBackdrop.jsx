@@ -31,13 +31,16 @@ export const isBanner = src => typeof src === 'string' && src.startsWith('/banne
 export const BANNER_SCRIM_LG =
   'linear-gradient(90deg, rgba(3,24,45,.94) 0%, rgba(3,24,45,.90) 48%, rgba(3,24,45,.80) 62%, rgba(3,24,45,.28) 70%, rgba(3,24,45,.06) 80%, rgba(3,24,45,0) 88%)'
 
+// `preload` + fetchPriority="high": in Next 16 the old `priority` prop only
+// emits the <link rel=preload>; without fetchPriority the hero (the LCP element
+// on every page) queued behind the four preloaded font files.
 export default function HeroBackdrop({ src }) {
   if (!src) return null
 
   if (isBanner(src)) {
     return (
       <div data-hero-bg className="absolute inset-0" aria-hidden="true">
-        <Image src={src} alt="" fill priority sizes="100vw"
+        <Image src={src} alt="" fill preload fetchPriority="high" sizes="100vw"
           className="object-cover object-[72%_50%]" />
         {/* phones and tablets: the headline spans the full width */}
         <div className="absolute inset-0 lg:hidden bg-gradient-to-b from-[#03182d]/84 via-[#03182d]/68 to-[#03182d]/90" />
@@ -50,7 +53,7 @@ export default function HeroBackdrop({ src }) {
     <div data-hero-bg className="absolute inset-0" aria-hidden="true">
       {/* 1200×675 art in a band taller than 16:9 on mobile — object-top keeps
          the top of the frame, where the subject usually sits */}
-      <Image src={src} alt="" fill priority sizes="100vw"
+      <Image src={src} alt="" fill preload fetchPriority="high" sizes="100vw"
         className="object-cover object-top opacity-[0.38]" />
       <div className="absolute inset-0 bg-gradient-to-b from-[#03182d]/70 via-[#03182d]/60 to-[#03182d]/85" />
     </div>

@@ -297,7 +297,7 @@ export default async function HomePage() {
         {/* layered backdrop (parallaxed by GSAP) — photo + technical grid + compass ring */}
         <div data-hero-bg className="absolute inset-[-12%] z-0 pointer-events-none" aria-hidden="true">
           {heroPhoto && (
-            <Image src={heroPhoto} alt="" fill sizes="100vw" preload
+            <Image src={heroPhoto} alt="" fill sizes="100vw" preload fetchPriority="high"
               className={heroIsBanner ? 'object-cover object-[72%_50%] opacity-90' : 'object-cover opacity-[0.38]'} />
           )}
           {heroPhoto && !heroIsBanner && <div className="absolute inset-0 bg-gradient-to-b from-[#03182d]/80 via-[#06294a]/70 to-[#03182d]/95" />}

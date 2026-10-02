@@ -10,7 +10,9 @@ import { getSiteSettings } from '../lib/corporatePages'
 import { getCurrentBrand, brandMeta } from '../lib/brand'
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
-const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] })
+// not preloaded: it only sets code / reference chips, never the hero, so it must
+// not compete with the LCP image for early bandwidth
+const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'], preload: false })
 // Light editorial system — display serif shared by the landing + every template (.egg-display)
 const fraunces = Fraunces({ variable: '--font-fraunces', subsets: ['latin'], weight: ['400', '500', '600'], style: ['normal', 'italic'], display: 'swap' })
 
