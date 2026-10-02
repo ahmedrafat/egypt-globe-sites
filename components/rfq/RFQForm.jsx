@@ -69,7 +69,7 @@ const SPEC_LABELS = {
 }
 const prettyKey = k => SPEC_LABELS[k] || k.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
 
-export default function RFQForm({ products, destPorts, preselectPath, requestType = 'quote', supabaseUrl, supabaseAnon, buyerUserId = null }) {
+export default function RFQForm({ products, preselectPath, requestType = 'quote', supabaseUrl, supabaseAnon, buyerUserId = null }) {
   // PostgREST directly rather than the Supabase client: this form is one
   // SELECT and one INSERT, and importing the client shipped 217 KB of
   // auth/storage/realtime JS with the page.
@@ -79,6 +79,24 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
     return { base, headers }
   }, [supabaseUrl, supabaseAnon])
   const isCoa = requestType === 'coa'
+
+  // Destination ports are fetched on first focus of the select, not shipped
+  // with the page: the 378-row master registry was serialised twice (markup +
+  // hydration data) on every /rfq load, for a field most buyers type into.
+  const [destPorts, setDestPorts] = useState(null)
+  const [portsState, setPortsState] = useState('idle') // idle | loading | ready | error
+  const loadPorts = async () => {
+    if (portsState !== 'idle') return
+    setPortsState('loading')
+    try {
+      const res = await fetch(`${rest.base}/rest/v1/globe_ports?select=unlocode,name,country,region&is_active=eq.true&is_egypt_origin=eq.false&order=region,country,name`, { headers: rest.headers })
+      if (!res.ok) throw new Error(`ports ${res.status}`)
+      setDestPorts(await res.json())
+      setPortsState('ready')
+    } catch {
+      setPortsState('error')
+    }
+  }
 
   // Group products by category for the dropdown
   const productGroups = useMemo(() => {
@@ -596,8 +614,9 @@ export default function RFQForm({ products, destPorts, preselectPath, requestTyp
           </Field>
           <Field label="Destination port (master registry)">
             <select value={form.dest_port} onChange={e => update('dest_port', e.target.value)}
+              onFocus={loadPorts} onMouseDown={loadPorts} onTouchStart={loadPorts}
               className="w-full px-4 py-3 rounded-xl border border-[#14161a]/15 bg-white text-[#14161a] text-sm focus:outline-none focus:ring-2 focus:ring-[#ff6321]/25 focus:border-[#ff6321]">
-              <option value="">— Select a destination port —</option>
+              <option value="">{portsState === 'loading' ? 'Loading ports…' : portsState === 'error' ? 'Port list unavailable — type the port below' : '— Select a destination port —'}</option>
               {Object.entries(portGroups).map(([region, ports]) => (
                 <optgroup key={region} label={`${region} (${ports.length} ports)`}>
                   {ports.map(p => (

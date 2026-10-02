@@ -15,7 +15,6 @@ import {
   getPageByPath,
   getRfqProductOptions,
   getSiteSettings,
-  getMasterDestPorts,
 } from '../../lib/corporatePages'
 import RFQForm from '../../components/rfq/RFQForm'
 import { ServiceJsonLd } from '../../components/StructuredData'
@@ -45,12 +44,11 @@ export default async function RFQPage({ searchParams }) {
   const preselectPath = typeof params.product === 'string' ? params.product : null
   const requestType = params.type === 'coa' ? 'coa' : 'quote'
 
-  const [page, visibility, products, company, destPorts] = await Promise.all([
+  const [page, visibility, products, company] = await Promise.all([
     getPageByPath('/rfq'),
     getBuyerVisibility().catch(() => null),
     getRfqProductOptions(),
     getSiteSettings(),
-    getMasterDestPorts(),
   ])
 
   const isCoa = requestType === 'coa'
@@ -97,7 +95,6 @@ export default async function RFQPage({ searchParams }) {
           <div className="lg:col-span-8 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             <RFQForm
               products={products}
-              destPorts={destPorts}
               preselectPath={preselectPath}
               requestType={requestType}
               supabaseUrl={process.env.NEXT_PUBLIC_SUPABASE_URL}
