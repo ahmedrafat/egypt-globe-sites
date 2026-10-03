@@ -220,6 +220,24 @@ export default function RFQForm({ products, preselectPath, requestType = 'quote'
       .sort((a, b) => a.title.localeCompare(b.title))
   }, [form.productCategory, productGroups])
 
+  // Type-to-filter for big categories (salt has 100+ SKUs with 80-character titles,
+  // which a native picker makes slow to scan on a phone). Tolerant of "deicing" vs
+  // "de-icing"; the chosen product always stays in the list.
+  const [productFilter, setProductFilter] = useState({ cat: '', q: '' })
+  const filterQ = productFilter.cat === form.productCategory ? productFilter.q : ''
+  const visibleProducts = useMemo(() => {
+    const toks = filterQ.toLowerCase().split(/\s+/).filter(Boolean)
+    if (!toks.length) return productsInCategory
+    const compact = x => x.toLowerCase().replace(/[^a-z0-9]/g, '')
+    return productsInCategory.filter(p => {
+      if (p.path === form.productPath) return true
+      const text = `${p.title} ${p.hs_code || ''} ${String(p.path || '').split('/').pop()}`
+      const spaced = text.toLowerCase().replace(/[-–—_/]/g, ' ')
+      const flat = compact(text)
+      return toks.every(t => spaced.includes(t) || flat.includes(compact(t)))
+    })
+  }, [productsInCategory, filterQ, form.productPath])
+
   function selectCategory(catId) {
     setForm(f => ({
       ...f,
@@ -502,17 +520,28 @@ export default function RFQForm({ products, preselectPath, requestType = 'quote'
           {/* Step 2 — Pick a specific product within the chosen category */}
           {form.productCategory && (
             <Field label={`Step 2 — Choose a ${availableCategories.find(c => c.id === form.productCategory)?.label || 'product'} SKU`} full>
+              {productsInCategory.length > 12 && (
+                <div className="mb-2">
+                  <input type="search" inputMode="search" autoComplete="off" enterKeyHint="search"
+                    value={filterQ} onChange={e => setProductFilter({ cat: form.productCategory, q: e.target.value })}
+                    placeholder={`Filter ${productsInCategory.length} products — e.g. de-icing, sea, food grade, PS-ROCK`}
+                    aria-label="Filter products in this category"
+                    className="w-full px-4 py-3 rounded-xl border border-[#14161a]/15 bg-white text-[#14161a] text-sm focus:outline-none focus:ring-2 focus:ring-[#ff6321]/25 focus:border-[#ff6321]" />
+                </div>
+              )}
               <select value={form.productPath} onChange={e => selectProduct(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl border border-[#14161a]/15 bg-white text-[#14161a] text-sm focus:outline-none focus:ring-2 focus:ring-[#ff6321]/25 focus:border-[#ff6321]">
                 <option value="">— Select a product (or describe in the commodity field below) —</option>
-                {productsInCategory.map(p => (
+                {visibleProducts.map(p => (
                   <option key={p.id} value={p.path}>
                     {p.title}{p.hs_code ? ` (HS ${p.hs_code})` : ''}
                   </option>
                 ))}
               </select>
               <p className="text-[11px] text-[#5b6577] mt-1.5">
-                {productsInCategory.length} {productsInCategory.length === 1 ? 'product' : 'products'} in this category.
+                {filterQ
+                  ? `${visibleProducts.length} of ${productsInCategory.length} products match “${filterQ}”.`
+                  : `${productsInCategory.length} ${productsInCategory.length === 1 ? 'product' : 'products'} in this category.`}
               </p>
             </Field>
           )}
