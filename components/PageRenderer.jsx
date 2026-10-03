@@ -275,8 +275,8 @@ export default async function PageRenderer({ page }) {
 
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-20">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-1.5 text-xs text-[#8ba3bd] mb-5 flex-wrap animate-fade-in">
-            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-[#8ba3bd] mb-5 flex-wrap animate-fade-in">
+            <Link href="/" className="inline-block py-2.5 -my-2.5 hover:text-white transition-colors">Home</Link>
             <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7"/>
             </svg>
@@ -287,7 +287,7 @@ export default async function PageRenderer({ page }) {
                   {last ? (
                     <span className="text-white font-medium truncate max-w-[320px]" aria-current="page">{c.name}</span>
                   ) : c.href ? (
-                    <Link href={c.href} className="hover:text-white transition-colors">{c.name}</Link>
+                    <Link href={c.href} className="inline-block py-2.5 -my-2.5 hover:text-white transition-colors">{c.name}</Link>
                   ) : (
                     <span className="text-[#a9bfd7] cursor-default">{c.name}</span>
                   )}
@@ -335,7 +335,11 @@ export default async function PageRenderer({ page }) {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-end">
             <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
-              <h1 className="egg-display text-[30px] sm:text-5xl lg:text-6xl text-white mb-3 sm:mb-4 leading-[1.08] sm:leading-[1.02]">
+              <h1 className={`egg-display text-white mb-3 sm:mb-4 ${
+                String(heading || '').length > 60
+                  ? 'text-[26px] sm:text-4xl lg:text-5xl leading-[1.12] sm:leading-[1.08]'
+                  : 'text-[30px] sm:text-5xl lg:text-6xl leading-[1.08] sm:leading-[1.02]'
+              }`}>
                 {heading}
                 {heroText.sub && <span className="block italic text-xl sm:text-3xl lg:text-4xl mt-3 leading-[1.15]">{heroText.sub}</span>}
               </h1>

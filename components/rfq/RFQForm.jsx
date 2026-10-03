@@ -639,7 +639,7 @@ export default function RFQForm({ products, preselectPath, requestType = 'quote'
                 <div className="flex flex-wrap gap-2 mb-3">
                   {selected.packing_options.map(p => (
                     <button key={p} type="button" onClick={() => update('packaging', p)}
-                      className={`text-xs font-semibold px-3 py-1.5 rounded-full border transition-colors ${form.packaging === p
+                      className={`text-xs font-semibold px-3.5 py-2.5 min-h-[40px] rounded-full border transition-colors ${form.packaging === p
                         ? 'bg-[#087a70] text-white border-[#087a70]'
                         : 'bg-white text-[#3f4650] border-[#14161a]/15 hover:border-[#0fb5a5] hover:text-[#087a70]'}`}>
                       {p}
@@ -671,7 +671,7 @@ export default function RFQForm({ products, preselectPath, requestType = 'quote'
                 'OEM Custom Bag',
               ].map(p => (
                 <button key={p} type="button" onClick={() => update('packaging', p)}
-                  className={`text-xs font-semibold px-3 py-1.5 rounded-full border transition-colors ${form.packaging === p
+                  className={`text-xs font-semibold px-3.5 py-2.5 min-h-[40px] rounded-full border transition-colors ${form.packaging === p
                     ? 'bg-[#d0450f] text-white border-[#ff6321]'
                     : 'bg-white text-[#3f4650] border-[#14161a]/15 hover:border-[#ff6321] hover:text-[#c2410c]'}`}>
                   {p}
@@ -776,7 +776,8 @@ function Field({ label, full = false, required = false, name, error, children })
   return (
     <label className={`block ${full ? 'sm:col-span-2' : ''}`}>
       <span className="text-xs font-semibold text-[#3f4650] mb-1.5 block">
-        {label} {required && <span className="text-[#c2410c]">*</span>}
+        {/* labels in this form were written with a trailing " *"; the marker below is the only one */}
+        {typeof label === 'string' ? label.replace(/\s*\*\s*$/, '') : label} {required && <span className="text-[#c2410c]" aria-hidden="true">*</span>}
       </span>
       {child}
       {error && <span id={`rfq-${name}-error`} className="block mt-1.5 text-xs font-medium text-[#a3261c]">{error}</span>}

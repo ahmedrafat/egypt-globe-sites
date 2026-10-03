@@ -54,17 +54,17 @@ export default function SiteFooter({ settings }) {
               <span className="w-4 h-0.5 bg-[#d0450f] rounded-full" />
               Products
             </h2>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-0.5 text-sm">
               {PRODUCT_DIVISIONS.map(div => (
                 <li key={div.id}>
-                  <Link href={div.path} className="text-[#3f4650] hover:text-[#14161a] transition-colors flex items-center gap-2 group">
+                  <Link href={div.path} className="text-[#3f4650] hover:text-[#14161a] transition-colors flex items-center gap-2 py-1.5 group">
                     <Icon name={DIVISION_ICON[div.id] || 'box'} className="w-3.5 h-3.5 text-[#5b6577] group-hover:text-[#14161a] transition-colors" />
                     {div.label}
                   </Link>
                 </li>
               ))}
               <li className="pt-1">
-                <Link href="/products" className="text-[#c2410c] font-semibold hover:underline text-xs">
+                <Link href="/products" className="text-[#c2410c] font-semibold hover:underline text-xs inline-block py-1.5">
                   All products →
                 </Link>
               </li>
@@ -77,17 +77,17 @@ export default function SiteFooter({ settings }) {
               <span className="w-4 h-0.5 bg-[#d0450f] rounded-full" />
               Services
             </h2>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-0.5 text-sm">
               {SERVICE_DIVISIONS.map(svc => (
                 <li key={svc.id}>
-                  <Link href={svc.path} className="text-[#3f4650] hover:text-[#14161a] transition-colors flex items-center gap-2 group">
+                  <Link href={svc.path} className="text-[#3f4650] hover:text-[#14161a] transition-colors flex items-center gap-2 py-1.5 group">
                     <Icon name={SERVICE_ICON[svc.id] || 'ship'} className="w-3.5 h-3.5 text-[#5b6577] group-hover:text-[#14161a] transition-colors" />
                     {svc.label}
                   </Link>
                 </li>
               ))}
               <li className="pt-1">
-                <Link href="/services" className="text-[#c2410c] font-semibold hover:underline text-xs">
+                <Link href="/services" className="text-[#c2410c] font-semibold hover:underline text-xs inline-block py-1.5">
                   All services →
                 </Link>
               </li>
@@ -107,7 +107,7 @@ export default function SiteFooter({ settings }) {
               <span className="w-4 h-0.5 bg-[#d0450f] rounded-full" />
               Company
             </h2>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-0.5 text-sm">
               {[
                 ['/about', 'About'],
                 ['/about/mission-vision', 'Mission & Vision'],
@@ -127,7 +127,7 @@ export default function SiteFooter({ settings }) {
                 ['/trade-tools/vessel-sizes', 'Vessel Sizes'],
               ].map(([href, label]) => (
                 <li key={href}>
-                  <Link href={href} className="text-[#3f4650] hover:text-[#14161a] transition-colors">
+                  <Link href={href} className="text-[#3f4650] hover:text-[#14161a] transition-colors inline-block py-1.5">
                     {label}
                   </Link>
                 </li>
@@ -196,11 +196,11 @@ export default function SiteFooter({ settings }) {
             © {new Date().getFullYear()} {s.name} · All rights reserved · Egypt
           </span>
           <div className="flex items-center gap-5 text-[#5b6577]">
-            <Link href="/contact" className="hover:text-[#14161a] transition-colors">Contact</Link>
-            <Link href="/rfq" className="hover:text-[#14161a] transition-colors">RFQ</Link>
-            <Link href="/about/quality-compliance" className="hover:text-[#14161a] transition-colors">Quality</Link>
-            <Link href="/cookies-policy" className="hover:text-[#14161a] transition-colors">Cookies</Link>
-            <Link href="/ar" lang="ar" hrefLang="ar" className="hover:text-[#14161a] transition-colors">العربية</Link>
+            <Link href="/contact" className="inline-block py-2 hover:text-[#14161a] transition-colors">Contact</Link>
+            <Link href="/rfq" className="inline-block py-2 hover:text-[#14161a] transition-colors">RFQ</Link>
+            <Link href="/about/quality-compliance" className="inline-block py-2 hover:text-[#14161a] transition-colors">Quality</Link>
+            <Link href="/cookies-policy" className="inline-block py-2 hover:text-[#14161a] transition-colors">Cookies</Link>
+            <Link href="/ar" lang="ar" hrefLang="ar" className="inline-block py-2 hover:text-[#14161a] transition-colors">العربية</Link>
             {s.linkedin && (
               <a href={s.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-[#14161a] transition-colors">
                 LinkedIn

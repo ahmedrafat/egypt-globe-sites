@@ -40,7 +40,7 @@ export default async function SiteHeader({ settings }) {
               <Icon name="phone" className="w-3.5 h-3.5" /> {s.phone}
             </a>
             <span className="text-blue-400/50">·</span>
-            <a href={`mailto:${s.email}`} className="hover:text-white transition-colors">
+            <a href={`mailto:${s.email}`} className="flex items-center gap-1 whitespace-nowrap hover:text-white transition-colors">
               <Icon name="mail" className="w-3.5 h-3.5" /> {s.email}
             </a>
           </div>

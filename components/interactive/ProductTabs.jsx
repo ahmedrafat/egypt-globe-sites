@@ -419,8 +419,15 @@ function specSummary(page, specs, commodity) {
   if (src) parts.push(`${fmt(src)}`)
   if (specs.nacl_min) parts.push(`NaCl ${String(specs.nacl_min).includes('%') ? '' : '≥ '}${fmt(specs.nacl_min)}`)
   if (specs.purity && !specs.nacl_min) parts.push(`purity ${fmt(specs.purity)}`)
-  if (specs.particle_size) parts.push(`particle size ${fmt(specs.particle_size)}`)
-  if (specs.grain_label) parts.push(`${fmt(specs.grain_label).toLowerCase()} grain`)
+  // A graded size (a sieve table) is a paragraph, not a figure: the grain label
+  // already names it, so don't repeat it inline. Labels that carry a size, a
+  // gradation or a grade read as written; plain labels ("Extra Coarse") get "grain".
+  const longSize = specs.particle_size && String(fmt(specs.particle_size)).length > 36
+  if (specs.particle_size && !longSize) parts.push(`particle size ${fmt(specs.particle_size)}`)
+  if (specs.grain_label) {
+    const g = String(fmt(specs.grain_label))
+    parts.push(/\bmm\b|gradation|band|grade/i.test(g) ? g : `${g.toLowerCase()} grain`)
+  }
   if (specs.moisture_max) parts.push(`moisture ${String(specs.moisture_max).match(/^[≤<]/) ? '' : '≤ '}${fmt(specs.moisture_max)}`)
   const moq = page.moq_mt || commodity?.moq_mt || specs.moq_mt
   if (moq) parts.push(`minimum order ${fmt(moq)}${/mt|t\b/i.test(String(moq)) ? '' : ' MT'}`)
