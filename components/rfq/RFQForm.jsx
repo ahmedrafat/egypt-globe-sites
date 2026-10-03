@@ -540,7 +540,7 @@ export default function RFQForm({ products, preselectPath, requestType = 'quote'
               </select>
               <p className="text-[11px] text-[#5b6577] mt-1.5">
                 {filterQ
-                  ? `${visibleProducts.length} of ${productsInCategory.length} products match “${filterQ}”.`
+                  ? `${visibleProducts.length} of ${productsInCategory.length} products match “${filterQ}”.${visibleProducts.length === 0 ? ' Clear the filter, or describe what you need in the commodity field below — made-to-order grades are not all listed.' : ''}`
                   : `${productsInCategory.length} ${productsInCategory.length === 1 ? 'product' : 'products'} in this category.`}
               </p>
             </Field>
