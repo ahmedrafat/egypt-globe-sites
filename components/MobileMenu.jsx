@@ -190,7 +190,9 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
         tabIndex={-1}
         aria-hidden={!open}
         inert={!open}
-        className="lg:hidden fixed inset-y-0 right-0 z-50 w-[min(20rem,88vw)] bg-white shadow-[0_24px_60px_-28px_rgba(20,22,26,.35)] flex flex-col outline-none transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none"
+        // shadow only while open: the closed panel is parked at translateX(100%) and its blur
+        // bled ~30px into the viewport as a grey edge on every white page
+        className={`lg:hidden fixed inset-y-0 right-0 z-50 w-[min(20rem,88vw)] bg-white ${open ? 'shadow-[0_24px_60px_-28px_rgba(20,22,26,.35)]' : ''} flex flex-col outline-none transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none`}
         style={{ transform: open ? 'translateX(0)' : 'translateX(100%)' }}
       >
         {/* Header */}

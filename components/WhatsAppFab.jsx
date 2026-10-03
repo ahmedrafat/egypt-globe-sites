@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 
 /**
@@ -17,6 +18,26 @@ import { usePathname } from 'next/navigation'
  */
 export default function WhatsAppFab({ url, label = 'Chat on WhatsApp' }) {
   const pathname = usePathname() || ''
+  // Reading pages: the button sat over body text on every phone screen. Below lg it
+  // now slides off the edge while the reader scrolls down and returns on scroll up
+  // or near the top, so it is findable without covering the line being read.
+  const [away, setAway] = useState(false)
+  useEffect(() => {
+    let last = window.scrollY, ticking = false
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        const y = window.scrollY
+        if (y < 160) setAway(false)
+        else if (y > last + 6) setAway(true)
+        else if (y < last - 6) setAway(false)
+        last = y; ticking = false
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
   if (!url) return null
   // On the quote form the button floated over the inputs on phones and tablets;
   // the form page already shows the phone / WhatsApp details, so hide it there
@@ -29,7 +50,8 @@ export default function WhatsAppFab({ url, label = 'Chat on WhatsApp' }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className={`fixed right-4 sm:right-5 z-30 group ${onForm ? 'hidden lg:block' : ''}`}
+      className={`fixed right-4 sm:right-5 z-30 group transition-transform duration-300 motion-reduce:transition-none ${away ? 'max-lg:translate-x-[calc(100%+1.5rem)]' : ''} ${onForm ? 'hidden lg:block' : ''}`}
+      tabIndex={away ? -1 : undefined}
       style={{ bottom: 'max(5.5rem, calc(env(safe-area-inset-bottom) + 5.5rem))' }}
     >
       <span className="absolute inset-0 rounded-full bg-emerald-500 opacity-30 animate-ping" style={{ animationIterationCount: 3 }} aria-hidden="true" />
