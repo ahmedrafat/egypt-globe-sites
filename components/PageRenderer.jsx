@@ -335,7 +335,7 @@ export default async function PageRenderer({ page }) {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-end">
             <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
-              <h1 className={`egg-display text-white mb-3 sm:mb-4 ${
+              <h1 className={`egg-display text-balance text-white mb-3 sm:mb-4 ${
                 String(heading || '').length > 60
                   ? 'text-[26px] sm:text-4xl lg:text-5xl leading-[1.12] sm:leading-[1.08]'
                   : 'text-[30px] sm:text-5xl lg:text-6xl leading-[1.08] sm:leading-[1.02]'

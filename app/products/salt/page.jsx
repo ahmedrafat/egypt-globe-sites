@@ -90,7 +90,7 @@ export default async function SaltMainPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-end">
             <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
-              <h1 className="egg-display text-4xl sm:text-5xl lg:text-6xl text-[#14161a] mb-4 leading-[1.02]">
+              <h1 className="egg-display text-balance text-4xl sm:text-5xl lg:text-6xl text-[#14161a] mb-4 leading-[1.02]">
                 {hero.heading || <>Bulk Egyptian salt — sea &amp; rock,</>}<br /><span className="italic text-[#087a70]">{hero.sub || 'over 2 million tonnes shipped since 2015.'}</span>
               </h1>
               <p className="text-base sm:text-lg leading-relaxed max-w-3xl text-[#3f4650]">
@@ -237,6 +237,23 @@ export default async function SaltMainPage() {
             </div>
           </div>
         </div>
+
+        {/* The two source cards count sea + rock; anything else in the salt catalogue
+            (Wadi Natrun natron, Lake Qarun mineral salt) is named here so the hero's
+            total reconciles for a buyer who adds the cards up. Derived, not hard-coded. */}
+        {(() => {
+          const others = all.filter(p => !sea.includes(p) && !rock.includes(p))
+          if (!others.length) return null
+          return (
+            <p className="mt-8 text-center text-sm text-[#3f4650] max-w-3xl mx-auto leading-relaxed">
+              {sea.length} sea + {rock.length} rock + {others.length} specialty brine {others.length === 1 ? 'product' : 'products'} = {all.length} SKUs.
+              Also in the catalogue:{' '}
+              {others.map((p, i) => (
+                <span key={p.path}>{i > 0 && ' · '}<Link href={p.path} className="egg-link">{String(p.title).split(' — ')[0]}</Link></span>
+              ))}.
+            </p>
+          )
+        })()}
 
         {/* Differentiation table */}
         <div className="mt-10 space-y-6">

@@ -160,9 +160,10 @@ export default async function CoaCenter() {
                     <Link key={c.id} href={com?.page_path || '/products'}
                       className="egg-card group p-4">
                       <div className="flex items-start gap-2.5">
-                        <span className="w-9 h-9 rounded-lg flex items-center justify-center text-base flex-shrink-0"
-                          style={{ background: `${meta.color}1f`, boxShadow: `inset 0 0 0 1px ${meta.color}66` }}>
-                                                  </span>
+                        <span className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 text-[#14161a]"
+                          style={{ background: `${meta.color}1f`, boxShadow: `inset 0 0 0 1px ${meta.color}66` }} aria-hidden="true">
+                          <Icon name={meta.icon} className="w-[18px] h-[18px]" />
+                        </span>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-1.5 flex-wrap mb-1">
                             <span className="font-mono text-[11px] font-bold text-[#3f4650] bg-[#f3f4f6] px-1.5 py-0.5 rounded">{c.ref_code}</span>
