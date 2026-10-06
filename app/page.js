@@ -70,7 +70,7 @@ export async function generateMetadata() {
     ? 'Egypt Globe Group — Verified Bulk Commodity Exporter, Egypt'
     : `${m.siteName} — Egyptian Commodity Exporter`
   const description = isUmbrella
-    ? 'Verified bulk commodity exporter from Egypt — salt, cement, fertilizers, chemicals, minerals, metals. Every lot lab-verified before B/L. FOB / CIF, 7 ports.'
+    ? 'Verified bulk commodity exporter from Egypt — salt, cement, fertilizers, chemicals, minerals, metals. Every lot lab-verified before B/L. FOB / CIF, 8 ports.'
     : 'Egyptian commodity exporter. Request a priced offer.'
   const canonical = isUmbrella ? BASE : `https://${m.host}`
   return {
@@ -161,14 +161,14 @@ const METRICS = [
 const QA_PROTOCOL = [
   { icon: 'shield', t: 'Zero tolerance on specification deviation', b: 'A lot that falls outside its Certificate of Analysis is rejected at the loading port. It is never re-graded, blended down or renegotiated after the fact.' },
   { icon: 'beaker', t: 'Per-lot laboratory verification', b: 'Mine-site and port laboratories test every lot against the contract specification before a Bill of Lading is issued — the CoA ships with the cargo, not after it.' },
-  { icon: 'doc',    t: 'Independent third-party inspection', b: 'Pre-shipment sampling and witness testing by TÜV Austria, SGS, Intertek or Bureau Veritas (ISO/IEC 17020 / 17025) at any of seven Egyptian ports.' },
+  { icon: 'doc',    t: 'Independent third-party inspection', b: 'Pre-shipment sampling and witness testing by TÜV Austria, SGS, Intertek or Bureau Veritas (ISO/IEC 17020 / 17025) at any of eight Egyptian ports.' },
   { icon: 'clock',  t: 'Laycan and grading discipline', b: 'Documented Notice of Readiness and Statement of Facts on every vessel; sieve and laser-diffraction grading verified per lot so the spreader or kiln receives exactly what was contracted.' },
 ]
 
 const PILLARS = [
   // Export operations lead: the track record is the headline, QA is how it holds.
-  { n: '01', tag: 'Export Operations', body: 'Commodity sourcing, vessel chartering, stevedoring, freight forwarding and the full L/C bank document set — extraction point to buyer warehouse across salt, cement & clinker, fertilizers, chemicals, industrial minerals, agro and metals. One counterparty, seven divisions, seven ports; the salt programme alone has moved more than 2 million tonnes on 100+ chartered vessels since 2015.', href: '/about/export-record', cta: 'Our export record' },
-  { n: '02', tag: 'Quality Assurance', body: 'What keeps that record consistent: an internal QA division at the nucleus of the group since its 2014 incorporation, with on-site laboratories at the Siwa Oasis and Qattara Depression mines, port-side QC teams at all seven loading ports, and ISO 9001 / ISO 22000 / HACCP systems across every division. Specification is guaranteed at the port of loading and binding under the sales contract.', href: '/about/quality-compliance', cta: 'Our QA charter' },
+  { n: '01', tag: 'Export Operations', body: 'Commodity sourcing, vessel chartering, stevedoring, freight forwarding and the full L/C bank document set — extraction point to buyer warehouse across salt, cement & clinker, fertilizers, chemicals, industrial minerals, agro and metals. One counterparty, seven divisions, eight ports; the salt programme alone has moved more than 2 million tonnes on 100+ chartered vessels since 2015.', href: '/about/export-record', cta: 'Our export record' },
+  { n: '02', tag: 'Quality Assurance', body: 'What keeps that record consistent: an internal QA division at the nucleus of the group since its 2014 incorporation, with on-site laboratories at the Siwa Oasis and Qattara Depression mines, port-side QC teams at all eight loading ports, and ISO 9001 / ISO 22000 / HACCP systems across every division. Specification is guaranteed at the port of loading and binding under the sales contract.', href: '/about/quality-compliance', cta: 'Our QA charter' },
   { n: '03', tag: 'Industrial Development', body: 'Processing capacity alongside trading: washing, screening, kiln-drying and blending lines, Egyptian industrial-zone development and greenfield partnerships that build durable, audited supply rather than brokerage spread. Counting added-value processing and supply to other exporters, the group has produced and supplied more than 10 million tonnes of salt.', href: '/about', cta: 'About the group' },
   { n: '04', tag: 'Technical Services', body: 'Application testing, new-grade qualification, tender-specification matching and process optimisation — executed with buyers’ technical teams. Every specification is validated in Egyptian facilities before the first container is loaded.', href: '/services', cta: 'Our services' },
 ]
@@ -342,7 +342,7 @@ export default async function HomePage() {
             <p className="egg-rise mt-7 sm:mt-9 text-base sm:text-lg lg:text-[1.25rem] max-w-3xl leading-relaxed text-[#a9bfd7]" style={{ animationDelay: '.2s' }}>
               {hero.lede || <>An Egyptian B2B commodity house trading since 2014 that loads what it agrees to, season after season.
               Every lot is laboratory-verified before the Bill of Lading and ships FOB / CIF / CFR
-              from seven Egyptian seaports to buyers in sixty-plus markets.</>}
+              from eight Egyptian seaports to buyers in sixty-plus markets.</>}
 </p>
             {/* Batch 2 (audit UX1) — what is sold, on the first screen. */}
             <nav aria-label="Product divisions" className="egg-rise mt-7 sm:mt-8 flex flex-wrap gap-2" style={{ animationDelay: '.24s' }}>
@@ -622,7 +622,7 @@ export default async function HomePage() {
               </div>
               <Facts data-rise items={[
                 ['60+', 'destination markets served'],
-                ['FOB / CIF / CFR', 'from 7 Egyptian ports'],
+                ['FOB / CIF / CFR', 'from 8 Egyptian ports'],
                 ['2M+', 'tonnes of salt shipped since 2015'],
               ]} />
             </article>
@@ -986,7 +986,7 @@ function PanelLogistics() {
         ))}
       </svg>
       <div className="absolute left-3 right-3 bottom-3 sm:left-5 sm:right-auto sm:bottom-5 z-20 max-w-[92%] rounded-xl sm:rounded-2xl bg-white/92 backdrop-blur ring-1 ring-[#14161a]/10 shadow-[0_12px_30px_-18px_rgba(20,22,26,.45)] px-3.5 py-2.5 sm:px-4 sm:py-3">
-        <p className="text-[9px] sm:text-[11px] font-mono uppercase tracking-[0.24em]" style={{ color: C.orangeText }}>Logistics network · 7 Egyptian seaports · resident EGG teams</p>
+        <p className="text-[9px] sm:text-[11px] font-mono uppercase tracking-[0.24em]" style={{ color: C.orangeText }}>Logistics network · 8 Egyptian seaports · resident EGG teams</p>
         <p className="text-sm sm:text-base text-[#14161a] mt-0.5 leading-tight">Source to berth in under twelve hours</p>
         <div className="hidden sm:flex flex-wrap gap-1.5 mt-2">
           {[['Loading ports', '/services/loading-ports'], [svc('logistics').label, svc('logistics').path], [svc('port-services').label, svc('port-services').path], ['Vessel sizes', '/trade-tools/vessel-sizes']].map(([label, href]) => (

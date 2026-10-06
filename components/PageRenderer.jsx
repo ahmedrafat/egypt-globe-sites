@@ -650,7 +650,7 @@ export default async function PageRenderer({ page }) {
             <div className="relative flex-1">
               <div className="egg-eyebrow text-[#c2410c] mb-3">Priced offers</div>
               <h3 className="egg-display text-3xl sm:text-4xl text-[#14161a] mb-1">Ready for a quote?</h3>
-              <p className="text-[#3f4650] leading-relaxed text-sm sm:text-base">FOB / CIF / CFR pricing from 7 Egyptian ports — turnaround once stock, laycan and freight are confirmed.</p>
+              <p className="text-[#3f4650] leading-relaxed text-sm sm:text-base">FOB / CIF / CFR pricing from 8 Egyptian ports — turnaround once stock, laycan and freight are confirmed.</p>
             </div>
             <Link href={`/rfq?product=${encodeURIComponent(page.path)}`}
               className="egg-btn-primary relative">

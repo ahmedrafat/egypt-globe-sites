@@ -34,7 +34,7 @@ export async function generateMetadata({ searchParams }) {
     openGraph: routeOpenGraph({ path: '/rfq' }),
     title: 'Request a Quote — Egyptian Salt, Cement & Fertilizers',
     description:
-      'Submit a B2B RFQ for Egyptian salt, cement, fertilizers, chemicals, or minerals. Egypt Globe Group responds with FOB / CIF / CFR pricing from 7 Egyptian seaports.',
+      'Submit a B2B RFQ for Egyptian salt, cement, fertilizers, chemicals, or minerals. Egypt Globe Group responds with FOB / CIF / CFR pricing from 8 Egyptian seaports.',
     ...(hasParams ? { robots: { index: false, follow: true } } : {}),
   }
 }
@@ -62,7 +62,7 @@ export default async function RFQPage({ searchParams }) {
     <article className="bg-white text-[#14161a]">
       <ServiceJsonLd
         name="B2B Commodity Export Quote — Egypt Globe Group"
-        description="Request a FOB / CIF / CFR price quote for Egyptian salt, cement, fertilizers, chemicals, industrial minerals, or agro commodities. Egypt Globe Group responds with pricing from any of 7 Egyptian seaports."
+        description="Request a FOB / CIF / CFR price quote for Egyptian salt, cement, fertilizers, chemicals, industrial minerals, or agro commodities. Egypt Globe Group responds with pricing from any of 8 Egyptian seaports."
         url="/rfq"
       />
       {/* Hero */}

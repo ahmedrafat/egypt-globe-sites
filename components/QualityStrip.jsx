@@ -11,7 +11,7 @@ import Icon from './ui/Icon'
 const POINTS = [
   { icon: 'shield', t: 'Zero tolerance on specification deviation', b: 'A lot outside its Certificate of Analysis is rejected at the loading port — never re-graded, blended down or renegotiated.' },
   { icon: 'beaker', t: 'Per-lot laboratory verification',           b: 'Source and port laboratories test every lot against the contract specification before a Bill of Lading is issued.' },
-  { icon: 'doc',    t: 'Independent third-party inspection',        b: 'TÜV Austria, SGS, Intertek or Bureau Veritas (ISO/IEC 17020 / 17025) sample and witness at any of seven Egyptian ports.' },
+  { icon: 'doc',    t: 'Independent third-party inspection',        b: 'TÜV Austria, SGS, Intertek or Bureau Veritas (ISO/IEC 17020 / 17025) sample and witness at any of eight Egyptian ports.' },
   { icon: 'clock',  t: 'Laycan and grading discipline',             b: 'Documented Notice of Readiness and Statement of Facts on every vessel; sieve, assay and moisture verified per lot.' },
 ]
 

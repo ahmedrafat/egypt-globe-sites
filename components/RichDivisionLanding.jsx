@@ -56,7 +56,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
   const subCount = subcategories?.length || 0
   const tone     = division.color
   const divIcon  = DIVISION_ICON[division.id] || 'box'
-  // Batch 2 (audit UI4) — division facts only. "7 loading ports" and
+  // Batch 2 (audit UI4) — division facts only. "8 loading ports" and
   // "100 % CoA-verified" repeated on every hub; they stay on the homepage
   // and the Quality page where they belong.
   const standards = new Set()
@@ -251,7 +251,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 stagger-children">
             {[
               { ico: 'pin',    t: 'Egyptian-origin, traceable',  b: 'Direct producer relationships across Egypt — a short, audited supply chain with EUR.1 / PAFTA / COMESA Certificate of Origin on every shipment.' },
-              { ico: 'anchor', t: '7-port loading, own teams',    b: 'Damietta · Port Said East · Alexandria · El Dekheila · Ain Sokhna · Safaga · Al-Arish — closest-to-source routing with resident EGG stevedoring, agency and port-QC teams.' },
+              { ico: 'anchor', t: '8-port loading, own teams',    b: 'Damietta · Port Said East · Alexandria · El Dekheila · Ain Sokhna · Safaga · Al-Arish · Gargoub — closest-to-source routing with resident EGG stevedoring, agency and port-QC teams.' },
               { ico: 'shield', t: 'Per-lot QA before B/L',        b: 'Port-laboratory analysis and Certificate of Analysis on every lot before the Bill of Lading; TÜV Austria / SGS / Intertek / Bureau Veritas pre-shipment inspection on request.' },
               { ico: 'clock',  t: 'Written, priced offers',            b: 'Submit an RFQ today, receive a priced FOB / CIF / CFR offer, sample CoA and inspection protocol tomorrow. Standardised L/C-bank document set on order.' },
             ].map(c => (

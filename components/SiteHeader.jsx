@@ -110,7 +110,7 @@ export default async function SiteHeader({ settings }) {
                 <div className="px-5 py-2.5 bg-[#f9fafb] border-t border-[#14161a]/10 flex items-center gap-3 text-[11px] text-[#5b6577]">
                   <span className="inline-flex items-center gap-1.5"><span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-[#0fb5a5]" /> Egyptian-origin verified</span>
                   <span className="text-[#67707f]">·</span>
-                  <span>7 seaports · FOB / CIF / CFR</span>
+                  <span>8 seaports · FOB / CIF / CFR</span>
                   <span className="text-[#67707f]">·</span>
                   <span>CoA per shipment</span>
                 </div>

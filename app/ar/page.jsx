@@ -55,6 +55,7 @@ const PORTS = [
   ['العريش', 'Al-Arish', 'EGAAC', '/ports/al-arish-salt'],
   ['العين السخنة', 'Ain Sokhna', 'EGSOK', '/ports/ain-sokhna-salt'],
   ['سفاجا', 'Safaga', 'EGSGA', '/ports/safaga-salt'],
+  ['جرجوب', 'Gargoub', '—', null], // no UN/LOCODE assigned; no port profile page yet
 ]
 
 const AR_FONT = { fontFamily: "'Segoe UI', Tahoma, 'Noto Naskh Arabic', 'Noto Sans Arabic', Arial, sans-serif" }
@@ -81,7 +82,7 @@ export default async function ArabicProfile() {
           </nav>
           <div className="flex items-center gap-2 mb-4 flex-wrap">
             <span className="egg-chip text-xs">تأسست 2014 · القاهرة ودمياط الجديدة</span>
-            <span className="egg-chip text-xs">7 موانئ تصدير مصرية</span>
+            <span className="egg-chip text-xs">8 موانئ تصدير مصرية</span>
             <span className="egg-chip text-xs">شهادة تحليل قبل بوليصة الشحن</span>
           </div>
           <h1 className="egg-display text-4xl sm:text-5xl lg:text-6xl text-[#14161a] mb-4 leading-[1.15]">
@@ -107,7 +108,7 @@ export default async function ArabicProfile() {
           <Link href="/about/export-record" className="egg-link">سجل التصدير</Link>.
         </p>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-          {[['+2 مليون طن', 'ملح مصدّر منذ 2015'], ['+100', 'سفينة مستأجرة'], ['7', 'موانئ تحميل مصرية'], ['+60', 'سوق تصدير']].map(([v, l]) => (
+          {[['+2 مليون طن', 'ملح مصدّر منذ 2015'], ['+100', 'سفينة مستأجرة'], ['8', 'موانئ تحميل مصرية'], ['+60', 'سوق تصدير']].map(([v, l]) => (
             <div key={l} className="egg-card p-5">
               <div className="text-2xl sm:text-3xl font-bold text-[#14161a]">{v}</div>
               <div className="text-sm text-[#5b6577] mt-1">{l}</div>
@@ -146,7 +147,7 @@ export default async function ArabicProfile() {
               {PORTS.map(([ar, en, code, href]) => (
                 <tr key={code} className="border-t border-[#14161a]/10">
                   <td className="px-4 py-3 font-medium">{ar}</td>
-                  <td className="px-4 py-3" dir="ltr"><Link href={href} className="egg-link">{en}</Link></td>
+                  <td className="px-4 py-3" dir="ltr">{href ? <Link href={href} className="egg-link">{en}</Link> : en}</td>
                   <td className="px-4 py-3 font-mono" dir="ltr">{code}</td>
                 </tr>
               ))}

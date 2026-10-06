@@ -33,7 +33,7 @@ export const metadata = {
   alternates: { canonical: '/products/salt' },
   openGraph: routeOpenGraph({ path: '/products/salt' }),
   title: 'Bulk Salt Supplier Egypt — Rock, Sea, De-icing & Industrial NaCl',
-  description: 'Bulk Egyptian salt exporter — Siwa Oasis crystalline rock salt (≥ 97 % NaCl, chemical, food and pharma grades) and North Sinai / Red Sea sea salt (industrial and de-icing scale). Per-lot CoA before B/L, TÜV Austria / SGS / Intertek inspection, FOB / CIF / CFR from 7 Egyptian ports. 8 grades, 100+ SKUs. Priced offers from the export desk.',
+  description: 'Bulk Egyptian salt exporter — Siwa Oasis crystalline rock salt (≥ 97 % NaCl, chemical, food and pharma grades) and North Sinai / Red Sea sea salt (industrial and de-icing scale). Per-lot CoA before B/L, TÜV Austria / SGS / Intertek inspection, FOB / CIF / CFR from 8 Egyptian ports. 8 grades, 100+ SKUs. Priced offers from the export desk.',
 }
 
 const APPS_BY_ID = Object.fromEntries(APPLICATIONS.map(a => [a.id, a]))
@@ -51,7 +51,7 @@ export default async function SaltMainPage() {
   const STATS = [
     { big: String(all.length),  label: 'SKUs in catalogue' },
     { big: '8',   label: 'Quality grades' },
-    { big: '7',   label: 'Loading ports' },
+    { big: '8',   label: 'Loading ports' },
     { big: '10M+', label: 'Tonnes of salt produced & supplied' },
   ]
 

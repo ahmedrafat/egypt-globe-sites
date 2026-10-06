@@ -33,7 +33,7 @@ export default function SiteFooter({ settings }) {
             <p className="text-sm leading-relaxed text-[#3f4650] max-w-xs mb-5">
               {s.tagline}. Salt, cement, fertilizers, chemicals,
               construction materials, agro & food, and industrial minerals —
-              shipped from 7 Egyptian ports to 60+ destination markets.
+              shipped from 8 Egyptian ports to 60+ destination markets.
             </p>
             {s.linkedin && (
               <a href={s.linkedin} target="_blank" rel="noopener noreferrer"

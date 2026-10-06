@@ -27,7 +27,7 @@ export const metadata = {
   alternates: { canonical: '/services' },
   openGraph: routeOpenGraph({ path: '/services' }),
   title: 'Services — Logistics, Port, Packing, Inspection, Distribution',
-  description: 'Egypt Globe Group supply-chain services: logistics, port operations, added-value processing, packing, inspection, distribution and trade documentation across 7 Egyptian ports.',
+  description: 'Egypt Globe Group supply-chain services: logistics, port operations, added-value processing, packing, inspection, distribution and trade documentation across 8 Egyptian ports.',
 }
 
 const TONE = '#0d9488'
@@ -58,7 +58,7 @@ export default async function ServicesHub() {
               <Icon name="ship" className="w-3.5 h-3.5" /> {SERVICE_DIVISIONS.length} services
             </span>
             <span className="egg-chip text-xs">
-              7 loading ports
+              8 loading ports
             </span>
             <span className="egg-chip text-xs">
               60+ destination markets
@@ -79,7 +79,7 @@ export default async function ServicesHub() {
               <p className="text-base sm:text-lg leading-relaxed max-w-3xl text-[#3f4650]">
                 {hero.lede || <>Supply-chain risk in bulk export is rarely the commodity — it is the handover between
                 contractors. Egypt Globe Group removes the handovers: resident stevedoring, vessel-agency,
-                port-QC, packing, inspection and documentation teams at all seven Egyptian ports, one
+                port-QC, packing, inspection and documentation teams at all eight Egyptian ports, one
                 accountable desk, documented Notice of Readiness and Statement of Facts on every vessel.</>}
 </p>
             </div>

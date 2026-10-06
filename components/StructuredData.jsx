@@ -67,7 +67,7 @@ export function OrganizationJsonLd({ settings }) {
           height: 630,
         },
         description:
-          'Egyptian B2B export trading conglomerate. Salt, cement, fertilizers, chemicals, construction materials, agro & food, industrial minerals, metals. FOB / CIF from 7 Egyptian ports to 60+ countries. Priced offers from the export desk.',
+          'Egyptian B2B export trading conglomerate. Salt, cement, fertilizers, chemicals, construction materials, agro & food, industrial minerals, metals. FOB / CIF from 8 Egyptian ports to 60+ countries. Priced offers from the export desk.',
         foundingDate: pick('foundingDate', 'founding_date') || '2014',
         ...(pick('taxCard', 'tax_card') ? { taxID: pick('taxCard', 'tax_card') } : {}),
         ...(brandSameAs.length ? { sameAs: brandSameAs } : {}),
@@ -263,7 +263,7 @@ export function ServiceJsonLd({ name, description, url }) {
     },
     offers: {
       '@type': 'Offer',
-      description: 'FOB, CIF, CFR from 7 Egyptian seaports. Minimum order varies by commodity.',
+      description: 'FOB, CIF, CFR from 8 Egyptian seaports. Minimum order varies by commodity.',
       seller: { '@id': `${BASE}#org` },
     },
   }

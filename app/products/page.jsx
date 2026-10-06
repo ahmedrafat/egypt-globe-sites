@@ -19,7 +19,7 @@ export const metadata = {
   openGraph: routeOpenGraph({ path: '/products' }),
   title: 'Products — Egyptian Commodity Exporter',
   description:
-    'Salt, fertilizers, construction materials, chemicals, industrial minerals, agro & food, metals — 7 commodity divisions, every lot laboratory-verified before B/L, exported FOB / CIF / CFR from 7 Egyptian seaports to 60+ markets with TÜV Austria / SGS / Intertek / BV inspection.',
+    'Salt, fertilizers, construction materials, chemicals, industrial minerals, agro & food, metals — 7 commodity divisions, every lot laboratory-verified before B/L, exported FOB / CIF / CFR from 8 Egyptian seaports to 60+ markets with TÜV Austria / SGS / Intertek / BV inspection.',
 }
 
 const INCOTERMS = [
@@ -185,7 +185,7 @@ export default async function ProductsHub() {
       <section className="border-b border-[#14161a]/10 egg-reveal">
         <div className="px-5 sm:px-8 lg:px-14 py-10">
           <p className="egg-eyebrow text-[#0369a1] mb-6">
-            Loading ports — 7 Egyptian seaports
+            Loading ports — 8 Egyptian seaports
           </p>
           <div className="flex flex-wrap gap-2 sm:gap-3">
             {PORTS.map(p => (

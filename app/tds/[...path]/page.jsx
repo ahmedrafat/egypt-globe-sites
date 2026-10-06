@@ -209,7 +209,7 @@ export default async function TDSPage({ params }) {
               </>
             ) : (
               <p className="text-sm text-[#3f4650] leading-relaxed">
-                Damietta · Port Said East · Alexandria · El-Dekheila · Ain Sokhna · Safaga · El-Arish.
+                Damietta · Port Said East · Alexandria · El-Dekheila · Ain Sokhna · Safaga · El-Arish · Gargoub.
                 Specific loading port confirmed at quote stage based on destination.
               </p>
             )}
