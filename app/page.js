@@ -154,7 +154,7 @@ const METRICS = [
   { value: 2,   suffix: 'M+', label: 'Tonnes of salt exported' },
   { value: 10,  suffix: 'M+', label: 'Tonnes of salt produced & supplied' },
   { value: 100, suffix: '+',  label: 'Vessels chartered' },
-  { value: 7,   suffix: '',   label: 'Egyptian seaports' },
+  { value: 8,   suffix: '',   label: 'Egyptian seaports' },
 ]
 
 // "Quality at the Core" — the four non-negotiables, stated once near the top.
@@ -589,7 +589,7 @@ export default async function HomePage() {
               </div>
               <Facts data-rise items={[
                 ['< 12 h', 'source to berth, any division'],
-                ['7', 'ports with resident EGG teams'],
+                ['8', 'ports with resident EGG teams'],
                 ['NOR / SOF', 'documented on every vessel'],
               ]} />
             </article>

@@ -99,7 +99,7 @@ export default async function ServicesHub() {
           <div className="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-px rounded-2xl overflow-hidden ring-1 ring-[#14161a]/10 bg-[#14161a]/10 stagger-children">
             {[
               { big: String(SERVICE_DIVISIONS.length), label: 'In-house services' },
-              { big: '7',   label: 'Loading ports' },
+              { big: '8',   label: 'Loading ports' },
               { big: '60+', label: 'Destination markets' },
               { big: '100%', label: 'Lots CoA-verified before B/L' },
             ].map(s => (

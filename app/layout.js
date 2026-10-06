@@ -180,7 +180,7 @@ export async function generateMetadata() {
         'rice supplier egypt', 'cotton exporter', 'grains egypt', 'pulses egypt',
         'dates egypt', 'spices', 'oilseeds',
         // Trade & logistics
-        'B2B trading conglomerate egypt', 'egyptian export trader', 'FOB 7 egyptian ports',
+        'B2B trading conglomerate egypt', 'egyptian export trader', 'FOB 8 egyptian ports',
         'CIF/CFR egypt', 'vessel chartering egypt', 'L/C export documentation',
         'global trade egypt', 'mediterranean exporter', 'red sea exporter',
         'egypt to 60+ countries'

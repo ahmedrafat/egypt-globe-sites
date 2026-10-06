@@ -90,7 +90,7 @@ export default async function ProductsHub() {
           </h1>
           <p className="text-base sm:text-lg text-[#3f4650] leading-relaxed mb-8 animate-fade-in-up" style={{ animationDelay: '.2s' }}>
             {hero.lede || <>Salt, cement &amp; clinker, fertilizers, chemicals, industrial minerals, agro &amp; food
-            and metals — sourced from Egyptian capacity and shipped FOB / CIF / CFR from 7 Egyptian
+            and metals — sourced from Egyptian capacity and shipped FOB / CIF / CFR from 8 Egyptian
             seaports. The salt programme alone has moved 
             <Link href="/about/export-record" className="text-white underline decoration-[#ff5a18]/70 underline-offset-4 hover:decoration-[#ff5a18] transition-colors">more than 2 million tonnes on 100+ chartered
             vessels since 2015</Link>. Every division works to one rule: the specification agreed is

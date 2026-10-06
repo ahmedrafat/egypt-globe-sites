@@ -93,7 +93,7 @@ export default function RichApplicationLanding({ page, application, products, si
             {[
               { big: String((products || []).length), label: 'SKUs serving this industry' },
               { big: certList.length > 0 ? String(certList.length) : '—', label: 'Standards & certs covered' },
-              { big: '7',   label: 'Loading ports' },
+              { big: '8',   label: 'Loading ports' },
               { big: '60+', label: 'Destination markets' },
             ].map(s => (
               <div key={s.label} className="bg-white/90 backdrop-blur px-5 py-5">
