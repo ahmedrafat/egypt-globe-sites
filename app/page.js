@@ -843,12 +843,16 @@ export default async function HomePage() {
         </p>
       </div>
 
-      {/* ── GSAP + ScrollTrigger (CDN) + init ───────────────────────── */}
-      <Script src={`https://cdn.jsdelivr.net/npm/gsap@${GSAP_VERSION}/dist/gsap.min.js`} strategy="afterInteractive" />
-      <Script src={`https://cdn.jsdelivr.net/npm/gsap@${GSAP_VERSION}/dist/ScrollTrigger.min.js`} strategy="afterInteractive" />
+      {/* ── GSAP + ScrollTrigger (CDN) + init ─────────────────────────
+          lazyOnload: the scenes are below the fold and the hero entrance is CSS, so the
+          47 KB of GSAP no longer shares a slow mobile link with the LCP hero image
+          (lab, slow-4G: it finished after fonts and scripts). The init polls for
+          window.gsap, so order and timing are safe. */}
+      <Script src={`https://cdn.jsdelivr.net/npm/gsap@${GSAP_VERSION}/dist/gsap.min.js`} strategy="lazyOnload" />
+      <Script src={`https://cdn.jsdelivr.net/npm/gsap@${GSAP_VERSION}/dist/ScrollTrigger.min.js`} strategy="lazyOnload" />
       <Script
         id="egg-scrolly-init"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
         dangerouslySetInnerHTML={{ __html: `window.__EGG_ENV=${JSON.stringify({ url: SUPABASE_URL, key: SUPABASE_ANON })};${INIT_SCRIPT}` }}
       />
     </div>
