@@ -179,7 +179,8 @@ export default async function ArabicProfile() {
             <div>
               <p><span className="font-bold text-[#14161a]">المقر الرئيسي:</span> 30 شارع سيبويه المصري، متفرع من شارع الطيران، مدينة نصر، القاهرة</p>
               <p><span className="font-bold text-[#14161a]">مكتب العمليات:</span> مكتب 2، عمارة 82، الحي المركزي، دمياط الجديدة</p>
-              <p><span className="font-bold text-[#14161a]">سجل تجاري:</span> <span dir="ltr">{s?.commercialRegistry || '73418'}</span> · <span className="font-bold text-[#14161a]">رخصة تصدير:</span> <span dir="ltr">{s?.exportLicense || '600010794'}</span></p>
+              <p><span className="font-bold text-[#14161a]">سجل تجاري:</span> <span dir="ltr">{s?.commercialRegistry || '73418'}</span></p>
+              <p><span className="font-bold text-[#14161a]">رخصة تصدير:</span> <span dir="ltr">{s?.exportLicense || '600010794'}</span></p>
             </div>
             <div>
               <p><span className="font-bold text-[#14161a]">البريد الإلكتروني:</span> <a href={`mailto:${email}`} className="egg-link" dir="ltr">{email}</a></p>

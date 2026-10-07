@@ -334,6 +334,9 @@ body.no-scroll {
   --egg-ocean-text: #0369a1;
 }
 .egg-display { font-family: var(--font-fraunces, var(--font-geist-sans)), Georgia, serif; font-weight: 400; letter-spacing: -.015em; }
+/* Arabic joins its letters: any tracking, tight or loose, pulls the cursive forms apart
+   (the /ar headings carried -.015em and the port-table header .05em). */
+:lang(ar), :lang(ar) * { letter-spacing: 0 !important; }
 .egg-grid-light { background-image: linear-gradient(rgba(20,22,26,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(20,22,26,.055) 1px, transparent 1px); background-size: 48px 48px; }
 .egg-eyebrow { display: inline-flex; align-items: center; gap: .6rem; font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--egg-muted); }
 .egg-eyebrow::before { content: ""; width: 2rem; height: 1px; background: currentColor; opacity: .7; flex: none; }
