@@ -47,7 +47,7 @@ export async function GET() {
 
   let body = `# Egypt Globe Group
 
-> Egyptian B2B export trading conglomerate. Salt, cement, fertilizers, chemicals, construction materials, agro & food, industrial minerals, metals. FOB / CIF from 8 Egyptian ports (Damietta, Alexandria, El Dekheila, Port Said, Port Said East, Ain Sokhna, Adabiya) to 60+ destination markets. Priced offers from the export desk.
+> Egyptian B2B export trading conglomerate. Salt, cement, fertilizers, chemicals, construction materials, agro & food, industrial minerals, metals. FOB / CIF from 8 Egyptian ports (Damietta, Alexandria, El Dekheila, Ain Sokhna, Port Said East, Al-Arish, Safaga, Gargoub) to 60+ destination markets. Priced offers from the export desk.
 
 We supply commodities to manufacturers, water utilities, oil & gas operators, fertilizer importers, traders, and downstream blenders globally. Every shipment ships with a Certificate of Analysis, Mill Test Certificate where applicable, and full Letter-of-Credit documentation. Independent third-party inspection (TÜV Austria / SGS / Intertek / Bureau Veritas) is available on request.
 
