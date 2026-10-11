@@ -52,7 +52,7 @@ export default async function SaltMainPage() {
     { big: String(all.length),  label: 'SKUs in catalogue' },
     { big: '8',   label: 'Quality grades' },
     { big: '8',   label: 'Loading ports' },
-    { big: '10M+', label: 'Tonnes of salt produced & supplied' },
+    { big: '10M+', label: 'Tonnes produced & supplied, incl. other exporters' },
   ]
 
   return (
