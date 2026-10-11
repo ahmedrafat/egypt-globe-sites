@@ -589,3 +589,17 @@ header::after {
   [data-hero] [data-hero-bg] { transform: none !important; }
   [data-hero] [data-hero-copy] { transform: none !important; opacity: 1 !important; }
 }
+
+
+/* Native <select> — one consistent control: custom chevron, no OS arrow. Unlayered so it
+   wins over the utility layer's horizontal padding only on the right edge. */
+select:not([multiple]):not([size]) {
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%237a8290' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 7.5l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  background-size: 1rem;
+  padding-right: 2.5rem;
+  text-overflow: ellipsis;
+}

@@ -75,7 +75,7 @@ export default async function RFQPage({ searchParams }) {
           style={{ background: isCoa
             ? 'radial-gradient(55% 55% at 88% 0%, rgba(15,181,165,.2), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(184,134,43,.1), transparent 60%)'
             : 'radial-gradient(55% 55% at 88% 0%, rgba(255,99,33,.16), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(15,181,165,.12), transparent 60%)' }} />
-        <div className="relative max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 animate-fade-in-up">
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 animate-fade-in-up">
           <div className={`egg-eyebrow mb-4 ${isCoa ? 'text-[#087a70]' : 'text-[#c2410c]'}`}>
             <span className={`w-2 h-2 rounded-full ${isCoa ? 'bg-[#0fb5a5]' : 'bg-[#d0450f]'} animate-pulse`} />
             {heroLabel}

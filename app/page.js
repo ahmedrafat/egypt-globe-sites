@@ -293,7 +293,7 @@ export default async function HomePage() {
       <style>{SCOPED_CSS}</style>
 
       {/* ── 1. HERO ─────────────────────────────────────────────────── */}
-      <section data-hero className="egg-hero-dark relative min-h-[92vh] flex flex-col justify-between overflow-hidden px-5 sm:px-10 lg:px-16 pt-20 sm:pt-24 pb-10">
+      <section data-hero className="egg-hero-dark relative min-h-[92vh] flex flex-col justify-between overflow-hidden pt-20 sm:pt-24 pb-10">
         {/* layered backdrop (parallaxed by GSAP) — photo + technical grid + compass ring */}
         <div data-hero-bg className="absolute inset-[-12%] z-0 pointer-events-none" aria-hidden="true">
           {heroPhoto && (
@@ -325,7 +325,7 @@ export default async function HomePage() {
         <div className="absolute inset-x-0 bottom-0 h-px z-[2] bg-gradient-to-r from-transparent via-[#ff5a18]/70 to-transparent" aria-hidden="true" />
         <div className="absolute inset-x-0 bottom-0 h-40 z-[1] bg-gradient-to-b from-transparent to-[#03182d]" aria-hidden="true" />
 
-        <div data-hero-copy className="relative z-10 flex-1 flex flex-col justify-between">
+        <div data-hero-copy className="relative z-10 flex-1 flex flex-col justify-between w-full max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
           {/* overline */}
           <p className="egg-rise text-[11px] sm:text-[11px] font-mono uppercase tracking-[0.32em] text-[#ff7a22]" style={{ animationDelay: '.05s' }}>
             Egypt Globe Group
