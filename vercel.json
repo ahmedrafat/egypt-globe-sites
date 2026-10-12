@@ -849,6 +849,16 @@
       "source": "/heroes/markets-egypt-urea.png",
       "destination": "/banners/topics/fertilizers.jpg",
       "permanent": true
+    },
+    {
+      "source": "/case-studies",
+      "destination": "/about/export-record",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/:slug",
+      "destination": "/about/export-record",
+      "permanent": true
     }
   ]
 }

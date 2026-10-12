@@ -243,12 +243,12 @@ export default async function SiteHeader({ settings }) {
                     <Link href="/ports/ain-sokhna-salt" className="block text-xs text-[#3f4650] hover:text-[#087a70] py-1 leading-tight">Ain Sokhna — Red Sea 17m</Link>
                     <Link href="/ports/port-said-east-salt" className="block text-xs text-[#3f4650] hover:text-[#087a70] py-1 leading-tight">Port Said East — 22m ULCV</Link>
                     <Link href="/ports/al-arish-salt" className="block text-xs text-[#3f4650] hover:text-[#087a70] py-1 leading-tight">Al-Arish — upgraded 14m, 50k DWT</Link>
+                    <Link href="/ports/gargoub-salt" className="block text-xs text-[#3f4650] hover:text-[#087a70] py-1 leading-tight">Gargoub — Matrouh, Siwa rock salt</Link>
                     <Link href="/ports/adabiya-salt" className="block text-xs text-[#3f4650] hover:text-[#087a70] py-1 leading-tight">Adabiya — Suez Gulf bulk</Link>
                     <Link href="/ports/safaga-salt" className="block text-xs text-[#3f4650] hover:text-[#087a70] py-1 leading-tight">Safaga — Red Sea phosphate</Link>
                     <Link href="/services/loading-ports" className="block text-[11px] font-bold text-blue-700 hover:underline pt-2">All Egyptian loading ports →</Link>
                     <div className="mt-4 pt-3 border-t border-[#14161a]/10">
                       <Link href="/blog" className="block text-xs font-semibold text-[#3f4650] hover:text-[#087a70] py-1"><Icon name="news" className="w-3.5 h-3.5" /> News & insights</Link>
-                      <Link href="/case-studies" className="block text-xs font-semibold text-[#3f4650] hover:text-[#087a70] py-1"><Icon name="book" className="w-3.5 h-3.5" /> Case studies</Link>
                       <Link href="/coa" className="block text-xs font-semibold text-[#3f4650] hover:text-[#087a70] py-1"><Icon name="beaker" className="w-3.5 h-3.5" /> CoA centre</Link>
                     </div>
                   </div>

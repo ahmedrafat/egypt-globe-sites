@@ -4,7 +4,6 @@ import Image from 'next/image'
 import Script from 'next/script'
 import { Fraunces } from 'next/font/google'
 import {
-  getCaseStudies,
   getSiteSettings,
   getPageByPath,
   PRODUCT_DIVISIONS,
@@ -272,9 +271,8 @@ const app = id => byId(APPLICATIONS, id)
 /* ─── page ────────────────────────────────────────────────────────────── */
 
 export default async function HomePage() {
-  const [settings, caseStudies, cmsHome] = await Promise.all([
+  const [settings, cmsHome] = await Promise.all([
     getSiteSettings().catch(() => null),
-    getCaseStudies({ limit: 3 }).catch(() => []),
     getPageByPath('/').catch(() => null),
   ])
 
@@ -807,34 +805,15 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── 6. RECENT THINKING ──────────────────────────────────────── */}
-      {caseStudies.length > 0 && (
-        <section className="border-t border-[#14161a]/10 bg-white">
-          <div className="flex items-center justify-between px-6 sm:px-10 lg:px-16 pt-12 pb-4">
-            <p className="text-[11px] font-mono uppercase tracking-[0.28em] text-[#5b6577]">Verified deliveries · case studies</p>
-            <Link href="/case-studies" className="group inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-[0.18em] text-[#5b6472] hover:text-[#8a6d3b] transition-colors">
-              All <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-            </Link>
-          </div>
-          <div className="divide-y divide-[#14161a]/10 border-t border-[#14161a]/10">
-            {caseStudies.map(cs => (
-              <Link key={cs.path} href={cs.path} data-reveal className="group flex items-center gap-6 px-6 sm:px-10 lg:px-14 py-7 hover:bg-[#f6f7f9] transition-colors duration-400">
-                {cardUrl(cs) && (
-                  <div className="hidden sm:block shrink-0 w-16 h-16 rounded-lg overflow-hidden opacity-90 group-hover:opacity-100 transition-opacity duration-400 ring-1 ring-[#14161a]/10">
-                    <Image src={cardUrl(cs)} alt="" width={64} height={64} className="w-full h-full object-cover" />
-                  </div>
-                )}
-                <div className="flex-1 min-w-0">
-                  <p className="text-[11px] font-mono uppercase tracking-[0.22em] text-[#8a6d3b] mb-2">Case study</p>
-                  <p className={`${display.className} text-lg sm:text-xl text-[#2a2f38] group-hover:text-[#14161a] leading-snug transition-colors`}>{cs.title}</p>
-                  {cs.description && <p className="text-xs text-[#5b6577] mt-1.5 line-clamp-1 leading-relaxed">{cs.description}</p>}
-                </div>
-                <span className="shrink-0 text-[#67707f] group-hover:text-[#c2410c] transition-all duration-400 group-hover:translate-x-1 text-lg">→</span>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* ── 6. VERIFIED RECORD ──────────────────────────────────────── */}
+      <section className="border-t border-[#14161a]/10 bg-white">
+        <div className="flex flex-wrap items-center justify-between gap-3 px-6 sm:px-10 lg:px-16 py-10">
+          <p className="text-[11px] font-mono uppercase tracking-[0.28em] text-[#5b6577]">Verified deliveries · export record</p>
+          <Link href="/about/export-record" className="group inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-[0.18em] text-[#5b6472] hover:text-[#8a6d3b] transition-colors">
+            See the shipment record <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+          </Link>
+        </div>
+      </section>
 
       {/* ── legal trust line ────────────────────────────────────────── */}
       <div className="border-t border-[#14161a]/10 px-6 sm:px-10 lg:px-16 py-7 bg-white">

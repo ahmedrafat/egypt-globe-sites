@@ -62,7 +62,7 @@ We supply commodities to manufacturers, water utilities, oil & gas operators, fe
   body += `- [HS-code glossary](${BASE}/trade-tools/hs-codes): canonical HS codes for Egyptian exports\n`
   body += `- [Request a quote](${BASE}/rfq): RFQ form\n`
   body += `- [About / company](${BASE}/about): history, mission, locations, quality, careers\n`
-  body += `- [Case studies](${BASE}/case-studies): real shipments + delivered numbers\n`
+  body += `- [Export record](${BASE}/about/export-record): verified shipment record (vessels by year, no buyer or destination detail)\n`
   body += `- [Market intelligence](${BASE}/markets): commodity market overviews — cement HS 2523.29, caustic soda, palm oil, vegetable oil, industrial salt, mining companies, gypsum, NPK fertilizer\n\n`
 
   // Category sections

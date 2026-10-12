@@ -115,7 +115,6 @@ export default function SiteFooter({ settings }) {
                 ['/about/quality-compliance', 'Quality'],
                 ['/coa', 'CoA Center'],
                 ['/about/careers', 'Careers'],
-                ['/case-studies', 'Case Studies'],
                 ['/markets', 'Market Intelligence'],
                 ['/blog', 'News & Blog'],
                 ['/global-presence', 'Global Presence'],
