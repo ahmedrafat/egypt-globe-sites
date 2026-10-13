@@ -44,7 +44,7 @@ export default function CoaFilter({ divisions, total }) {
           placeholder="Search by product or reference…"
           className="w-full pl-10 pr-4 py-2.5 rounded-full bg-white text-sm text-[#14161a] placeholder-[#67707f] ring-1 ring-[#14161a]/15 focus:outline-none focus:ring-2 focus:ring-[#ff6321]" />
       </label>
-      <div className="flex gap-2 overflow-x-auto min-w-0 pb-0.5" role="group" aria-label="Filter by division">
+      <div className="flex gap-2 overflow-x-auto lg:flex-wrap lg:overflow-visible min-w-0 pb-0.5" role="group" aria-label="Filter by division">
         {chip('all', 'All', total)}
         {divisions.map(d => chip(d.id, d.label, d.count))}
       </div>
