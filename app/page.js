@@ -232,7 +232,7 @@ const COMPARE_ROWS = [
   ['Sieve profiles',    '0/2 · 0/4 · 0/6.3 · 2/8 · 10/40 mm', '0/2 · 0/4 · 0/6.3 · 2/8 · 0.5/10 mm'],
   ['Standards',         'EN 16811-1 A/B/C · ASTM D632 · BS 3247 · GOST 13830', 'EN 16811-1 Type 1/2 · ASTM D632 · AASHTO M-143 · SS-EN 16811-1'],
   ['Primary use',       'Food · pharma · cosmetic · chlor-alkali · de-icing', 'De-icing · industrial · water treatment · pool'],
-  ['Loading ports',     'El Dekheila · Alexandria · Damietta · Ain Sokhna', 'Port Said East · Damietta · Al-Arish · Ain Sokhna'],
+  ['Loading ports',     'El Dekheila · Alexandria · Damietta · Ain Sokhna · Gargoub', 'Port Said East · Damietta · Al-Arish · Ain Sokhna'],
   ['MOQ',               '240 MT FCL · 2,000–65,000 MT bulk', '240 MT FCL · 2,000–65,000 MT bulk'],
 ]
 

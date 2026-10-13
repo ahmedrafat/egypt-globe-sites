@@ -38,7 +38,8 @@ const PORTS = [
   { name: 'Port Said East', code: 'EGPSE', note: 'Container & sea salt' },
   { name: 'Ain Sokhna',     code: 'EGSOK', note: 'Minerals & fertilizers' },
   { name: 'Al-Arish',       code: 'EGAAC', note: 'Sinai sea salt' },
-  { name: 'Suez',           code: 'EGPSD', note: 'Red Sea lane entry' },
+  { name: 'Safaga',         code: 'EGSGA', note: 'Red Sea phosphate & bulk minerals' },
+  { name: 'Gargoub',        code: 'n/a',   note: 'Siwa rock salt, Matrouh coast' },
 ]
 
 const QA_MATRIX = [

@@ -213,13 +213,13 @@ export default async function SaltMainPage() {
               <div className="relative mt-4 grid grid-cols-3 gap-2 text-center">
                 <div><div className="egg-display text-3xl text-[#8a6d3b]">{rock.length || '—'}</div><div className="text-[11px] font-mono tracking-[0.14em] text-[#5b6472] uppercase">SKUs</div></div>
                 <div><div className="egg-display text-3xl text-[#8a6d3b]">≥97%</div><div className="text-[11px] font-mono tracking-[0.14em] text-[#5b6472] uppercase">NaCl floor</div></div>
-                <div><div className="egg-display text-3xl text-[#8a6d3b]">4</div><div className="text-[11px] font-mono tracking-[0.14em] text-[#5b6472] uppercase">Loading ports</div></div>
+                <div><div className="egg-display text-3xl text-[#8a6d3b]">5</div><div className="text-[11px] font-mono tracking-[0.14em] text-[#5b6472] uppercase">Loading ports</div></div>
               </div>
             </div>
             <div className="p-6">
               <div className="egg-eyebrow mb-3">Loading ports</div>
               <div className="flex flex-wrap gap-2 mb-5">
-                {['El Dekheila', 'Alexandria', 'Damietta', 'Ain Sokhna'].map(p => (
+                {['El Dekheila', 'Alexandria', 'Damietta', 'Ain Sokhna', 'Gargoub'].map(p => (
                   <span key={p} className="egg-chip text-xs" style={{ color: GOLD_TEXT, boxShadow: `inset 0 0 0 1px ${GOLD}73` }}>
                     <Icon name="anchor" className="w-3 h-3" /> {p}
                   </span>
