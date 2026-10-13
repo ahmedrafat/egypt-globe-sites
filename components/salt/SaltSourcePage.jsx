@@ -50,9 +50,9 @@ export default function SaltSourcePage({ source, page, items }) {
         {!isBanner(page?.hero_photo_url) && <HeroMotif variant="lattice" tone={s.tone} />}
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-24">
           <nav className="flex items-center gap-2 text-xs mb-5 flex-wrap animate-fade-in" aria-label="Breadcrumb">
-            <Link href="/">Home</Link><span>›</span>
-            <Link href="/products">Products</Link><span>›</span>
-            <Link href="/products/salt">Salt</Link><span>›</span>
+            <Link href="/" className="inline-block py-2.5 -my-2.5">Home</Link><span>›</span>
+            <Link href="/products" className="inline-block py-2.5 -my-2.5">Products</Link><span>›</span>
+            <Link href="/products/salt" className="inline-block py-2.5 -my-2.5">Salt</Link><span>›</span>
             <span className="font-medium" aria-current="page">{s.label}</span>
           </nav>
 

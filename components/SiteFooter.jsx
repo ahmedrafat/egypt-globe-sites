@@ -93,7 +93,7 @@ export default function SiteFooter({ settings }) {
               </li>
               <li className="pt-2 mt-1 border-t border-[#14161a]/10">
                 <a href={LOGISTICS_PORTAL_URL} target="_blank" rel="noopener noreferrer"
-                  className="text-[#5b6577] hover:text-[#14161a] text-xs flex items-center gap-1.5 transition-colors">
+                  className="text-[#5b6577] hover:text-[#14161a] text-xs flex items-center gap-1.5 py-2 transition-colors">
                   <Icon name="anchor" className="w-3.5 h-3.5" /> Provider portal ↗
                 </a>
                 <span className="text-[11px] text-[#67707f] block mt-0.5">For freight carriers</span>
@@ -151,12 +151,12 @@ export default function SiteFooter({ settings }) {
               </li>
               <li className="pt-1 border-t border-[#14161a]/10">
                 <a href={`tel:${s.phoneE164}`}
-                  className="block text-[#14161a] hover:text-[#087a70] transition-colors font-medium text-sm">
+                  className="block py-1.5 text-[#14161a] hover:text-[#087a70] transition-colors font-medium text-sm">
                   <Icon name="phone" className="w-3.5 h-3.5" /> {s.phone}
                 </a>
                 <span className="block text-[#67707f] text-xs mt-0.5">Tel &amp; Fax: {s.telFax}</span>
                 <a href={`mailto:${s.email}`}
-                  className="block text-[#14161a] hover:text-[#087a70] transition-colors mt-1 text-sm">
+                  className="block py-1.5 text-[#14161a] hover:text-[#087a70] transition-colors text-sm">
                   <Icon name="mail" className="w-3.5 h-3.5" /> {s.email}
                 </a>
               </li>
@@ -201,7 +201,7 @@ export default function SiteFooter({ settings }) {
             <Link href="/cookies-policy" className="inline-block py-2 hover:text-[#14161a] transition-colors">Cookies</Link>
             <Link href="/ar" lang="ar" hrefLang="ar" className="inline-block py-2 hover:text-[#14161a] transition-colors">العربية</Link>
             {s.linkedin && (
-              <a href={s.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-[#14161a] transition-colors">
+              <a href={s.linkedin} target="_blank" rel="noopener noreferrer" className="inline-block py-2 hover:text-[#14161a] transition-colors">
                 LinkedIn
               </a>
             )}

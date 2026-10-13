@@ -372,7 +372,7 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
               </Link>
             ) : (
               <Link href="/login" onClick={close}
-                className="flex items-center gap-2 text-[13.5px] text-[#5b6577] hover:text-[#14161a] transition-colors">
+                className="flex items-center gap-2 py-2.5 text-[13.5px] text-[#5b6577] hover:text-[#14161a] transition-colors">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
@@ -380,7 +380,7 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
               </Link>
             )}
             <Link href="/ar" lang="ar" hrefLang="ar" onClick={close}
-              className="mt-3 flex items-center gap-2 text-[13.5px] text-[#5b6577] hover:text-[#14161a] transition-colors">
+              className="flex items-center gap-2 py-2.5 text-[13.5px] text-[#5b6577] hover:text-[#14161a] transition-colors">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path strokeLinecap="round" d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18" /></svg>
               العربية
             </Link>
