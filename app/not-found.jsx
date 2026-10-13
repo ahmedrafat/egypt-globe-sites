@@ -21,9 +21,16 @@ export default function NotFound() {
         <p className="text-[#3f4650] mb-8 max-w-md mx-auto">
           The address may have changed or been typed incorrectly. Everything Egypt Globe Group exports is one step away.
         </p>
+        <form action="/search" method="get" role="search" className="flex gap-2 max-w-md mx-auto mb-6">
+          <label className="flex-1">
+            <span className="sr-only">Search the site</span>
+            <input type="search" name="q" placeholder="Search products, ports, standards…"
+              className="w-full px-4 py-3 rounded-full bg-white text-sm text-[#14161a] placeholder-[#67707f] ring-1 ring-[#14161a]/15 focus:outline-none focus:ring-2 focus:ring-[#ff6321]" />
+          </label>
+          <button type="submit" className="egg-btn-primary">Search</button>
+        </form>
         <div className="flex flex-wrap justify-center gap-3 mb-10">
-          <Link href="/products" className="egg-btn-primary">Browse all products</Link>
-          <Link href="/search" className="egg-btn-ghost">Search the site</Link>
+          <Link href="/products" className="egg-btn-ghost">Browse all products</Link>
           <Link href="/rfq" className="egg-btn-ghost">Request a quote</Link>
         </div>
         <nav aria-label="Product divisions" className="flex flex-wrap justify-center gap-2">
