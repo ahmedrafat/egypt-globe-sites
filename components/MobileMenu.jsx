@@ -379,6 +379,11 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
                 Sign in to buyer portal
               </Link>
             )}
+            <Link href="/ar" lang="ar" hrefLang="ar" onClick={close}
+              className="mt-3 flex items-center gap-2 text-[13.5px] text-[#5b6577] hover:text-[#14161a] transition-colors">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path strokeLinecap="round" d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18" /></svg>
+              العربية
+            </Link>
           </div>
         </div>
 

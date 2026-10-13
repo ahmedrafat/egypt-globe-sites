@@ -47,6 +47,7 @@ export default async function SiteHeader({ settings }) {
           </div>
           <div className="flex items-center gap-3 text-blue-100">
             <span className="hidden lg:inline text-xs text-blue-100">60+ destination markets worldwide</span>
+            <Link href="/ar" lang="ar" hrefLang="ar" className="px-2 py-0.5 rounded-md text-white/90 hover:text-white hover:bg-white/10 transition-colors">العربية</Link>
             {s.linkedin && (
               <a href={s.linkedin} target="_blank" rel="noopener noreferrer"
                 className="flex items-center gap-1 bg-white/10 hover:bg-white/20 px-2 py-0.5 rounded-md transition-colors text-white">
