@@ -8,7 +8,7 @@
  * Drop 168. Light editorial edition — tokens + utilities (.egg-*) in
  * app/globals.css.
  */
-import HeroMotif from '../../components/HeroMotif'
+import HeroBackdrop from '../../components/HeroBackdrop'
 import Link from 'next/link'
 import { searchPages } from '../../lib/corporatePages'
 import { CATEGORY_META } from '../../lib/corporatePages'
@@ -39,14 +39,11 @@ export default async function SearchPage({ searchParams }) {
 
   return (
     <div className="bg-white min-h-screen text-[#14161a]">
-      <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10 py-12">
-        <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
-        {/* scanning the catalogue */}
-        <HeroMotif variant="radar" tone="#0284c7" />
-        <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(55% 55% at 88% 0%, rgba(2,132,199,.14), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(15,181,165,.12), transparent 60%)' }} />
+      <section data-hero className="egg-hero-dark relative overflow-hidden border-b border-[#ff5a18]/60 py-12">
+        <HeroBackdrop src="/banners/topics/trade-tools.jpg" />
+        <div aria-hidden="true" className="absolute inset-0 egg-grid-dark opacity-60 pointer-events-none" />
         <div className="relative max-w-4xl mx-auto px-5 sm:px-6 lg:px-8">
-          <h1 className="egg-display text-3xl sm:text-4xl lg:text-5xl text-[#14161a] mb-4">
+          <h1 className="egg-display text-3xl sm:text-4xl lg:text-5xl text-[#14161a] mb-4 max-w-2xl">
             {q ? <>Search results for &ldquo;{q}&rdquo;</> : 'Search Egypt Globe Group'}
           </h1>
           <form action="/search" method="get" className="flex gap-2 mt-6">
