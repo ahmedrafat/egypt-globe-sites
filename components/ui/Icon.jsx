@@ -65,8 +65,13 @@ export const ICON_PATHS = {
 
 export default function Icon({ name, className = 'w-4 h-4', strokeWidth = 1.75, title }) {
   const d = ICON_PATHS[name] || ICON_PATHS.dot
+  // Tailwind's preflight makes every <svg> display:block, which dropped icons onto their own line
+  // above inline text (footer contact block, RFQ email card). Sit inline with the text unless
+  // the caller chose a display mode.
+  const cls = /(^|\s)(block|inline|inline-block|inline-flex|flex|hidden|absolute|fixed)(\s|$)|:(block|inline|inline-block|flex|hidden)/.test(className)
+    ? className : `${className} inline-block shrink-0 align-[-0.15em]`
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth}
+    <svg className={cls} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth}
       strokeLinecap="round" strokeLinejoin="round" aria-hidden={title ? undefined : 'true'} role={title ? 'img' : undefined}>
       {title && <title>{title}</title>}
       <path d={d} />
