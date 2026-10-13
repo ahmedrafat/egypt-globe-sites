@@ -5,6 +5,7 @@
  * the page has rich product data, gallery, child grid for category
  * landings, related-pages strip, and a CTA banner.
  */
+import ContactQuickActions from './ContactQuickActions'
 import { skuDifferentiator } from '../lib/specs'
 import { heroCopy } from '../lib/heroCopy'
 import { buildBreadcrumb, ancestorPaths } from '../lib/breadcrumbs'
@@ -428,6 +429,9 @@ export default async function PageRenderer({ page }) {
             <PackingMatrix packingOptions={packingOptions} productPackingOptions={[]} />
           }
         />
+      ) : page.path === '/contact' && page.body_markdown ? (
+        // Contact: the four ways to reach the desk first, the written detail after.
+        <MarkdownDocument body={page.body_markdown} title={page.title} leadingWidget={<ContactQuickActions />} />
       ) : page.body_markdown ? (
         // Every other editorial page — sectioned body_markdown document.
         <MarkdownDocument body={page.body_markdown} title={page.title} />
