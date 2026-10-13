@@ -85,7 +85,7 @@ export default async function CoaCenter() {
           </nav>
 
           <div className="flex items-center gap-2 mb-4 flex-wrap">
-            <span className="egg-chip text-xs" style={{ color: TONE, boxShadow: 'inset 0 0 0 1px rgba(15,181,165,.5)' }}>
+            <span className="egg-chip text-xs" style={{ color: '#7fe3d8', boxShadow: 'inset 0 0 0 1px rgba(15,181,165,.6)' }}>
               <Icon name="shield" className="w-3.5 h-3.5" /> Independent TÜV Austria / SGS / Intertek / Bureau Veritas
             </span>
             <span className="egg-chip text-xs">
@@ -95,7 +95,7 @@ export default async function CoaCenter() {
               {totalCommodities} commodities
             </span>
             <span className="egg-chip text-xs">
-              {regions.length} markets
+              {regions.length} {regions.length === 1 ? 'market' : 'markets'}
             </span>
           </div>
 
