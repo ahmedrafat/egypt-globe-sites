@@ -52,7 +52,7 @@ export default async function SearchPage({ searchParams }) {
               name="q"
               defaultValue={q}
               placeholder="Search commodities, ports, standards, HS codes…"
-              className="flex-1 px-4 py-3 rounded-full bg-white text-[#14161a] placeholder-[#67707f] ring-1 ring-[#14161a]/15 focus:outline-none focus:ring-2 focus:ring-[#ff6321]"
+              className="flex-1 px-4 py-3 rounded-full bg-white text-white placeholder-[#8ba3bd] ring-1 ring-[#14161a]/15 focus:outline-none focus:ring-2 focus:ring-[#ff6321]"
               autoFocus
             />
             <button
