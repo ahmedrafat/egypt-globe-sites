@@ -136,15 +136,15 @@ export default async function RFQPage({ searchParams }) {
               <div className="relative">
                 <h3 className="egg-display text-2xl text-[#14161a] mb-3">Prefer to email?</h3>
                 <p className="text-sm text-[#3f4650] mb-4 leading-relaxed">
-                  Send your RFQ directly to our export desk — same export desk.
+                  Send your RFQ straight to the export desk by email or phone — it lands with the same team as the form.
                 </p>
                 <a href={`mailto:${company.email}?subject=RFQ%20-%20Egypt%20Globe%20Group`}
-                  className="block bg-white ring-1 ring-[#14161a]/10 hover:ring-[#14161a]/35 transition-all rounded-lg px-4 py-3 text-sm font-mono font-semibold text-[#14161a]">
-                  <Icon name="mail" className="w-3.5 h-3.5" /> {company.email}
+                  className="flex items-center gap-2.5 bg-white ring-1 ring-[#14161a]/10 hover:ring-[#14161a]/35 transition-all rounded-lg px-4 py-3 text-sm font-mono font-semibold text-[#14161a] break-all">
+                  <Icon name="mail" className="w-3.5 h-3.5 shrink-0 text-[#087a70]" /> {company.email}
                 </a>
                 <a href={`tel:${company.phoneE164}`}
-                  className="block mt-2 bg-white ring-1 ring-[#14161a]/10 hover:ring-[#14161a]/35 transition-all rounded-lg px-4 py-3 text-sm font-mono font-semibold text-[#14161a]">
-                  <Icon name="phone" className="w-3.5 h-3.5" /> {company.phone}
+                  className="flex items-center gap-2.5 mt-2 bg-white ring-1 ring-[#14161a]/10 hover:ring-[#14161a]/35 transition-all rounded-lg px-4 py-3 text-sm font-mono font-semibold text-[#14161a]">
+                  <Icon name="phone" className="w-3.5 h-3.5 shrink-0 text-[#087a70]" /> {company.phone}
                 </a>
               </div>
             </div>

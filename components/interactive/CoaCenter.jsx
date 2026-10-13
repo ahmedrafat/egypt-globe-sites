@@ -14,7 +14,7 @@
  */
 import { fmtSpecValue } from '../../lib/specs'
 import { useMemo, useState } from 'react'
-import { printCoa } from '../../lib/coaPrint'
+import { printCoa, isSpecTemplate } from '../../lib/coaPrint'
 import Icon from '../ui/Icon'
 
 const REGION_META = {
@@ -155,11 +155,13 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
           <div>
             <h3 className="font-bold text-lg text-[#14161a] flex items-center gap-2">
               <Icon name="beaker" className="w-5 h-5 text-[#087a70]" />
-              Certificates of Analysis
+              {coas.every(isSpecTemplate) ? 'Specification and CoA' : 'Certificates of Analysis'}
             </h3>
             <p className="text-xs text-[#5b6577] mt-1">
-              {coas.length} active CoA{coas.length === 1 ? '' : 's'} across {regions.length} market{regions.length === 1 ? '' : 's'}.
-              Issued by our Egypt Globe QC Lab — third-party verification (SGS / Intertek / Bureau Veritas / TUV) on request.
+              {coas.every(isSpecTemplate)
+                ? 'The limits every lot of this product is certified against. A Certificate of Analysis with measured results, issued by our Egypt Globe QC Lab, accompanies every shipment before the Bill of Lading; third-party verification (SGS / Intertek / Bureau Veritas / TUV) on request.'
+                : <>{coas.length} active CoA{coas.length === 1 ? '' : 's'} across {regions.length} market{regions.length === 1 ? '' : 's'}.
+              Issued by our Egypt Globe QC Lab — third-party verification (SGS / Intertek / Bureau Veritas / TUV) on request.</>}
             </p>
           </div>
           {requestPath && (
@@ -202,6 +204,7 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
           const expiringSoon = days != null && days >= 0 && days < 30
           const params = coa.parameters || {}
           const paramKeys = Object.keys(params).filter(k => k !== 'compliance_tested')
+          const tpl = isSpecTemplate(coa)
           return (
             <div key={coa.id} className="px-5 sm:px-6 py-5">
               {/* CoA card header */}
@@ -209,6 +212,11 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
                     <span className="font-mono text-[11px] font-bold text-[#14161a] bg-[#f3f4f6] px-2 py-0.5 rounded">{coa.ref_code}</span>
+                    {tpl && (
+                      <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full bg-[#fbf7ee] text-[#8a6d3b] border border-[#b8862b]/40">
+                        Specification template
+                      </span>
+                    )}
                     {coa.pass_fail === true && (
                       <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#e6fbf8] text-[#087a70] border border-[#0fb5a5]/40">
                         ✓ Pass
@@ -231,7 +239,7 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
                     )}
                   </div>
                   <div className="text-sm font-bold text-[#14161a]">
-                    {coa.lab_name}
+                    {tpl ? 'Guaranteed limits' : coa.lab_name}
                     {coa.lab_certificate_no && <span className="text-[#67707f] font-mono font-normal ml-2">{coa.lab_certificate_no}</span>}
                   </div>
                   {coa.overall_result && (
@@ -270,12 +278,12 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
               </div>
 
               {/* Date strip */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4 text-[11px] uppercase tracking-wider font-semibold text-[#5b6577]">
+              {!tpl && <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4 text-[11px] uppercase tracking-wider font-semibold text-[#5b6577]">
                 {coa.sample_date && <div><div className="text-[#67707f]">Sampled</div><div className="text-[#3f4650] font-bold normal-case tracking-normal">{fmtDate(coa.sample_date)}</div></div>}
                 {coa.analysis_date && <div><div className="text-[#67707f]">Analysed</div><div className="text-[#3f4650] font-bold normal-case tracking-normal">{fmtDate(coa.analysis_date)}</div></div>}
                 {coa.issue_date && <div><div className="text-[#67707f]">Issued</div><div className="text-[#3f4650] font-bold normal-case tracking-normal">{fmtDate(coa.issue_date)}</div></div>}
                 {coa.expiry_date && <div><div className="text-[#67707f]">Expires</div><div className={`font-bold normal-case tracking-normal ${expired ? 'text-red-700' : expiringSoon ? 'text-[#8a6d3b]' : 'text-[#3f4650]'}`}>{fmtDate(coa.expiry_date)}</div></div>}
-              </div>
+              </div>}
 
               {/* Drop 148 — Packing + cargo metadata strip (only if any field set) */}
               {(coa.packing_name || coa.packing_label || coa.quantity_mt || coa.vessel_name || coa.pol_unlocode || coa.pod_unlocode) && (
@@ -327,7 +335,7 @@ export default function CoaCenter({ coas = [], commodityName, requestPath, brand
               {paramKeys.length > 0 && (
                 <div className="rounded-xl border border-[#14161a]/10 overflow-hidden bg-[#f9fafb]">
                   <div className="px-4 py-2 border-b border-[#14161a]/10 bg-[#f9fafb]">
-                    <h4 className="text-[11px] font-bold uppercase tracking-wider text-[#5b6577]">Measured parameters</h4>
+                    <h4 className="text-[11px] font-bold uppercase tracking-wider text-[#5b6577]">{tpl ? 'Specification limits' : 'Measured parameters'}</h4>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 divide-[#14161a]/10">
                     {paramKeys.map((k, i) => (
