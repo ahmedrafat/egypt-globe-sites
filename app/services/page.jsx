@@ -11,6 +11,7 @@ import { routeOpenGraph } from '../../lib/seo'
 import HeroMotif from '../../components/HeroMotif'
 import HeroBackdrop, { isBanner } from '../../components/HeroBackdrop'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   SERVICE_DIVISIONS,
   LOGISTICS_PORTAL_URL,
@@ -138,9 +139,10 @@ export default async function ServicesHub() {
               <div className="h-1.5 w-full" style={{ background: svc.color }} />
               <div className="aspect-[16/9] overflow-hidden relative"
                 style={{ background: `linear-gradient(135deg, ${svc.color}1F 0%, ${svc.color}08 60%, white 100%)` }}>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-[#14161a]/20 group-hover:text-[#14161a]/35 group-hover:scale-110 transition-all duration-500"><Icon name={SERVICE_ICON[svc.id] || 'ship'} className="w-8 h-8" strokeWidth={1.25} /></span>
-                </div>
+                {/* Commissioned banner art (public/banners/services-<id>.jpg), cropped to the subject side */}
+                <Image src={`/banners/services-${svc.id}.jpg`} alt="" fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.04] motion-reduce:transition-none"
+                  style={{ objectPosition: '74% 50%' }} />
               </div>
               <div className="p-6">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl mb-3 -mt-12 ml-1 bg-white shadow-md ring-1 ring-[#14161a]/10"
