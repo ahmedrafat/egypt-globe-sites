@@ -1,6 +1,6 @@
 {
-  "generated": "2026-09-26T22:13:10.384Z",
-  "count": 62,
+  "generated": "2026-10-13T17:20:01.559Z",
+  "count": 69,
   "banners": [
     {
       "url": "/banners/about-careers.jpg",
@@ -63,10 +63,22 @@
       "bytes": 192207
     },
     {
+      "url": "/banners/buyer-login.jpg",
+      "label": "Buyer Login",
+      "group": "Section banners",
+      "bytes": 205299
+    },
+    {
       "url": "/banners/case-studies.jpg",
       "label": "Case Studies",
       "group": "Section banners",
       "bytes": 297983
+    },
+    {
+      "url": "/banners/coa.jpg",
+      "label": "Coa",
+      "group": "Section banners",
+      "bytes": 191022
     },
     {
       "url": "/banners/contact.jpg",
@@ -75,10 +87,28 @@
       "bytes": 263400
     },
     {
+      "url": "/banners/faq.jpg",
+      "label": "Faq",
+      "group": "Section banners",
+      "bytes": 240866
+    },
+    {
       "url": "/banners/global-presence.jpg",
       "label": "Global Presence",
       "group": "Section banners",
       "bytes": 242430
+    },
+    {
+      "url": "/banners/investors.jpg",
+      "label": "Investors",
+      "group": "Section banners",
+      "bytes": 347879
+    },
+    {
+      "url": "/banners/legal.jpg",
+      "label": "Legal",
+      "group": "Section banners",
+      "bytes": 143678
     },
     {
       "url": "/banners/markets.jpg",
@@ -219,6 +249,12 @@
       "bytes": 320675
     },
     {
+      "url": "/banners/trade-strategies.jpg",
+      "label": "Trade Strategies",
+      "group": "Section banners",
+      "bytes": 196435
+    },
+    {
       "url": "/banners/trade-tools-import-guides.jpg",
       "label": "Trade Tools Import Guides",
       "group": "Section banners",
@@ -313,6 +349,12 @@
       "label": "Pharma Cosmetic",
       "group": "Topic banners",
       "bytes": 256547
+    },
+    {
+      "url": "/banners/topics/port-gargoub.jpg",
+      "label": "Port Gargoub",
+      "group": "Topic banners",
+      "bytes": 287544
     },
     {
       "url": "/banners/topics/port-mediterranean.jpg",

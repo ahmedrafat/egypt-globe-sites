@@ -8,10 +8,12 @@
  * Light editorial edition — tokens + utilities (.egg-*) in app/globals.css.
  */
 import { routeOpenGraph } from '../../lib/seo'
-import HeroMotif from '../../components/HeroMotif'
+import HeroBackdrop from '../../components/HeroBackdrop'
 import Link from 'next/link'
 import { getCoaSummary } from '../../lib/corporatePages'
 import Icon from '../../components/ui/Icon'
+
+const HERO_BANNER = '/banners/coa.jpg'
 
 export const dynamic = 'force-dynamic'
 
@@ -69,11 +71,10 @@ export default async function CoaCenter() {
 
   return (
     <article className="bg-white text-[#14161a]">
-      {/* Hero — white editorial banner with turquoise glow */}
-      <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10">
-        <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
-        {/* calibrated lab instrument */}
-        <HeroMotif variant="dial" tone="#0fb5a5" />
+      {/* Hero — commissioned banner under the navy band (Oct 2026) */}
+      <section data-hero className="egg-hero-dark relative overflow-hidden border-b border-[#ff5a18]/60">
+        <HeroBackdrop src={HERO_BANNER} />
+        <div aria-hidden="true" className="absolute inset-0 egg-grid-dark opacity-60 pointer-events-none" />
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
           style={{ background: 'radial-gradient(55% 55% at 88% 0%, rgba(15,181,165,.2), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(255,99,33,.09), transparent 60%)' }} />
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16">

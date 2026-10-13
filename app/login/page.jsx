@@ -10,6 +10,8 @@
 import LoginForm from '../../components/auth/LoginForm'
 import { getBuyerVisibility } from '../../lib/supabaseServer'
 import { redirect } from 'next/navigation'
+import HeroBackdrop, { isBanner } from '../../components/HeroBackdrop'
+import { getPageByPath } from '../../lib/corporatePages'
 
 export const metadata = {
   title: 'Buyer Sign In',
@@ -21,16 +23,15 @@ export const metadata = {
 }
 
 export default async function LoginPage() {
-  const v = await getBuyerVisibility()
+  const [v, page] = await Promise.all([getBuyerVisibility(), getPageByPath('/login').catch(() => null)])
   // Already signed in? Bounce to dashboard.
   if (v.authenticated) redirect('/buyer')
 
   return (
     <article className="bg-white text-[#14161a]">
-      <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10">
-        <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
-        <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(55% 55% at 88% 0%, rgba(2,132,199,.14), transparent 60%), radial-gradient(40% 45% at 0% 100%, rgba(15,181,165,.12), transparent 60%)' }} />
+      <section data-hero className="egg-hero-dark relative overflow-hidden border-b border-[#ff5a18]/60">
+        <HeroBackdrop src={isBanner(page?.hero_photo_url) ? page.hero_photo_url : '/banners/buyer-login.jpg'} />
+        <div aria-hidden="true" className="absolute inset-0 egg-grid-dark opacity-60 pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16">
           <h1 className="egg-display text-4xl sm:text-5xl lg:text-6xl text-[#14161a] mb-3">
