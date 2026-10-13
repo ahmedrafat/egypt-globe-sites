@@ -141,11 +141,10 @@ export default async function ServicesHub() {
                 style={{ background: `linear-gradient(135deg, ${svc.color}1F 0%, ${svc.color}08 60%, white 100%)` }}>
                 {/* Commissioned banner art (public/banners/services-<id>.jpg), cropped to the subject side */}
                 <Image src={`/banners/services-${svc.id}.jpg`} alt="" fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.04] motion-reduce:transition-none"
-                  style={{ objectPosition: '74% 50%' }} />
+                  className="object-cover origin-[90%_50%] scale-[1.5] transition-transform duration-700 group-hover:scale-[1.58] motion-reduce:transition-none" />
               </div>
               <div className="p-6">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl mb-3 -mt-12 ml-1 bg-white shadow-md ring-1 ring-[#14161a]/10"
+                <div className="relative z-10 w-10 h-10 rounded-xl flex items-center justify-center text-xl mb-3 -mt-12 ml-1 bg-white shadow-md ring-1 ring-[#14161a]/10"
                   style={{ color: svc.color }}>
                   <Icon name={SERVICE_ICON[svc.id] || 'ship'} className="w-6 h-6" />
                 </div>
