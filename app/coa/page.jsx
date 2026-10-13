@@ -12,6 +12,7 @@ import HeroBackdrop from '../../components/HeroBackdrop'
 import Link from 'next/link'
 import { getCoaSummary } from '../../lib/corporatePages'
 import Icon from '../../components/ui/Icon'
+import CoaFilter from '../../components/CoaFilter'
 
 const HERO_BANNER = '/banners/coa.jpg'
 
@@ -64,6 +65,13 @@ export default async function CoaCenter() {
   const regionOrder = ['GLOBAL', 'East Africa', 'GCC', 'Mediterranean', 'Europe', 'Far East', 'South Asia', 'North Europe', 'Americas', 'West Africa']
   const regions = [...regionOrder.filter(r => byRegion[r]?.length), ...Object.keys(byRegion).filter(r => !regionOrder.includes(r))]
 
+  // Division chips for the filter — first path segment under /products
+  const divOf = c => (c.commodities?.page_path || '').split('/')[2] || 'other'
+  const divCounts = {}
+  for (const c of coas) divCounts[divOf(c)] = (divCounts[divOf(c)] || 0) + 1
+  const divisions = Object.entries(divCounts).sort((a, b) => b[1] - a[1])
+    .map(([id, count]) => ({ id, count, label: id.charAt(0).toUpperCase() + id.slice(1) }))
+
   // KPI counts
   const totalCoas = coas.length
   const totalCommodities = new Set(coas.map(c => c.commodity_id)).size
@@ -111,22 +119,27 @@ export default async function CoaCenter() {
         </div>
       </section>
 
-      {/* Region quick-jump nav */}
+      {/* Filter + region quick-jump */}
       <section className="bg-white border-b border-[#14161a]/10 sticky top-0 z-10 backdrop-blur-md bg-white/85">
-        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-3 overflow-x-auto" tabIndex={0}>
-          <div className="flex gap-2 min-w-max">
-            {regions.map(r => {
-              const meta = regionMeta(r)
-              return (
-                <a key={r} href={`#${r.replace(/\s+/g, '-')}`}
-                  className="egg-chip text-xs hover:text-[#14161a] transition-all hover:shadow-[inset_0_0_0_1.5px_rgba(20,22,26,.35)] whitespace-nowrap">
-                  <Icon name={meta.icon} className="w-3.5 h-3.5" />
-                  {meta.label}
-                  <span className="ml-1 text-[11px] font-bold tabular-nums text-[#67707f]">{byRegion[r].length}</span>
-                </a>
-              )
-            })}
-          </div>
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-3 space-y-2.5">
+          <CoaFilter divisions={divisions} total={coas.length} />
+          {regions.length > 1 && (
+            <div className="overflow-x-auto" tabIndex={0}>
+              <div className="flex gap-2 min-w-max">
+                {regions.map(r => {
+                  const meta = regionMeta(r)
+                  return (
+                    <a key={r} href={`#${r.replace(/\s+/g, '-')}`}
+                      className="egg-chip text-xs hover:text-[#14161a] transition-all hover:shadow-[inset_0_0_0_1.5px_rgba(20,22,26,.35)] whitespace-nowrap">
+                      <Icon name={meta.icon} className="w-3.5 h-3.5" />
+                      {meta.label}
+                      <span className="ml-1 text-[11px] font-bold tabular-nums text-[#67707f]">{byRegion[r].length}</span>
+                    </a>
+                  )
+                })}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -135,7 +148,7 @@ export default async function CoaCenter() {
         const meta = regionMeta(r)
         const items = byRegion[r]
         return (
-          <section key={r} id={r.replace(/\s+/g, '-')}
+          <section key={r} id={r.replace(/\s+/g, '-')} data-coa-section
             className="border-t border-[#14161a]/10 scroll-mt-20 egg-reveal"
             style={{ background: `linear-gradient(180deg, ${meta.color}0a 0%, #ffffff 80%)` }}>
             <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-10">
@@ -159,6 +172,8 @@ export default async function CoaCenter() {
                   const com = c.commodities
                   return (
                     <Link key={c.id} href={com?.page_path || '/products'}
+                      data-coa-card data-division={divOf(c)}
+                      data-text={`${c.ref_code} ${com?.name || ''} ${c.lab_name || ''} ${c.overall_result || ''}`.toLowerCase()}
                       className="egg-card group p-4">
                       <div className="flex items-start gap-2.5">
                         <span className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 text-[#14161a]"
