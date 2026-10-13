@@ -253,7 +253,7 @@ export default function RichDivisionLanding({ page, division, subcategories, fea
               { ico: 'pin',    t: 'Egyptian-origin, traceable',  b: 'Direct producer relationships across Egypt — a short, audited supply chain with EUR.1 / PAFTA / COMESA Certificate of Origin on every shipment.' },
               { ico: 'anchor', t: '8-port loading, own teams',    b: 'Damietta · Port Said East · Alexandria · El Dekheila · Ain Sokhna · Safaga · Al-Arish · Gargoub — closest-to-source routing with resident EGG stevedoring, agency and port-QC teams.' },
               { ico: 'shield', t: 'Per-lot QA before B/L',        b: 'Port-laboratory analysis and Certificate of Analysis on every lot before the Bill of Lading; TÜV Austria / SGS / Intertek / Bureau Veritas pre-shipment inspection on request.' },
-              { ico: 'clock',  t: 'Written, priced offers',            b: 'Submit an RFQ today, receive a priced FOB / CIF / CFR offer, sample CoA and inspection protocol tomorrow. Standardised L/C-bank document set on order.' },
+              { ico: 'clock',  t: 'Written, priced offers',            b: 'Submit an RFQ and receive a written FOB / CIF / CFR offer with a sample CoA and the inspection protocol. Standardised L/C-bank document set on order.' },
             ].map(c => (
               <div key={c.t} className="egg-panel p-6">
                 <span className="inline-flex w-10 h-10 items-center justify-center rounded-lg ring-1 ring-[#14161a]/15 text-[#14161a] mb-4">
