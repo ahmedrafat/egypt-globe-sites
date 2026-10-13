@@ -18,12 +18,13 @@
  * clear the sticky site header.
  */
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import Icon from './Icon'
 
 /** Put this on every section wrapper so anchor jumps clear the header. */
 export const SECTION_ANCHOR = 'scroll-mt-28'
 
-export default function SectionIndex({ sections, className = '', variant = 'both' }) {
+export default function SectionIndex({ sections, className = '', variant = 'both', quoteCta = false }) {
   const [active, setActive] = useState(sections[0]?.id)
 
   useEffect(() => {
@@ -99,6 +100,13 @@ export default function SectionIndex({ sections, className = '', variant = 'both
           </div>
           {list}
         </nav>
+        {quoteCta && (
+          <div className="mt-3 rounded-2xl border border-[#14161a]/10 bg-[#fff4ec] p-4">
+            <p className="text-sm font-semibold text-[#14161a] leading-snug">Sourcing this?</p>
+            <p className="mt-1 text-[13px] leading-relaxed text-[#3f4650]">Send grade, tonnage and destination and the export desk replies with a priced offer.</p>
+            <Link href="/rfq" className="mt-3 inline-flex items-center justify-center w-full rounded-full bg-[#d0450f] px-4 py-2.5 text-sm font-bold text-white hover:bg-[#14161a] transition-colors">Request a quote</Link>
+          </div>
+        )}
       </div>
   )
 

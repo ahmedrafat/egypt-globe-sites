@@ -8,6 +8,7 @@
 import Link from 'next/link'
 import Logo from './Logo'
 import MobileMenu from './MobileMenu'
+import HeaderSearch from './HeaderSearch'
 import {
   PRODUCT_DIVISIONS,
   SERVICE_DIVISIONS,
@@ -315,6 +316,7 @@ export default async function SiteHeader({ settings }) {
 
           {/* Right-side actions */}
           <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+            <HeaderSearch />
             {visibility.authenticated ? (
               <Link href="/buyer"
                 className="hidden md:flex items-center gap-1.5 text-sm font-semibold text-[#3f4650] hover:text-[#087a70] px-3 py-2 rounded-lg hover:bg-[#f9fafb] transition-colors">

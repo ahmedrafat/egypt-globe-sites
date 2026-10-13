@@ -177,7 +177,7 @@ export default function MarkdownDocument({ body, title, leadingWidget = null }) 
         </div>
 
         <div className="order-1 lg:order-2">
-          <SectionIndex sections={parts} />
+          <SectionIndex sections={parts} quoteCta />
         </div>
       </div>
     </section>

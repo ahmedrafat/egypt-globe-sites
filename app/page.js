@@ -438,7 +438,7 @@ export default async function HomePage() {
               <Node href="/standards/iso-9001-salt-suppliers" tone="#64748b">ISO 9001 for bulk suppliers</Node>
             </div>
           </div>
-          <div className="lg:col-span-7 grid sm:grid-cols-2 gap-px rounded-2xl overflow-hidden ring-1 ring-[#14161a]/10 bg-[#14161a]/10" data-reveal>
+          <div className="lg:col-span-7 lg:self-start lg:sticky lg:top-28 grid sm:grid-cols-2 gap-px rounded-2xl overflow-hidden ring-1 ring-[#14161a]/10 bg-[#14161a]/10" data-reveal>
             {QA_PROTOCOL.map(q => (
               <div key={q.t} className="bg-white p-6 lg:p-7 hover:bg-[#f6f7f9] transition-colors duration-400">
                 <span className="inline-flex w-9 h-9 items-center justify-center rounded-lg ring-1 ring-[#14161a]/15 text-[#14161a]">
