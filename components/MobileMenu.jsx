@@ -223,6 +223,16 @@ export default function MobileMenu({ productDivisions, serviceDivisions, aboutPa
         {/* Scrollable body — children stagger in on each open via key remount */}
         <div key={openCount} className="flex-1 overflow-y-auto overscroll-contain stagger-children motion-reduce:[&>*]:!animate-none">
 
+          <form action="/search" method="get" role="search" className="mx-4 mt-4">
+            <label htmlFor="mobile-search-q" className="sr-only">Search Egypt Globe Group</label>
+            <div className="flex items-center gap-2 rounded-full bg-[#f6f7f9] ring-1 ring-[#14161a]/12 pl-4 pr-1.5 focus-within:ring-2 focus-within:ring-[#087a70]">
+              <svg className="w-4 h-4 text-[#67707f] shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path strokeLinecap="round" d="M20 20l-3.5-3.5" /></svg>
+              <input id="mobile-search-q" type="search" name="q" required placeholder="Search products, ports, standards"
+                className="flex-1 min-w-0 bg-transparent py-2.5 text-[14px] text-[#14161a] placeholder-[#67707f] focus:outline-none" />
+              <button type="submit" className="px-4 py-2 rounded-full bg-[#14161a] text-white text-[13px] font-semibold">Go</button>
+            </div>
+          </form>
+
           <Eyebrow>Navigate</Eyebrow>
 
           {/* Products accordion */}

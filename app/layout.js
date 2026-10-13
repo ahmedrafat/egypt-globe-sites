@@ -4,6 +4,7 @@ import './globals.css'
 import SiteHeader from '../components/SiteHeader'
 import SiteFooter from '../components/SiteFooter'
 import WhatsAppFab from '../components/WhatsAppFab'
+import BackToTop from '../components/BackToTop'
 import { OrganizationJsonLd } from '../components/StructuredData'
 import WebVitalsReporter from '../components/WebVitalsReporter'
 import { getSiteSettings } from '../lib/corporatePages'
@@ -237,6 +238,7 @@ export default async function RootLayout({ children }) {
         <main id="main-content" className="flex-1">{children}</main>
         <HeroMotion />
         <SiteFooter settings={settings} />
+        <BackToTop />
         <WhatsAppFab url={settings.whatsappUrl} label={`Chat with ${settings.name} on WhatsApp`} />
       </body>
     </html>
