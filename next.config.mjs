@@ -41,6 +41,13 @@ const nextConfig = {
           { key: 'Referrer-Policy',           value: 'strict-origin-when-cross-origin' },
           { key: 'Permissions-Policy',        value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()' },
           { key: 'X-DNS-Prefetch-Control',    value: 'on' },
+          // Baseline CSP: the directives that cannot break a page (no script-src /
+          // style-src yet - the landing uses inline GSAP + JSON-LD). Blocks plugin
+          // content, base-tag hijack, framing by other origins and form posts to
+          // third-party hosts, and upgrades any stray http:// subresource.
+          { key: 'Content-Security-Policy',   value: "default-src 'self' https: data: blob: 'unsafe-inline' 'unsafe-eval'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; upgrade-insecure-requests" },
+          { key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups' },
+          { key: 'X-Permitted-Cross-Domain-Policies', value: 'none' },
         ],
       },
       {

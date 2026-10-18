@@ -106,10 +106,17 @@ export async function GET(request: Request) {
   const reporter = (url.searchParams.get('reporter') || '').toUpperCase().trim()
   const hsRaw = url.searchParams.get('hs') || ''
   const hs6 = trimHs6(hsRaw)
-  const year = Number(url.searchParams.get('year')) || (new Date().getFullYear() - 1)
+  const thisYear = new Date().getFullYear()
+  const year = Number(url.searchParams.get('year')) || (thisYear - 1)
 
-  if (!reporter || !hs6 || hs6.length < 4) {
+  // Strict input: reporter goes into an outbound WITS URL and a DB filter, and
+  // this route is public, so anything but ISO3 letters / digits / a sane year
+  // is rejected before it can reach either (no path injection, no cache churn).
+  if (!/^[A-Z]{3}$/.test(reporter) || !/^[0-9]{4,}/.test(hsRaw.replace(/[^0-9]/g, '')) || hs6.length < 4) {
     return Response.json({ error: 'reporter (ISO3) + hs (6-digit) required' }, { status: 400 })
+  }
+  if (!Number.isInteger(year) || year < 2000 || year > thisYear) {
+    return Response.json({ error: 'year out of range' }, { status: 400 })
   }
 
   // 1. Cache check
