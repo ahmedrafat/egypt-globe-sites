@@ -24,6 +24,7 @@ const nextConfig = {
       { protocol: 'https', hostname: 'images.unsplash.com' },
     ],
     formats: ['image/avif', 'image/webp'],
+    qualities: [60, 75],            // 60 for banner heroes (under a scrim), 75 everywhere else
     minimumCacheTTL: 31536000,    // 1 year — heroes are rebuilt deliberately
   },
 

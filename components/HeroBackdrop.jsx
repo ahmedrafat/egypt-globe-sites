@@ -42,7 +42,7 @@ export default function HeroBackdrop({ src, mirror = false }) {
   if (isBanner(src)) {
     return (
       <div data-hero-bg className="absolute inset-0" aria-hidden="true">
-        <Image src={src} alt="" fill preload fetchPriority="high" sizes="100vw"
+        <Image src={src} alt="" fill preload fetchPriority="high" sizes="100vw" quality={60}
           className={mirror ? 'object-cover object-[28%_50%] -scale-x-100' : 'object-cover object-[72%_50%]'} />
         {/* phones and tablets: the headline spans the full width */}
         <div className="absolute inset-0 lg:hidden bg-gradient-to-b from-[#03182d]/84 via-[#03182d]/68 to-[#03182d]/90" />
