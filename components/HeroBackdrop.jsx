@@ -34,17 +34,19 @@ export const BANNER_SCRIM_LG =
 // `preload` + fetchPriority="high": in Next 16 the old `priority` prop only
 // emits the <link rel=preload>; without fetchPriority the hero (the LCP element
 // on every page) queued behind the four preloaded font files.
-export default function HeroBackdrop({ src }) {
+// `mirror` is for right-to-left pages: the type sits on the right, so the art is
+// flipped and the scrim runs from the right edge.
+export default function HeroBackdrop({ src, mirror = false }) {
   if (!src) return null
 
   if (isBanner(src)) {
     return (
       <div data-hero-bg className="absolute inset-0" aria-hidden="true">
         <Image src={src} alt="" fill preload fetchPriority="high" sizes="100vw"
-          className="object-cover object-[72%_50%]" />
+          className={mirror ? 'object-cover object-[28%_50%] -scale-x-100' : 'object-cover object-[72%_50%]'} />
         {/* phones and tablets: the headline spans the full width */}
         <div className="absolute inset-0 lg:hidden bg-gradient-to-b from-[#03182d]/84 via-[#03182d]/68 to-[#03182d]/90" />
-        <div className="absolute inset-0 hidden lg:block" style={{ background: BANNER_SCRIM_LG }} />
+        <div className="absolute inset-0 hidden lg:block" style={{ background: mirror ? BANNER_SCRIM_LG.replace('90deg', '270deg') : BANNER_SCRIM_LG }} />
       </div>
     )
   }

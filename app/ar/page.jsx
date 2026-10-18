@@ -13,7 +13,7 @@
  * Site chrome stays English (same pattern as saltsiwa.com/de).
  */
 import Link from 'next/link'
-import HeroMotif from '../../components/HeroMotif'
+import HeroBackdrop from '../../components/HeroBackdrop'
 import Icon from '../../components/ui/Icon'
 import { getSiteSettings } from '../../lib/corporatePages'
 
@@ -69,11 +69,9 @@ export default async function ArabicProfile() {
 
   return (
     <article lang="ar" dir="rtl" className="bg-white text-[#14161a]" style={AR_FONT}>
-      <section className="relative overflow-hidden bg-white border-b border-[#14161a]/10">
-        <div aria-hidden="true" className="absolute inset-0 egg-grid-light opacity-70 pointer-events-none" />
-        <HeroMotif variant="compass" tone="#0fb5a5" />
-        <div aria-hidden="true" className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(55% 55% at 12% 0%, rgba(15,181,165,.2), transparent 60%), radial-gradient(40% 45% at 100% 100%, rgba(255,99,33,.09), transparent 60%)' }} />
+      <section data-hero className="egg-hero-dark relative overflow-hidden border-b border-[#ff5a18]/60">
+        <HeroBackdrop src="/banners/about.jpg" mirror />
+        <div aria-hidden="true" className="absolute inset-0 egg-grid-dark opacity-60 pointer-events-none" />
         <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-16">
           <nav className="flex items-center gap-2 text-xs text-[#5b6577] mb-5 flex-wrap">
             <Link href="/" className="hover:text-[#14161a] transition-colors">الرئيسية (English)</Link>
