@@ -28,7 +28,7 @@ export default async function ContactQuickActions() {
             </span>
             <span className="min-w-0">
               <span className="block text-[15px] font-semibold leading-snug">{t.title}</span>
-              <span className={`block mt-0.5 text-[13px] leading-snug break-words ${t.primary ? 'text-white/85' : 'text-[#5b6472]'}`}>{t.sub}</span>
+              <span className={`block mt-0.5 text-[13px] leading-snug break-words ${t.primary ? 'text-white' : 'text-[#5b6472]'}`}>{t.sub}</span>
             </span>
           </>
         )
