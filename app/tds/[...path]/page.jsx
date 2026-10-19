@@ -16,6 +16,7 @@ import {
   getSiteSettings,
   APPLICATIONS,
 } from '../../../lib/corporatePages'
+import { getBuyerVisibility } from '../../../lib/supabaseServer'
 import Logo from '../../../components/Logo'
 import TDSPrintTrigger from '../../../components/TDSPrintTrigger'
 
@@ -55,9 +56,10 @@ export async function generateMetadata({ params }) {
 export default async function TDSPage({ params }) {
   const { path } = await params
   const fullPath = '/' + (Array.isArray(path) ? path.join('/') : path)
-  const [page, settings] = await Promise.all([
+  const [page, settings, visibility] = await Promise.all([
     getPageByPath(fullPath),
     getSiteSettings(),
+    getBuyerVisibility().catch(() => null),
   ])
   if (!page) notFound()
   const commodity = page.commodity_id ? await getCommodityById(page.commodity_id) : null
@@ -186,7 +188,8 @@ export default async function TDSPage({ params }) {
               ['Min. Order Quantity', page.moq_mt ? `${Number(page.moq_mt).toLocaleString()} ${page.price_unit || 'MT'}` : '—'],
               ['Lead time',           (page.lead_time_min_weeks || page.lead_time_max_weeks)
                                         ? `${page.lead_time_min_weeks || '?'}–${page.lead_time_max_weeks || '?'} weeks` : '—'],
-              ['Indicative price',    page.price_indication || '—'],
+              // Same rule as the rest of the site: indicative prices are for approved buyers only.
+              ['Indicative price',    visibility?.showPrices ? (page.price_indication || '—') : 'On request'],
               ['Incoterms',           'FOB / CIF / CFR (Egyptian ports)'],
               ['Currency',            page.price_currency || 'USD'],
             ]} />

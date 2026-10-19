@@ -69,7 +69,7 @@ const SPEC_LABELS = {
 }
 const prettyKey = k => SPEC_LABELS[k] || k.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
 
-export default function RFQForm({ products, preselectPath, requestType = 'quote', supabaseUrl, supabaseAnon, buyerUserId = null }) {
+export default function RFQForm({ products, preselectPath, requestType = 'quote', supabaseUrl, supabaseAnon, buyerUserId = null, showPrices = false }) {
   // PostgREST directly rather than the Supabase client: this form is one
   // SELECT and one INSERT, and importing the client shipped 217 KB of
   // auth/storage/realtime JS with the page.
@@ -176,7 +176,7 @@ export default function RFQForm({ products, preselectPath, requestType = 'quote'
     setSelectedSpecs(null)
     setSelectedDetail(null)
     if (!form.productPath) return
-    const cols = 'specs,packing_options,certifications,applications,moq_mt,lead_time_min_weeks,lead_time_max_weeks,price_indication'
+    const cols = 'specs,packing_options,certifications,applications,moq_mt,lead_time_min_weeks,lead_time_max_weeks' + (showPrices ? ',price_indication' : '')
     const url = `${rest.base}/rest/v1/egg_corporate_pages?select=${cols}&path=eq.${encodeURIComponent(form.productPath)}&is_published=is.true&limit=1`
     fetch(url, { headers: rest.headers })
       .then(r => (r.ok ? r.json() : []))
@@ -568,7 +568,7 @@ export default function RFQForm({ products, preselectPath, requestType = 'quote'
                     {(selected.lead_time_min_weeks || selected.lead_time_max_weeks) && (
                       <span><strong>Lead time:</strong> {selected.lead_time_min_weeks || '?'}–{selected.lead_time_max_weeks || '?'} weeks</span>
                     )}
-                    {selected.price_indication && (
+                    {showPrices && selected.price_indication && (
                       <span><strong>Price:</strong> {selected.price_indication}</span>
                     )}
                   </div>

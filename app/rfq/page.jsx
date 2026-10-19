@@ -100,6 +100,7 @@ export default async function RFQPage({ searchParams }) {
               supabaseUrl={process.env.NEXT_PUBLIC_SUPABASE_URL}
               supabaseAnon={process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}
               buyerUserId={visibility?.user?.id || null}
+              showPrices={!!visibility?.showPrices}
             />
           </div>
 
